@@ -1,0 +1,219 @@
+# Style Packs — Instagram Carousel Skill v2
+
+Six visual packs. User picks one at Step 0.5. Every pack uses Vitesse Bold (display) and Barlow (body) — only weight/size/casing/color changes.
+
+Each pack defines:
+- Accent color + contrast ink
+- Dominant background / inverse background
+- Overlay treatment for photos
+- Slide-number treatment
+- Cover slide behavior
+- Corner ornament (if any)
+
+---
+
+## 1. ASPHALT EDITORIAL
+
+Moody B&W photos, heavy dark overlays, gold accent. The default GW look, tightened.
+
+```css
+--bg-dominant: #1A1A1A;      /* asphalt */
+--bg-inverse:  #F5F0E8;      /* paper-warm */
+--fg-dominant: #F5F0E8;
+--fg-inverse:  #1A1A1A;
+--accent:      #C8A84E;       /* gold */
+--accent-ink:  #1A1A1A;
+--overlay-dark: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.85) 100%);
+```
+
+- **Cover:** Mega-Cover on asphalt or full-bleed photo with bottom gradient. Vitesse 700 at auto-fit size, 0.88 line-height, uppercase, `letter-spacing: -0.02em`.
+- **Photo treatment:** B&W or desaturated (filter: grayscale(1) contrast(1.05)). Strong bottom gradient. Gold hairline bar above headline on image slides.
+- **Slide number:** Small gold "01 / 07" in top-right. Barlow 700 small caps.
+- **Body copy:** Paper on asphalt, Barlow 400 18px equivalent.
+- **Recommend for:** mindset content, grit/discipline topics, long training narratives.
+
+---
+
+## 2. THE CASE
+
+Hero photo carried across every slide. Scanline overlay. Gold accent. Argument-building carousel format where each slide is one act of the case being made.
+
+```css
+--bg-dominant: #1A1A1A;       /* asphalt fallback if no photo */
+--bg-inverse:  #F5F0E8;
+--fg-dominant: #FFFFFF;        /* pure white headlines on photo */
+--fg-inverse:  #1A1A1A;
+--accent:      #C8A84E;        /* gold — brand */
+--accent-ink:  #FFFFFF;        /* white reads on gold for the section tag */
+--overlay-dark: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.88) 100%);
+--photo-filter: saturate(0.65) contrast(1.05) brightness(0.92);
+```
+
+- **Hero photo system:** ONE photo loaded once, base64-embedded, used as the full-bleed background of every slide in the carousel. The photo does not change slide to slide. The skill prompts the user for a hero photo path at Step 1 when this pack is selected.
+- **Photo treatment:** Slightly desaturated and contrast-pushed (saturate 0.65, contrast 1.05, brightness 0.92). Heavy two-stop dark gradient overlay (55% at top, 88% at bottom) for legibility. Color elements in the photo remain readable but muted.
+- **Scanline overlay:** A 2px-spaced horizontal scanline pattern at ~4% opacity sits over the photo and under the dark overlay. Implementation: `repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 3px)` with `mix-blend-mode: overlay`.
+- **Cover:** No section tag. No eyebrow label of any kind — the cover leads directly with the headline (the reference's "→ STRENGTH & CONDITIONING" line is school-brand chrome that does not belong on a Case carousel). Massive uppercase Vitesse Bold headline at ~120–148pt with one or two key words wrapped in `.hl` spans (gold color + 6px gold underline 8px below the baseline). Subhead line in light gray Barlow 400 ~30pt below the headline. Bottom of slide: "→ SWIPE TO LEARN MORE" in Barlow 600 small caps, white at 0.7 opacity. TGW logo + progress bar remain at the foot.
+- **Content slide:** Gold filled rectangle section tag at top-left (Barlow 700, white text, 22pt, 12×24px padding, uppercase, ~3px letter-spacing). Label text is freeform — match the slide's role for the carousel topic. Massive Vitesse Bold headline below the tag with one or two words in `.hl` gold + underline. Body copy below the headline in Barlow 400 at ~30–34pt, white at 0.85 opacity, line-height 1.45. Body may run 2–3 short paragraphs.
+- **Headline highlight rule:** Each slide highlights one or two words in gold with a gold underline beneath them. Never more than two words per headline. Underline is 6px tall, 8px below the baseline, same gold as the word. No box around the word — color shift and underline only.
+- **Frame system override:** This pack does NOT carry the standard slide-number stamp, swipe arrow, or header strip on inner slides. TGW logo and progress bar remain. The section tags and headline progression ARE the navigation.
+- **Optional component — Priority callout banner:** Translucent gold-tinted rectangle with a 4px gold left border. Contains a hash-number stamp ("#1", "#2") in Vitesse 700 ~56pt gold on the left, and a one-line priority statement in Barlow 500 white ~22pt on its right. Use sparingly — max once per carousel.
+- **Optional component — Circle-badge numbered list:** Vertical list where each item leads with a 64px circular badge (gold 3px ring, transparent fill, gold numeral inside in Barlow 700 28pt). Item subhead in Vitesse 700 32pt white. Item body in Barlow 400 24pt white at 0.85 opacity. Use for slides that summarize multiple pillars or steps.
+- **Body copy voice rule:** Scott's external brand voice forbids em-dashes. Body copy uses periods or commas only. Do NOT mirror the reference's em-dash usage.
+- **Recommend for:** authority arguments, "why X is wrong" posts, "the science of Y" breakdowns, "what most coaches miss about Z" — any carousel that walks the reader through a coaching case to a conclusion.
+- **Note:** Hero photo is the brand carrier in this pack. Pick a photo that earns the screen real estate. Tight portraits, wide gym scenes, and coach-in-context shots all work. Avoid action blurs — the photo needs to read as a still anchor across 6–8 slides.
+
+---
+
+## 3. ACID BLOCK
+
+Off-black + paper + electric cherry red accent. Color blocks behind individual words.
+
+```css
+--bg-dominant: #0F0F0F;
+--bg-inverse:  #EFEDE3;
+--fg-dominant: #EFEDE3;
+--fg-inverse:  #0F0F0F;
+--accent:      #FF2E3C;       /* electric cherry red — replaces gold for this pack only */
+--accent-ink:  #EFEDE3;
+--overlay-dark: rgba(0,0,0,0.5);
+```
+
+- **Cover:** Mega-Cover on asphalt. One or two key words wrapped in a cherry-red `<span>` with `background: var(--accent); color: var(--accent-ink); padding: 0.05em 0.25em;` — the "highlighter block" effect. No italic, no underline; the block does the work.
+- **Alternating backgrounds:** slides switch between asphalt, paper, and solid cherry-red. Commit to the rhythm — don't make two cherry slides adjacent.
+- **Photo treatment:** Full B&W with a cherry-red duotone option on 1–2 slides max (mix-blend-mode: multiply over red fill).
+- **Slide number:** Cherry-red circle stamp, 56px, top-left. Barlow 700 paper-colored numeral.
+- **Recommend for:** bold opinion/contrarian takes, attention-grabbers, campaign launches.
+- **Note:** This is the only pack that replaces gold. Gold and cherry red do not co-exist on a slide.
+
+---
+
+## 4. PAPER MINIMAL
+
+Paper-dominant, asphalt type, small supporting photos, heavy negative space.
+
+```css
+--bg-dominant: #EFEDE3;       /* paper */
+--bg-inverse:  #1A1A1A;
+--fg-dominant: #1A1A1A;
+--fg-inverse:  #EFEDE3;
+--accent:      #1A1A1A;       /* no color accent — asphalt IS the accent */
+--accent-ink:  #EFEDE3;
+--overlay-dark: rgba(0,0,0,0.0);
+```
+
+- **Cover:** Mega-Cover in asphalt on paper. Type can go bigger here because there's no image competing — auto-fit has more room.
+- **Photo treatment:** Photos appear as small, contained rectangles (not full-bleed) — roughly 60–70% of slide width, left-aligned, with paper margin around them. B&W.
+- **Slide number:** Small asphalt "01 / 07" top-right. Same as Asphalt Editorial.
+- **Ornament:** None. Restraint is the point.
+- **Recommend for:** editorial essays, philosophy posts, anything that benefits from quiet confidence.
+
+---
+
+## 5. MONO SERIES
+
+Monochrome black / paper / asphalt-tinted gray. Oversized ghosted slide numbers as the hero design element. Edge gradients create swipe-continuity rhythm between slides. No accent color — the absence of color is the pack's identity.
+
+```css
+--bg-dominant: #1A1A1A;       /* asphalt — default dark slide */
+--bg-inverse:  #F5F0E8;       /* paper — alternates with asphalt */
+--bg-tertiary: #3A3A3A;       /* asphalt-tinted gray — third tone for rhythm */
+--fg-dominant: #F5F0E8;
+--fg-inverse:  #1A1A1A;
+--accent:      #3A3A3A;       /* tonal only — never used as a color pop */
+--accent-ink:  #F5F0E8;
+--overlay-dark: none;          /* edge gradients only, no flat photo overlays */
+```
+
+- **Cover:** Mega-Cover only. NO ghost number on the cover. Stacked tight headline at ~140–160pt, paper on asphalt (or asphalt on paper). The cover sets up the list — it isn't the first item of it.
+- **Ghost number system (LIST-INDEXED, not slide-indexed):** The ghost number on a content slide reflects the position of that item IN THE LIST, not the slide's index in the carousel. A "5 ways to build speed" carousel reads: Cover (no number) → 01 → 02 → 03 → 04 → 05 → CTA (no number). The cover and final CTA slide are both bare. Ghost number renders in Vitesse 700, ~340–400pt, opacity 0.13–0.18 (lighter on paper, heavier on asphalt). Position matches the slide's content alignment: number-left when content is left-aligned, number-right when content is right-aligned, number-centered when content is centered.
+- **CTA / final slide:** No ghost number. No section frame chrome other than the header strip and TGW logo + progress bar. Headline and CTA copy only.
+- **Alternating slide rhythm:** Slides alternate between asphalt (#1A1A1A), paper (#F5F0E8), and asphalt-tinted gray (#3A3A3A). Never two adjacent slides in the same tone. The rhythm IS the pack — commit to it.
+- **Edge gradients:** Every slide carries a vertical gradient strip down one edge (alternating sides slide to slide). Light-into-dark on asphalt/gray slides, dark-into-light on paper slides. Width ~25–30% of slide width, fades to transparent. This is the pack's signature swipe-continuity device.
+- **Photo treatment:** Photos are rare in this pack — the design is text-and-number driven. When used, photos appear as small contained rectangles (not full-bleed), B&W, ~50% slide width max, positioned to balance the ghost number.
+- **Header strip:** Every slide carries a thin top header (~88px tall) with handle (avatar dot + @Sleech72) left and a topic tag (`#mindset`, `#offseason`, etc.) right. Barlow 600 small caps, 22pt.
+- **No slide-number stamp.** This pack drops the standard "02 / 07" corner stamp entirely. The ghost number IS the counter on content slides. Cover and CTA carry no counter at all. Other packs use the stamp; Mono Series does not.
+- **Body copy alignment:** Left, center, or right — alignment rotates slide to slide to create rhythm. Centered body allowed up to 3 lines on declarative-statement slides only.
+- **Bullet lists:** Allowed. Custom marker is an 8x8 filled square in fg-dominant at 0.5 opacity. No round dots, no dashes. Match Editorial Long-Form's marker treatment.
+- **Recommend for:** numbered teaching listicles ("5 ways to ___", "Top 7 ___", "3 lessons from ___"), breakdown series, coaching-principle drops where each slide is one numbered point.
+- **Note:** This is the only pack with zero color accent. If a layout tempts you to add gold or any other color, the pack's identity is gone.
+
+---
+
+## 6. EDITORIAL LONG-FORM
+
+Paper background, asphalt body copy in real reading columns, numbered subheads. Built for text-heavy educational content.
+
+```css
+--bg-dominant: #EFEDE3;
+--bg-inverse:  #1A1A1A;
+--fg-dominant: #1A1A1A;
+--fg-inverse:  #EFEDE3;
+--accent:      #C8A84E;
+--accent-ink:  #1A1A1A;
+--overlay-dark: rgba(0,0,0,0.6);
+```
+
+- **Cover:** Mega-Cover in asphalt on paper. Can include a small `EDITORIAL` or `GUIDE` eyebrow label in gold above the headline.
+- **Content slides:** reading-column layout. Max 58ch width. Barlow 400 at 36px (renders ~18px at IG display), line-height 1.5, left-aligned ragged right. Numbered subhead (`01.` in gold, Vitesse 700 at 72pt) sits above the paragraph.
+- **Photo treatment:** Photos allowed but kept small — 100% width × 40% height max, positioned above or below the text column as a visual break every 2–3 slides.
+- **Slide number:** Small asphalt "Page 3 / 8" bottom-left, Barlow 600 16pt. Reads like a magazine folio.
+- **Ornament:** Thin 1px asphalt hairline between the subhead and the body column on content slides.
+- **Allowed list marker:** checkbox square (8×8 asphalt outline) for checklist slides. This is the only pack where lists are explicitly allowed.
+- **Recommend for:** how-to guides, teaching content, frameworks, multi-point educational posts.
+
+---
+
+## Pack selection quick-reference
+
+| User said... | Suggest |
+|---|---|
+| "mindset", "grind", "discipline" | Asphalt Editorial |
+| "argument", "case", "why X is wrong", "the science of", "what coaches miss" | The Case |
+| "bold take", "hot take", "launch" | Acid Block |
+| "essay", "philosophy", "quiet" | Paper Minimal |
+| "5 ways to", "top 7", "3 lessons", "numbered listicle" | Mono Series |
+| "how-to", "guide", "teach", "framework", "long-form teaching" | Editorial Long-Form |
+
+If unclear, ask. Don't guess — the pack shapes everything downstream.
+
+---
+
+## Headline character budgets — REQUIRED, USE AT PLANNING TIME
+
+A carousel breaks when the planner writes a headline that doesn't fit the pack's font size. Before delivering the Step 3B slide plan, check each headline against the pack's budget. If a headline exceeds budget, either:
+- Shorten the copy (preferred — tighter Scott voice usually reads better anyway), or
+- Split it across more `<span class="line">` elements so each line stays inside its per-line cap.
+
+**Do NOT just bump the font size down to make it fit.** That breaks the pack's visual rhythm. The budgets exist so copy stays at the size the pack was designed for.
+
+### How the budgets are derived
+
+Slide content width at 1080×1350 with 64px left/right margins = **952px**. Vitesse Bold uppercase characters average **~0.57 × font-size** wide. So:
+
+> **chars-per-line ≈ 952 / (0.57 × font-size-in-px)**
+
+This is the only formula you need. Budgets below apply it per pack. Numbers are conservative — assume punctuation/highlight underlines eat 1–2 chars per line.
+
+### Per-pack budgets
+
+| Pack | Element | Font size | Chars per line | Max lines | Verified? |
+|---|---|---|---|---|---|
+| **The Case** | `.mega-cover` (cover) | 108px | 18 | 4 | ✅ (Marshall carousel, 2026-05-11) |
+| **The Case** | `.content-headline` | 88px | 22 | 3 | ✅ (Marshall carousel, 2026-05-11) |
+| **The Case** | `.cta-headline` | 96px | 20 | 2 | ✅ (Marshall carousel, 2026-05-11) |
+| Asphalt Editorial | `.mega-cover` (cover) | ~120px (auto-fit) | 16 | 4 | starting estimate |
+| Asphalt Editorial | `.content-headline` | ~92px | 22 | 3 | starting estimate |
+| Acid Block | `.mega-cover` (cover) | ~120px | 16 | 4 | starting estimate |
+| Acid Block | `.content-headline` | ~92px | 22 | 3 | starting estimate |
+| Paper Minimal | `.mega-cover` (cover) | ~140px | 14 | 4 | starting estimate (bigger headline allowed — no photo competing) |
+| Paper Minimal | `.content-headline` | ~96px | 21 | 3 | starting estimate |
+| Mono Series | `.mega-cover` (cover) | ~150px | 13 | 3 | starting estimate (oversized headline paired with ghost number) |
+| Mono Series | `.content-headline` | ~96px | 21 | 3 | starting estimate |
+| Editorial Long-Form | `.mega-cover` (cover) | ~104px | 19 | 4 | starting estimate |
+| Editorial Long-Form | Numbered subhead | 72px | 28 | 2 | starting estimate (reading-column body has its own 58ch max — different system) |
+
+**The first time a pack ships, mark its row Verified after Step 5.5 passes.** Update the Verified column when a real carousel renders cleanly at the listed numbers. If reality forces a different size, update the table — don't leave stale numbers.
+
+### Quick check at Step 3B
+
+For each row of the slide plan: count visible characters in the headline (incl. spaces and punctuation, excluding any markup), divide by the budget's chars-per-line, round up to lines. If the result exceeds the budget's max lines, tighten the copy before showing the plan to the user. Don't ask the user to approve a plan with an oversized headline.

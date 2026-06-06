@@ -1,0 +1,10 @@
+{
+  "name": "gw-command-center",
+  "version": "0.1.0",
+  "description": "Gridiron Warrior + Scott Leech Training plugin. Voice-aware skills for content production, image generation, Substack and Leech Letters, IG carousels, PDF and PPTX work, NotebookLM-backed video review, advisor council, and Kit MCP safety rails. Code is truth.",
+  "author": {
+    "name": "Scott Leech",
+    "email": "scott@scottleechtraining.com"
+  },
+  "homepage": "https://scottleechtraining.com"
+}

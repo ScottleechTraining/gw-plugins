@@ -1,0 +1,5 @@
+# Plugin install cache (regenerated on install)
+.cache/
+*.tmp
+.DS_Store
+Thumbs.db
