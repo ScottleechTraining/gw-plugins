@@ -15,7 +15,16 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 - Vitesse embedding is locked to **inline `<style>` only**. External stylesheets for fonts are banned (they cache-stale and render the wrong font).
 - New **pack-compliance pass** at the end of Step 3B — the slide plan must respect the chosen pack's architecture rules (reading columns, centered body allowances, photo sizing), not just its colors.
 - Each carousel HTML file is **self-contained**. No shared CSS files, no external pack stylesheets, no imports beyond Barlow from Google Fonts. If it doesn't open correctly from a USB drive with no internet, it's broken.
-- Canonical visual references for each pack live in the project as `Carousel Test - <Pack Name>.html`. Read them when authoring slides to pattern-match the pack's feel.
+
+---
+
+## Single Source of Truth — Style Packs
+
+**`references/style-packs.md` is the only place style packs are defined.** Pack names, descriptions, color tokens, architecture rules, overrides, and use-case mappings live there and nowhere else.
+
+This SKILL.md must NEVER hardcode pack names ("Asphalt Editorial", "Mono Series", etc.), descriptions, color values, or architecture rules. Every place a pack is referenced, this file instructs the agent to read `references/style-packs.md`. If you find a hardcoded pack name or description in this SKILL.md outside of an example illustrating how to read style-packs.md, that's drift — fix it.
+
+**Why:** for months the pack list lived in three places that drifted independently. Packs were renamed (High Contrast Hype → The Case, Dark Project → Mono Series) and SKILL.md kept presenting the old names to users. The structural fix is delegation, not vigilance.
 
 ---
 
@@ -27,13 +36,9 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 
 ### Authorized Overrides (approved by Scott)
 
-Three specific exceptions to Visual Brain rules are allowed inside this skill. These are scoped, not global — they apply only to the packs named. Every other pack and every other skill must follow the Visual Brain verbatim.
+Some packs are allowed scoped exceptions to Visual Brain rules (accent color, body centering, word count). The full list of which pack overrides which rule lives in each pack's section in `references/style-packs.md`. Read that file to find them — do not hardcode the override list here.
 
-| Rule in Visual Brain | Pack allowed to override | Why |
-|---|---|---|
-| "Gold is the only accent color. No secondary colors." | **Acid Block** may replace gold with cherry red (#FF2E3C). | Bold-statement / attention-grabber carousels where the point is visual jolt. Gold and cherry red never appear on the same slide. |
-| "Never center-align body copy." | **Dark Project** may center body copy (max 3 lines). | Cinematic manifesto feel for challenge/transformation posts. |
-| "Maximum 25 words per slide." | **Editorial Long-Form** may exceed 25 words on content slides. | Built for teaching/how-to content where the point is reading, not skimming. Cover and CTA still respect the cap. |
+The principle: overrides are scoped, not global. They apply only to the named pack inside this skill. Every other pack and every other skill follows the Visual Brain verbatim.
 
 ### Type Scale — 1080×1350 canvas
 
@@ -120,36 +125,24 @@ Check whether the user has provided images or references an image folder.
 
 **Do not proceed past this step without a pack choice.** No color derivation, no slide planning, no HTML. The pack shapes every downstream decision.
 
-Present this exact menu:
+**Build the menu from `references/style-packs.md` — do not hardcode it here.**
+
+Open that file. Each top-level `## <N>. <PACK NAME>` heading is one menu option, numbered in the order they appear (1 through whatever count is in the file). For each pack, the user-facing line is:
 
 ```
-Pick a style pack for this carousel:
-
-1. ASPHALT EDITORIAL — moody B&W photos, heavy dark overlays, gold accent.
-   Good for: mindset, grit, long-form training content.
-
-2. HIGH CONTRAST HYPE — sports collage energy. B&W subject cutouts, bold gold slashes, duotone backgrounds.
-   Good for: player features, hype posts, game-day content.
-
-3. ACID BLOCK — off-black + paper + electric cherry red accent. Color blocks behind individual words.
-   Good for: bold statements, contrarian takes, attention-grabbers. (Replaces gold with cherry red.)
-
-4. PAPER MINIMAL — paper-dominant, asphalt type, small supporting photos, lots of negative space.
-   Good for: editorial pieces, philosophy, quiet confidence.
-
-5. DARK PROJECT — near-black slides, smaller centered type, photos as texture. Cinematic.
-   Good for: challenges, programs, transformation narratives.
-
-6. EDITORIAL LONG-FORM — paper background, asphalt body copy in real reading columns, numbered subheads.
-   Good for: teaching, how-to, text-heavy educational posts.
-
-Which one? (number or name)
+N. <PACK NAME> — <one-line description, taken from the first paragraph under the heading>.
+   Good for: <list from the "Recommend for:" bullet at the end of that pack's section>.
 ```
+
+The "Pack selection quick-reference" table at the bottom of `references/style-packs.md` is the canonical "if user said X, suggest Y" mapping. Use it when recommending a pack.
+
+Then ask: "Which one? (number or name)"
 
 **After the user picks:**
-1. Load the pack definition from `references/style-packs.md` — this is canonical. Copy its `:root` tokens and CSS guidance verbatim; do not improvise pack values.
-2. Open the matching `Carousel Test - <Pack Name>.html` in the project root as a **visual reference**. Read it to understand how the pack's slides actually look — slide-number treatment, type sizes, photo handling, spacing. Pattern-match against this reference during Step 5 (HTML generation).
-3. Note the pack's architecture rules for the compliance pass at Step 3B.
+1. Re-read the pack's section in `references/style-packs.md` and copy its `:root` tokens and CSS guidance verbatim. Do not improvise pack values.
+2. Note the pack's architecture rules (photo treatment, slide-number treatment, ornaments, body-copy rules) for the compliance pass at Step 3B.
+
+**Drift guardrail:** if your mental model of the pack list does not match what `references/style-packs.md` actually says right now, trust the file. Do not present a pack from memory that has been renamed or removed.
 
 ---
 
@@ -242,16 +235,9 @@ Subtext for each slide:
 
 Before showing the plan to the user, run it against the selected pack's architecture rules. A plan that uses the pack's *colors* but ignores its *architecture* is a bad plan.
 
-| Pack | Must respect |
-|---|---|
-| Asphalt Editorial | B&W photo treatment; gold hairline above headline on image slides |
-| High Contrast Hype | Diagonal gold slash element present on every non-cover slide; oversized ghosted slide number behind content |
-| Acid Block | Alternating asphalt/paper/cherry-red slide rhythm — never two cherry-red slides adjacent; cherry-red circle stamp for slide number |
-| Paper Minimal | Photos are **small contained rectangles**, not full-bleed. ~60–70% slide width, left-aligned. No ornament. |
-| Dark Project | Cover type smaller than other packs (~96pt). Centered body allowed (max 3 lines). Photos as dark texture only. |
-| Editorial Long-Form | Reading-column layout on content slides (max 58ch). Numbered subheads in gold Vitesse 700. Folio-style slide number ("Page 3 / 8"). |
+Read the chosen pack's section in `references/style-packs.md` and confirm the plan respects every architecture bullet listed there (photo treatment, slide-number treatment, ornaments, body-copy alignment, list markers, header strips, alternating-tone rhythms, hero-photo systems, etc.). Do not paraphrase the rules into this file — go read the source.
 
-If any row in the plan violates these rules, fix it before the checkpoint. Do not ask the user to approve a plan that breaks pack architecture.
+If any row in the plan violates a pack rule, fix it before the checkpoint. Do not ask the user to approve a plan that breaks pack architecture.
 
 **Do not write any HTML until the user says "Approved" or equivalent.**
 
@@ -593,7 +579,7 @@ Before outputting HTML, verify:
 - No script/handwriting/cursive fonts
 - No bullet points (use numbered steps or line breaks). Exception: Editorial Long-Form pack allows checklist items with a custom square marker.
 - No strikethrough text
-- No centered body copy (left-align body; center only single-line headings). Exception: Dark Project.
+- No centered body copy (left-align body; center only single-line headings). Exception: any pack whose section in `references/style-packs.md` explicitly permits centered body copy.
 - No light/thin font weights on headings
 - Text never overlays the subject of a background image directly
 - Minimum 40px safe zone margins on all edges
@@ -613,17 +599,8 @@ Before outputting HTML, verify:
 
 ---
 
-## Canonical Visual References
+## Canonical Pack Definitions
 
-These files live in the project root and are the ground truth for each pack's final look. Read the matching file at Step 0.5 and pattern-match during Step 5:
+`references/style-packs.md` is the canonical spec for every pack's look — colors, type, photo treatment, ornaments, architecture rules. Read the chosen pack's section at Step 0.5 and again at Step 3B (compliance pass) and Step 5 (HTML generation).
 
-- `Carousel Test - Asphalt Editorial.html`
-- `Carousel Test - High Contrast Hype.html`
-- `Carousel Test - Acid Block.html`
-- `Carousel Test - Paper Minimal.html`
-- `Carousel Test - Dark Project.html`
-- `Carousel Test - Editorial Long-Form.html`
-
-`Carousel Pack Index.html` links all six for side-by-side comparison.
-
-If a pack preview file is missing or looks different from its spec in `references/style-packs.md`, trust the spec and note the discrepancy — don't silently copy a broken preview.
+If a rendered preview HTML for a pack exists somewhere in the project and looks different from the spec, trust the spec — preview files can rot.
