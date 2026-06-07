@@ -1,3 +1,8 @@
+---
+name: gw-x-bookmarks
+description: "Convert X (Twitter) bookmarks into richly connected Obsidian notes with full threads, extracted articles, GW football/S&C tags, and wikilinks. Pipeline runs from D:/Claude Projects/GW-X-Bookmarks/ and writes to D:/Claude Projects/Gridiron Warrior/X-Bookmarks/ in the vault."
+---
+
 # GW X Bookmarks Pipeline
 
 Converts X bookmarks into richly connected Obsidian notes with full threads, extracted articles, GW football/S&C tags, and wikilinks.

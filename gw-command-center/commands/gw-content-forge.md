@@ -1,3 +1,8 @@
+---
+name: gw-content-forge
+description: "Transform any source material into a full content pack - 2 Twitter threads, 2 Instagram carousel drafts, and 1 email draft in Scott Leech's voice. Accepts a file path, topic name, Second Brain reference, or nothing (defaults to most recent research brief). Use when Scott says 'content forge', 'run the forge', or wants social content from any GW source."
+---
+
 # GW Content Forge
 
 Transform any source material into a full content pack: 2 Twitter threads, 2 Instagram carousel drafts, and 1 email draft. All in Scott Leech's voice.

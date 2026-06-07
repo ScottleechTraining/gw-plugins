@@ -1,5 +1,5 @@
 ---
-description: Daily business research — pull top topic from queue, NotebookLM → brief
+description: "Daily business research — pull top topic from queue, NotebookLM → brief"
 ---
 
 # /gw-business-research — Daily Business Research Brief

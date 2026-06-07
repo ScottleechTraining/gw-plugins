@@ -1,5 +1,5 @@
 ---
-description: One-glance GREEN / YELLOW / RED verdict on the overnight GW pipeline + one next action
+description: "One-glance GREEN / YELLOW / RED verdict on the overnight GW pipeline + one next action"
 ---
 
 # /gw-morning-readiness — Pipeline Verdict

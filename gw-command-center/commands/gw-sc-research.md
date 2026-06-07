@@ -1,5 +1,5 @@
 ---
-description: Daily S&C research — pull top topic from queue, NotebookLM → brief
+description: "Daily S&C research — pull top topic from queue, NotebookLM → brief"
 ---
 
 # /gw-sc-research — Daily Strength & Conditioning Research Brief

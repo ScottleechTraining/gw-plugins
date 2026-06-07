@@ -1,5 +1,5 @@
 ---
-description: Process voice notes from Pocket — transcribe, verbatim file, wikilink
+description: "Process voice notes from Pocket — transcribe, verbatim file, wikilink"
 ---
 
 # /gw-voice-ingest — Voice Note Processing

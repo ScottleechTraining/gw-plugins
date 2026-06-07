@@ -1,3 +1,8 @@
+---
+name: gw-mark
+description: "One-shot channel state update for a Deliverables topic. Format: `<topic-slug> <channel> <state> [date]`. Records that a content asset was drafted, posted, skipped, or made ready without opening the queue dashboard. Channels: ig_carousel, twitter_thread, ig_single, email, insiders, substack. States: ready, drafted, posted, skip, n/a."
+---
+
 # GW Mark — One-shot channel state update
 
 Update a topic's channel state from the terminal. Useful when you've

@@ -1,3 +1,8 @@
+---
+name: gw-unship
+description: "Take a Deliverables topic OFF the Drive sync list. Flips `ready_to_ship: false` so future /gw-queue runs skip syncing it. Existing Drive folder is not deleted automatically (manual cleanup if needed)."
+---
+
 # GW Unship — Take a topic OFF the Drive sync list
 
 Flip `ready_to_ship: false`. Future /gw-queue runs will skip Drive sync for

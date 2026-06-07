@@ -1,3 +1,8 @@
+---
+name: gw-queue
+description: "Refresh queue-state.json by scanning the Deliverables folder tree, optionally trigger Drive sync for ready_to_ship topics, and print a 'what's new in inbox' report. Auto-deploys the dashboard via Netlify CLI when state changes."
+---
+
 # GW Queue — Refresh queue-state.json and report inbox status
 
 Scan the Deliverables folder tree, refresh `queue-state.json`, optionally trigger

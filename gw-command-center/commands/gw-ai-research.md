@@ -1,5 +1,5 @@
 ---
-description: Daily AI research — pull top topic from queue, NotebookLM → brief
+description: "Daily AI research — pull top topic from queue, NotebookLM → brief"
 ---
 
 # /gw-ai-research — Daily AI Research Brief

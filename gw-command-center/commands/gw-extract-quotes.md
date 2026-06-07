@@ -1,3 +1,8 @@
+---
+name: gw-extract-quotes
+description: "Pull teaching moments and Scott-voice quotes from a podcast, Film Study, or webinar transcript and write them to wiki/extracted/. Builds the second brain of Scott's voice corpus over time so future content can reuse his real lines. Accepts a transcript file path, speaker/topic reference, or nothing (lists 10 most recent transcripts)."
+---
+
 # GW Extract Quotes — Transcript → Wiki Quote Extraction
 
 Pull teaching moments and Scott-voice quotes from a podcast, Film Study, or webinar transcript and write them to `wiki\extracted\`. This builds the second brain of Scott's voice corpus over time so future content can reuse his real lines.

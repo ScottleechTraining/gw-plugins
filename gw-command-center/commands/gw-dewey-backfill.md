@@ -1,5 +1,5 @@
 ---
-description: One-time Dewey 2nd pass — re-classify backlog for Business + AI content
+description: "One-time Dewey 2nd pass — re-classify backlog for Business + AI content"
 ---
 
 # /gw-dewey-backfill — Dewey Second Pass (One-Time)

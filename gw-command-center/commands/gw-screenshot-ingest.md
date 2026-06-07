@@ -1,5 +1,5 @@
 ---
-description: Daily screenshot ingest — OCR + classify + file Screenshots/inbox
+description: "Daily screenshot ingest — OCR + classify + file Screenshots/inbox"
 ---
 
 # /gw-screenshot-ingest — Daily Screenshot Sweep

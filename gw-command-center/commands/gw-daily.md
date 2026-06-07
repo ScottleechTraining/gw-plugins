@@ -1,5 +1,5 @@
 ---
-description: Evening ritual — pull cloud results, process screenshots + voice notes, report
+description: "Evening ritual — pull cloud results, process screenshots + voice notes, report"
 ---
 
 # /gw-daily — Scott's 8pm Evening Ritual

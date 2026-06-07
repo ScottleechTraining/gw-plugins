@@ -1,5 +1,5 @@
 ---
-description: Generate a one-page PDF-ready lead magnet from a brief or content source. Funnels into Insiders, a course, or Summit.
+description: "Generate a one-page PDF-ready lead magnet from a brief or content source. Funnels into Insiders, a course, or Summit."
 ---
 
 # /gw-freebie-forge [brief-or-content-path] — Lead Magnet Producer

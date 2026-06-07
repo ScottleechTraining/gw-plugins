@@ -1,3 +1,8 @@
+---
+name: gw-dewey-ingest
+description: "GW Dewey Ingest Pipeline (v3.1 - 3-Domain Classifier). Converts hand-curated Twitter/Instagram saves from the Dewey Google Sheet into richly tagged Obsidian notes in External Library/Twitter-Instagram Saves/. Classifies each row into s-and-c, business, ai, or skip. Never auto-promotes to wiki. Never writes in Scott's voice."
+---
+
 # GW Dewey Ingest Pipeline (v3.1 — 3-Domain Classifier)
 
 Converts hand-curated Twitter/Instagram saves from the **Dewey Google Sheet** into richly tagged Obsidian notes inside `External Library/Twitter-Instagram Saves/`. One-way link to the wiki concept layer. Never auto-promotes. Never writes in Scott's voice.

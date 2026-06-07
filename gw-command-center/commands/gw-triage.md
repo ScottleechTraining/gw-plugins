@@ -1,3 +1,8 @@
+---
+name: gw-triage
+description: "Walk the Deliverables inbox and decide Ready/Cold/Kill per topic. Terminal mirror of the dashboard's Inbox view. Decisions are batched and reviewed before any folder moves happen."
+---
+
 # GW Triage — Walk inbox, decide Ready/Cold/Kill per topic
 
 Sit down with the inbox and triage each topic. Terminal mirror of the

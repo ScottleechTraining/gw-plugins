@@ -1,5 +1,5 @@
 ---
-description: Stage content pack assets to native draft surfaces (Kit for email, markdown fallback for X/IG/Substack until those platforms are wired)
+description: "Stage content pack assets to native draft surfaces (Kit for email, markdown fallback for X/IG/Substack until those platforms are wired)"
 ---
 
 # /gw-stage [content-pack-path] — Outbound Draft Router

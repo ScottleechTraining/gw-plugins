@@ -1,3 +1,8 @@
+---
+name: gw-ship
+description: "Mark a Deliverables topic ready for Drive sync. Flips `ready_to_ship: true` on the topic so the next /gw-queue run pushes its slides and captions to Google Drive. Until shipped, slides and captions are rendered locally for preview but nothing leaves the laptop."
+---
+
 # GW Ship — Mark a topic ready for Drive sync
 
 Flip `ready_to_ship: true` on a topic so the next `/gw-queue` run pushes its

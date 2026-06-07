@@ -1,3 +1,8 @@
+---
+name: gw-research
+description: "Automated research pipeline - search YouTube for a coaching topic, build a NotebookLM notebook with sources, query for a structured coaching brief, save to Research/NotebookLM/, and ingest into the wiki. Use before any Film Study, content creation pass, or course module build. NotebookLM is the fuel, not just a search tool."
+---
+
 # GW Research Pipeline
 
 Automated research pipeline: search YouTube for a coaching topic, build a NotebookLM notebook with sources, query for a structured coaching brief, save to vault, ingest into wiki.
