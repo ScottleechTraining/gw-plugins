@@ -1,5 +1,6 @@
 ---
-description: "Sunday synthesis — promote best vault material to wiki concepts, write weekly themes"
+name: gw-weekly-synthesis
+description: "Sunday synthesis - promote best vault material to wiki concepts, write weekly themes"
 ---
 
 # /gw-weekly-synthesis — Sunday Weekly Synthesis Pass

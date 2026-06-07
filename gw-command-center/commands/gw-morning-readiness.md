@@ -1,4 +1,5 @@
 ---
+name: gw-morning-readiness
 description: "One-glance GREEN / YELLOW / RED verdict on the overnight GW pipeline + one next action"
 ---
 

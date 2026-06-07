@@ -1,5 +1,6 @@
 ---
-description: "Film Study full production chain — brief + wiki ingest + content pack + Substack + IG carousel + freebie. Manual invocation, no email, no commit."
+name: gw-film-study-brief
+description: "Film Study full production chain - brief + wiki ingest + content pack + Substack + IG carousel + freebie. Manual invocation, no email, no commit."
 ---
 
 # /gw-film-study-brief [topic] — Full Film Study Production Chain

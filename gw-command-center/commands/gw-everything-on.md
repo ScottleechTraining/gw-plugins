@@ -1,5 +1,6 @@
 ---
-description: "On-demand corpus search — pull every relevant snippet from across the GW archive on one topic into a single reference doc"
+name: gw-everything-on
+description: "On-demand corpus search - pull every relevant snippet from across the GW archive on one topic into a single reference doc"
 ---
 
 # /gw-everything-on [topic] — Corpus Mining

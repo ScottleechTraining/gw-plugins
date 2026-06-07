@@ -1,5 +1,6 @@
 ---
-description: "Daily content seed — yesterday's vault deltas → 1-3 content angles in Scott's voice"
+name: gw-seed-writer
+description: "Daily content seed - yesterday's vault deltas -> 1-3 content angles in Scott's voice"
 ---
 
 # /gw-seed-writer — Daily Content Seed

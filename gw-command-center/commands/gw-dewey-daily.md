@@ -1,5 +1,6 @@
 ---
-description: "Daily Dewey sheet check — classify new rows into S&C / Business / AI / Skip"
+name: gw-dewey-daily
+description: "Daily Dewey sheet check - classify new rows into S&C / Business / AI / Skip"
 ---
 
 # /gw-dewey-daily — Daily Dewey Ingest with 3-Domain Classification
