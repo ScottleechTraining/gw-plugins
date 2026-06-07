@@ -9,23 +9,26 @@ Fires every Sunday. Reviews the week's vault deltas. Promotes the best material 
 
 ## Hard guard
 
+This skill's only write surface is `Gridiron Warrior/wiki/`. Check that path for dirt — not the whole tree. Scott routinely has unrelated WIP edits in the repo (scripts, config, drafts), and those should not block the weekly synthesis from updating the wiki.
+
 Before reading or writing anything, run:
 
 ```bash
-git -C "D:\Claude Projects" status --porcelain
+git -C "D:\Claude Projects" status --porcelain -- "Gridiron Warrior/wiki/"
 ```
 
 If the output is not empty, STOP. Do not edit files. Do not stage files. Do not commit. Report:
 
 ```text
-Weekly synthesis blocked because the repo is already dirty.
-Dirty paths:
-<paste git status --short output>
+Weekly synthesis blocked because the wiki/ tree is already dirty.
+Dirty paths under Gridiron Warrior/wiki/:
+<paste the scoped git status --short output>
 
-Next action: clean or commit the unrelated changes, then rerun /gw-weekly-synthesis.
+Next action: clean or commit the wiki/ changes, then rerun /gw-weekly-synthesis.
+(Unrelated dirt elsewhere in the repo is fine — this check is scoped to wiki only.)
 ```
 
-This command is allowed to update the wiki only from a clean starting point.
+This command is allowed to update the wiki only from a clean wiki/ starting point.
 Raw `git commit` is forbidden inside this command.
 
 ## Steps
