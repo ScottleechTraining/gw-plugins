@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Refuse the commit if any plugin command file has invalid frontmatter.
+# This blocks the regression that took the GW pipeline red on 2026-06-07:
+# missing `name:` field or Unicode em-dash/arrow in description, which makes
+# Claude Code's plugin loader silently fail to register the command.
+#
+# Bypass with: git commit --no-verify  (only when intentional)
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+CHECK="$REPO_ROOT/gw-command-center/check_commands.py"
+
+if [ ! -f "$CHECK" ]; then
+  echo "pre-commit: check_commands.py missing at $CHECK, skipping" >&2
+  exit 0
+fi
+
+# Only run when a command file is being changed (cheap).
+if ! git diff --cached --name-only | grep -q "^gw-command-center/commands/"; then
+  exit 0
+fi
+
+# Find python (prefer the same version GW uses).
+PY="/c/Python314/python.exe"
+if [ ! -x "$PY" ]; then
+  PY="python"
+fi
+
+echo "pre-commit: validating plugin command files..."
+if ! "$PY" "$CHECK"; then
+  echo "" >&2
+  echo "pre-commit: REFUSED — plugin command validation failed." >&2
+  echo "Fix with: python $REPO_ROOT/gw-command-center/fix_commands.py" >&2
+  echo "Or bypass with: git commit --no-verify (only if intentional)" >&2
+  exit 1
+fi
