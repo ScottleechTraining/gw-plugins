@@ -1,15 +1,17 @@
 ---
 name: gw-youtube-takeaways
-description: Scott Leech's video review and takeaway engine for Gridiron Warrior. Extracts content from YouTube videos or NotebookLM notebooks, generates 8 specific takeaways per video plus one 10x business insight tied to GW (Insiders, DFY, Courses, Summit), gives a watch verdict per video, and produces a GW-branded PDF saved to D:\Claude Projects\Gridiron Warrior AND uploaded to Google Drive. Use this skill aggressively whenever Scott pastes one or more YouTube URLs, says "review this video", "review these videos", "watch this for me", "give me the takeaways", "review my notebook", "review the new videos in my notebook", "build a video PDF", "summarize these videos for the business", or asks any variant of "what should I take from these videos." Also trigger on "review the youtube videos notebook" or any reference to a NotebookLM notebook full of video sources. Default to the full PDF + Drive upload workflow unless Scott explicitly asks for inline-only review.
+description: "Scott Leech's video review and takeaway engine for Gridiron Warrior. Extracts content from YouTube videos or NotebookLM notebooks via the native notebooklm MCP, generates 8 specific takeaways per video plus one 10x business insight tied to GW (Insiders, DFY, Courses, Summit), gives a watch verdict per video, and produces a GW-branded PDF saved to D:\\Claude Projects\\Gridiron Warrior AND uploaded to Google Drive. Use this skill aggressively whenever Scott pastes one or more YouTube URLs, says 'review this video', 'review these videos', 'watch this for me', 'give me the takeaways', 'review my notebook', 'review the new videos in my notebook', 'build a video PDF', 'summarize these videos for the business', or asks any variant of 'what should I take from these videos.' Also trigger on 'review the youtube videos notebook' or any reference to a NotebookLM notebook full of video sources. Default to the full PDF + Drive upload workflow unless Scott explicitly asks for inline-only review."
 ---
 
 # GW Video Takeaways
 
-This is Scott's video review engine. It turns YouTube content into per-video takeaways, business-applied 10x insights, and a GW-branded PDF saved locally and to Google Drive.
+Scott's video review engine. Turns YouTube content into per-video takeaways, business-applied 10x insights, and a GW-branded PDF saved locally and to Google Drive.
 
 Scott uses this for two reasons. One: he runs a NotebookLM notebook called "Youtube Videos" where he stockpiles videos he hasn't watched yet, and he needs them filtered through a coach-and-business lens before deciding which to actually watch. Two: he sometimes pastes raw YouTube URLs and wants the same treatment on the spot.
 
 The skill exists because Scott's working window is 8pm to sleep, and he doesn't have time to watch 30+ minute videos hoping for the gold. He needs Claude to extract the gold first.
+
+**v0.3.0 change:** This skill now uses the native `mcp__notebooklm__*` MCP server. The previous Chrome-MCP DOM-scraping flow is archived as a fallback only.
 
 ## Triggers
 
@@ -22,27 +24,43 @@ Run this skill when Scott:
 
 If Scott pastes 1 or 2 URLs and seems to want a quick answer in chat, ask whether he wants the full PDF treatment or inline-only. Default to PDF if there are 3+ videos or if the source is a full notebook.
 
-## Inputs
+## Inputs (3 modes)
 
-The skill accepts three input modes:
+**Mode A — NotebookLM notebook.** Scott references a notebook (usually "Youtube Videos"). Use `mcp__notebooklm__notebook_list` to find it by title, get its sources via `mcp__notebooklm__notebook_get`, filter out titles already in the run log, then extract content for each remaining source.
 
-**Mode A — NotebookLM notebook.** Scott references a notebook (usually "Youtube Videos"). Open it via the Claude in Chrome MCP at `https://notebooklm.google.com`, identify all video sources, and skip any whose title appears in the run log (see the Run Log section). Extract content for each remaining source.
+**Mode B — Raw YouTube URLs.** Scott pastes one or more URLs. Add them to the "Youtube Videos" notebook via `mcp__notebooklm__source_add` with `source_type="url"` and `wait=True`. NotebookLM handles the YouTube transcript extraction natively — no DOM scraping. Then proceed exactly as Mode A.
 
-**Mode B — Raw YouTube URLs.** Scott pastes one or more URLs. Open each in Chrome, extract the title, channel, length, view count, description, and full transcript via the Show transcript panel.
+**Mode C — Mixed.** Scott pastes URLs AND mentions a notebook. Add the new URLs to the notebook (Mode B path), then extract all relevant sources (Mode A path). Each video becomes a separate entry in the final PDF.
 
-**Mode C — Mixed.** Scott pastes URLs AND mentions a notebook. Process both, treating each video as a separate entry in the final PDF.
+Each video gets the same synthesis treatment regardless of source mode.
 
-Each video gets the same treatment regardless of source mode.
+## Per-video extraction (native MCP path)
 
-## Per-video extraction
+This replaces the old Chrome-MCP click sequences. The full extraction guide lives in `references/notebooklm-extraction.md`.
 
-The extraction approach differs by source. The detail that matters lives in the references — read them before extracting.
+The short version:
 
-For NotebookLM sources, see `references/notebooklm-extraction.md`. The short version: try a targeted chat query first because it produces tactical, quote-rich output. If the chat fails (long videos sometimes return "The system was unable to answer"), fall back to clicking the source title to open the source guide and extracting the summary paragraph.
+```
+1. notebook_list()                                          → find "Youtube Videos" by title match
+2. notebook_get(notebook_id)                                → list of sources with IDs + titles
+3. (Mode B/C only) source_add(notebook_id, source_type="url", urls=[...], wait=True)
+                                                            → wait for NotebookLM to process the YouTube transcript
+4. For each source to review:
+   a. source_get_content(source_id)                         → raw transcript text (fast, no AI)
+   b. notebook_query(notebook_id, query="8 tactical takeaways from this video...", source_ids=[source_id])
+                                                            → quote-rich, source-scoped takeaways
+   c. (Optional) source_describe(source_id)                 → keyword chips for theme grouping
+```
 
-For YouTube URLs, see `references/youtube-extraction.md`. The short version: navigate to the video, find the Show transcript button, click it, and extract segments via JavaScript. Also grab the description for chapter timestamps and any creator-supplied context.
+Per-video synthesis input: combine raw transcript (from `source_get_content`) + AI takeaways (from `notebook_query`). The transcript gives you exact quotes and numbers; the AI query gives you structure. Don't skip either.
 
-The goal of extraction is the same in both modes: enough raw material to write 8 substantive takeaways with specific numbers, frameworks, and direct quotes. If the material is thin, drill deeper before synthesizing — generic takeaways are worthless.
+For the per-source `notebook_query`, use this prompt template verbatim:
+
+```
+For the source titled "<exact source title>" ONLY, give me the 8 most important takeaways for a strength and conditioning coach who is also a business owner. Be specific and tactical, not general. Number them 1-8. Include direct quotes in quotation marks where they exist. Include numbers (dollar amounts, follower counts, percentages, time costs) where they appear. Do not pull from any other source.
+```
+
+The `source_ids=[source_id]` parameter scopes the query to one source — far more reliable than the old "Be careful not to pull from other sources" prompt-engineering trick.
 
 ## Per-video synthesis
 
@@ -73,7 +91,7 @@ The structure:
 2. **Per-video sections.** For each video: red header with "Video N: <title>", italic gray subheader with creator name, a Takeaways section with 8 numbered items, a "10x Move for GW" section with the insight in a cream-colored callout box, and a "Watch the full video?" section with the verdict.
 
 3. **Final Summary page.** Always on a new page. Includes:
-   - **Themes.** 2-4 themes that group the videos.
+   - **Themes.** 2-4 themes that group the videos. Use keyword chips from `source_describe` to seed these.
    - **Watch Priority table.** Three columns: Tier ("Watch first," "Watch second," "Optional"), Video, Why. Black header row, alternating cream and white rows.
    - **Highest-Leverage Move Across All Videos.** One paragraph synthesizing the cross-video play. This is the most important section in the document — it's the answer to "if Scott can only do one thing from all this, what's the move?"
 
@@ -122,17 +140,19 @@ Before a notebook run, scan recent log entries to identify titles already covere
 
 ## Edge cases
 
-**The chat query failed and the source guide is generic.** When NotebookLM returns "The system was unable to answer" AND the source guide reads like a notebook-wide summary ("These sources..."), click on the source guide topic chips below the summary. Each chip expands a focused query that pulls source-specific content. See `references/notebooklm-extraction.md` for the click sequence.
+**Notebook not found by title.** If `notebook_list()` returns no notebook matching "Youtube Videos" (case-insensitive), tell Scott the notebook name. Don't auto-create — Scott manages his notebook layout deliberately.
 
-**Show transcript button doesn't open the panel on first click.** Some YouTube videos require expanding the description first (`...more` link), then clicking Show transcript. If the panel doesn't appear after 5 seconds, scroll the description into view and try clicking the second Show transcript ref returned by the find tool.
+**`source_add` with `wait=True` times out.** Default timeout is 120s. For very long videos NotebookLM can take longer to index the transcript. Retry once with `wait_timeout=300`. If it still times out, add without waiting and tell Scott to come back in a few minutes; the source will be ready on the next run.
 
-**Scott pasted a URL with a timestamp parameter.** Strip `?t=` and `&t=` parameters before navigating — they cause YouTube to autoplay at that point and can interfere with transcript loading. Use the bare `watch?v=<id>` form.
+**`notebook_query` returns an empty or refusing answer.** Some videos break the query layer (very long videos, code-heavy content, or sparse transcripts). Fall back to using `source_get_content` raw text and synthesize the takeaways directly from the transcript yourself. Note "synthesized from raw transcript" in the takeaway intro line so Scott knows the difference.
 
-**Video has no available transcript.** Note this in the takeaways section ("transcript unavailable; based on title and description") and rely on the description, chapters, and AI-generated summary if YouTube provides one. Rate the video 5/10 confidence in the watch verdict and tell Scott which video had thin source material so he can decide if a manual watch is worth it.
+**Source has no extractable transcript.** YouTube videos without captions return short or empty content from `source_get_content`. Note this in the takeaways section ("transcript unavailable; based on title and source guide"), use `source_describe` for the AI summary, and rate the video 5/10 confidence in the watch verdict. Recommend manual watch if the title suggests high value.
 
-**Video is over 60 minutes.** Long videos sometimes break NotebookLM chat queries. If chat fails, click the source title and use the source guide chips. If you have the transcript directly (Mode B), chunk it and synthesize from the most quote-rich middle section first.
+**Scott pasted a URL with `?t=` or other tracking parameters.** Strip query params before passing to `source_add` — use the bare `watch?v=<id>` form. NotebookLM handles canonicalization but cleaner URLs in the source list make Scott's notebook easier to browse.
 
 **More than 15 videos in a single run.** Ask Scott if he wants to split into two PDFs (videos 1-N and N-end) for readability. Otherwise the priority table at the end gets cramped.
+
+**Scott wants raw URLs reviewed without adding to his notebook.** Default behavior is to add them to "Youtube Videos" since that's his stockpile and it keeps the workflow seamless. If Scott explicitly says "don't add it to my notebook," create a one-shot temporary notebook via `notebook_create(name="GW Review Scratch <date>")`, do the extraction there, and `notebook_delete(notebook_id)` it after the PDF ships. Confirm with Scott before deleting.
 
 ## Format example
 
@@ -155,3 +175,9 @@ Specific. Quoted. Numbered. The reader can act on these. That's the standard.
 Scott's working time is 30-60 minutes per night. The wrong video eats two of those nights. This skill exists so he can decide in 5 minutes what's worth watching and what's not, and walk away with at least one move he can ship before bed regardless.
 
 Don't soften the watch verdicts to be polite. If a video isn't worth his time given what's already in the takeaways, say NO.
+
+## Legacy fallback
+
+If the `mcp__notebooklm__*` MCP server is unavailable in a session (auth expired, server disconnected, or transient failure), the Chrome-MCP DOM-scraping path documented in `references/youtube-extraction.md` still works as a fallback. It's brittle (click coordinates, JavaScript injection, 60s waits) but functional.
+
+Default path is always native MCP. Only fall through if MCP is hard down.

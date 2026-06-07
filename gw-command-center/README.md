@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.2.1 (latest tag: v0.2.1)
+**Version:** 0.3.0 (latest tag: gw-command-center--v0.3.0)
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -18,7 +18,7 @@ Single source of truth for Gridiron Warrior skills and commands across Claude Co
 |---|---|
 | `leech-letter-editor` | Edit/ghostwrite the weekly Saturday Leech Letter in Scott's voice |
 | `gw-substack-forge` | Long-form Substack article engine in Scott's voice |
-| `gw-youtube-takeaways` | YouTube/notebook → 8 takeaways + GW 10x insight + branded PDF + Drive upload |
+| `gw-youtube-takeaways` | YouTube/notebook → 8 takeaways + GW 10x insight + branded PDF + Drive upload. Native `notebooklm` MCP (v0.3.0+); Chrome MCP archived as fallback. |
 | `gw-image-forge` | OpenAI Images (`gpt-image-1`) image generation, SI 1987 / Tri-X 400 aesthetic, B&W default + cinematic color mode |
 | `ig-carousel` | Editable HTML Instagram carousels with PNG/PDF export, 6 style packs, Vitesse Bold embedded |
 | `jedi-council` | 5-advisor multi-agent council for strategic decisions (Karpathy LLM Council pattern) |
@@ -75,7 +75,7 @@ These skills rely on tooling outside the plugin:
 | `gw-image-forge` | `OPENAI_API_KEY` in `D:\Claude Projects\Gridiron Warrior\scripts\.env` | Get key from https://platform.openai.com/api-keys, add billing |
 | `pdf` | `pypdf`, `reportlab` | `pip install pypdf reportlab` |
 | `pptx` | `soffice` (LibreOffice) for PDF conversion | Install LibreOffice; everything else works without it |
-| `gw-youtube-takeaways` | `reportlab` for PDF, `Claude in Chrome` MCP for video extraction | Already in stack |
+| `gw-youtube-takeaways` | `reportlab` for PDF, native `notebooklm` MCP (`mcp__notebooklm__*`) for extraction, `Claude in Chrome` MCP as legacy fallback | Already in stack — run `nlm login` once if auth expires |
 | `gw-research` and friends | `nlm` CLI, `yt-dlp` | Already in stack — see CLAUDE.md "Active Intelligence Pipeline" section |
 
 ---
@@ -128,10 +128,10 @@ The non-negotiable rule lives in `D:\Claude Projects\CLAUDE.md` under "PLUGIN & 
 |---|---|
 | **0.1.0** (2026-06-06) | Initial. 10 skills + 27 commands. `gw-image-forge` rebuilt against OpenAI Images API. Voice-writing guardrails on `leech-letter-editor` + `gw-substack-forge`. |
 | **0.2.1** (2026-06-07) | Frontmatter added to all 27 commands (validation now clean). `--dry-run` flag added to `gw-image-forge` for no-cost prompt iteration. README rewritten. `gw-image-forge` prompt methodology rewritten to documentary photo-editor framing: 5-block prompt structure (Subject/Environment/Camera/Medium/Exclusions), 4 era presets (1980s SI default, 1990s NCAA media guide, 2000s ESPN Magazine, modern D1 athletic comms), 15-item imperfection variable list, verbatim Reality Layer paragraph, banned-word enforcement (no "cinematic", "ultra detailed", "volumetric lighting", "dramatic lighting", etc.). |
+| **0.3.0** (2026-06-07) | `gw-youtube-takeaways` swapped from Chrome MCP DOM-scraping to native `mcp__notebooklm__*` MCP server. SKILL.md and `references/notebooklm-extraction.md` rewritten around `notebook_list`, `notebook_get`, `source_add(wait=True)`, `source_get_content`, `notebook_query(source_ids=[…])`, and `source_describe`. No more click coordinates, no more JavaScript injection to scrape `chat-message-pair`, no more 60-second waits. Source titles return untruncated. AI queries are cleanly scoped to a single source via `source_ids` parameter rather than prompt-engineering trick. Mode B (raw URLs) now adds to the "Youtube Videos" notebook seamlessly via `source_add(urls=[…], wait=True)`. Chrome MCP path documented as legacy fallback for sessions where the MCP server is unavailable. End-to-end notebook review time drops from 4-6 minutes to 60-90 seconds. |
 
-Planned for **0.3.0**:
-- Swap `gw-youtube-takeaways` from Chrome MCP extraction to native `notebooklm` MCP
-- Fold `gw-content-forge` Cowork variant in if Scott decides he wants the parallel version killed
+Planned for **0.4.0** (defer until Scott calls them):
+- Fold `gw-content-forge` Cowork variant in if Scott decides he wants the parallel version killed (currently the plugin command handles natural-language triggers via its description, so this may be moot)
 - Disable Cowork `anthropic-skills` GW bundle entirely (target: 2026-06-13, one week after v0.1 ship)
 
 ---
