@@ -1,260 +1,259 @@
 ---
 name: gw-image-forge
-description: Generate a PNG image for Gridiron Warrior via the OpenAI Images API (gpt-image-1). Use this skill whenever Scott provides a subject or concept and wants an image. Trigger on phrases like "generate an image", "make me an image for", "image forge", "create an image", "build me an image for", or any request to produce image gen output for Gridiron Warrior or Scott Leech Training. Defaults to B&W editorial aesthetic (SI 1987, Tri-X 400, chiaroscuro, no faces). Switches to cinematic color mode when Scott says "color", "in color", or "full color".
+description: "Generate a photographic-realism PNG image for Gridiron Warrior via the OpenAI Images API (gpt-image-1). The north star is a documentary photograph, not an AI image. Use this skill whenever Scott provides a subject or concept and wants an image. Trigger on phrases like 'generate an image', 'make me an image for', 'image forge', 'create an image', 'build me an image for', or any request to produce image gen output for Gridiron Warrior or Scott Leech Training. Defaults to 1987 Sports Illustrated B&W aesthetic. Switches to color (1990s NCAA media guide or modern D1 athletic comms) when Scott says 'color', 'in color', or 'full color'."
 ---
 
 # GW Image Forge
 
-Converts Scott's raw subject/concept into a fully constructed prompt and ships it through OpenAI's `gpt-image-1` model to produce a PNG. Two modes: B&W editorial (default) and cinematic color. Scott provides the subject and optional mode. The skill handles the rest.
+Build photo-editor prompts for `gpt-image-1`. The north star is **a documentary photograph**, not an AI image of someone's idea of an image. The test is one question:
+
+> Could this image have appeared in a 1987 Sports Illustrated feature, a 1996 NCAA media guide, or a 2026 university athletic communications release?
+
+If the answer is no, the prompt is wrong. Rewrite.
+
+This skill writes prompts the way a photo editor describes an existing photograph — not the way a designer pitches an idea.
 
 ---
 
 ## What This Skill Does
 
-1. Takes Scott's raw concept (one sentence or phrase)
-2. Detects mode: B&W (default) or color (if Scott says "color", "in color", "full color")
-3. Asks for platform/aspect ratio if not provided
-4. Builds the full structured prompt with the locked-in GW aesthetic
-5. Writes a config JSON, shells `python scripts/generate.py --config -`, and reports the resulting PNG path
-6. PNG lands in `D:\Claude Projects\Gridiron Warrior\Images\`
-
-**Expect a wait** — `quality: "high"` takes ~30 seconds. Tell Scott "generating, give it ~30s" before the shell call so it doesn't feel hung.
-
----
-
-## MODE 1: B&W Editorial (Default)
-
-Use this unless Scott explicitly requests color. This is the primary GW look.
-
-### Locked-In B&W Style Guide
-
-```
-Sports Illustrated 1987 editorial photograph
-Tri-X 400 black and white film grain
-Low-key chiaroscuro lighting
-Desaturated steel grays and deep blacks
-Blue hour or 5am pre-dawn atmosphere
-Volumetric light with visible dust particles and breath condensation
-Aggressive bokeh with sharp foreground subject
-Cinematic wide-angle OR extreme macro (pick based on subject)
-Industrial textures throughout
-No visible faces — no portraits, no eyes, no recognizable facial features
-```
-
-### B&W Style Opener (always this exact phrase)
-```
-Sports Illustrated 1987 editorial photograph, Tri-X 400 black and white film grain,
-```
-
-### B&W Quality Line
-```
-ultra detailed, photographic grain texture, high contrast blacks and whites, cinematic depth of field
-```
-
-### B&W Lighting Line
-```
-low-key chiaroscuro lighting, volumetric light shafts with visible dust particles and breath condensation, blue hour atmosphere, deep blacks with single hard overhead light source
-```
+1. Take Scott's raw concept (one sentence or phrase)
+2. Pick an era preset (1980s SI / 1990s NCAA / 2000s ESPN / modern D1) — ask only if ambiguous
+3. Build a 5-block prompt: **Subject · Environment · Camera · Medium · Exclusions**
+4. Roll 1–3 imperfection variables in
+5. Append the **Reality Layer** verbatim
+6. Write the config JSON, shell `python scripts/generate.py --config -`
+7. Report the PNG path
 
 ---
 
-## MODE 2: Cinematic Color
+## Banned Words (NEVER USE)
 
-Triggered when Scott says "color", "in color", or "full color". Keeps all structural elements of the GW look — chiaroscuro, industrial, no faces, pre-dawn — but switches to a muted cinematic color grade. Not vivid. Not bright. Think Kodak Vision 500T, not Instagram filter.
+These were useful for AI prompts in 2023. Today they create the exact "AI look" we are trying to avoid. The model trains on prompts containing these words and the output is a tell.
 
-### Color Palette Logic
-The GW palette for cinematic color images:
-- **Shadows:** cool steel blue and slate gray
-- **Practical lights (overhead weight room, stadium):** tungsten amber and warm orange — this is the one place warmth is allowed
-- **Midtones:** desaturated and muted, pulled toward gray
-- **No lifted blacks** — shadows stay deep and crushed
+`cinematic` · `epic` · `masterpiece` · `trending on artstation` · `hyper detailed` · `hyper realistic` · `ultra detailed` · `highly detailed` · `8k` · `4k` · `octane render` · `unreal engine` · `dramatic lighting` · `volumetric lighting` · `award winning` · `breathtaking` · `stunning` · `beautiful` · `aesthetic` · `mood lighting` · `bokeh` (as descriptor) · `depth of field` (use camera spec instead) · `studio quality` · `professional photography` · `dynamic` · `striking`
 
-### Color Style Opener
-```
-Cinematic editorial photograph, Kodak Vision 500T color film stock, muted desaturated color grade,
-```
-
-### Color Quality Line
-```
-ultra detailed, Kodak film grain texture, cinematic color grade with crushed blacks, desaturated mids, tungsten warm accent light, cinematic depth of field
-```
-
-### Color Lighting Line
-```
-low-key chiaroscuro lighting with muted cinematic color, cool blue shadows, tungsten amber from practical overhead lights, volumetric light shafts with visible dust particles and breath condensation, 5am pre-dawn atmosphere, deep crushed blacks with single warm practical light source
-```
+Also banned: any "more X" descriptor. The prompt describes what IS, not what should be added.
 
 ---
 
-## Platform Presets
+## Era Presets
 
-Ask Scott which platform this is for if not stated. Default to Instagram post (square) if unclear.
+Pick one based on Scott's concept. When ambiguous, ask:
 
-| Platform | size | Prompt suffix |
-|---|---|---|
-| Instagram post (1:1) | `1024x1024` | centered subject, text-safe zone at bottom 20% |
-| Instagram story (9:16) | `1024x1536` | vertical composition, text-safe zones top and bottom 15% |
-| Twitter/X header (16:9) | `1536x1024` | wide cinematic frame, subject left third, right side open |
-| YouTube thumbnail (16:9) | `1536x1024` | bold subject placement, high contrast, space for title text |
-| Web banner / general landscape | `1536x1024` | gradient fade right 40% for text overlay |
-| Print / general (1:1) | `1024x1024` | full frame composition, no text zones needed |
+> "1980s SI, 1990s NCAA media guide, 2000s ESPN Magazine, or modern D1 athletic comms?"
 
----
+### Preset A — 1980s Sports Illustrated (default for legacy GW look)
 
-## Fixed Parameters for GW Aesthetic
+**Medium block (use verbatim):**
+> Sports Illustrated assignment photograph, late 1980s, Tri-X 400 negative scan, black and white, editorial framing.
 
-These are always used unless Scott specifically asks for variation:
+**Camera defaults:**
+- 35mm prime, knee-height to chest-height angle
+- Available light + occasional flash falloff
+- Slight softness from negative grain, not lens softness
 
-```json
-"quality": "high",
-"n": 1
-```
+### Preset B — 1990s NCAA Media Guide
 
-**Why `high`:** Film grain and chiaroscuro depth require the higher-quality render. Standard quality flattens the grain structure and shadow detail.
+**Medium block (use verbatim):**
+> NCAA media guide team photograph, mid-1990s, color negative film, direct on-camera flash, practical lighting, lower contrast than modern stock.
 
----
+**Camera defaults:**
+- 50mm, eye-level
+- Direct on-camera flash visible
+- Flat, document-style composition
 
-## Negative Guidance (Folded Into Prompt)
+### Preset C — 2000s ESPN Magazine
 
-`gpt-image-1` does not accept a `negative_prompt` parameter. The negative IP is preserved by appending an `Avoid:` suffix to the main prompt. Always include this exact phrase at the END of the constructed prompt:
+**Medium block (use verbatim):**
+> ESPN Magazine sports photograph, mid-2000s, color, controlled strobes, sharper rendering than film stock, editorial composition.
 
-```
-Avoid: visible face, portrait face, eyes looking at camera, blurry, low quality, distorted, watermark, text overlay, logo, cartoon, anime, illustration, deformed, ugly, noise artifacts, overexposed.
-```
+**Camera defaults:**
+- 24–70mm zoom, knee height
+- Studio strobes with visible falloff
+- Cleaner composition than 80s SI
 
-For B&W mode, prepend `color, colorful, vivid colors, saturation, warm tones, golden hour, orange` to the Avoid list.
+### Preset D — Modern D1 Athletic Communications (default for modern GW look)
 
-For color mode, prepend `black and white, grayscale, monochrome, oversaturated, neon, bright pop colors` to the Avoid list.
+**Medium block (use verbatim):**
+> University athletic communications department photograph, 2026, color, controlled strobes, sharper rendering, recruiting-graphic style.
 
----
-
-## Prompt Construction Formula
-
-Build the prompt in this exact order. Each section is required. Use the B&W or color variants for the opener, lighting, and quality lines depending on mode.
-
-```
-[STYLE OPENER] + [SUBJECT] + [ENVIRONMENT] + [CAMERA] + [LIGHTING] + [TEXTURE DETAILS] + [MOOD] + [QUALITY] + [PLATFORM SUFFIX] + [AVOID SUFFIX]
-```
-
-### Style Opener
-Use the B&W opener (Mode 1) or color opener (Mode 2) from the relevant section above.
-
-### Subject
-Translate Scott's concept into a concrete visual subject. Make it specific and physical. No abstract concepts.
-
-- "linemen in pass protection" → "two offensive linemen mid-drive in a three-point stance, padded arms extended, no faces visible"
-- "early morning conditioning" → "football cleats digging into frosted turf, legs in motion, silhouetted against pre-dawn sky"
-- "weight room grind" → "chalk-dusted barbell loaded with iron plates on a rack, no hands visible, industrial weight room background"
-
-### Environment
-Physical, specific. Avoid generic "football field." Use: frosted turf, rubber flooring, concrete walls, chain-link fence, stadium tunnel, under the bleachers, empty field at dawn.
-
-### Camera
-Pick ONE: cinematic wide OR extreme macro. Do not mix.
-
-- **Wide:** "low-angle 24mm wide shot" or "35mm medium-wide, slightly elevated"
-- **Macro:** "100mm extreme macro" or "85mm tight close-up with aggressive background separation"
-
-If the subject is equipment, texture, or environment → macro.
-If the subject involves players or space → wide.
-
-### Lighting
-Use the B&W lighting line (Mode 1) or color lighting line (Mode 2) from the relevant section above.
-
-### Texture Details
-Add 2-3 specific materials relevant to the subject. Examples: chrome barbell knurling, matte rubber flooring, worn leather chinstrap, chain-link mesh, concrete block wall, painted steel rack.
-
-### Mood
-Always (both modes): "raw editorial sports journalism mood, gritty and physical, no sentimentality"
-
-### Quality
-Use the B&W quality line (Mode 1) or color quality line (Mode 2) from the relevant section above.
-
-### Platform Suffix
-Add the appropriate suffix from the Platform Presets table.
-
-### Avoid Suffix
-Append the Avoid phrase from the "Negative Guidance" section, prepended with the mode-specific terms.
+**Camera defaults:**
+- 35mm or 85mm, low angle
+- Shallow focus from aperture spec, not "shallow depth of field"
+- Clean composition with brand-safe negative space
 
 ---
 
-## How It Ships
+## Prompt Block Structure (5 Blocks, In This Order)
 
-Build a config dict, then shell the generator:
+Build the prompt with EXACTLY these labeled sections. The model parses them better when they are explicit.
 
-```json
-{
-  "name": "[kebab-case-slug-from-subject]",
-  "prompt": "[full constructed prompt as a single string]",
-  "size": "[1024x1024 | 1024x1536 | 1536x1024]",
-  "quality": "high",
-  "n": 1
-}
+```
+Subject: [physical description of what is in the photograph]
+Environment: [the location, time of day, surface, weather]
+Camera: [focal length, angle, lighting source]
+Medium: [the era preset's Medium block, verbatim]
+Exclusions: [no HDR, no stylization, no AI rendering, plus mode-specific exclusions]
 ```
 
-Then:
+### Subject Block
 
-```bash
-echo '<config json>' | python "D:/Claude Projects/plugins/gw-command-center/skills/gw-image-forge/scripts/generate.py" --config -
-```
+Describe a real person doing a real thing. Physical, observable, no abstractions.
 
-Or write the config to a temp file and pass `--config <path>`.
+- Bad: "a strong football player"
+- Good: "a defensive lineman in two-point stance, arms loaded with chalk, jersey untucked, no helmet"
 
-On success the script prints `{"paths": ["D:\\...\\name.png"]}` to stdout. Surface that path back to Scott so he can open it.
+**No faces visible.** Frame from chest down, use back angles, profiles, motion blur, partial crops, or environment focus. This is both a safety rule (no real person identity) and a realism rule — real action photography rarely catches a clean front-facing portrait of a moving athlete.
 
-### Filename convention
+### Environment Block
 
-- `n: 1` → `{name}.png`
-- `n: 2..4` → `{name}_1.png`, `{name}_2.png`, ...
+Where, when, what surface, what time of day. Specific.
 
-The `name` field must be a kebab-case slug: `linemen-pass-pro`, `weight-room-dawn`, `contact-drill-macro`.
+- Bad: "in a weight room"
+- Good: "the West End strength and conditioning room at 5am, fluorescent overhead lights, scuffed rubber flooring, painted concrete block walls"
 
-### Output location
+### Camera Block
 
-All PNGs land in `D:\Claude Projects\Gridiron Warrior\Images\`.
+Focal length + angle + lighting source. No technical jargon beyond what a photo editor writes on an assignment slip.
+
+- Bad: "shallow depth of field with cinematic bokeh"
+- Good: "35mm prime, knee height, available fluorescent light, no flash"
+
+### Medium Block
+
+Copy the era preset Medium block VERBATIM. Do not edit. Do not paraphrase.
+
+### Exclusions Block
+
+Always include:
+> no HDR, no stylization, no AI rendering, no cinematic effects, no dramatic lighting, no octane render, no oversaturation, no visible faces
+
+Add mode-specific exclusions:
+- **B&W mode:** also include `no color, no color tinting, no warm tones, no golden hour`
+- **Color mode:** also include `no neon, no oversaturated colors, no Instagram-style filter, no cinematic color grade`
 
 ---
 
-## Example: Full Input to Output
+## Imperfection Variables (Roll 1–3)
 
-**Scott says:** "make me an image for the Contact Prep course landing page — two players in a combative drill"
+After the 5 blocks, append 1–3 of these. Pick randomly. Vary across runs — don't always grab the same three.
 
-**Platform:** Instagram post (square)
+```
+- slight motion blur on the trailing limb
+- imperfect framing with subject slightly off-center
+- subject partially cropped at the frame edge
+- flash falloff darkening the background
+- film softness, not lens softness
+- focus landing slightly behind the subject
+- uneven overhead lighting
+- wrinkled jersey
+- chalk residue on hands and forearms
+- sweat stains on the shirt
+- visible breath in cold air
+- a piece of equipment intruding into the frame
+- one stray detail (water bottle, towel, spotter's hand) at the frame edge
+- fingerprint on the lens producing a soft area in one corner
+- mis-timed shutter catching the athlete mid-grimace
+- a coach's clipboard or stopwatch in the foreground out of focus
+```
 
-**Config JSON:**
+Real photography contains flaws. AI photography removes them unless instructed otherwise. This is the single highest-leverage change in the prompt structure.
+
+---
+
+## Reality Layer (Always Append, Verbatim)
+
+After the 5 blocks + imperfection variables, append this paragraph EXACTLY:
+
+> Documentary sports journalism photograph. Captured during a real training session. Authentic imperfections. Looks accidental rather than designed. If forced to choose between realism and visual impact, prioritize realism.
+
+This paragraph does more work than 200 words of style descriptors. Do not edit. Do not paraphrase. Do not abbreviate.
+
+---
+
+## Modes
+
+### B&W (Default)
+
+Era preset: **A** (1980s SI) unless Scott specifies otherwise.
+
+Mode-specific exclusions: `no color, no color tinting, no warm tones, no golden hour`
+
+### Color
+
+Triggered by "color", "in color", "full color" in Scott's prompt.
+
+Era preset: **D** (Modern D1) by default — could also be **B** (1990s NCAA) or **C** (2000s ESPN). Ask if ambiguous.
+
+Mode-specific exclusions: `no neon, no oversaturated colors, no Instagram-style filter, no cinematic color grade`
+
+---
+
+## Platform Sizes
+
+| Platform | size value | aspect | extra Camera note |
+|---|---|---|---|
+| Instagram post / square | `1024x1024` | 1:1 | none |
+| Instagram story / portrait | `1024x1536` | 2:3 | vertical composition |
+| Twitter/X header / landscape | `1536x1024` | 3:2 | wide framing |
+| YouTube thumbnail | `1536x1024` | 3:2 | "subject placed left third, right third clean for title text overlay" |
+| Default if unstated | `1024x1024` | 1:1 | none |
+
+---
+
+## Full Example
+
+**Scott says:** "make me an image for the Contact Prep course landing page"
+
+**Constructed prompt:**
+
+```
+Subject: two football players in a standing combative drill, locked at shoulder pads, arms framing each other's chest, helmets off, no faces visible, jerseys untucked. One is mid-stride forward, the other rooted.
+
+Environment: the West End strength and conditioning room at 5am, fluorescent overhead lights, painted concrete block walls, scuffed rubber mat surface, steel structural column at the frame edge.
+
+Camera: 35mm prime, knee height, available fluorescent light, no flash. Soft shadow detail in the corners.
+
+Medium: Sports Illustrated assignment photograph, late 1980s, Tri-X 400 negative scan, black and white, editorial framing.
+
+Exclusions: no HDR, no stylization, no AI rendering, no cinematic effects, no dramatic lighting, no octane render, no oversaturation, no visible faces, no color, no color tinting, no warm tones, no golden hour.
+
+Imperfections: slight motion blur on the trailing arm. Chalk residue on both pairs of forearms. A water bottle just visible at the lower right frame edge.
+
+Documentary sports journalism photograph. Captured during a real training session. Authentic imperfections. Looks accidental rather than designed. If forced to choose between realism and visual impact, prioritize realism.
+```
+
+**Config JSON to shell:**
+
 ```json
 {
   "name": "contact-prep-combatives",
-  "prompt": "Sports Illustrated 1987 editorial photograph, Tri-X 400 black and white film grain, two football players in a standing combative drill, torsos and arms locked in contact, no faces visible, helmet and shoulder pad textures prominent. Empty weight room concrete floor, industrial steel columns, rubber mat surface. Low-angle 35mm medium shot with aggressive foreground separation. Low-key chiaroscuro lighting, volumetric light shafts with visible dust particles and breath condensation, blue hour atmosphere, deep blacks with single hard overhead light source. Worn leather chinstrap, matte rubber mat, painted steel structural column. Raw editorial sports journalism mood, gritty and physical, no sentimentality. Ultra detailed, photographic grain texture, high contrast blacks and whites, cinematic depth of field. Centered subject, text-safe zone at bottom 20%. Avoid: color, colorful, vivid colors, saturation, warm tones, golden hour, orange, visible face, portrait face, eyes looking at camera, blurry, low quality, distorted, watermark, text overlay, logo, cartoon, anime, illustration, deformed, ugly, noise artifacts, overexposed.",
+  "prompt": "Subject: two football players ... [full prompt as constructed above, joined as a single string]",
   "size": "1024x1024",
   "quality": "high",
   "n": 1
 }
 ```
 
-**Output:** `D:\Claude Projects\Gridiron Warrior\Images\contact-prep-combatives.png`
+**Shell:** `python scripts/generate.py --config -`
 
 ---
 
 ## Workflow
 
-1. Read Scott's concept prompt
-2. Detect mode (B&W default, color on trigger phrases)
-3. If platform is missing, ask one question: "What platform is this for?" with the options from the table
-4. Build the prompt using the formula above
-5. Tell Scott "generating, give it ~30s"
-6. Shell the generator script with the config
-7. Surface the returned PNG path back to Scott
+1. Read Scott's concept
+2. If platform ambiguous, ask one question: "What platform?"
+3. If mode ambiguous, default to B&W (Preset A). Only switch to color if Scott says "color", "in color", or "full color"
+4. Pick era preset (A by default for B&W, D by default for color). Ask only if Scott's concept suggests a different era
+5. Build the 5 blocks
+6. Roll 1–3 imperfection variables — vary the picks across runs
+7. Append the Reality Layer paragraph (verbatim)
+8. Show Scott the constructed prompt
+9. If Scott wants to iterate: shell with `--dry-run` first (costs $0)
+10. When he approves: shell live, write the PNG, report the path
 
-Do not ask clarifying questions about style — the aesthetic is locked. Only ask about platform if it's genuinely ambiguous.
-
----
-
-## Multiple Variants
-
-If Scott asks for multiple variants (e.g., "give me 3 versions"), set `n: 3` in a single config. OpenAI returns 3 distinct images. They're saved as `{name}_1.png`, `{name}_2.png`, `{name}_3.png`. Max `n` is 4.
-
-If Scott wants the variants to differ in framing or subject angle (not just random reroll), run separate calls with slightly modified prompts — different camera distances, different environment details. Keep style locked across all variants.
+**Do NOT ask clarifying questions about style descriptors.** The era preset locks the look. Only ask about platform, mode, or era when truly ambiguous.
 
 ---
 
@@ -287,3 +286,14 @@ The script returns nonzero exit codes:
 On `3`, tell Scott to add the key to the .env file. Don't try to work around it.
 
 On `429` (rate limit), the script retries once automatically with 5s backoff before failing.
+
+---
+
+## North Star (read this last, every time)
+
+> Could this image have appeared in a 1987 SI feature, a 1996 NCAA media guide, or a 2026 university athletic communications release?
+
+- If yes → ship it.
+- If no → rewrite the Subject, Environment, or Camera block. Do NOT add style descriptors. Do NOT reach for the banned words. The fix is always more concrete description and more imperfection, never more "polish".
+
+The aesthetic Scott is chasing is **a real photograph that was taken**, not **an image that was rendered**. Every prompt should obey that distinction.
