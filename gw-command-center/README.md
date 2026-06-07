@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.3.0 (latest tag: gw-command-center--v0.3.0)
+**Version:** 0.4.0 (latest tag: gw-command-center--v0.4.0)
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -122,6 +122,31 @@ The non-negotiable rule lives in `D:\Claude Projects\CLAUDE.md` under "PLUGIN & 
 
 ---
 
+## Disabling the old Cowork bundle
+
+After installing this plugin in Cowork or claude.ai chat, the parallel `anthropic-skills` GW bundle is still active and will compete with the plugin for natural-language routing. To restore single-source-of-truth, disable the duplicates:
+
+**In claude.ai chat:**
+1. https://claude.ai/customize → **Skills**
+2. In the middle column, find each duplicate GW skill (those that exist both as Personal skill AND in `gw-command-center` plugin)
+3. Click into each duplicate → top-right three-dot menu (⋮) → **Delete**
+4. Targets to delete (each is a Personal-skill copy that the plugin now owns):
+   - `gw-content-forge`, `gw-image-forge`, `gw-substack-forge`, `gw-youtube-takeaways`
+   - `ig-carousel`, `jedi-council`, `leech-letter-editor`, `skill-creator`
+   - `pdf`, `pptx` (only if you have parallel copies; sometimes claude.ai keeps these scoped to the anthropic-skills plugin)
+5. Also remove the standalone **Gw kit** plugin entirely (the plugin's `kit-guardrails` owns this surface now)
+6. **KEEP** `grill-me` and `notebooklm-bridge` if they exist — `grill-me` is canonical local, `notebooklm-bridge` we intentionally skipped folding in (the native MCP is direct)
+
+**In Cowork:**
+1. Open Cowork → **Settings → Plugins**
+2. Find the `anthropic-skills` plugin in the list
+3. For each GW skill inside it (`gw-content-forge`, `gw-image-forge`, `gw-substack-forge`, `gw-youtube-takeaways`, `ig-carousel`, `jedi-council`, `leech-letter-editor`, `skill-creator`), toggle OFF
+4. Find the `gw-kit` plugin and disable it entirely
+
+After this, the router has exactly one source for every GW skill — the plugin. The "code is truth" loop is closed across all three surfaces.
+
+---
+
 ## Versioning
 
 | Version | What changed |
@@ -129,10 +154,10 @@ The non-negotiable rule lives in `D:\Claude Projects\CLAUDE.md` under "PLUGIN & 
 | **0.1.0** (2026-06-06) | Initial. 10 skills + 27 commands. `gw-image-forge` rebuilt against OpenAI Images API. Voice-writing guardrails on `leech-letter-editor` + `gw-substack-forge`. |
 | **0.2.1** (2026-06-07) | Frontmatter added to all 27 commands (validation now clean). `--dry-run` flag added to `gw-image-forge` for no-cost prompt iteration. README rewritten. `gw-image-forge` prompt methodology rewritten to documentary photo-editor framing: 5-block prompt structure (Subject/Environment/Camera/Medium/Exclusions), 4 era presets (1980s SI default, 1990s NCAA media guide, 2000s ESPN Magazine, modern D1 athletic comms), 15-item imperfection variable list, verbatim Reality Layer paragraph, banned-word enforcement (no "cinematic", "ultra detailed", "volumetric lighting", "dramatic lighting", etc.). |
 | **0.3.0** (2026-06-07) | `gw-youtube-takeaways` swapped from Chrome MCP DOM-scraping to native `mcp__notebooklm__*` MCP server. SKILL.md and `references/notebooklm-extraction.md` rewritten around `notebook_list`, `notebook_get`, `source_add(wait=True)`, `source_get_content`, `notebook_query(source_ids=[…])`, and `source_describe`. No more click coordinates, no more JavaScript injection to scrape `chat-message-pair`, no more 60-second waits. Source titles return untruncated. AI queries are cleanly scoped to a single source via `source_ids` parameter rather than prompt-engineering trick. Mode B (raw URLs) now adds to the "Youtube Videos" notebook seamlessly via `source_add(urls=[…], wait=True)`. Chrome MCP path documented as legacy fallback for sessions where the MCP server is unavailable. End-to-end notebook review time drops from 4-6 minutes to 60-90 seconds. |
+| **0.4.0** (2026-06-07) | `gw-content-forge` Cowork variant folded into the plugin command. Single source of truth restored. The merged command now handles TWO MODES: **TRANSCRIPT MODE** (paste a transcript → get the correct asset set for podcast / Film Study / Wildcat Webinar) and **CONTENT PACK MODE** (give a topic or file → get 3 Twitter threads + 2 IG carousels + 3 reel ideas + email). Per-content-type asset variations come from the Cowork SKILL: podcast = 6 assets (YT desc, HelloAudio desc, email, thread, IG caption, show notes), Film Study = 5 assets, Wildcat Webinar = 6 assets (adds guest share message). Plugin-side richness preserved: wiki-first integration, NotebookLM depth check, External Library cross-domain sweep (Dewey saves / Business briefs / AI briefs / Voice corpus / Daily seeds), wiki ingest pipeline, queue-system save-to-`_inbox/`, forge backlog mark step. Validation clean. |
 
-Planned for **0.4.0** (defer until Scott calls them):
-- Fold `gw-content-forge` Cowork variant in if Scott decides he wants the parallel version killed (currently the plugin command handles natural-language triggers via its description, so this may be moot)
-- Disable Cowork `anthropic-skills` GW bundle entirely (target: 2026-06-13, one week after v0.1 ship)
+Planned for **0.5.0** (Scott action required):
+- Disable the parallel Cowork `anthropic-skills` GW bundle (must be done in the Cowork UI; see README "Disabling the old Cowork bundle" section). With v0.4.0, the plugin owns every GW skill and command. Once disabled, the router never sees the parallel copies. Target: do it next time you open Cowork.
 
 ---
 
