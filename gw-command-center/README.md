@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.2.0-dev (latest tag: v0.1.0)
+**Version:** 0.2.1 (latest tag: v0.2.1)
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -127,12 +127,12 @@ The non-negotiable rule lives in `D:\Claude Projects\CLAUDE.md` under "PLUGIN & 
 | Version | What changed |
 |---|---|
 | **0.1.0** (2026-06-06) | Initial. 10 skills + 27 commands. `gw-image-forge` rebuilt against OpenAI Images API. Voice-writing guardrails on `leech-letter-editor` + `gw-substack-forge`. |
-| **0.2.0-dev** (in progress) | Frontmatter added to all 27 commands (validation now clean). `--dry-run` flag added to `gw-image-forge` for no-cost prompt iteration. README rewritten. |
+| **0.2.1** (2026-06-07) | Frontmatter added to all 27 commands (validation now clean). `--dry-run` flag added to `gw-image-forge` for no-cost prompt iteration. README rewritten. `gw-image-forge` prompt methodology rewritten to documentary photo-editor framing: 5-block prompt structure (Subject/Environment/Camera/Medium/Exclusions), 4 era presets (1980s SI default, 1990s NCAA media guide, 2000s ESPN Magazine, modern D1 athletic comms), 15-item imperfection variable list, verbatim Reality Layer paragraph, banned-word enforcement (no "cinematic", "ultra detailed", "volumetric lighting", "dramatic lighting", etc.). |
 
 Planned for **0.3.0**:
 - Swap `gw-youtube-takeaways` from Chrome MCP extraction to native `notebooklm` MCP
 - Fold `gw-content-forge` Cowork variant in if Scott decides he wants the parallel version killed
-- Disable Cowork `anthropic-skills` GW bundle entirely
+- Disable Cowork `anthropic-skills` GW bundle entirely (target: 2026-06-13, one week after v0.1 ship)
 
 ---
 
