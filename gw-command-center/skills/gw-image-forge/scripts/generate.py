@@ -180,6 +180,11 @@ def main() -> int:
         required=True,
         help="Path to JSON config file, or '-' to read JSON from stdin",
     )
+    p.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate config and print the constructed prompt without calling the OpenAI API. Costs nothing. Useful for iterating on prompt construction.",
+    )
     args = p.parse_args()
 
     if args.config == "-":
@@ -192,6 +197,26 @@ def main() -> int:
     except (json.JSONDecodeError, ValueError) as e:
         print(f"Config error: {e}", file=sys.stderr)
         return 2
+
+    if args.dry_run:
+        # Print what would be sent without calling the API.
+        preview = {
+            "mode": "dry-run",
+            "name": cfg["name"],
+            "size": cfg["size"],
+            "quality": cfg["quality"],
+            "n": cfg["n"],
+            "prompt_length": len(cfg["prompt"]),
+            "prompt": cfg["prompt"],
+            "would_write_to": str(
+                OUT_DIR / f"{cfg['name']}.png" if cfg["n"] == 1
+                else OUT_DIR / f"{cfg['name']}_1.png"
+            ),
+            "api_url": API_URL,
+            "model": MODEL,
+        }
+        print(json.dumps(preview, indent=2))
+        return 0
 
     load_env_file()
     api_key = os.environ.get("OPENAI_API_KEY", "").strip()

@@ -258,6 +258,24 @@ If Scott wants the variants to differ in framing or subject angle (not just rand
 
 ---
 
+## Dry-Run Mode (No-Cost Iteration)
+
+Add `--dry-run` to the shell call to validate the config and print the constructed prompt **without calling the OpenAI API**. Costs $0. Useful when:
+
+- Scott wants to see the prompt you'd send before paying for the render
+- You're iterating on prompt construction and don't need a real image yet
+- You want to confirm the size, quality, and output path are right
+
+```bash
+echo '<config json>' | python "D:/Claude Projects/plugins/gw-command-center/skills/gw-image-forge/scripts/generate.py" --config - --dry-run
+```
+
+Returns JSON with `mode: "dry-run"`, the full constructed prompt, prompt length, target output path, and API endpoint that would be hit. No PNG is written.
+
+Run live only when Scott confirms the dry-run prompt looks right.
+
+---
+
 ## Errors
 
 The script returns nonzero exit codes:
