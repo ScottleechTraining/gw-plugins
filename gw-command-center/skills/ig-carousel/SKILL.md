@@ -1,18 +1,46 @@
 ---
 name: ig-carousel
-description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080×1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports 6 distinct visual style packs selected at Step 0.5, plus seamless image spreads across multiple slides.
+description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080x1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports 6 distinct visual style packs selected at Step 0.5, plus seamless image spreads across multiple slides.
 ---
 
-# Instagram Carousel Skill — v3.1
+# Instagram Carousel Skill — v3.4
 
 Create editable, export-ready Instagram carousels as self-contained HTML files.
 
+---
+
+## IDENTITY — print this line FIRST, every run (non-negotiable)
+
+The very first thing you output when this skill runs, before Step 0 or anything else, must be this line, verbatim:
+
+`▶ ig-carousel v3.4 · gw-command-center plugin · canonical single source`
+
+This is Scott's guarantee that the canonical plugin skill ran, not a loose shadow. If you are following carousel instructions and this IDENTITY block is not in the skill file you loaded, you are running a stale copy: stop and tell Scott the exact file path you loaded from.
+
+---
+
+**All raw markup (HTML, CSS, JS) lives in `references/html-implementation.md`.** SKILL.md stays prose-only. When a step needs the actual code, it points you to a numbered section in that reference. Do not inline raw markup into this file.
+
+**What's new in v3.4 (cover headline overflow fix):**
+- The Mega-Cover auto-fit is now a verbatim, copy-exactly block (section 8 of `references/html-implementation.md`) instead of a prose description that each run re-derived. The re-derived version only fit per-span WIDTH, so multi-line headlines overflowed the frame (top word clipped, words breaking mid-word, last line colliding with the footer/handle).
+- The canonical `autoFitMegaCover()` now also fits the cover to available HEIGHT and re-runs on `document.fonts.ready` (the real Vitesse glyphs are wider than the fallback the first pass measures against).
+- `.mega-cover span` gains `white-space: nowrap` so a wrapped multi-word line can't hide its true width from the fit loop.
+- One-off patcher for already-generated carousels: `scripts/gwqueue/patch_carousels_megacover_autofit.py` (idempotent; mirrors `patch_carousels_savebtn.py`; skips files carrying the `MEGACOVER_FIT_V1` marker).
+
+**What's new in v3.3 (save button + identity):**
+- Every generated carousel now emits the 💾 SAVE CHANGES button (new section 9 of `references/html-implementation.md`), so in-browser edits persist to disk. Copied verbatim from `scripts/gwqueue/patch_carousels_savebtn.py` so generated files self-skip the patcher.
+- Added the IDENTITY banner above so every run self-identifies as the canonical plugin skill.
+- This file is now `SKILL.md` inside the plugin (was `workflow.md`), so the plugin registers it directly. The loose `~/.claude/skills/ig-carousel/` shadow was removed.
+
+**What's new in v3.2 (registration fix):**
+- Every HTML, CSS, and JS block moved out of SKILL.md into `references/html-implementation.md`. SKILL.md was failing to register as a skill because it contained raw document markup (doctype, html, script tags). Behavior is unchanged; the code is one file away now.
+
 **What's new in v3.1 (bug fix):**
-- **Spread positioning fixed.** Seamless image spreads now use pixel-based `background-size` and `background-position`. The previous percentage-based formula silently rendered slide 2+ of a spread as empty. If you have any v3 carousels with spreads, open them and check. See `references/seamless-image-spread.md` for the corrected formula.
+- **Spread positioning fixed.** Seamless image spreads now use pixel-based background sizing and positioning. The previous percentage-based formula silently rendered slide 2+ of a spread as empty. If you have any v3 carousels with spreads, open them and check. See `references/seamless-image-spread.md` for the corrected formula.
 
 **What's new in v3 (changes from v2):**
 - Step 0.5 (style pack selection) is now hard-gated — no HTML until a pack is chosen.
-- Vitesse embedding is locked to **inline `<style>` only**. External stylesheets for fonts are banned (they cache-stale and render the wrong font).
+- Vitesse embedding is locked to an inline style block only. External stylesheets for fonts are banned (they cache-stale and render the wrong font).
 - New **pack-compliance pass** at the end of Step 3B — the slide plan must respect the chosen pack's architecture rules (reading columns, centered body allowances, photo sizing), not just its colors.
 - Each carousel HTML file is **self-contained**. No shared CSS files, no external pack stylesheets, no imports beyond Barlow from Google Fonts. If it doesn't open correctly from a USB drive with no internet, it's broken.
 
@@ -24,7 +52,7 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 
 This SKILL.md must NEVER hardcode pack names ("Asphalt Editorial", "Mono Series", etc.), descriptions, color values, or architecture rules. Every place a pack is referenced, this file instructs the agent to read `references/style-packs.md`. If you find a hardcoded pack name or description in this SKILL.md outside of an example illustrating how to read style-packs.md, that's drift — fix it.
 
-**Why:** for months the pack list lived in three places that drifted independently. Packs were renamed (High Contrast Hype → The Case, Dark Project → Mono Series) and SKILL.md kept presenting the old names to users. The structural fix is delegation, not vigilance.
+**Why:** for months the pack list lived in three places that drifted independently. Packs were renamed (High Contrast Hype to The Case, Dark Project to Mono Series) and SKILL.md kept presenting the old names to users. The structural fix is delegation, not vigilance.
 
 ---
 
@@ -40,18 +68,18 @@ Some packs are allowed scoped exceptions to Visual Brain rules (accent color, bo
 
 The principle: overrides are scoped, not global. They apply only to the named pack inside this skill. Every other pack and every other skill follows the Visual Brain verbatim.
 
-### Type Scale — 1080×1350 canvas
+### Type Scale — 1080x1350 canvas
 
-The Visual Brain type scale (36px hero, 28px section head, 14px body) is a web/UI scale. Carousel slides render on a 1080px-wide canvas, so those sizes scale up proportionally to maintain intended display sizes in-feed. Pack-specific sizes (e.g., Mega-Cover at 180–240px) are correct for the 1080×1350 canvas and compress back to the Visual Brain's intended feel when Instagram displays the slide in-feed.
+The Visual Brain type scale (36px hero, 28px section head, 14px body) is a web/UI scale. Carousel slides render on a 1080px-wide canvas, so those sizes scale up proportionally to maintain intended display sizes in-feed. Pack-specific sizes (e.g., Mega-Cover at 180–240px) are correct for the 1080x1350 canvas and compress back to the Visual Brain's intended feel when Instagram displays the slide in-feed.
 
 ---
 
 ## What This Skill Produces
 
 A single, self-contained HTML file containing:
-- 5–10 slides at 4:5 aspect ratio (1080×1350 on export)
+- 5–10 slides at 4:5 aspect ratio (1080x1350 on export)
 - All text fields click-to-edit (contenteditable)
-- **Toolbar:** "EXPORT ALL PNGs" + "EXPORT PDF (Canva)" + per-slide "DOWNLOAD"
+- **Toolbar:** "EXPORT ALL PNGs" + "EXPORT PDF (Canva)" + "💾 SAVE CHANGES" + per-slide "DOWNLOAD"
 - **Inline resize controls:** click any editable element to show a floating A− / size / A+ / RESET toolbar; Ctrl+Up / Ctrl+Down (4px step), Shift for 1px precision; Mega-Cover spans resize per-line; auto-fit stops re-fitting once a line is manually sized
 - html2canvas + jsPDF from CDN (only external runtime dependency)
 - Barlow from Google Fonts CDN (only external font dependency)
@@ -67,42 +95,15 @@ A single, self-contained HTML file containing:
 
 **Required embedding pattern. Do not deviate.**
 
-Vitesse Bold ships inside the HTML file as a base64 data URL in an inline `<style>` block. Barlow loads from Google Fonts.
+Vitesse Bold ships inside the HTML file as a base64 data URL in an inline style block. Barlow loads from Google Fonts.
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>...</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&display=swap" rel="stylesheet">
-<style>
-  @font-face {
-    font-family: 'Vitesse';
-    src: url('data:font/otf;base64,{VITESSE_BASE64}') format('opentype');
-    font-weight: 700;
-    font-style: normal;
-    font-display: block;
-  }
-
-  :root {
-    --font-heading: 'Vitesse', 'Georgia', serif;
-    --font-body: 'Barlow', sans-serif;
-    /* pack tokens go here — see Step 2A */
-  }
-
-  /* rest of stylesheet */
-</style>
-</head>
-```
-
-Read the full base64 string from `assets/vitesse-bold-base64.txt` and paste it where `{VITESSE_BASE64}` sits.
+**For the exact document head and inline @font-face skeleton, read section 1 of `references/html-implementation.md`.** Read the full base64 string from `assets/vitesse-bold-base64.txt` and paste it where the `{VITESSE_BASE64}` placeholder sits.
 
 **Banned patterns (these will break silently or cache-stale):**
-- External `<link rel="stylesheet">` pointing to a shared pack file that contains the @font-face
+- An external stylesheet link pointing to a shared pack file that contains the @font-face
 - Referencing `assets/Vitesse-Bold.otf` as a `src: url()` path (won't resolve when the user opens the file elsewhere)
-- Splitting the @font-face into its own .css file and `@import`-ing it
-- Omitting `font-display: block` (causes a paint flash of Archivo Black before Vitesse loads)
+- Splitting the @font-face into its own .css file and importing it
+- Omitting `font-display: block` (causes a paint flash of a fallback font before Vitesse loads)
 
 **Why inline-only:** the HTML is meant to be portable. A user may open it from Desktop, from a Canva import staging folder, from a USB drive, or a colleague's laptop. External CSS files break any of those. Inline @font-face makes the file a true single-file artifact.
 
@@ -127,11 +128,11 @@ Check whether the user has provided images or references an image folder.
 
 **Build the menu from `references/style-packs.md` — do not hardcode it here.**
 
-Open that file. Each top-level `## <N>. <PACK NAME>` heading is one menu option, numbered in the order they appear (1 through whatever count is in the file). For each pack, the user-facing line is:
+Open that file. Each top-level pack heading (formatted as "N. PACK NAME") is one menu option, numbered in the order they appear (1 through whatever count is in the file). For each pack, the user-facing line is:
 
 ```
-N. <PACK NAME> — <one-line description, taken from the first paragraph under the heading>.
-   Good for: <list from the "Recommend for:" bullet at the end of that pack's section>.
+N. PACK NAME — one-line description, taken from the first paragraph under the heading.
+   Good for: the list from the "Recommend for:" bullet at the end of that pack's section.
 ```
 
 The "Pack selection quick-reference" table at the bottom of `references/style-packs.md` is the canonical "if user said X, suggest Y" mapping. Use it when recommending a pack.
@@ -165,20 +166,7 @@ Do not ask about fonts.
 
 ### Step 2A: Derive the Color System
 
-Pull the base tokens from the selected style pack. All packs share the same structural tokens, only their values shift:
-
-```css
-:root {
-  --bg-dominant:    /* per pack */;
-  --bg-inverse:     /* per pack */;
-  --fg-dominant:    /* per pack */;
-  --fg-inverse:     /* per pack */;
-  --accent:         /* per pack — gold default, cherry red for Acid Block */;
-  --accent-ink:     /* contrast color to read ON the accent */;
-  --overlay-dark:   /* tune per pack — see style-packs.md */;
-  --edit-highlight: var(--accent);
-}
-```
+Pull the base tokens from the selected style pack. All packs share the same structural tokens, only their values shift. **For the `:root` token list, read section 2 of `references/html-implementation.md`.**
 
 Exact values live in `references/style-packs.md`. Copy them, don't improvise.
 
@@ -209,9 +197,9 @@ Read `references/slide-architecture.md` for the full template structure and comp
 | **Checklist** | Numbered or checked list items (Editorial Long-Form only for true checklists) |
 | **CTA / Follow** | Final slide, no swipe arrow, logo lockup |
 
-**Cover headline rule:** the cover is a phone-legible power statement. Write whatever length you want — the skill auto-fits the type to the safe zone. If auto-fit drops the size below 80pt (at 1080×1350), stop and recommend trimming. Powerful > short.
+**Cover headline rule:** the cover is a phone-legible power statement. Write whatever length you want — the skill auto-fits the type to the safe zone. If auto-fit drops the size below 80pt (at 1080x1350), stop and recommend trimming. Powerful > short.
 
-**Narrative arc (7 slides ideal, flex 5–10):** Cover → Hook → Build → Turn → Payoff → Reinforce → CTA. Light/dark rhythm still applies within the pack's dominant palette.
+**Narrative arc (7 slides ideal, flex 5–10):** Cover, Hook, Build, Turn, Payoff, Reinforce, CTA. Light/dark rhythm still applies within the pack's dominant palette.
 
 ---
 
@@ -245,40 +233,17 @@ If any row in the plan violates a pack rule, fix it before the checkpoint. Do no
 
 ### Step 4: Embed the TGW Logo
 
-See `references/slide-architecture.md` for the progress bar HTML with logo embedded.
+See `references/slide-architecture.md` for the progress bar markup with the logo embedded.
 
 ---
 
 ### Step 5: Generate the HTML
 
-**File structure (top to bottom):**
+**Build the file in the order documented in section 3 of `references/html-implementation.md`** (doctype and head, single inline style block in its 10-part order, body with toolbar and slide sections, then the final script block).
 
-1. `<!DOCTYPE html>` + `<head>` with:
-   - `<meta charset="UTF-8">`
-   - `<meta name="viewport" content="width=1080">`
-   - `<title>` — `{Topic} — {Pack Name} — Gridiron Warrior`
-   - Barlow `<link>` from Google Fonts (weights 400, 600, 700, 900)
-   - **One** inline `<style>` block containing, in order:
-     1. @font-face for Vitesse (base64 data URL)
-     2. Reset + box-sizing
-     3. `:root` pack tokens
-     4. Typography base (`body`, `h1`–`h3`, paragraph defaults)
-     5. Slide frame (`.slide` at 1080×1350, scaled down for preview)
-     6. Persistent frame system (slide number, handle, swipe arrow, progress bar, logo)
-     7. Template classes (Mega-Cover, Numbered Content, Long-Form Text, etc. — only the ones used)
-     8. Pack-specific overrides (see `references/style-packs.md` for each pack's CSS block)
-     9. Toolbar styles, then the inline resize toolbar CSS (see **Inline Resize Controls** below)
-     10. Edit highlight states (`[contenteditable]:hover`, `[contenteditable]:focus`)
-   - html2canvas + jsPDF CDN `<script>` tags
-2. `<body>`:
-   - Toolbar at top (fixed)
-   - `<section class="slide">` for each slide, in order
-   - Resize toolbar element (`<div id="resize-toolbar">`) immediately before `</body>` (see **Inline Resize Controls** below)
-   - Export / edit JS, then the Inline Resize Controls JS block, as the final inline `<script>` block
+**Pack CSS loads once.** Copy the pack's full CSS block from `references/style-packs.md` into the inline style block — do not split into a separate file and link it.
 
-**Pack CSS loads once.** Copy the pack's full CSS block from `references/style-packs.md` into the inline `<style>` — do not split into a separate file and link it.
-
-**For image slides:** base64-encode each assigned image, embed as `background-image: url('data:image/...;base64,...')`, apply the pack's photo treatment (grayscale filter, overlay gradient, etc.). See `references/slide-architecture.md`.
+**For image slides:** base64-encode each assigned image, embed as a `background-image` data URL, apply the pack's photo treatment (grayscale filter, overlay gradient, etc.). See `references/slide-architecture.md`.
 
 **For seamless spreads:** see `references/seamless-image-spread.md`. Use pixel-based `background-size: calc(1080px * N) 1350px` and `background-position: calc(-1080px * k) 0` so side-by-side slides reconstruct the full image. Do not use percentages for spread positioning — they silently render slide 2+ as empty.
 
@@ -288,29 +253,15 @@ See `references/slide-architecture.md` for the progress bar HTML with logo embed
 - Sticky top
 - Title
 - Edit hint ("click any text to edit")
-- `EXPORT ALL PNGs` → html2canvas loop, one file per slide, filename `{brand}-{topic}-slide-{n}.png`
-- `EXPORT PDF (Canva)` → html2canvas loop → jsPDF multi-page PDF at 1080×1350 per page, filename `{brand}-{topic}-carousel.pdf`
+- `EXPORT ALL PNGs` — html2canvas loop, one file per slide, filename `{brand}-{topic}-slide-{n}.png`
+- `EXPORT PDF (Canva)` — html2canvas loop into a jsPDF multi-page PDF at 1080x1350 per page, filename `{brand}-{topic}-carousel.pdf`
 - Per-slide `DOWNLOAD SLIDE X`
 
-**PDF export snippet:**
+**PDF export script:** read section 4 of `references/html-implementation.md` for the jsPDF CDN tag and the `exportPDF()` function.
 
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-async function exportPDF() {
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF({ unit: 'px', format: [1080, 1350], orientation: 'portrait' });
-  const slides = document.querySelectorAll('.slide');
-  for (let i = 0; i < slides.length; i++) {
-    const canvas = await html2canvas(slides[i], { scale: 1080 / slides[i].offsetWidth });
-    const img = canvas.toDataURL('image/png');
-    if (i > 0) pdf.addPage([1080, 1350], 'portrait');
-    pdf.addImage(img, 'PNG', 0, 0, 1080, 1350);
-  }
-  pdf.save(`${BRAND_SLUG}-${TOPIC_SLUG}-carousel.pdf`);
-}
-</script>
-```
+**Auto-fit Mega-Cover JS:** read section 8 of `references/html-implementation.md` and copy the `autoFitMegaCover()` function plus its three call sites (`DOMContentLoaded`, `document.fonts.ready`, immediate) into the final script block VERBATIM. Do not write your own from the prose. A hand-rolled version drops the height guard and the font-load re-fit, and the cover headline overflows on any multi-line headline. The matching `.mega-cover span { white-space: nowrap; }` rule must be in the stylesheet (it ships in the Mega-Cover CSS in `references/slide-architecture.md`).
+
+**Save Changes button:** read section 9 of `references/html-implementation.md`. Add its button HTML to the toolbar immediately after the `EXPORT PDF (Canva)` button, and add its save script verbatim immediately before the closing `</body>` tag. Copy both blocks exactly so they match the standalone patcher (`scripts/gwqueue/patch_carousels_savebtn.py`) byte-for-byte, including the `__SAVE_SCRIPT_VERSION__` marker, so freshly-generated files are treated as already-current and never re-patched.
 
 **Persistent frame system on every slide (except where noted):**
 - Slide number (`01` / `07`) — position and treatment **per pack** (see pack spec; don't use a generic default)
@@ -326,209 +277,15 @@ async function exportPDF() {
 
 Every carousel HTML ships with inline font-size controls so Scott can adjust type during the editing pass without rewriting copy.
 
-**What it does:** click into any editable text field. A small floating toolbar appears with `A−`, current size in px, `A+`, and `RESET`. Each click shrinks or grows by 4px. `RESET` returns to the template default. Keyboard shortcuts: `Ctrl+Up` / `Ctrl+Down` (4px step), hold `Shift` for 1px precision. For Mega-Cover, each line `<span>` is a separate resize target — click the specific line, resize that line. Once a Mega-Cover line is manually sized, the auto-fit JS stops re-fitting the parent.
+**What it does:** click into any editable text field. A small floating toolbar appears with `A−`, current size in px, `A+`, and `RESET`. Each click shrinks or grows by 4px. `RESET` returns to the template default. Keyboard shortcuts: `Ctrl+Up` / `Ctrl+Down` (4px step), hold `Shift` for 1px precision. For Mega-Cover, each line is a separate resize target — click the specific line, resize that line. Once a Mega-Cover line is manually sized, the auto-fit JS stops re-fitting the parent.
 
 **What not to add:** no font-family picker, no color picker, no alignment toggle, no bold/italic. This control is intentionally narrow — it solves copy that doesn't fit the template's expected length, nothing more.
 
-### CSS — add after existing toolbar rules in slot 9
-
-```css
-.resize-toolbar {
-  position: absolute;
-  display: none;
-  align-items: center;
-  gap: 6px;
-  background: #1A1A1A;
-  border: 1px solid rgba(245, 240, 232, 0.25);
-  padding: 6px 8px;
-  z-index: 9999;
-  font-family: var(--font-body);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
-  user-select: none;
-}
-.resize-toolbar.active { display: flex; }
-.resize-toolbar .resize-label {
-  color: rgba(245, 240, 232, 0.45);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-weight: 700;
-  border-right: 1px solid rgba(245, 240, 232, 0.18);
-  padding-right: 8px;
-  margin-right: 2px;
-}
-.resize-toolbar button {
-  background: transparent;
-  border: 1px solid rgba(245, 240, 232, 0.3);
-  color: #F5F0E8;
-  font-family: var(--font-body);
-  font-weight: 700;
-  padding: 4px 10px;
-  cursor: pointer;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-}
-.resize-toolbar button:hover {
-  background: rgba(245, 240, 232, 0.12);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.resize-toolbar .size-display {
-  color: rgba(245, 240, 232, 0.7);
-  font-size: 11px;
-  letter-spacing: 1px;
-  font-weight: 600;
-  min-width: 56px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-.mega-cover[data-manual-size="true"] { /* state marker only */ }
-```
-
-For Paper Minimal and Editorial Long-Form (paper-dominant packs), the toolbar's dark theme still works — do not invert it per pack.
-
-### HTML — add once, immediately before `</body>`
-
-```html
-<div class="resize-toolbar" id="resize-toolbar" role="toolbar" aria-label="Text size">
-  <span class="resize-label">SIZE</span>
-  <button data-resize="-4" title="Shrink (Ctrl+Down)">A−</button>
-  <span class="size-display" id="resize-size">--px</span>
-  <button data-resize="+4" title="Grow (Ctrl+Up)">A+</button>
-  <button data-resize="reset" title="Reset to template default">RESET</button>
-</div>
-```
-
-### JavaScript — add inside the final `<script>` block, after the export functions and after `autoFitMegaCover()`
-
-```javascript
-// =====================================================================
-// Inline Resize Controls
-// =====================================================================
-(function () {
-  const toolbar = document.getElementById('resize-toolbar');
-  const sizeDisplay = document.getElementById('resize-size');
-  const MIN_SIZE = 12;
-  const MAX_SIZE = 400;
-  let target = null;
-
-  function isMegaSpan(el) {
-    return el && el.matches && el.matches('.mega-cover > span');
-  }
-
-  function isEditable(el) {
-    if (!el || !el.hasAttribute) return false;
-    return el.hasAttribute('contenteditable') &&
-           el.getAttribute('contenteditable') !== 'false';
-  }
-
-  function eligible(el) {
-    return isMegaSpan(el) || (isEditable(el) && !el.classList.contains('mega-cover'));
-  }
-
-  function currentSize(el) {
-    return parseFloat(getComputedStyle(el).fontSize);
-  }
-
-  function applySize(el, newPx) {
-    const clamped = Math.max(MIN_SIZE, Math.min(MAX_SIZE, newPx));
-    el.style.fontSize = clamped + 'px';
-    el.dataset.manualSize = 'true';
-    const mega = el.closest('.mega-cover');
-    if (mega) mega.dataset.manualSize = 'true';
-    refreshDisplay();
-  }
-
-  function resetSize(el) {
-    el.style.fontSize = '';
-    delete el.dataset.manualSize;
-    refreshDisplay();
-  }
-
-  function refreshDisplay() {
-    sizeDisplay.textContent = target
-      ? Math.round(currentSize(target)) + 'px'
-      : '--px';
-  }
-
-  function positionToolbar() {
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
-    const tbRect = toolbar.getBoundingClientRect();
-    const tbHeight = tbRect.height || 36;
-    let top = window.scrollY + rect.top - tbHeight - 8;
-    let left = window.scrollX + rect.left;
-    if (rect.top - tbHeight - 8 < 0) {
-      top = window.scrollY + rect.bottom + 8;
-    }
-    const maxLeft = window.scrollX + document.documentElement.clientWidth - tbRect.width - 8;
-    if (left > maxLeft) left = maxLeft;
-    if (left < window.scrollX + 8) left = window.scrollX + 8;
-    toolbar.style.top = top + 'px';
-    toolbar.style.left = left + 'px';
-  }
-
-  function showFor(el) {
-    target = el;
-    toolbar.classList.add('active');
-    toolbar.offsetHeight; // force layout so getBoundingClientRect on toolbar is correct
-    positionToolbar();
-    refreshDisplay();
-  }
-
-  function hide() {
-    target = null;
-    toolbar.classList.remove('active');
-    refreshDisplay();
-  }
-
-  document.addEventListener('click', (e) => {
-    if (toolbar.contains(e.target)) return;
-    const span = e.target.closest && e.target.closest('.mega-cover > span');
-    if (span) { showFor(span); return; }
-    if (eligible(e.target)) { showFor(e.target); return; }
-    if (target && !target.contains(e.target)) hide();
-  });
-
-  toolbar.addEventListener('mousedown', (e) => e.preventDefault());
-  toolbar.addEventListener('click', (e) => {
-    if (!target) return;
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    const action = btn.dataset.resize;
-    if (action === 'reset') {
-      resetSize(target);
-    } else {
-      const delta = parseInt(action, 10);
-      applySize(target, currentSize(target) + delta);
-    }
-    positionToolbar();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (!target) return;
-    if (!(e.ctrlKey || e.metaKey)) return;
-    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
-    e.preventDefault();
-    const step = e.shiftKey ? 1 : 4;
-    const delta = e.key === 'ArrowUp' ? step : -step;
-    applySize(target, currentSize(target) + delta);
-    positionToolbar();
-  });
-
-  window.addEventListener('scroll', positionToolbar, true);
-  window.addEventListener('resize', positionToolbar);
-})();
-```
-
-### Auto-fit guard — add at the top of `autoFitMegaCover()`'s forEach callback
-
-```javascript
-document.querySelectorAll('.mega-cover').forEach((el) => {
-  if (el.dataset.manualSize === 'true') return;   // skip manually-sized covers
-  // ... existing auto-fit logic
-});
-```
+**The full implementation lives in `references/html-implementation.md`:**
+- Section 5 — resize toolbar CSS (add after the existing toolbar rules in style slot 9)
+- Section 6 — resize toolbar HTML (add once, immediately before the closing body tag)
+- Section 7 — resize controls JavaScript (add inside the final script block, after the export functions and after `autoFitMegaCover()`)
+- Section 8 — the full `autoFitMegaCover()` JS (fits width + height, re-fits on font load, and skips manually-sized covers via the guard)
 
 ---
 
@@ -548,12 +305,13 @@ Save to the user's output folder as `{topic-slug}-carousel.html`. Present with a
 
 The HTML file must open correctly with no internet. Before declaring done, verify:
 
-- [ ] No `<link rel="stylesheet">` pointing to any file in the project (Barlow from Google Fonts is the only allowed external CSS link)
-- [ ] No `<script src="./...">` or relative script paths — html2canvas and jsPDF come from CDN URLs
-- [ ] `@font-face` for Vitesse is inside the inline `<style>` block with a base64 data URL, not a file path
+- [ ] No external stylesheet link pointing to any file in the project (Barlow from Google Fonts is the only allowed external CSS link)
+- [ ] No script tags with relative `src` paths — html2canvas and jsPDF come from CDN URLs
+- [ ] The Vitesse @font-face is inside the inline style block with a base64 data URL, not a file path
 - [ ] All images are embedded as base64 data URLs (no `src="./images/..."` or similar)
 - [ ] The TGW logo is inline SVG or base64, not a file reference
 - [ ] Opening the file by double-click (not through a dev server) renders Vitesse correctly
+- [ ] The Save Changes button (`id="saveChangesBtn"`) is in the toolbar and the save script (`window.__SAVE_SCRIPT_VERSION__`) sits before `</body>`, both copied verbatim from section 9 of `references/html-implementation.md`
 - [ ] If the carousel has any seamless spreads, the `background-size` and `background-position` on spread slides use **pixel values**, not percentages. Slide 1+ of every spread should visibly show the correct slice of the image, not be empty.
 
 If any of the above is violated, the file isn't portable or correct — fix before delivering.
@@ -565,7 +323,7 @@ If any of the above is violated, the file isn't portable or correct — fix befo
 1. Click `EXPORT PDF (Canva)` in the toolbar. Wait for the download.
 2. In Canva, go to **Create a design → Import file** and drop the PDF.
 3. Canva creates one page per slide. Each slide is a flat image you can layer on top of but not text-edit directly — do final text tweaks in the HTML *before* exporting PDF for cleanest results.
-4. Alternative: `EXPORT ALL PNGs` gives you individual 1080×1350 files you can upload to a Canva Instagram Post template (4:5) and arrange as a carousel.
+4. Alternative: `EXPORT ALL PNGs` gives you individual 1080x1350 files you can upload to a Canva Instagram Post template (4:5) and arrange as a carousel.
 
 ---
 

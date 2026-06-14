@@ -136,10 +136,12 @@ Stacked headline, auto-fit to safe zone. Each line is a `<span>` inside the `<h1
   flex-direction: column;
   /* font-size set by auto-fit JS — starts at 220pt, shrinks until fits */
 }
-.mega-cover span { display: block; }
+.mega-cover span { display: block; white-space: nowrap; }
 ```
 
-Auto-fit JS: measure `.content` width, binary-search `font-size` on `.mega-cover` until the longest child `<span>` fits within safe zone. Minimum size 80pt — below that, log a console warning (the skill narrative already told the user at Step 3 to trim).
+`white-space: nowrap` on the span is load-bearing, not cosmetic. Without it a multi-word line (e.g. `ONE TICKET.`) wraps internally and `scrollWidth` then reports the *wrapped* (narrower) width, which hides the real overflow from the fit loop and the cover renders too big.
+
+Auto-fit JS: copy the `autoFitMegaCover()` function and its call sites verbatim from section 8 of `references/html-implementation.md`. Do not re-derive it from this description. It shrinks `font-size` on each `.mega-cover` from 220px down until BOTH (a) every child `<span>` fits the horizontal safe zone (`scrollWidth <= 1080 - 128`) AND (b) the whole cover fits the vertical space left inside `.slide-content` (`scrollHeight <= availH`). It re-runs on `document.fonts.ready` because the real Vitesse glyphs are wider than the fallback font and otherwise leave the cover oversized after the swap. Minimum size 80px. Below that it stops shrinking (the skill narrative already told the user at Step 3 to trim). A width-only fit (no height guard) is the historical bug: multi-line headlines clip the top word and collide with the footer.
 
 ### Image-Dominant Hook
 Full-bleed photo, headline in corner (bottom-left default). Uses `overlay` at 60% opacity bottom gradient.
