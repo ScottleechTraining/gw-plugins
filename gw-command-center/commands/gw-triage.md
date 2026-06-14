@@ -115,7 +115,7 @@ p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
 ## Step 6: Refresh state
 
-Invoke `/gw-queue` (or directly run `python -m scripts.queue.scan_folders`) to pick up the new layout.
+Invoke `/gw-queue` (or directly run `python -m scripts.gwqueue.scan_folders`) to pick up the new layout.
 
 ## Step 7: Commit
 

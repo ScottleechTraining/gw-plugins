@@ -12,7 +12,7 @@ report.
 ## Paths
 
 - **Deliverables:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
-- **Scanner module:** `scripts.queue.scan_folders`
+- **Scanner module:** `scripts.gwqueue.scan_folders`
 - **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
 - **Dashboard state copy:** `D:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (Phase 9+)
 
@@ -20,12 +20,12 @@ report.
 
 Phase 11 adds an `apply_state.py` script. Until then, this step is a no-op.
 
-If `scripts/queue/apply_state.py` exists, run it:
+If `scripts/gwqueue/apply_state.py` exists, run it:
 
 ```bash
 cd "D:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/queue/apply_state.py" ]; then
-  python -m scripts.queue.apply_state
+if [ -f "scripts/gwqueue/apply_state.py" ]; then
+  python -m scripts.gwqueue.apply_state
 else
   echo "apply_state.py not yet implemented (Phase 11); skipping"
 fi
@@ -54,7 +54,7 @@ Remember this list (call it `prior_inbox`).
 
 ```bash
 cd "D:/Claude Projects/Gridiron Warrior"
-python -m scripts.queue.scan_folders
+python -m scripts.gwqueue.scan_folders
 ```
 
 Expected output: `Scanned N topics. Wrote .../queue-state.json.`
@@ -63,14 +63,14 @@ Expected output: `Scanned N topics. Wrote .../queue-state.json.`
 
 ```bash
 cd "D:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/queue/render_carousel.py" ]; then
-  python -m scripts.queue.render_carousel
+if [ -f "scripts/gwqueue/render_carousel.py" ]; then
+  python -m scripts.gwqueue.render_carousel
 else
   echo "render_carousel.py not yet implemented (Phase 6); skipping slide rendering"
 fi
 
-if [ -f "scripts/queue/split_captions.py" ]; then
-  python -m scripts.queue.split_captions
+if [ -f "scripts/gwqueue/split_captions.py" ]; then
+  python -m scripts.gwqueue.split_captions
 else
   echo "split_captions.py not yet implemented (Phase 7); skipping caption split"
 fi
@@ -80,10 +80,10 @@ fi
 
 ```bash
 cd "D:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/queue/sync_to_drive.py" ]; then
-  python -m scripts.queue.sync_to_drive
+if [ -f "scripts/gwqueue/sync_to_drive.py" ]; then
+  python -m scripts.gwqueue.sync_to_drive
   # Re-run scanner to pick up drive_folder_id updates
-  python -m scripts.queue.scan_folders
+  python -m scripts.gwqueue.scan_folders
 else
   echo "sync_to_drive.py not yet implemented (Phase 8); skipping Drive sync"
 fi
