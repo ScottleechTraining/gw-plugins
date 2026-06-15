@@ -33,6 +33,8 @@ Use the `mcp__notebooklm__*` MCP server:
    - **Best quote** (one memorable line)
    - **GW application** (how this connects to Insiders / Courses / Summit / DFY)
 
+**HARD RULE — NotebookLM auth/availability (identical across gw-sc/ai/business-research):** If the `mcp__notebooklm__*` server is unavailable or any call errors (commonly an expired Google session — `notebook_create` / `source_add` / `notebook_query` return an auth error), do NOT write the brief from the web-search sources alone and do NOT present it as a normal brief. The web sources gathered in step 2 are NOT a substitute for the notebook synthesis. Instead write a STUB brief with `status: blocked`, `notebook_id: null`, `source_count: 0`, and a one-line body naming the cause and the fix (`run nlm login`, then re-invoke). Leave the topic in `## Active Queue` (append ` *(blocked YYYY-MM-DD — NotebookLM auth; retry after nlm login)*`), append the wiki/log line, and exit. Do NOT raw-commit (gw-daily-closeout commits). The blocked stub keeps the `file_today` gate green, but `/gw-morning-readiness` detects `status: blocked` and surfaces it YELLOW with the `nlm login` next action. Scott would rather see one honest "blocked" than a fake-fresh brief.
+
 ### 3. Write brief
 
 Save to `D:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\YYYY-MM-DD-[topic-slug]-brief.md`:
@@ -100,4 +102,4 @@ The `gw-daily-closeout` job commits all approved daily-output paths once, after 
 ## Notes
 
 - Budget per run: ~$0.10-0.30 in NotebookLM credits
-- If NotebookLM is unavailable, write a stub brief with frontmatter and `status: blocked` so Scott can re-run manually
+- If NotebookLM is unavailable: see the HARD RULE in step 2 — write a `status: blocked` stub, never a web-only brief.

@@ -33,7 +33,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
 
 4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\strength-conditioning\` for anchor authors / recent reels relevant to the topic.
 
-**HARD RULE:** If the MCP server isn't available or `notebook_list` errors, do NOT silently fall back to memory-only synthesis. Write a stub brief with frontmatter `status: blocked` and `notebook_id: null`, append `(blocked)` to the queue + index entries, commit, and exit. Scott would rather see "blocked" and re-run later than get a fake brief that looks fresh but isn't.
+**HARD RULE — NotebookLM auth/availability (identical across gw-sc/ai/business-research):** If the `mcp__notebooklm__*` server is unavailable or any call errors (commonly an expired Google session — `notebook_list` returns an auth error), do NOT fall back to web-search-only or memory-only synthesis, and do NOT present the result as a normal brief. Instead write a STUB brief with `status: blocked`, `notebook_id: null`, `source_count: 0`, and a one-line body naming the cause and the fix (`run nlm login`, then re-invoke). Leave the topic in `## Active Queue` (append ` *(blocked YYYY-MM-DD — NotebookLM auth; retry after nlm login)*`), append the wiki/log line, and exit. Do NOT raw-commit (gw-daily-closeout commits). The blocked stub keeps the `file_today` gate green, but `/gw-morning-readiness` detects `status: blocked` and surfaces it YELLOW with the `nlm login` next action. Scott would rather see one honest "blocked" than a fake-fresh brief.
 
 **Structured query prompt fields:**
 - **Core concept** (the big idea, 2-3 sentences in Scott's plain-language coaching voice)

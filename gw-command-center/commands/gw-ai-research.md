@@ -19,6 +19,8 @@ If empty: auto-pick a trending AI topic relevant to a small-business AI user (Cl
 
 Same flow as business research but with AI-relevant sources (Anthropic docs, AI Twitter, dev YouTube, Claude release notes).
 
+**HARD RULE — NotebookLM auth/availability (identical across gw-sc/ai/business-research):** If the `mcp__notebooklm__*` server is unavailable or any call errors (commonly an expired Google session — `notebook_list` returns an auth error, or Chrome/CDP is missing in a headless run), do NOT fall back to web-search-only or memory-only synthesis, and do NOT present the result as a normal brief. Instead write a STUB brief with `status: blocked`, `notebook_id: null`, `source_count: 0`, and a one-line body naming the cause and the fix (`run nlm login`, then re-invoke). Leave the topic in `## Active Queue` (append ` *(blocked YYYY-MM-DD — NotebookLM auth; retry after nlm login)*`), append the wiki/log line, and exit. Do NOT raw-commit (gw-daily-closeout commits). The blocked stub keeps the `file_today` gate green, but `/gw-morning-readiness` detects `status: blocked` and surfaces it YELLOW with the `nlm login` next action. Scott would rather see one honest "blocked" than a fake-fresh brief.
+
 Structured query:
 - **Core concept** (the big idea, 2-3 sentences)
 - **How it works** (3-5 mechanics)
