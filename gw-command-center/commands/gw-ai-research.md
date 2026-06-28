@@ -17,7 +17,14 @@ If empty: auto-pick a trending AI topic relevant to a small-business AI user (Cl
 
 ### 2. Run NotebookLM research
 
-Same flow as business research but with AI-relevant sources (Anthropic docs, AI Twitter, dev YouTube, Claude release notes).
+Use the `mcp__notebooklm__*` MCP server. Same explicit flow as `/gw-business-research`, with AI-relevant sources (Anthropic docs, AI Twitter, dev YouTube, Claude release notes):
+
+1. `notebook_create` with title "AI Research: [topic name] — [date]" → capture the returned `notebook_id`
+2. Use yt-dlp or web search to find 4-6 high-signal sources on the topic
+3. Add sources via `source_add`
+4. Query with `notebook_query` (notebook_id from step 1) using the structured prompt below
+
+**Never call `research_start` without a `notebook_id`.** The MCP advertises "creates new notebook if not provided," but that auto-create path is NOT implemented (verified in `notebooklm_tools/core/research.py`): a null notebook_id builds a request to `/notebook/None` and NotebookLM rejects it with `INVALID_ARGUMENT` (Google API error code 3). This presents as a fake "transient" block and silently kills the day's AI brief. If you want `research_start`'s web auto-crawl, `notebook_create` FIRST, then `research_start(notebook_id=<that id>)` → poll → import → query. The numbered `source_add` flow above avoids it entirely and is the default.
 
 **HARD RULE — NotebookLM errors (identical across gw-sc/ai/business-research):** Never fall back to web-search-only or memory-only synthesis and never present a fallback as a normal brief. But before blocking, classify the error correctly — a transient blip is NOT an auth failure, and the two get different fixes:
 
