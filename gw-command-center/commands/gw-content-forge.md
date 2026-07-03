@@ -397,6 +397,8 @@ NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - full
 
 The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
 
+**The receipt lives in the pack file, not just the wiki.** When Step 4 writes the wiki summary page, the SAME PULLED FROM THE BRAIN block MUST also be appended to the end of the content pack file in `Deliverables/_inbox/[TOPIC-SLUG]/` (this applies to every mode and every caller, including overnight `/gw-nightly-forge` runs). Scott triages from the inbox, not the wiki - a receipt that only exists on the summary page is invisible at triage. Before reporting done, verify the pack file's last section is the receipt.
+
 ---
 
 ## Step 3: Save (handled inside mode steps)
@@ -413,7 +415,8 @@ If the source contained coaching knowledge NOT already captured in a wiki summar
 2. Update any entity or concept pages in `wiki/` that this source touches
 3. Add the new summary to `wiki/index.md` under the appropriate section
 4. Append to `wiki/log.md`: `## [YYYY-MM-DD] ingest | [topic] — via gw-content-forge`
-5. **Flag any new coaching concept** that appears repeatedly in this source and does NOT have a dedicated wiki concept page yet. Note it in the Step 5 report so it can be created.
+5. **Append the same PULLED FROM THE BRAIN block to the end of the content pack file** in `Deliverables/_inbox/[TOPIC-SLUG]/`. Writing it to the wiki summary alone is not enough - the pack is where Scott triages.
+6. **Flag any new coaching concept** that appears repeatedly in this source and does NOT have a dedicated wiki concept page yet. Note it in the Step 5 report so it can be created.
 
 If a wiki summary for this source already exists, skip this step but still check for new concepts.
 

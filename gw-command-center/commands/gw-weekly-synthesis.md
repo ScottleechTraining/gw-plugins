@@ -126,6 +126,16 @@ Stub created from Scott's voice note on <date>. Expand as more material accumula
 
 **4e. Identify 2-3 strongest themes** across the week's voice notes for the weekly summary report (carries forward to Step 5).
 
+### 4.5. Expand stale stubs (wiki health)
+
+The wiki's stub rate is the "wide but shallow" risk. This step burns it down 3-5 pages per week.
+
+1. Read `wiki\system\wiki-health-report.md` (produced by `scripts/wiki_health.py`). Find the `## Stale stubs (oldest first)` list.
+2. Pick 3-5 stubs, oldest first. Skip any stub whose topic has zero vault material (log it as `skipped - no sources yet` instead of padding a page with generic filler).
+3. For each pick, expand the stub into a real concept page: the teaching, the evidence, the application (per the concept page convention in `Gridiron Warrior/CLAUDE.md`), plus wikilinks to related concept/entity pages. Source material from the vault only: Voice Corpus, wiki summaries, research briefs, course transcripts. Remove `stub` from the page's tags/status when done.
+4. Update the page's one-line description in `wiki/index.md` if it changed, and log each expansion in `wiki/log.md`.
+5. Carry the list of expanded pages forward to the Step 5 report.
+
 ### 5. Write weekly synthesis report
 
 Save to `D:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
@@ -151,6 +161,7 @@ pipeline: gw-weekly-synthesis
 - **Top Dewey saves promoted**: <list with wikilinks>
 - **Voice notes wikilinked from existing concepts**: <N links across M concept pages>
 - **Voice-note-origin stubs created**: <list with wikilinks>
+- **Stale stubs expanded to full pages**: <list with wikilinks, or "none">
 - **Briefs queued for further research (no wiki page yet)**: <list of [topic-slug] → which queue, or "none">
 
 ## Voice corpus highlights
