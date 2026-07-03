@@ -385,7 +385,17 @@ pipeline: gw-content-forge
 ## Email Draft
 **Subject:** [subject]
 [body]
+
+---
+## PULLED FROM THE BRAIN
+- [wiki page path] ([one clause: what it contributed to this pack])
+- [wiki page path] ([one clause])
+- [Voice Corpus file if used] ([one clause])
+
+NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - fully covered by existing pages"]
 ```
+
+The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
 
 ---
 
@@ -414,7 +424,7 @@ If a wiki summary for this source already exists, skip this step but still check
 Tell him:
 1. The content pack file path
 2. Mode used (TRANSCRIPT or CONTENT PACK), and for TRANSCRIPT mode which content type (podcast / film-study / wildcat-webinar)
-3. What the wiki cross-reference found (angles already covered, what's new)
+3. The PULLED FROM THE BRAIN block, verbatim
 4. What cross-domain material was used (Dewey saves, voice notes, business briefs, daily seeds)
 5. Which products/offers the CTAs point to and why
 6. Whether a new wiki summary was created or an existing one was used

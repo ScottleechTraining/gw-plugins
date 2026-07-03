@@ -85,6 +85,8 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 Write the markdown file using this exact structure. Keep it tight - every section earns its spot.
 
+Opportunity Radar rule: before writing, check `Gridiron Warrior/wiki/business/opportunity-radar.md`. If it gained a RUN-WITH-IT entry since the last digest (unchecked, score 80+), name it in its own line at the top of Today's Move: what the idea is, its score, and the save it came from. Scott decides same-week: build, park, or kill. If nothing new, say nothing.
+
 
 
 ```markdown
