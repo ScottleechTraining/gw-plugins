@@ -16,6 +16,8 @@ You are running unattended at night inside the GW vault (cwd is `Gridiron Warrio
 
 3. Wiki ingest per the standard Content Forge contract (summary stub if the topic is new).
 
+3.5. **Freebie cadence.** If the pick's score is 16/20 or higher, run `/gw-freebie-forge` against the pack you just produced and move the resulting `<topic-slug>-freebie.md` into `Deliverables/_inbox/[slug]/`. Markdown only (no PDF render overnight). Picks below 16/20 or unscored get no freebie; half the inbox never ships and freebies on dead packs are wasted work.
+
 4. When every pick is done (or on a no-picks night), print exactly this marker on its own line so the job validator can see it:
 
 GW-DONE: nightly-forge

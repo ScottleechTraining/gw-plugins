@@ -1,0 +1,310 @@
+# Slide Architecture — Instagram Carousel Skill v2
+
+Shared HTML structure, component patterns, and template definitions. Style packs (see `starter-packs/starter-packs.md` or the buyer's `carousel/packs/`) override tokens but not structure.
+
+---
+
+## Slide sizing — CANONICAL PATTERN (copy verbatim, do not improvise)
+
+Every slide renders at native **1080×1350px**. The browser displays it at preview size by scaling the slide element; html2canvas captures at native size by clearing the scale transform on capture.
+
+**Why this section exists:** earlier versions of the skill let each run write its own scaling math. Two failure modes kept appearing:
+- `position: absolute; inset: 0` on `.slide` — the `inset` shorthand overrides `width/height`, so the slide collapses to the wrap size and everything inside breaks.
+- `transform: scale(calc(720px / 1080))` — `scale()` requires a unitless number, not a pixel ratio. The transform silently fails to apply.
+
+The pattern below is the only one that ships. Don't substitute.
+
+```css
+.slide-wrap {
+  width: min(720px, 90vw);
+  aspect-ratio: 1080 / 1350;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1350px;
+  transform-origin: top left;
+  transform: scale(var(--slide-scale, 0.6667));
+  overflow: hidden;
+  background: var(--bg-dominant);
+}
+```
+
+Set `--slide-scale` from JS so it stays responsive when the viewport changes:
+
+```javascript
+function updateSlideScale() {
+  const wrap = document.querySelector('.slide-wrap');
+  if (!wrap) return;
+  const w = wrap.getBoundingClientRect().width;
+  document.documentElement.style.setProperty('--slide-scale', String(w / 1080));
+}
+updateSlideScale();
+window.addEventListener('resize', updateSlideScale);
+```
+
+In the html2canvas capture function, clear the transform before capture and restore it after:
+
+```javascript
+async function captureSlide(slideEl) {
+  const prev = slideEl.style.transform;
+  slideEl.style.transform = 'none';
+  try {
+    return await html2canvas(slideEl, {
+      width: 1080, height: 1350,
+      windowWidth: 1080, windowHeight: 1350,
+      scale: 1, useCORS: true, backgroundColor: null, logging: false
+    });
+  } finally {
+    slideEl.style.transform = prev;
+  }
+}
+```
+
+This combination is tested and works. If you find yourself reaching for `inset: 0`, `calc()` inside `scale()`, or a non-unitless scale factor — stop, come back to this section, copy what's here.
+
+---
+
+## Slide shell (every slide)
+
+```html
+<div class="slide" data-slide-index="N" data-total="T">
+  <!-- optional image or span layer -->
+  <div class="image-layer" style="background-image: url(...); background-size: cover; background-position: center;"></div>
+
+  <!-- overlay for legibility -->
+  <div class="overlay"></div>
+
+  <!-- ghosted oversized slide number (some packs) -->
+  <div class="slide-number-ghost">02</div>
+
+  <!-- primary content -->
+  <div class="content">
+    <div class="eyebrow" contenteditable="true">EYEBROW</div>
+    <h1 class="headline" contenteditable="true">Headline</h1>
+    <p class="body" contenteditable="true">Body copy.</p>
+  </div>
+
+  <!-- persistent frame -->
+  <div class="handle-stamp">{handle}</div>
+  <div class="slide-number-stamp">01 / 07</div>
+  <div class="swipe-arrow">→</div>
+
+  <!-- progress bar + logo -->
+  <div class="progress-bar">
+    <img class="brand-logo" src="data:image/png;base64,{BRAND_LOGO_BASE64}" alt="">
+    <div class="progress-track"><div class="progress-fill" style="width: calc(100% * N / T);"></div></div>
+    <div class="progress-count">N / T</div>
+  </div>
+</div>
+```
+
+Hide `.slide-number-ghost` by default; individual pack CSS un-hides it. Mono Series uses its own `.mono-ghost-num` element with different positioning rules — see the pack spec.
+
+Hide `.slide-number-stamp` where the pack uses the ghost version instead, OR where the pack strips the stamp entirely (some packs remove slide-number-stamp, swipe-arrow, and handle-stamp on inner slides).
+
+Last slide: hide `.swipe-arrow`, fill progress to 100%.
+
+---
+
+## Templates
+
+### Mega-Cover
+Stacked headline, auto-fit to safe zone. Each line is a `<span>` inside the `<h1>`. Default cover for all packs.
+
+```html
+<h1 class="headline mega-cover">
+  <span>YOUR</span>
+  <span>POWER</span>
+  <span>STATEMENT</span>
+</h1>
+```
+
+```css
+.mega-cover {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  /* font-size set by auto-fit JS — starts at 220pt, shrinks until fits */
+}
+.mega-cover span { display: block; white-space: nowrap; }
+```
+
+`white-space: nowrap` on the span is load-bearing, not cosmetic. Without it a multi-word line (e.g. `ONE TICKET.`) wraps internally and `scrollWidth` then reports the *wrapped* (narrower) width, which hides the real overflow from the fit loop and the cover renders too big.
+
+Auto-fit JS: copy the `autoFitMegaCover()` function and its call sites verbatim from section 8 of `references/html-implementation.md`. Do not re-derive it from this description. It shrinks `font-size` on each `.mega-cover` from 220px down until BOTH (a) every child `<span>` fits the horizontal safe zone (`scrollWidth <= 1080 - 128`) AND (b) the whole cover fits the vertical space left inside `.slide-content` (`scrollHeight <= availH`). It re-runs on `document.fonts.ready` because the real display-font glyphs are wider than the fallback font and otherwise leave the cover oversized after the swap. Minimum size 80px. Below that it stops shrinking (the skill narrative already told the user at Step 3 to trim). A width-only fit (no height guard) is the historical bug: multi-line headlines clip the top word and collide with the footer.
+
+### Image-Dominant Hook
+Full-bleed photo, headline in corner (bottom-left default). Uses `overlay` at 60% opacity bottom gradient.
+
+### Numbered Content
+Ghosted oversized slide number in background. Headline + body in foreground.
+
+### Split-Image Spread
+See `seamless-image-spread.md`. Two or three adjacent slides share an image via `background-size` + `background-position` math.
+
+### Highlighted-Word Paragraph
+Body copy with specific words wrapped in `<span class="hl">` for an accent-block highlight, or `<span class="hl hl--underline">` for an accent underline. A pack chooses which it uses.
+
+```html
+<p class="body">The best time to start was <span class="hl">yesterday</span>. The second best time is <span class="hl">today</span>.</p>
+```
+
+```css
+/* Solid block behind the word (default highlight) */
+.hl {
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.05em 0.25em;
+}
+
+/* Underline highlight modifier — color shift + underline, no block */
+.hl--underline {
+  background: transparent;
+  color: var(--accent);
+  border-bottom: 6px solid var(--accent);
+  padding-bottom: 8px;
+  padding-left: 0;
+  padding-right: 0;
+}
+```
+
+### Pull Quote
+Large display-font quote, attribution below in the body font small caps. Quote marks are a separate `::before` element in the display font at 2x the quote size.
+
+### Color-Block Statement
+Solid accent background, huge contrast text. No photo. Used sparingly — max one per carousel.
+
+### Long-Form Text
+Reading column, numbered subhead. Editorial Long-Form pack leans on this.
+
+```html
+<div class="content long-form">
+  <div class="subhead"><span class="num">03.</span> How to train hard without breaking</div>
+  <hr class="hairline">
+  <p class="body-column">Paragraph of ~40 words. Left-aligned. Ragged right. Max 58ch.</p>
+</div>
+```
+
+### Checklist
+Editorial Long-Form only. Items use a square outline marker instead of a bullet.
+
+### CTA / Follow
+Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow {handle} for more.").
+
+---
+
+## Progress bar with embedded logo
+
+```html
+<div class="progress-bar">
+  <img class="brand-logo" src="data:image/png;base64,{BRAND_LOGO_BASE64}">
+  <div class="progress-track">
+    <div class="progress-fill"></div>
+  </div>
+  <div class="progress-count">N / T</div>
+</div>
+```
+
+```css
+.progress-bar { display: flex; align-items: center; gap: 16px; padding: 24px 40px; }
+.brand-logo { height: 20px; width: auto; }
+.progress-track { flex: 1; height: 2px; background: currentColor; opacity: 0.2; position: relative; }
+.progress-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+.progress-count { font-family: var(--font-body); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
+
+/* logo blend — dark slides */
+.slide.dark .brand-logo { mix-blend-mode: screen; opacity: 0.8; }
+/* logo blend — light slides */
+.slide.light .brand-logo { mix-blend-mode: multiply; filter: invert(1); opacity: 0.65; }
+```
+
+---
+
+## Edit highlight
+
+```css
+[contenteditable="true"]:hover,
+[contenteditable="true"]:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+```
+
+---
+
+## Safe zone
+
+40px on all edges at 1080×1350. All text and critical elements respect it. The frame system (progress bar, handle, slide number) sits at the edge by design — those are frame, not content.
+
+---
+
+## Verification snippets (used by Step 5.5)
+
+These are paste-into-`preview_eval` blocks. They exist so every run audits the rendered file the same way.
+
+### Overlap-checker JS snippet
+
+Returns one row per slide listing the vertical position of every named element, and any overlap where one element's bottom edge crosses the next element's top edge. **Every slide must return `overlaps: []`.** Anything else, fix.
+
+```javascript
+(() => {
+  const checkSlide = (slide, idx) => {
+    const els = [...slide.querySelectorAll(
+      '.section-tag, .content-headline, .mega-cover, .cta-headline, ' +
+      '.body-copy, .cta-body, ' +
+      '.subhead-line, .swipe-cta, .cta-handle, .cta-instruction, .progress-bar'
+    )];
+    const rects = els.map(el => ({
+      name: el.className.split(' ')[0],
+      top:  el.offsetTop,
+      bot:  el.offsetTop + el.offsetHeight,
+      h:    el.offsetHeight,
+    }));
+    rects.sort((a, b) => a.top - b.top);
+    const overlaps = [];
+    for (let i = 0; i < rects.length - 1; i++) {
+      if (rects[i].bot > rects[i + 1].top) {
+        overlaps.push(`${rects[i].name}(${rects[i].bot}) > ${rects[i + 1].name}(${rects[i + 1].top})`);
+      }
+    }
+    // Also flag anything that runs into or past the 1350px slide bottom (footer is 1286–1350)
+    const clipped = rects.filter(r => r.bot > 1286 && r.name !== 'progress-bar');
+    return { slide: idx + 1, rects, overlaps, clipped: clipped.map(r => `${r.name}(bot ${r.bot})`) };
+  };
+  return [...document.querySelectorAll('.slide')].map(checkSlide);
+})()
+```
+
+The audit also flags any non-footer element whose bottom edge falls inside the footer band (1286–1350px). That covers the case where layout is technically non-overlapping but the body copy is bleeding into the progress bar.
+
+### Grid-view snippet (for a single all-slides screenshot)
+
+Temporarily rearranges the stage into a 4-column grid so all 7 slides fit in one screenshot. Non-persistent — page reload restores the normal stacked view.
+
+```javascript
+(() => {
+  const stage = document.querySelector('.stage');
+  stage.style.display = 'grid';
+  stage.style.gridTemplateColumns = 'repeat(4, 1fr)';
+  stage.style.gap = '12px';
+  stage.style.padding = '12px';
+  document.querySelectorAll('.slide-wrap').forEach(w => { w.style.width = '100%'; });
+  document.querySelectorAll('.per-slide-bar').forEach(b => { b.style.display = 'none'; });
+  const wrap = document.querySelector('.slide-wrap');
+  document.documentElement.style.setProperty('--slide-scale', String(wrap.getBoundingClientRect().width / 1080));
+  window.scrollTo(0, 0);
+  return 'grid view active — screenshot now, then reload';
+})()
+```
+
+Call this, then `mcp__Claude_Preview__preview_screenshot`, then reload the page to restore the normal view.

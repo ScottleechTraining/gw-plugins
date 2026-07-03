@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keep on Truckin' — Editorial Long-Form — Leon's Fixit Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;900&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* Leon's Fixit Shop — from carousel/brand-profile.md */
+    --ink:    #1A1A1A;
+    --paper:  #F0E6CE;
+    --dark:   #211C16;
+    --accent: #E8551F;
+    --accent-2: #9C4312;
+
+    --bg-dominant: var(--paper);
+    --fg-dominant: var(--ink);
+
+    --font-heading: 'Roboto Slab', Georgia, serif;
+    --font-body: 'Barlow', sans-serif;
+
+    --slide-scale: 0.389;
+  }
+
+  body {
+    background: #b9b0a0;
+    font-family: var(--font-body);
+    color: var(--ink);
+    padding: 0 0 80px;
+  }
+
+  /* ---------- toolbar ---------- */
+  .toolbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 14px 22px;
+  }
+  .toolbar .title { font-family: var(--font-heading); font-weight: 700; font-size: 18px; letter-spacing: 0.01em; }
+  .toolbar .hint { font-size: 12px; opacity: 0.6; }
+  .toolbar button {
+    font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer; border: 0; padding: 10px 14px;
+    background: var(--accent); color: #fff;
+  }
+  .toolbar button.ghost { background: transparent; color: var(--paper); border: 1px solid rgba(240,230,206,0.4); }
+
+  /* ---------- stage ---------- */
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 28px 12px; }
+  .per-slide-bar { margin-top: 8px; }
+  .per-slide-bar button {
+    font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer; border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 6px 12px;
+  }
+
+  /* ---------- slide sizing (canonical) ---------- */
+  .slide-wrap { width: min(420px, 92vw); aspect-ratio: 1080 / 1350; position: relative; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+  .slide {
+    position: absolute; top: 0; left: 0; width: 1080px; height: 1350px;
+    transform-origin: top left; transform: scale(var(--slide-scale));
+    overflow: hidden; background: var(--paper); color: var(--ink);
+  }
+
+  /* ---------- frame system ---------- */
+  .handle-stamp { position: absolute; top: 48px; right: 64px; font-family: var(--font-body); font-weight: 600; font-size: 22px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); opacity: 0.7; }
+  .folio { position: absolute; left: 64px; bottom: 78px; font-family: var(--font-body); font-weight: 600; font-size: 22px; letter-spacing: 0.08em; color: var(--ink); opacity: 0.6; }
+  .swipe-arrow { position: absolute; right: 64px; bottom: 70px; font-family: var(--font-heading); font-weight: 700; font-size: 44px; color: var(--accent); }
+
+  .progress-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 18px; padding: 26px 64px; }
+  .brand-logo-text { font-family: var(--font-heading); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+  .progress-track { flex: 1; height: 3px; background: var(--ink); opacity: 0.18; position: relative; }
+  .progress-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
+  .progress-count { font-family: var(--font-body); font-weight: 700; font-size: 18px; letter-spacing: 0.1em; color: var(--ink); }
+
+  /* ---------- content ---------- */
+  .content { position: absolute; inset: 0; padding: 150px 64px 150px; display: flex; flex-direction: column; }
+
+  /* cover */
+  .eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 30px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 26px; }
+  .mega-cover { font-family: var(--font-heading); font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; display: flex; flex-direction: column; color: var(--ink); }
+  .mega-cover span { display: block; white-space: nowrap; }
+  .cover-sub { margin-top: 40px; font-family: var(--font-body); font-weight: 500; font-size: 36px; line-height: 1.4; max-width: 20ch; color: var(--ink); }
+
+  /* numbered content */
+  .subhead { font-family: var(--font-heading); font-weight: 700; font-size: 64px; line-height: 1.0; color: var(--ink); display: flex; align-items: baseline; gap: 18px; }
+  .subhead .num { font-family: var(--font-heading); font-weight: 900; font-size: 72px; color: var(--accent); }
+  .hairline { border: 0; border-top: 2px solid var(--ink); opacity: 0.85; margin: 34px 0 36px; width: 100%; }
+  .body-column { font-family: var(--font-body); font-weight: 400; font-size: 38px; line-height: 1.5; max-width: 24ch; color: var(--ink); }
+  .body-column strong { color: var(--accent); font-weight: 700; }
+
+  /* cta */
+  .cta-headline { font-family: var(--font-heading); font-weight: 900; font-size: 110px; line-height: 0.95; text-transform: uppercase; color: var(--ink); }
+  .cta-headline .hl { color: var(--accent); }
+  .cta-body { margin-top: 30px; font-family: var(--font-body); font-weight: 500; font-size: 36px; line-height: 1.4; color: var(--ink); max-width: 22ch; }
+
+  [contenteditable="true"]:hover, [contenteditable="true"]:focus { outline: 2px solid var(--accent); outline-offset: 6px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="title">Keep on Truckin' — Leon's Fixit Shop</span>
+  <span class="hint">click any text to edit</span>
+  <button onclick="exportAllPNGs()">Export all PNGs</button>
+  <button onclick="exportPDF()">Export PDF (Canva)</button>
+  <button id="saveChangesBtn" class="ghost" onclick="saveChanges()">💾 Save changes</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- 1 COVER -->
+  <div class="slide-wrap"><div class="slide" data-i="1" data-total="6">
+    <div class="content">
+      <div class="eyebrow" contenteditable="true">GUIDE</div>
+      <h1 class="headline mega-cover">
+        <span contenteditable="true">KEEP ON</span>
+        <span contenteditable="true">TRUCKIN'</span>
+      </h1>
+      <p class="cover-sub" contenteditable="true">Five truths for keeping a classic Ford alive. Straight off the floor at Leon's.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 16.6%"></div></div>
+      <div class="progress-count">1 / 6</div>
+    </div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- 2 -->
+  <div class="slide-wrap"><div class="slide" data-i="2" data-total="6">
+    <div class="content">
+      <div class="subhead"><span class="num">01.</span> <span contenteditable="true">Rust never sleeps</span></div>
+      <hr class="hairline">
+      <p class="body-column" contenteditable="true">A classic Ford does not die from miles. It dies from <strong>rust</strong>. Check the cab corners, the bed seams, the floor pans. Catch it early and it is a weekend. Ignore it and it is a new panel.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="folio">Page 2 / 6</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 33.3%"></div></div>
+      <div class="progress-count">2 / 6</div>
+    </div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- 3 -->
+  <div class="slide-wrap"><div class="slide" data-i="3" data-total="6">
+    <div class="content">
+      <div class="subhead"><span class="num">02.</span> <span contenteditable="true">Grease is cheap</span></div>
+      <hr class="hairline">
+      <p class="body-column" contenteditable="true">Parts are expensive. <strong>Grease is not.</strong> Hit the zerks, pack the bearings, keep the fluids fresh. Old Fords were built to be maintained, not replaced. Reward them for it.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="folio">Page 3 / 6</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 50%"></div></div>
+      <div class="progress-count">3 / 6</div>
+    </div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- 4 -->
+  <div class="slide-wrap"><div class="slide" data-i="4" data-total="6">
+    <div class="content">
+      <div class="subhead"><span class="num">03.</span> <span contenteditable="true">Drive it</span></div>
+      <hr class="hairline">
+      <p class="body-column" contenteditable="true">A truck that sits is a truck that seizes. Seals dry out. Tires flat-spot. Gas goes stale. The best thing you can do for a classic Ford is <strong>put miles on it</strong>. Regularly.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="folio">Page 4 / 6</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 66.6%"></div></div>
+      <div class="progress-count">4 / 6</div>
+    </div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- 5 -->
+  <div class="slide-wrap"><div class="slide" data-i="5" data-total="6">
+    <div class="content">
+      <div class="subhead"><span class="num">04.</span> <span contenteditable="true">Honor the original</span></div>
+      <hr class="hairline">
+      <p class="body-column" contenteditable="true">Resto-mods have their place. But a numbers-matching Ford with its <strong>original drivetrain</strong> tells a story no crate motor can. When you can save the original, save it.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="folio">Page 5 / 6</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 83.3%"></div></div>
+      <div class="progress-count">5 / 6</div>
+    </div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- 6 CTA -->
+  <div class="slide-wrap"><div class="slide" data-i="6" data-total="6">
+    <div class="content">
+      <h1 class="cta-headline" contenteditable="true">Bring it to <span class="hl">Leon's</span>.</h1>
+      <p class="cta-body" contenteditable="true">Classic Ford bodywork done right. Austin, TX. Keep on Truckin'.</p>
+    </div>
+    <div class="handle-stamp">@leonsfixitshop</div>
+    <div class="progress-bar">
+      <span class="brand-logo-text">Leon's Fixit Shop</span>
+      <div class="progress-track"><div class="progress-fill" style="width: 100%"></div></div>
+      <div class="progress-count">6 / 6</div>
+    </div>
+  </div></div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  /* ----- responsive slide scale ----- */
+  function updateSlideScale() {
+    const wrap = document.querySelector('.slide-wrap');
+    if (!wrap) return;
+    const w = wrap.getBoundingClientRect().width;
+    document.documentElement.style.setProperty('--slide-scale', String(w / 1080));
+  }
+  updateSlideScale();
+  window.addEventListener('resize', updateSlideScale);
+
+  /* ----- Mega-Cover auto-fit (width + height, re-fit on font load) ----- */
+  function autoFitMegaCover() {
+    document.querySelectorAll('.mega-cover').forEach(el => {
+      if (el.dataset.manual === '1') return;
+      const content = el.closest('.content');
+      const avail = content ? content.clientHeight : 1050;
+      let size = 220;
+      el.style.fontSize = size + 'px';
+      const fits = () => {
+        const spansFit = [...el.querySelectorAll('span')].every(s => s.scrollWidth <= (1080 - 128));
+        return spansFit && el.scrollHeight <= avail;
+      };
+      while (size > 80 && !fits()) { size -= 2; el.style.fontSize = size + 'px'; }
+    });
+  }
+  autoFitMegaCover();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(autoFitMegaCover);
+  window.addEventListener('load', autoFitMegaCover);
+
+  /* ----- capture one slide at native 1080x1350 ----- */
+  async function captureSlide(slideEl) {
+    const prev = slideEl.style.transform;
+    slideEl.style.transform = 'none';
+    try {
+      return await html2canvas(slideEl, {
+        width: 1080, height: 1350, windowWidth: 1080, windowHeight: 1350,
+        scale: 1, useCORS: true, backgroundColor: null, logging: false
+      });
+    } finally { slideEl.style.transform = prev; }
+  }
+
+  async function exportAllPNGs() {
+    const slides = [...document.querySelectorAll('.slide')];
+    for (let i = 0; i < slides.length; i++) {
+      const canvas = await captureSlide(slides[i]);
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = `leons-keep-on-truckin-slide-${i + 1}.png`;
+      a.click();
+      await new Promise(r => setTimeout(r, 250));
+    }
+  }
+
+  async function exportPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [1080, 1350] });
+    const slides = [...document.querySelectorAll('.slide')];
+    for (let i = 0; i < slides.length; i++) {
+      const canvas = await captureSlide(slides[i]);
+      if (i > 0) pdf.addPage([1080, 1350], 'portrait');
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, 1080, 1350);
+    }
+    pdf.save('leons-keep-on-truckin-carousel.pdf');
+  }
+
+  /* ----- save changes to disk (File System Access API) ----- */
+  let _fileHandle = null;
+  async function saveChanges() {
+    try {
+      const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      if (html.length < 2000) { alert('Refusing to save: serialized HTML looks empty.'); return; }
+      if (!_fileHandle) {
+        if (!window.showSaveFilePicker) { alert('Your browser does not support save-in-place. Use Chrome/Edge.'); return; }
+        _fileHandle = await window.showSaveFilePicker({ suggestedName: 'keep-on-truckin-carousel.html', types: [{ description: 'HTML', accept: { 'text/html': ['.html'] } }] });
+      }
+      const w = await _fileHandle.createWritable();
+      await w.write(html); await w.close();
+      const b = document.getElementById('saveChangesBtn'); const t = b.textContent; b.textContent = '✓ Saved'; setTimeout(() => b.textContent = t, 1400);
+    } catch (e) { if (e.name !== 'AbortError') alert('Save failed: ' + e.message); }
+  }
+  document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveChanges(); } });
+</script>
+</body>
+</html>

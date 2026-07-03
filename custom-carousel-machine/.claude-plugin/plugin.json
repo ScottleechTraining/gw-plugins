@@ -1,0 +1,7 @@
+{
+  "name": "custom-carousel-machine",
+  "version": "0.1.0",
+  "description": "The Custom Carousel Machine — a white-label Instagram carousel engine. Generate editable, export-ready IG carousels as a single self-contained HTML file, wearing your own brand. Run Brand Setup once, then make carousels in any of your style packs.",
+  "author": "Scott Leech Training LLC",
+  "license": "SEE README (engine MIT-style; you supply your own fonts/logo and own their licenses)"
+}
