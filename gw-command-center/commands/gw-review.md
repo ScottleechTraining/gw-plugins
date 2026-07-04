@@ -91,14 +91,25 @@ data = json.loads(STATE.read_text(encoding="utf-8"))
 topics = {t["slug"]: t for t in data["topics"]}
 actions = []
 
-# SHIP: mirror /gw-ship (ready_to_ship=True) and clear the polish flag
+# SHIP: mirror /gw-ship atomically - move _inbox topics into ready/, flip the
+# flag, clear any polish note. Folder contract: ready/ only holds approved,
+# Drive-synced topics (the per-slug Drive sync runs right after this script).
 for slug in ship:
     t = topics.get(slug)
     if not t:
         actions.append(f"SKIP ship {slug} (not in state)"); continue
+    if t["stage"] == "_inbox":
+        src = DELIV / t["folder"]
+        dst = DELIV / "ready" / src.name
+        if dst.exists():
+            actions.append(f"SKIP ship {slug} (ready/{src.name} already exists)"); continue
+        shutil.move(str(src), str(dst))
+        t["stage"] = "ready"
+        t["folder"] = f"ready/{src.name}"
     t["ready_to_ship"] = True
     t["carousel_needs_polish"] = False
-    actions.append(f"ship {slug} -> ready_to_ship=true")
+    t["polish_note"] = None
+    actions.append(f"ship {slug} -> ready/, ready_to_ship=true")
 
 # POLISH: keep the flag, stash the note on the topic entry
 for slug, note in polish.items():
@@ -135,12 +146,17 @@ PY
 Pass the pasted string as `$RESULT_STRING` (the whole line, including the
 `gw-review-result:` prefix - the regex ignores the prefix).
 
-## Step 4: Re-scan and report
+## Step 4: Render, sync shipped topics to Drive, re-scan
 
-Kills moved folders on disk, so refresh the queue:
+Ships and kills moved folders on disk. Render/split (idempotent), then sync
+EACH shipped slug so ready/ topics land on Drive immediately, then refresh:
 
 ```bash
 cd "D:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.render_carousel
+python -m scripts.gwqueue.split_captions
+# one per shipped slug:
+python -m scripts.gwqueue.sync_to_drive --slug "EXACT_SLUG"
 python -m scripts.gwqueue.scan_folders
 ```
 
@@ -148,13 +164,14 @@ Print a summary:
 
 ```
 Applied review:
-  ship:   <n>  (ready_to_ship flipped - run /gw-queue to push to Drive)
-  polish: <n>  (notes recorded on the topic)
+  ship:   <n>  (moved to ready/, synced to Drive - post from phone anytime)
+  polish: <n>  (stay in _inbox with notes recorded on the topic)
   kill:   <n>  (moved to trash-review/)
 ```
 
-Then recommend: shipped topics need `/gw-queue` to sync to Drive; polish topics
-go back to the carousel builder with their `polish_note`.
+If a Drive sync fails, say so plainly; the topic stays in ready/ with
+`ready_to_ship: true` and the next /gw-queue run retries it. Polish topics go
+back to the carousel builder with their `polish_note`.
 
 ## Step 5: Commit (optional, ask first)
 
