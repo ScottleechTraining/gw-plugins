@@ -89,6 +89,20 @@ else
 fi
 ```
 
+## Step 4.5: Retire topics Scott dragged to `used` on Drive (Drive -> local)
+
+The contract: when Scott drags a topic folder into the `used` subfolder under
+`GW Posting Queue` on Drive (or trashes it), that retires the topic locally.
+
+```bash
+cd "D:/Claude Projects/Gridiron Warrior"
+if [ -f "scripts/gwqueue/retire_from_drive.py" ]; then
+  python -m scripts.gwqueue.retire_from_drive
+  # Re-scan to reflect the archived stage changes in queue-state.json
+  python -m scripts.gwqueue.scan_folders
+fi
+```
+
 ## Step 5: Read fresh state and build the report
 
 ```bash

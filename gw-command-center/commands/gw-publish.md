@@ -119,6 +119,19 @@ New-Item -ItemType Directory -Force -Path (Split-Path $dst -Parent) | Out-Null
 Move-Item $src $dst
 ```
 
+## Step 4.5: Retire the Drive folder into `used` (local -> Drive)
+
+Now that the topic is archived locally, mirror the move on Drive so the two-way
+sync stays consistent: drag its Drive folder into the `used` subfolder under
+`GW Posting Queue`. Skip silently if the topic has no `drive_folder_id`.
+
+Pass the topic slug (the folder name with any leading `YYYY-MM-DD-` prefix stripped):
+
+```bash
+cd "D:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.retire_from_drive --push-slug "[topic-slug]"
+```
+
 ## Step 5: Update Wiki Index + Log
 
 - Add the summary link to `wiki/index.md` under Summaries → Published Campaigns (create section if missing)
