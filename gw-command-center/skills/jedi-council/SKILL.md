@@ -85,7 +85,9 @@ Save the framed question for the transcript.
 
 ### Step 2: Convene the council (5 sub-agents in parallel)
 
-Spawn all 5 advisors simultaneously as sub-agents. Each gets:
+**Model pinning (non-negotiable):** every advisor sub-agent spawn must set `model: opus` explicitly. Never let an advisor inherit the session model. A council run must not silently inherit an expensive planning model (e.g. Fable) across 10+ sub-agent spawns; pin every spawn so cost and behavior are predictable.
+
+Spawn all 5 advisors simultaneously as sub-agents, each with `model: opus` set on the spawn. Each gets:
 1. Their advisor identity and thinking style (from the descriptions above)
 2. The framed question
 3. A clear instruction: respond independently. Do not hedge. Do not try to be balanced. Lean fully into your assigned perspective. If you see a fatal flaw, say it. If you see massive upside, say it. Your job is to represent your angle as strongly as possible. The synthesis comes later.
@@ -110,7 +112,7 @@ Keep your response between 150-300 words. No preamble. Go straight into your ana
 
 This is the step that makes the council more than just "ask 5 times." It's the core of Karpathy's insight.
 
-Collect all 5 advisor responses. Anonymize them as Response A through E (randomize which advisor maps to which letter so reviewers can't identify who said what). Then spawn 5 new sub-agents, one for each advisor, each receiving ALL 5 anonymous responses.
+Collect all 5 advisor responses. Anonymize them as Response A through E (randomize which advisor maps to which letter so reviewers can't identify who said what). Then spawn 5 new sub-agents, one for each advisor, each receiving ALL 5 anonymous responses. **These peer-review spawns also set `model: opus` explicitly**: same rule as Step 2, no inheritance.
 
 **Peer review prompt template:**
 ```
@@ -137,6 +139,8 @@ Keep your review to 150-200 words. Be direct. The goal is to surface what no sin
 ```
 
 ### Step 4: Chairman synthesis
+
+**The chairman step runs in the invoking session, not a spawned sub-agent.** You (the session that convened the council) do the synthesis directly. Only the advisor and peer-review rounds fan out to pinned `model: opus` sub-agents; the chairman is you, here.
 
 The chairman receives: the framed question, all 5 advisor responses (now with names revealed), and all 5 peer reviews. The chairman's job is to produce the final council output.
 
@@ -258,6 +262,8 @@ The user sees the HTML report. The transcript is there if they want to dig deepe
 
 ## Important notes
 
+- **Always pin `model: opus` on every advisor and peer-review spawn.** Never inherit the session model. Council runs must not silently ride an expensive planning model across 10+ spawns.
+- **The chairman synthesis runs in the invoking session, not a spawn.** Only the advisor and peer-review rounds fan out.
 - **Always spawn all 5 advisors in parallel.** Sequential spawning wastes time and lets earlier responses bleed into later ones.
 - **Always anonymize for peer review.** If reviewers know which advisor said what, they'll defer to certain thinking styles instead of evaluating on merit.
 - **The chairman can disagree with the majority.** If 4 out of 5 advisors say "do it" but the reasoning of the 1 dissenter is strongest, the chairman should side with the dissenter and explain why.

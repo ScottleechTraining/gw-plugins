@@ -1,5 +1,6 @@
 ---
 name: gw-triage
+model: opus
 description: "Walk the Deliverables inbox and decide Ready/Cold/Kill per topic. Terminal mirror of the dashboard's Inbox view. Decisions are batched and reviewed before any folder moves happen."
 ---
 
@@ -14,6 +15,25 @@ folder moves happen.
 - **Inbox:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/`
 - **Ready:** `D:/Claude Projects/Gridiron Warrior/Deliverables/ready/`
 - **Cold:** `D:/Claude Projects/Gridiron Warrior/Deliverables/cold-storage/`
+
+## Promotion rubric (score each topic before you preview it)
+
+Scott makes the final R/C/K/S call, but every preview must carry a suggested verdict so he can decide in seconds. Score each topic on four axes, then apply the verdict rule below. Read what is already in `ready/` and `archived/` first so novelty and duplication are judged against real inventory, not memory.
+
+1. **Hook strength for the ICP**: does the first line stop a time-strapped HS football or S&C coach mid-scroll? Names a specific mistake, decision, or fear (letting athletes down, kids getting dominated), not a vague theme. Weak/generic hook is the most common reason a pack is not Ready.
+2. **Teaching novelty**: does it teach something not already sitting in `ready/` or `archived/`? A near-duplicate of a shipped or queued topic is Cold at best, never Ready. Same angle already published = Cold. Genuinely new teaching = Ready-eligible.
+3. **Seasonal timing**: is it on-calendar right now (August is coming, camp prep, in-season CNS, offseason build)? On-window and strong pushes toward Ready. On-window is a tie-breaker up, not a rescue for a weak hook. Off-season-but-evergreen is fine; off-season-and-dated leans Cold.
+4. **Offer alignment**: does it feed a live offer: Insiders ($29/mo, primary MRR), the Schools funnel (Summer/Inseason in a Day → GW Schools), Summit (July 18), or a course (GW2.0 / Contact Prep / Scores and Stops / Second Brain)? A pack with a clear CTA into an offer beats one that teaches into a dead end.
+
+**Verdict rule (suggested, Scott confirms):**
+- **Ready**: strong hook AND novel teaching AND (on-window OR clean offer alignment). The pack earns a spot in the publish queue as-is.
+- **Ready+ (needs carousel polish)**: meets the Ready bar on substance but the carousel asset is rough. Route R+ so the queue flags it, do not demote good teaching over a fixable asset.
+- **Cold-storage**: solid teaching but off-window, a soft hook, thin offer tie-in, or too close to something already shipped. Not dead, just not now. Revisit when the season or the queue shifts.
+- **Kill**: only for genuine junk: broken/empty pack, off-brand, off-voice, or a topic Scott has explicitly killed before. Kill is destructive and rare.
+
+**Tie-breaks:** Ready vs Cold, and the hook is anything short of strong → Cold. Cold vs Kill → Cold. On-window but duplicative → Cold (timing does not beat novelty). Two Ready-eligible packs competing for attention → the one with the tighter offer CTA wins.
+
+**Default when uncertain: Cold-storage. Never Kill on doubt.** Cold is reversible with one move back to `_inbox/`. Kill is a `git rm`. When you cannot decide, the answer is Cold.
 
 ## Step 1: Check the inbox
 

@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.4.0 (latest tag: gw-command-center--v0.4.0)
+**Version:** 0.6.0
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -10,7 +10,7 @@ Single source of truth for Gridiron Warrior skills and commands across Claude Co
 
 ## What's in here
 
-**10 skills** + **27 commands** = 37 components, all owned by this plugin.
+**11 skills** + **33 commands** = 44 components, all owned by this plugin.
 
 ### Skills
 
@@ -26,6 +26,7 @@ Single source of truth for Gridiron Warrior skills and commands across Claude Co
 | `pptx` | Create, edit, validate PowerPoint decks |
 | `skill-creator` | Build, evaluate, and benchmark new skills |
 | `kit-guardrails` | Safety rails on every Kit MCP call — never send / schedule / delete / bulk-mutate without explicit confirmation |
+| `gw-voice-gate` | Mechanical PASS/FAIL Scott-voice QA gate (banned words, em-dashes, sign-off, slop tells). Mandatory final step in every voice skill |
 
 ### Commands
 
@@ -37,6 +38,10 @@ All 27 `gw-*` slash commands from the daily GW operating pipeline. Highlights:
 - `/gw-queue`, `/gw-triage`, `/gw-mark`, `/gw-ship`, `/gw-unship`, `/gw-publish` — Deliverables queue management
 - `/gw-dewey-ingest`, `/gw-dewey-daily`, `/gw-dewey-backfill`, `/gw-x-bookmarks`, `/gw-screenshot-ingest`, `/gw-voice-ingest` — ingest pipelines
 - `/gw-seed-writer`, `/gw-stage`, `/gw-weekly-synthesis` — content shaping
+- `/gw-carousel-batch` — parallel carousel builds with central photo assignment + render-and-eyeball verification
+- `/gw-pipeline-doctor`, `/gw-plugin-ship` — ops runbooks (overnight failure triage, plugin release ritual)
+
+Every command carries `model:` frontmatter (opus for judgment/voice/synthesis, sonnet for mechanical work) per the MODEL POLICY in the root CLAUDE.md. New commands must include one.
 
 ---
 
@@ -156,7 +161,10 @@ After this, the router has exactly one source for every GW skill — the plugin.
 | **0.3.0** (2026-06-07) | `gw-youtube-takeaways` swapped from Chrome MCP DOM-scraping to native `mcp__notebooklm__*` MCP server. SKILL.md and `references/notebooklm-extraction.md` rewritten around `notebook_list`, `notebook_get`, `source_add(wait=True)`, `source_get_content`, `notebook_query(source_ids=[…])`, and `source_describe`. No more click coordinates, no more JavaScript injection to scrape `chat-message-pair`, no more 60-second waits. Source titles return untruncated. AI queries are cleanly scoped to a single source via `source_ids` parameter rather than prompt-engineering trick. Mode B (raw URLs) now adds to the "Youtube Videos" notebook seamlessly via `source_add(urls=[…], wait=True)`. Chrome MCP path documented as legacy fallback for sessions where the MCP server is unavailable. End-to-end notebook review time drops from 4-6 minutes to 60-90 seconds. |
 | **0.4.0** (2026-06-07) | `gw-content-forge` Cowork variant folded into the plugin command. Single source of truth restored. The merged command now handles TWO MODES: **TRANSCRIPT MODE** (paste a transcript → get the correct asset set for podcast / Film Study / Wildcat Webinar) and **CONTENT PACK MODE** (give a topic or file → get 3 Twitter threads + 2 IG carousels + 3 reel ideas + email). Per-content-type asset variations come from the Cowork SKILL: podcast = 6 assets (YT desc, HelloAudio desc, email, thread, IG caption, show notes), Film Study = 5 assets, Wildcat Webinar = 6 assets (adds guest share message). Plugin-side richness preserved: wiki-first integration, NotebookLM depth check, External Library cross-domain sweep (Dewey saves / Business briefs / AI briefs / Voice corpus / Daily seeds), wiki ingest pipeline, queue-system save-to-`_inbox/`, forge backlog mark step. Validation clean. |
 
-Planned for **0.5.0** (Scott action required):
+| **0.5.x** (2026-06/07) | Incremental fixes shipped without README rows (novelty-gate collision review in `gw-nightly-forge`, queue/idea-page integration, misc). Table drifted from `plugin.json`; closed at 0.6.0. |
+| **0.6.0** (2026-07-05) | **Opus/Sonnet handoff release.** Every command now carries `model:` frontmatter (17 opus, 16 sonnet) so nothing inherits the Fable session model; Fable is planning-only per the new MODEL POLICY in root CLAUDE.md. New skill `gw-voice-gate` (mechanical Scott-voice PASS/FAIL checklist) wired as mandatory final step into `leech-letter-editor`, `gw-substack-forge`, `gw-content-forge`. New commands: `gw-carousel-batch` (parallel carousel builds, central photo assignment, render-and-eyeball verification), `gw-pipeline-doctor` (overnight failure runbook: D: drive check, health JSONs, 401/token expiry, rerun_failed_jobs.py, git divergence rules), `gw-plugin-ship` (release ritual). `ig-carousel` v3.5 gains a "Known traps" section (hero JPEG-not-PNG, pack--case selector, headless quirks, kill-your-servers, mandatory visual verification). Explicit rubrics added to `gw-triage` (promotion rubric, default Cold never Kill), `gw-seed-writer` (angle-quality gate, zero-is-ok), `gw-weekly-synthesis` (wiki promotion criteria, under-promote default). `jedi-council` advisor/peer-review spawns pinned to `model: opus`. |
+
+Still pending (Scott action required):
 - Disable the parallel Cowork `anthropic-skills` GW bundle (must be done in the Cowork UI; see README "Disabling the old Cowork bundle" section). With v0.4.0, the plugin owns every GW skill and command. Once disabled, the router never sees the parallel copies. Target: do it next time you open Cowork.
 
 ---

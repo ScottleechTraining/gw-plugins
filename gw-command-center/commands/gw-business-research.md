@@ -1,5 +1,6 @@
 ---
 name: gw-business-research
+model: opus
 description: "Daily business research - pull top topic from queue, NotebookLM -> brief"
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: gw-review
+model: opus
 description: "Build and open a single local HTML contact sheet of every pending carousel (SHIP / POLISH / KILL per topic), then apply the pasted gw-review-result string: ship flips ready_to_ship, polish records a note, kill moves the folder to trash-review."
 ---
 

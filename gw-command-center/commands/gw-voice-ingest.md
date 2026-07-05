@@ -1,5 +1,6 @@
 ---
 name: gw-voice-ingest
+model: sonnet
 description: "Process voice notes from Pocket - transcribe, verbatim file, wikilink"
 ---
 

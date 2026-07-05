@@ -1,5 +1,6 @@
 ---
 name: gw-freebie-forge
+model: opus
 description: "Generate a one-page PDF-ready lead magnet from a brief or content source. Funnels into Insiders, a course, or Summit."
 ---
 

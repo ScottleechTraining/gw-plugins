@@ -3,7 +3,7 @@ name: ig-carousel
 description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080x1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports 6 distinct visual style packs selected at Step 0.5, plus seamless image spreads across multiple slides.
 ---
 
-# Instagram Carousel Skill — v3.4
+# Instagram Carousel Skill — v3.5
 
 Create editable, export-ready Instagram carousels as self-contained HTML files.
 
@@ -13,9 +13,21 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 
 The very first thing you output when this skill runs, before Step 0 or anything else, must be this line, verbatim:
 
-`▶ ig-carousel v3.4 · gw-command-center plugin · canonical single source`
+`▶ ig-carousel v3.5 · gw-command-center plugin · canonical single source`
 
 This is Scott's guarantee that the canonical plugin skill ran, not a loose shadow. If you are following carousel instructions and this IDENTITY block is not in the skill file you loaded, you are running a stale copy: stop and tell Scott the exact file path you loaded from.
+
+---
+
+## Known traps (non-negotiable)
+
+Five ways carousel builds fail silently. Every one has cost real time. Check them.
+
+1. **Hero photo must be a compact JPEG, never PNG.** A multi-MB PNG base64 overflows Chromium's CSS custom-property length limit; the `--hero-photo` variable silently drops to empty and the slide renders as a charcoal/near-black background with no error. Ship a brightened JPEG around 230KB (quality ~80, resized to slide dimensions). If a hero slide renders dark or blank, this is the first suspect.
+2. **The Case pack selector trap.** Putting the `pack--case` class on the slide element itself breaks descendant selectors like `.pack--case .slide::before` (there is no descendant), and the hero photo silently fails to near-black. Either keep `pack--case` on a wrapper element around the slide, or write the selector as `.slide.pack--case::before`.
+3. **Headless render quirks on this machine.** Use Edge/Chromium with `--headless=new` or embedded fonts will not load. Kill stray msedge and http.server processes before starting, and use a unique `--user-data-dir` per run plus `127.0.0.1` (not `localhost`). Use a fresh port for every throwaway static server. A desktop-width scrollbar can fake mobile clipping in screenshots, so size the window to the exact slide width.
+4. **Kill your servers.** Orphaned http.server processes and hung headless Edge leave files in delete-pending state ("Access is denied" on delete that looks like an ACL problem but is an open handle). Every render script must terminate the processes it started, even on failure.
+5. **Visual verification is mandatory.** Render every slide to PNG and actually look at the images (Read the PNG files) before reporting the carousel done. A file that passes a portability or lint check can still render wrong. Cover slide especially: verify the hero photo is visible, text is not clipped, and contrast holds.
 
 ---
 

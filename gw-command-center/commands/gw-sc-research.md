@@ -1,5 +1,6 @@
 ---
 name: gw-sc-research
+model: opus
 description: "Daily S&C research - pull top topic from queue, NotebookLM -> brief"
 ---
 

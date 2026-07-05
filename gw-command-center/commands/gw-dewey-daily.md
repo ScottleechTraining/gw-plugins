@@ -1,5 +1,6 @@
 ---
 name: gw-dewey-daily
+model: sonnet
 description: "Daily Dewey sheet check - classify new rows into S&C / Business / AI / Skip"
 ---
 

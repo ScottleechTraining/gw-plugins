@@ -125,6 +125,12 @@ Before saving the final file, run through this list:
 - [ ] Is every sentence under 20 words or broken into tw
 ---
 
+## Final Step: Voice Gate (mandatory)
+
+Before saving the `.md` file, run the `gw-voice-gate` checklist against the finished article and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. An article never ships with a FAIL.
+
+---
+
 ## GW Vault Rules (Non-Negotiable)
 
 When writing as Scott:

@@ -1,5 +1,6 @@
 ---
 name: gw-queue
+model: sonnet
 description: "Refresh queue-state.json by scanning the Deliverables folder tree, optionally trigger Drive sync for ready_to_ship topics, and print a 'what's new in inbox' report. Auto-deploys the dashboard via Netlify CLI when state changes."
 ---
 

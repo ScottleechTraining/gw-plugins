@@ -1,5 +1,6 @@
 ---
 name: gw-weekly-synthesis
+model: opus
 description: "Sunday synthesis - promote best vault material to wiki concepts, write weekly themes"
 ---
 
@@ -40,6 +41,18 @@ cd "D:\Claude Projects\Gridiron Warrior" && git log --since="7 days ago" --name-
 ```
 
 Filter to new content (Dewey notes, screenshots, voice notes, research briefs, daily seeds).
+
+### Promotion criteria (the bar for ANY vault → wiki concept promotion)
+
+These rules govern every promotion step below (Dewey saves, briefs, voice notes). A concept page is expensive to unwind, promotion is reversible only with git archaeology, so the bar is high and the default is "don't."
+
+A vault item earns a wiki concept page ONLY when all of these hold:
+
+1. **Provenance is clean.** It is either Scott's own teaching, OR external material with `external_origin: true` frontmatter AND the `Origin:` + `How Scott uses this in GW:` blocks per the vault schema in `Gridiron Warrior/CLAUDE.md`. External content with no attribution header does NOT promote, it stays in External Library. This is the contamination guardrail; do not launder someone else's framework into Scott's voice.
+2. **It has weight.** It appeared in 2+ independent sources or sessions this week (a real pattern, not a one-off save), OR it is load-bearing for a current live offer (Insiders, Schools funnel, Summit, a course). One brief or one Dewey save alone is not enough, that is the rule Step 3 already encodes for briefs, and it holds for every source type.
+3. **It is not a duplicate.** Search the wiki first (`wiki/index.md` plus the resolver in Step 4b). If a concept page already covers this, EXTEND that page, do not spawn a near-duplicate. A wiki with two pages on the same idea is worse than one tight page.
+
+**Default when in doubt: leave it in the vault and note it as a candidate** in the Step 5 report ("candidate for promotion, needs a second source"). Under-promote. A missed promotion costs one line in next Sunday's report; a bad promotion costs git archaeology to undo. When the case for a page is anything short of clear, it does not get a page this week.
 
 ### 2. Score and rank Dewey saves
 

@@ -1,5 +1,6 @@
 ---
 name: gw-ship
+model: sonnet
 description: "Ship a Deliverables topic in one atomic step: move it to ready/ (if still in _inbox), flip ready_to_ship, render slides, split captions, and sync it to Google Drive immediately. After this command the topic IS on Drive - no separate /gw-queue run needed. The folder contract: ready/ only ever contains approved, Drive-synced topics."
 ---
 

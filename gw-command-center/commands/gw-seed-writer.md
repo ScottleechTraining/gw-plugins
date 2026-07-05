@@ -1,5 +1,6 @@
 ---
 name: gw-seed-writer
+model: opus
 description: "Daily content seed - yesterday's vault deltas -> 1-3 content angles in Scott's voice"
 ---
 
@@ -35,6 +36,17 @@ Read `D:\Claude Projects\CLAUDE.md` — internalize:
 - Sign-off: "Keep the Fire Burning, / Leech"
 
 ### 3. Synthesize 1-3 angles
+
+**Angle-quality gate (every angle must clear all four before it gets scored, this is pass/fail, not a tally):**
+
+1. **Names a specific mistake or decision.** The angle points at one concrete coaching error or fork-in-the-road choice ("you're squatting Thursday and killing Friday", "you count reps instead of load"), NOT a vague theme ("conditioning matters", "toughness"). If you can't state the mistake in one sentence, the angle isn't ready.
+2. **Passes the ICP filter.** Would a time-strapped HS football or S&C coach stop scrolling? It has to hit a real pain (kids getting dominated, no time to program, letting athletes down), not just be interesting to you.
+3. **Teachable in one pack.** It fits a thread, a carousel, or one email. If it needs a course outline or three sessions to land, it's too big, split it or send it to `/gw-film-study-brief` instead of forcing it into a seed.
+4. **Not a duplicate.** Before writing, check `queue-state.json`'s `forge_backlog` and the last few days in `_daily-seeds/` for the same angle. If it's already queued or was seeded this week, skip it. A fresh spin on a shipped topic is fine; a re-run of a pending one is noise.
+
+An angle that fails any gate gets cut, not scored. Only survivors go through the scoring block below.
+
+**When the day's deltas are thin:** fewer good angles beats padded weak ones. One angle that clears the gate is a better output than three that limp through. **Zero angles is an acceptable output**: when nothing in the 24h delta clears the gate, write the seed file with zero angles and a one-line reason (e.g. "only new material was 2 competitor Dewey saves, no Scott-original hook"). Do not manufacture an angle to hit a count.
 
 **Read budget (HARD CAPS — do not exceed):**
 

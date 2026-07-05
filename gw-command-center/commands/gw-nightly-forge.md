@@ -1,5 +1,6 @@
 ---
 name: gw-nightly-forge
+model: opus
 description: "Overnight content production run. Reads the nightly picks list, runs the full Content Forge for each pick, lands everything in Deliverables/_inbox/ for morning triage. Unattended: no questions, no publishing, no carousel HTML. Prints GW-DONE: nightly-forge for the job validator."
 ---
 

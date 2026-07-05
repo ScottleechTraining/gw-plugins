@@ -1,5 +1,6 @@
 ---
 name: gw-content-forge
+model: opus
 description: "Scott Leech's content production engine. Two modes. TRANSCRIPT MODE: paste a transcript (podcast, Film Study, or Wildcat Webinar) and get the correct asset set for that content type, ready to schedule. CONTENT PACK MODE: give a topic, file path, or Second Brain reference and get a full content pack (3 Twitter threads, 2 Instagram carousels, 3 reel ideas, 1 email). All in Scott Leech's voice. Wiki-first, cross-domain integrated, queue-aware. Use when Scott pastes a transcript, says 'content forge', 'run the forge', 'make content from', or asks for Twitter threads, carousels, emails, or reels from any GW source or coaching topic."
 ---
 
@@ -404,6 +405,12 @@ The PULLED FROM THE BRAIN block is required in every pack, always the last secti
 ## Step 3: Save (handled inside mode steps)
 
 Both modes save into `Deliverables/_inbox/[TOPIC-SLUG]/`. The `_inbox/` lands new content for Scott to triage (Ready / Cold / Kill) before it enters the working set.
+
+---
+
+## Step 3.5: Voice Gate (mandatory, before save)
+
+Before saving any asset, run the `gw-voice-gate` checklist against every Scott-voice piece in the pack and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off on emails, sentence length, AI-slop tells, and ICP fit. No asset ships with a FAIL.
 
 ---
 

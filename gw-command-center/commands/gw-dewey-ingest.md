@@ -1,5 +1,6 @@
 ---
 name: gw-dewey-ingest
+model: sonnet
 description: "GW Dewey Ingest Pipeline (v3.1 - 3-Domain Classifier). Converts hand-curated Twitter/Instagram saves from the Dewey Google Sheet into richly tagged Obsidian notes in External Library/Twitter-Instagram Saves/. Classifies each row into s-and-c, business, ai, or skip. Never auto-promotes to wiki. Never writes in Scott's voice."
 ---
 

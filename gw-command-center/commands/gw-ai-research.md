@@ -1,5 +1,6 @@
 ---
 name: gw-ai-research
+model: opus
 description: "Daily AI research - pull top topic from queue, NotebookLM -> brief"
 ---
 

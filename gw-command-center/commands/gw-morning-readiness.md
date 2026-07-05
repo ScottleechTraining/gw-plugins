@@ -1,5 +1,6 @@
 ---
 name: gw-morning-readiness
+model: sonnet
 description: "One-glance GREEN / YELLOW / RED verdict on the overnight GW pipeline + one next action"
 ---
 

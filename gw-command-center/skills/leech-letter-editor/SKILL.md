@@ -145,6 +145,12 @@ If you are writing and it starts to sound like a motivational poster, stop and r
 
 ---
 
+## Final Step: Voice Gate (mandatory)
+
+Before presenting or saving any letter, run the `gw-voice-gate` checklist against it and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. A letter never ships with a FAIL.
+
+---
+
 ## GW Vault Rules (Non-Negotiable)
 
 When writing as Scott:
