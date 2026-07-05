@@ -18,6 +18,8 @@ You are running unattended at night inside the GW vault (cwd is `Gridiron Warrio
 
 3.5. **Freebie cadence.** If the pick's score is 16/20 or higher, run `/gw-freebie-forge` against the pack you just produced and move the resulting `<topic-slug>-freebie.md` into `Deliverables/_inbox/[slug]/`. Markdown only (no PDF render overnight). Picks below 16/20 or unscored get no freebie; half the inbox never ships and freebies on dead packs are wasted work.
 
+3.6. **Idea-mine inspiration picks.** If a pick's list entry carries an `inspiration: @<author>` line, the angle was sparked by a saved external post. Build the pack ENTIRELY from wiki and Voice Corpus sources. Never fetch, open, or quote the inspiring post; it is quarantined external content and only the one-line angle crossed that line. The pack's PULLED FROM THE BRAIN receipt must include the line `Angle sparked by a saved post from @<author>` so the attribution is on record.
+
 4. When every pick is done (or on a no-picks night), print exactly this marker on its own line so the job validator can see it:
 
 GW-DONE: nightly-forge
