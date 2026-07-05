@@ -12,6 +12,8 @@ You are running unattended at night inside the GW vault (cwd is `Gridiron Warrio
 1. Read `Deliverables/_inbox/_nightly-forge-picks.md`.
    - If it says NO PICKS TONIGHT, print the completion marker (step 4) and stop.
 
+1.5. **Collision review (the gate flags, judgment kills).** If the picks file lists novelty-gate skips ("repeats <prior-topic>"), judge each one semantically before accepting the skip: read the flagged idea's title and the prior topic's content-pack hook. Shared nouns are NOT the same teaching ("weight room sounds like a library" = culture; "when your weight room goes heavy" = CNS load; the gate once wrongly killed the first as a repeat of the second). If the teaching genuinely repeats, mark the backlog entry `status: "skipped"` with a `skip_reason` naming the prior topic. If it only shares words, treat it as a valid pick and forge it. Never leave a gate kill unrecorded; the ideas page surfaces every skip_reason for Scott's override.
+
 2. For EACH pick, run the full Content Forge process exactly as defined in the `/gw-content-forge` command (same vault paths, same Second Brain cross-referencing, same voice rules from `CLAUDE.md` at the repo root: short sentences, active verbs, no em-dashes, banned words list, sign-off `Keep the Fire Burning, / Leech`). Produce the standard pack: 2 Twitter threads, 2 IG carousels (slide plans / copy only), 1 email, saved to `Deliverables/_inbox/[slug]/[slug]-content-pack.md`. Every pack ends with the required PULLED FROM THE BRAIN block (see the content-forge command) so morning triage shows exactly which wiki pages each pack is built on.
 
 3. Wiki ingest per the standard Content Forge contract (summary stub if the topic is new).
