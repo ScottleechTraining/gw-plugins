@@ -745,7 +745,41 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 ### 5. Write `_dashboard-index.html` at vault root (overwrite, don't append). One self-contained HTML file with the 4-panel dropdown described in the Dashboard structure section. Today's Briefing panel mirrors the email body content. The AI / Business / S&C panels render the FULL today's brief (frontmatter stripped, markdown converted to clean HTML). If a brief file is missing for today, that panel shows "No brief produced today. Check pipeline logs."
 
-### 6. Append a single line to wiki/log.md:
+### 6. Append every forge suggestion in this digest to the backlog
+
+Every `/gw-content-forge "..."` you printed in Today's Move / If You Have Time (the digest often rewrites the seed's hook, so these phrasings would otherwise never reach the queue). Append each to `queue-state.json`'s `forge_backlog`, additive with slug dedup. Do NOT rebuild the array. Fill `titles` with the exact quoted text of each forge suggestion in today's digest.
+
+```bash
+python -c "
+import json, pathlib, re
+from datetime import date
+titles = [
+    # FILL IN: exact text inside each /gw-content-forge \"...\" you printed today.
+]
+p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+data = json.loads(p.read_text(encoding='utf-8'))
+backlog = data.setdefault('forge_backlog', [])
+existing = {e['slug'] for e in backlog}
+def slugify(t):
+    head = t.split(',')[0].strip().lower()
+    s = re.sub(r'[^a-z0-9]+', '-', head)
+    return re.sub(r'-+', '-', s).strip('-')[:80]
+today = date.today().isoformat()
+added = 0
+for t in titles:
+    slug = slugify(t)
+    if slug in existing: continue
+    backlog.append({'slug': slug, 'title': t, 'format': None, 'score': '14/20',
+                    'source': f'daily-report {today}', 'added': today, 'status': 'pending'})
+    existing.add(slug); added += 1
+p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
+print(f'forge_backlog: appended {added} suggestion(s) from today\'s digest')
+"
+```
+
+The nightly forge picker applies its own novelty gate on top of this, so a paraphrase that duplicates an already-forged topic is dropped at pick time. This step only makes sure the idea reaches the queue instead of leaking.
+
+### 7. Append a single line to wiki/log.md:
 
 ```
 
@@ -753,7 +787,7 @@ YYYY-MM-DD /gw-morning-digest: digest written (1 top move, N new vault items)
 
 ```
 
-### 7. Do NOT commit
+### 8. Do NOT commit
 
 The `gw-daily-closeout` job runs after this digest and commits all approved daily-output paths once, via `scripts/git_safe_commit.py`. This skill's job ends at writing `_morning-briefing.md`, `_morning-briefing.html`, `_dashboard-index.html`, and the wiki/log.md line.
 
