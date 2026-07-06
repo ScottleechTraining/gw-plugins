@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.6.0
+**Version:** 0.7.0
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -10,7 +10,7 @@ Single source of truth for Gridiron Warrior skills and commands across Claude Co
 
 ## What's in here
 
-**11 skills** + **33 commands** = 44 components, all owned by this plugin.
+**11 skills** + **35 commands** = 46 components, all owned by this plugin.
 
 ### Skills
 
@@ -30,7 +30,7 @@ Single source of truth for Gridiron Warrior skills and commands across Claude Co
 
 ### Commands
 
-All 27 `gw-*` slash commands from the daily GW operating pipeline. Highlights:
+All 33 `gw-*` slash commands from the daily GW operating pipeline. Highlights:
 
 - `/gw-daily`, `/gw-morning-readiness`, `/gw-morning-digest` — daily ritual
 - `/gw-research`, `/gw-ai-research`, `/gw-business-research`, `/gw-sc-research`, `/gw-everything-on` — research pipelines
@@ -54,7 +54,7 @@ claude plugin marketplace add ScottleechTraining/gw-plugins
 claude plugin install gw-command-center@gw-plugins
 ```
 
-Restart Code. The 37 components are now active at user scope.
+Restart Code. The 46 components are now active at user scope.
 
 ### Cowork
 
@@ -163,6 +163,7 @@ After this, the router has exactly one source for every GW skill — the plugin.
 
 | **0.5.x** (2026-06/07) | Incremental fixes shipped without README rows (novelty-gate collision review in `gw-nightly-forge`, queue/idea-page integration, misc). Table drifted from `plugin.json`; closed at 0.6.0. |
 | **0.6.0** (2026-07-05) | **Opus/Sonnet handoff release.** Every command now carries `model:` frontmatter (17 opus, 16 sonnet) so nothing inherits the Fable session model; Fable is planning-only per the new MODEL POLICY in root CLAUDE.md. New skill `gw-voice-gate` (mechanical Scott-voice PASS/FAIL checklist) wired as mandatory final step into `leech-letter-editor`, `gw-substack-forge`, `gw-content-forge`. New commands: `gw-carousel-batch` (parallel carousel builds, central photo assignment, render-and-eyeball verification), `gw-pipeline-doctor` (overnight failure runbook: D: drive check, health JSONs, 401/token expiry, rerun_failed_jobs.py, git divergence rules), `gw-plugin-ship` (release ritual). `ig-carousel` v3.5 gains a "Known traps" section (hero JPEG-not-PNG, pack--case selector, headless quirks, kill-your-servers, mandatory visual verification). Explicit rubrics added to `gw-triage` (promotion rubric, default Cold never Kill), `gw-seed-writer` (angle-quality gate, zero-is-ok), `gw-weekly-synthesis` (wiki promotion criteria, under-promote default). `jedi-council` advisor/peer-review spawns pinned to `model: opus`. |
+| **0.7.0** (2026-07-06) | **Audit fix release.** New commands `gw-ideas-apply` + `gw-freebie-apply` (consume the pasted result strings from ideas.html / freebies.html; both sonnet). `gw-review` kill branch now moves folders to terminal `Deliverables/killed/` (trash-review retired, no restore path). `gw-publish` archive paths corrected to flat `archived/` (the documented `USED ALREADY/[YYYY-MM]/` never existed). `gw-ask` flipped sonnet to opus (judgment task). `gw-stage` Kit re-auth note made generic. README counts fixed (33 commands + 11 skills = 44 components; now 35 commands with the two apply commands). |
 
 Still pending (Scott action required):
 - Disable the parallel Cowork `anthropic-skills` GW bundle (must be done in the Cowork UI; see README "Disabling the old Cowork bundle" section). With v0.4.0, the plugin owns every GW skill and command. Once disabled, the router never sees the parallel copies. Target: do it next time you open Cowork.

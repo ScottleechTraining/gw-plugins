@@ -220,7 +220,7 @@ Per the new pipeline pattern (matching `gw-sc-research`), commits are batched by
 ## Notes
 
 - **Always draft.** The Kit MCP `create_broadcast` is hard-coded to draft state. Even if a future version exposes a `published_at` field, this skill MUST NOT set it. Publishing is always Scott's click.
-- **Kit auth.** If the Kit MCP returns an auth error, run `mcp__kit__authenticate` once, then re-run this skill. The fallback markdown is the safety net while you fix auth.
+- **Kit auth.** If the Kit MCP returns an auth error, re-authenticate the Kit MCP server, then re-run this skill. The fallback markdown is the safety net while you fix auth.
 - **HTML for Kit.** Kit's `content` field expects HTML. Inline conversion is described above. If the email body is already HTML in the pack, pass it through unchanged.
 - **Buffer wiring (future Phase 2).** When Buffer is wired, add a step 4b.i that calls the Buffer API for posts/drafts. Keep the markdown fallback as the auth-fail safety net.
 - **Substack wiring (future Phase 4).** When claude-in-chrome MCP routes are added, step 4e gains an interactive browser drive. Keep markdown fallback.

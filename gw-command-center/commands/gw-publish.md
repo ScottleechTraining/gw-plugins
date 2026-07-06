@@ -1,14 +1,14 @@
 ---
 name: gw-publish
 model: sonnet
-description: "Mark a campaign as published. Generates a 1-page wiki summary (the campaign's permanent record in the second brain), archives the topic folder to Deliverables/USED ALREADY/YYYY-MM/, and logs the publish event. Run AFTER scheduling or shipping a campaign's social, email, and Substack assets."
+description: "Mark a campaign as published. Generates a 1-page wiki summary (the campaign's permanent record in the second brain), archives the topic folder to Deliverables/archived/, and logs the publish event. Run AFTER scheduling or shipping a campaign's social, email, and Substack assets."
 ---
 
 # GW Publish — Deliverable Archive + Summary Auto-Flow
 
 Mark a campaign as published. This command:
 1. Generates a 1-page wiki summary (the campaign's permanent record in the second brain)
-2. Moves the topic folder to `Deliverables\USED ALREADY\YYYY-MM\`
+2. Moves the topic folder to `Deliverables\archived\`
 3. Logs the publish event
 
 Run this AFTER you've scheduled or shipped a campaign's social/email/Substack assets.
@@ -18,12 +18,12 @@ Run this AFTER you've scheduled or shipped a campaign's social/email/Substack as
 The user provides one of:
 - A topic slug matching a Deliverables folder name (e.g., `jumps-by-force-vector`)
 - A full folder path (e.g., `D:/Claude Projects/Gridiron Warrior/Deliverables/2026-05-07-jumps-by-force-vector`)
-- Nothing — in which case, list the topic folders in `Deliverables/` (excluding `USED ALREADY/`, `_templates/`) and ask which to publish
+- Nothing — in which case, list the topic folders in `Deliverables/` (excluding `archived/`, `_templates/`) and ask which to publish
 
 ## Vault Paths
 
 - **Deliverables source:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
-- **Archive destination:** `D:/Claude Projects/Gridiron Warrior/Deliverables/USED ALREADY/[YYYY-MM]/`
+- **Archive destination:** `D:/Claude Projects/Gridiron Warrior/Deliverables/archived/`
 - **Wiki summaries:** `D:/Claude Projects/Gridiron Warrior/wiki/summaries/`
 - **Wiki index:** `D:/Claude Projects/Gridiron Warrior/wiki/index.md`
 - **Wiki log:** `D:/Claude Projects/Gridiron Warrior/wiki/log.md`
@@ -61,7 +61,7 @@ Write to `wiki/summaries/[topic-slug].md`:
 ---
 title: [Topic Title]
 type: summary
-source: Deliverables/USED ALREADY/[YYYY-MM]/[folder-name]/
+source: Deliverables/archived/[folder-name]/
 date_published: [YYYY-MM-DD]
 status: published
 tags: [infer 2-3 relevant tags from topic + content type]
@@ -70,7 +70,7 @@ pipeline: gw-publish
 
 # [Topic Title]
 
-**Source folder:** `Deliverables/USED ALREADY/[YYYY-MM]/[folder-name]/`
+**Source folder:** `Deliverables/archived/[folder-name]/`
 **Published:** [YYYY-MM-DD]
 **Asset count:** [N] files
 
@@ -108,14 +108,15 @@ pipeline: gw-publish
 
 ## Step 4: Move the Folder to Archive
 
-Target path: `Deliverables/USED ALREADY/[YYYY-MM]/[original-folder-name]/`
+Target path: `Deliverables/archived/[original-folder-name]/`
 
-Where `[YYYY-MM]` is the publish date's year-month. Create the dated month folder if it doesn't exist.
+Flat archive, no dated subfolders. The scanner treats `archived/` as a stage
+(see `scripts/gwqueue/paths.py`), so the folder must land directly under it.
 
 Use PowerShell:
 ```powershell
 $src = 'D:/Claude Projects/Gridiron Warrior/Deliverables/[folder-name]'
-$dst = 'D:/Claude Projects/Gridiron Warrior/Deliverables/USED ALREADY/[YYYY-MM]/[folder-name]'
+$dst = 'D:/Claude Projects/Gridiron Warrior/Deliverables/archived/[folder-name]'
 New-Item -ItemType Directory -Force -Path (Split-Path $dst -Parent) | Out-Null
 Move-Item $src $dst
 ```
@@ -136,7 +137,7 @@ python -m scripts.gwqueue.retire_from_drive --push-slug "[topic-slug]"
 ## Step 5: Update Wiki Index + Log
 
 - Add the summary link to `wiki/index.md` under Summaries → Published Campaigns (create section if missing)
-- Append to `wiki/log.md`: `## [YYYY-MM-DD] publish | [topic] — moved to USED ALREADY/[YYYY-MM]/ via gw-publish`
+- Append to `wiki/log.md`: `## [YYYY-MM-DD] publish | [topic] - moved to archived/ via gw-publish`
 
 ## Step 6: Flag Missing Concept Stubs
 
@@ -154,5 +155,5 @@ Tell Scott:
 ## Error Handling
 
 - If topic folder not found, list all candidate folders and ask.
-- If destination month folder collides with an existing folder of the same name (unlikely but possible — same topic shipped twice in one month), append `-v2` suffix.
+- If the archive destination collides with an existing folder of the same name (unlikely but possible - same topic shipped twice), append `-v2` suffix.
 - If wiki summary creation fails partway, don't move the folder yet. Folder move is the LAST step so a failed run leaves Deliverables intact.

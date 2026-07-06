@@ -1,7 +1,7 @@
 ---
 name: gw-review
 model: opus
-description: "Build and open a single local HTML contact sheet of every pending carousel (SHIP / POLISH / KILL per topic), then apply the pasted gw-review-result string: ship flips ready_to_ship, polish records a note, kill moves the folder to trash-review."
+description: "Build and open a single local HTML contact sheet of every pending carousel (SHIP / POLISH / KILL per topic), then apply the pasted gw-review-result string: ship flips ready_to_ship, polish records a note, kill moves the folder to the terminal killed/ folder (never rescanned, no restore)."
 ---
 
 # GW Review - Carousel approval contact sheet
@@ -17,7 +17,7 @@ decision. No server, no upload, all local.
 - **Builder module:** `scripts.gwqueue.build_review_page`
 - **Review page:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/review.html`
 - **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Trash:** `D:/Claude Projects/Gridiron Warrior/Deliverables/trash-review/`
+- **Killed:** `D:/Claude Projects/Gridiron Warrior/Deliverables/killed/` (terminal, never rescanned, no restore)
 
 ## Step 1: Build the page
 
@@ -60,8 +60,8 @@ Parse the three buckets. `polish` entries may carry an optional
 structure not naively on commas). Any bucket may be empty.
 
 Apply each bucket with the SAME mechanisms the existing commands use. Run this
-one script (it mirrors `/gw-ship` for ship, records the polish note, and mirrors
-the `/gw-triage` kill convention by moving to `trash-review/`):
+one script (it mirrors `/gw-ship` for ship, records the polish note, and kills
+by moving the folder to the terminal `killed/` folder):
 
 ```bash
 python - "$RESULT_STRING" <<'PY'
@@ -70,7 +70,7 @@ raw = sys.argv[1]
 
 DELIV = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables")
 STATE = DELIV / "queue-state.json"
-TRASH = DELIV / "trash-review"
+KILLED = DELIV / "killed"
 
 def bucket(name):
     m = re.search(name + r"=\[(.*?)\](?=\s+\w+=\[|\s*$)", raw)
@@ -122,8 +122,11 @@ for slug, note in polish.items():
         t["polish_note"] = note
     actions.append(f"polish {slug}" + (f' -> "{note}"' if note else ""))
 
-# KILL: move folder to trash-review/ (mirror /gw-triage's kill, non-destructive)
-TRASH.mkdir(parents=True, exist_ok=True)
+# KILL: move folder to the terminal killed/ folder. killed/ is never scanned,
+# so the entry drops out of state on the next scan (no stage write needed, no
+# restore path). This is a one-way door - to run the idea again, start fresh
+# through the forge (per the novelty rules).
+KILLED.mkdir(parents=True, exist_ok=True)
 for slug in kill:
     t = topics.get(slug)
     if not t:
@@ -131,13 +134,12 @@ for slug in kill:
     src = DELIV / t["folder"]
     if not src.exists():
         actions.append(f"SKIP kill {slug} (folder gone)"); continue
-    dst = TRASH / src.name
-    # dedup collision the way trash-review already does (suffix)
+    dst = KILLED / src.name
+    # dedup collision (suffix)
     if dst.exists():
-        dst = TRASH / (src.name + "__review")
+        dst = KILLED / (src.name + "__review")
     shutil.move(str(src), str(dst))
-    t["stage"] = "trash-review"
-    actions.append(f"kill {slug} -> trash-review/{dst.name}")
+    actions.append(f"kill {slug} -> killed/{dst.name}")
 
 STATE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 print("\n".join(actions) if actions else "no decisions to apply")
@@ -167,7 +169,7 @@ Print a summary:
 Applied review:
   ship:   <n>  (moved to ready/, synced to Drive - post from phone anytime)
   polish: <n>  (stay in _inbox with notes recorded on the topic)
-  kill:   <n>  (moved to trash-review/)
+  kill:   <n>  (moved to killed/ - terminal, never rescanned, no restore)
 ```
 
 If a Drive sync fails, say so plainly; the topic stays in ready/ with
