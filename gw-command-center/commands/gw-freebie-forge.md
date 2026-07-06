@@ -1,7 +1,7 @@
 ---
 name: gw-freebie-forge
 model: opus
-description: "Generate a one-page PDF-ready lead magnet from a brief or content source. Funnels into Insiders, a course, or Summit."
+description: "Generate a lead magnet from a brief or content source. Interactive Toolbox-standard HTML is the default format; one-page PDF only when the teaching is list-shaped. Dedup gate against site tools + freebie ledger is mandatory. Funnels into Insiders, a course, or Summit."
 ---
 
 # /gw-freebie-forge [brief-or-content-path] — Lead Magnet Producer
@@ -24,6 +24,59 @@ If empty, abort with: "Provide a source file path. Example: `/gw-freebie-forge \
 - **Output:** `D:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`
 - **Wiki for product targeting:** `D:\Claude Projects\Gridiron Warrior\wiki\` (read entities/Insiders, entities/GW-2-0, entities/Contact-Prep, entities/Scores-and-Stops, entities/Summit to pick the right CTA)
 - **Voice check guard:** `D:\Claude Projects\Gridiron Warrior\scripts\voice_check.py`
+
+## CREATION RULES (2026-07-06, Scott-approved - these outrank everything below)
+
+Scott killed an entire wave of repetitive cheat-sheet freebies and three PDFs that
+duplicated live site tools. These rules exist so that never happens again. They are
+written for whichever model runs this command - no session memory required.
+
+**Rule 0 - THE DEDUP GATE. Run it before creating anything.**
+Check, in order:
+1. `D:\Claude Projects\websites\scottleechtraining.com	ools\index.html` - the Toolbox
+   inventory (interactive tools: program audit, high/low CNS planner, training age sort,
+   missed lifts tree, session conductor, floor clock, sled load calculator, tri-set timer,
+   8-week team talks, hamstring resource, GPS for football).
+2. `D:\Claude Projects\Gridiron Warrior\Deliverables\_system
+eviewreebie-state.json` -
+   the freebie ledger. `killed` means dead: never rebuild without Scott explicitly reviving it.
+3. `Deliverables\projects\insiders-vault\VAULT-MANIFEST.md` - what members already have.
+If the job is already done by a site tool, DO NOT build a shadow PDF of it. Output a short
+funnel asset pointing at the live tool instead (or say so and stop). A static copy of an
+interactive tool undercuts the tool.
+
+**Rule 1 - THE FORMAT LADDER. Interactive is the default, flat must be earned.**
+Default format: a single-file interactive HTML tool at the Toolbox standard (below) or the
+Vault interactive template (`Deliverables\_templates\_interactive_template.html`).
+A one-page PDF/md cheat sheet is allowed ONLY when the teaching is genuinely list-shaped
+(reference card, phase comparison, checklist) or Scott asked for that format by name.
+Posters are dead - Scott has killed every poster variant. Do not produce them.
+
+**Rule 2 - KNOWLEDGE-BACKED, NEVER FROM MEMORY.**
+Any threshold, percentage, rep rule, or protocol in the freebie must trace to a wiki concept
+page, a Voice Corpus source, or a dated NotebookLM brief. If the number is not written down
+somewhere in the vault, query NotebookLM and write the brief first (pattern:
+`websites\scottleechtraining.com	ools\_plansrief-*.md`).
+
+**Rule 3 - THE FRESHNESS TEST.**
+Before building, answer in one line: what does this teach that no existing freebie or tool
+teaches? If the honest answer is "same teaching, new wrapper," stop and say so. A variation
+of an existing asset must name what is new (new audience like feeder programs, new season
+phase, new interaction) or it does not get built.
+
+**Rule 4 - THE TOOLBOX STANDARD (for interactive builds).**
+- Single self-contained index.html, vanilla JS, no framework, no build step.
+- Non-trivial logic as pure functions with a module.exports guard for headless tests; ship a `?demo=` URL hook.
+- State in localStorage only, key pattern `gw-{tool}-{purpose}`.
+- Lead capture: fetch() POST to `https://app.kit.com/forms/9647774/subscriptions` (shared free-rack gate; `tb_email`/`tb_unlocked` localStorage).
+- Printable `@media print` view; sign-off "Keep the Fire Burning. - Leech" + Insiders CTA.
+- Design tokens: --ink:#1a2742, --gold:#c0902f, --steel:#5b6472, --line:#d1d5db, stoplight --high:#dc2626 / --low:#10b981 / --amber:#f59e0b; fonts Oswald + Anton; navy .hero header; back-breadcrumb to /tools/.
+- NEVER use the legacy `_shared/gw-tools.css` black/stoplight system - deprecated.
+
+**Rule 5 - EVERY FREEBIE ENTERS THE LEDGER.**
+New freebies are pending until Scott reviews them on freebies.html
+(`python -m scripts.gwqueue.build_freebie_review_page` regenerates it). Nothing ships,
+uploads, or enters the Vault without his approve.
 
 ## Steps
 
