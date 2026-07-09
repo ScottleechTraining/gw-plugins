@@ -19,7 +19,39 @@ If `carousel/` does not exist in the current working directory, create it. Never
 
 ## Before you start
 
-Read `brand-profile.template.md` at the engine root. That template is the exact shape of the file you will write. Do not invent fields.
+The file you write has a fixed shape. If `brand-profile.template.md` is present at the engine root, read it — that is the exact template (the marketplace install keeps it). If it is not present (a zip install copies only the skill folders), use the field list below. Either way, do not invent fields.
+
+```yaml
+---
+brand_name: "Your Brand"
+handle: "@yourhandle"
+palette:
+  ink: "#1A1A1A"            # darkest type
+  paper: "#F5F0E8"          # light background
+  dark: "#1A1A1A"           # dark background
+  accent_primary: "#C8A84E"
+  accent_secondary: "#3A3A3A"
+fonts:
+  display:
+    family: "Roboto Slab"
+    source: google          # google | baked
+    custom_base64: ""        # filled when source: baked
+  body:
+    family: "Barlow"
+    source: google
+    custom_base64: ""
+logo:
+  base64: ""                 # base64-baked so output files stay portable; empty = handle-text fallback
+  alt: "Your Brand logo"
+voice:
+  tone: "direct"            # direct | professional | playful | minimal
+  no_em_dashes: false        # true if the brand bans em-dashes
+  banned_words: []           # words the engine must never use
+---
+
+## Voice notes
+(A few sentences, in the buyer's words, about how captions and headlines should sound.)
+```
 
 ## The interview (one question at a time, accept defaults fast)
 

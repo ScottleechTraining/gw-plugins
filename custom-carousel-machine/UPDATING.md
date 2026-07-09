@@ -10,9 +10,9 @@ claude plugin install custom-carousel-machine@<your-marketplace>
 ```
 
 ## If you installed via zip
-1. Delete the old engine folder (the `custom-carousel-machine` skill folder under `~/.claude/skills/`).
-2. Unzip the new version in its place.
-3. That's it. Your `carousel/` folder in your project is untouched.
+1. Delete the old skill folders under `~/.claude/skills/`: `carousel`, `brand-setup`, `pack-author`.
+2. Unzip the new version anywhere, then copy the three folders **inside** its `skills/` folder (`carousel`, `brand-setup`, `pack-author`) into `~/.claude/skills/`.
+3. Restart Claude Code. Your `carousel/` folder in your project is untouched.
 
 ## How to tell what changed
 Check `version` in `.claude-plugin/plugin.json` and the changelog at the top of `skills/carousel/SKILL.md`.

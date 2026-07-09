@@ -18,7 +18,7 @@ claude plugin marketplace add <your-marketplace-repo>
 claude plugin install custom-carousel-machine@<your-marketplace>
 ```
 
-**Paid — zip download (Gumroad / Thinkific):** unzip into `~/.claude/skills/` (or install as a local plugin). Price: **$27**.
+**Paid — zip download (Gumroad / Thinkific):** unzip anywhere, then copy the three folders **inside** the `skills/` folder — `carousel`, `brand-setup`, and `pack-author` — into `~/.claude/skills/` (Windows: `C:\Users\YOURNAME\.claude\skills\`). Claude Code discovers personal skills only at `~/.claude/skills/<skill-name>/SKILL.md`, so the skill folders must sit directly under `skills/`, not nested inside a `custom-carousel-machine` folder. Restart Claude Code afterward. Price: **$27**.
 
 There is no license key and no phone-home. The engine runs identically whether it was given away or bought. Don't redistribute what you didn't pay for.
 

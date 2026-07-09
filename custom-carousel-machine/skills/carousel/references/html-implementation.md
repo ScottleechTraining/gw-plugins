@@ -516,11 +516,8 @@ Copy both blocks VERBATIM from below. Do not retype or "improve" them.
         const filename = location.pathname.split('/').pop() || 'carousel.html';
         alert(
           'SAVE FAILED MID-WRITE: ' + err.message + '\n\n' +
-          'YOUR FILE MAY BE CORRUPTED.\n\n' +
-          'To restore from git:\n' +
-          '  cd "D:/Claude Projects"\n' +
-          '  git checkout HEAD -- "' + filename + '"\n\n' +
-          'Then reopen the file and try editing again. ' +
+          'YOUR FILE (' + filename + ') MAY BE CORRUPTED.\n\n' +
+          'Restore it from a backup, or regenerate the carousel. ' +
           'If this happens repeatedly, tell Claude.'
         );
         try { await writable.close(); } catch(e) {}

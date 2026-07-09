@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-<div class="toolbar"><span class="title">Keep on Truckin' — Mono Series — Leon's</span><button onclick="exportAllPNGs()">Export PNGs</button><button id="saveChangesBtn" onclick="saveChanges()">💾 Save</button></div>
+<div class="toolbar"><span class="title">Keep on Truckin' — Mono Series — Leon's</span><button onclick="exportAllPNGs()">Export PNGs</button><button onclick="exportPDF()">Export PDF (Canva)</button><button id="saveChangesBtn" onclick="saveChanges()">💾 Save</button></div>
 <div class="stage" id="stage">
 
   <div class="slide-wrap"><div class="slide tone-dark" data-i="1" data-total="5">
@@ -105,6 +105,7 @@
   autoFitMegaCover(); if(document.fonts&&document.fonts.ready)document.fonts.ready.then(autoFitMegaCover);
   async function captureSlide(el){const p=el.style.transform;el.style.transform='none';try{return await html2canvas(el,{width:1080,height:1350,windowWidth:1080,windowHeight:1350,scale:1,backgroundColor:null,logging:false});}finally{el.style.transform=p;}}
   async function exportAllPNGs(){const s=[...document.querySelectorAll('.slide')];for(let i=0;i<s.length;i++){const c=await captureSlide(s[i]);const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=`leons-mono-slide-${i+1}.png`;a.click();await new Promise(r=>setTimeout(r,250));}}
+  async function exportPDF(){const{jsPDF}=window.jspdf;const pdf=new jsPDF({orientation:'portrait',unit:'px',format:[1080,1350]});const s=[...document.querySelectorAll('.slide')];for(let i=0;i<s.length;i++){const c=await captureSlide(s[i]);if(i>0)pdf.addPage([1080,1350],'portrait');pdf.addImage(c.toDataURL('image/png'),'PNG',0,0,1080,1350);}pdf.save('leons-mono-carousel.pdf');}
   let _fh=null;
   async function saveChanges(){try{const h='<!DOCTYPE html>\n'+document.documentElement.outerHTML;if(h.length<2000){alert('empty');return;}if(!_fh){if(!window.showSaveFilePicker){alert('Use Chrome/Edge');return;}_fh=await window.showSaveFilePicker({suggestedName:'mono-keep-on-truckin.html',types:[{description:'HTML',accept:{'text/html':['.html']}}]});}const w=await _fh.createWritable();await w.write(h);await w.close();}catch(e){if(e.name!=='AbortError')alert(e.message);}}
   document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveChanges();}});
