@@ -1,5 +1,6 @@
 ---
 name: gw-substack-forge
+model: opus
 description: >
   Scott Leech's Substack article engine. Converts raw coaching content — transcripts, bullet notes, outlines, topics, or existing posts — into long-form Substack articles structured like Nick DiMarco's editorial style but written in Scott Leech's voice. Use this skill whenever Scott says "write a Substack article", "turn this into a Substack post", "substack forge", "write this up for Substack", "make this a long-form article", or pastes raw content and asks for a polished article. Also trigger when Scott wants to repurpose a Film Study, Wildcat Webinar transcript, or coaching concept into a standalone written piece for his newsletter. This skill produces a complete, publish-ready .md file.
 ---

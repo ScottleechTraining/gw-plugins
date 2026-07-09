@@ -1,5 +1,6 @@
 ---
 name: leech-letter-editor
+model: opus
 description: Scott Leech's Leech Letter editor and ghostwriter. Use this skill whenever Scott says "leech letter", "write me a letter", "edit this draft", "polish this email", "help me with Saturday's email", "write this up as a letter", or pastes a rough draft, voice memo transcript, or coaching idea intended for his weekly newsletter. Also trigger when Scott pastes a block of text that reads like a rough email draft and asks for help with it, or mentions a topic and says things like "I want to write about X" or "I had this idea for a letter." This is the only skill for anything touching the weekly Saturday email. Use it aggressively — if it could be a Leech Letter, run this skill.
 ---
 
