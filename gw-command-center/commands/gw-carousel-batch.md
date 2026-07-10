@@ -1,6 +1,6 @@
 ---
 name: gw-carousel-batch
-description: "Batch-build IG carousel HTML for multiple content packs in parallel. Central photo assignment, ~5 subagents per wave, mandatory render-and-eyeball verification of every cover before done."
+description: "Batch-build IG carousel HTML for multiple content packs in parallel. Run bare (no arguments) to discover every content pack still waiting on a carousel and get a recommended style pack per topic. Central photo assignment, ~5 subagents per wave, mandatory render-and-eyeball verification of every cover before done."
 model: opus
 ---
 
@@ -10,10 +10,21 @@ Orchestrates many carousel builds at once. Photo assignment is centralized so no
 
 ## 1. Input
 
-Take a list of content-pack folders (from `Deliverables/ready/` or `Deliverables/_inbox/`) or slugs, plus the style pack Scott chose for each carousel.
+Two ways in:
 
-- If a carousel is missing its style pack, ask which pack.
-- If invoked unattended (no human to answer), skip any carousel without a chosen pack and record it in the skipped list. Do not guess a pack.
+**A. Explicit list.** A list of content-pack folders (from `Deliverables/ready/` or `Deliverables/_inbox/`) or slugs, plus the style pack chosen for each carousel.
+
+**B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Two kinds of waiting work:
+
+1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and wait for confirmation or swaps before building.
+2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
+
+If nothing is waiting in either bucket, say so and stop.
+
+Pack rules for both modes:
+
+- Attended and a pack is missing or unclear: recommend one from the quick-reference table and ask to confirm. Never build on a guess.
+- If invoked unattended (no human to answer), skip any carousel without a confirmed pack and record it in the skipped list. Do not guess a pack.
 
 ## 2. Photo assignment (centrally, FIRST)
 

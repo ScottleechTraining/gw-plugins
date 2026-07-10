@@ -176,6 +176,15 @@ If a Drive sync fails, say so plainly; the topic stays in ready/ with
 `ready_to_ship: true` and the next /gw-queue run retries it. Polish topics go
 back to the carousel builder with their `polish_note`.
 
+**Restyle notes.** The review page has a style dropdown per row. When it is
+used with POLISH, the note arrives as `restyle: <Pack Name>` (optionally
+followed by `. <free text>`). That is a rebuild order, not a copy tweak:
+`/gw-carousel-batch` picks these topics up and rebuilds the carousel in the
+named pack. The pack came from a dropdown of valid names, so it counts as
+confirmed - do not re-ask. After applying the string, if any polish note
+starts with `restyle:`, tell the user those topics are queued for a rebuild
+and that running `/gw-carousel-batch` will do it now.
+
 ## Step 5: Commit (optional, ask first)
 
 If Scott wants it committed:
