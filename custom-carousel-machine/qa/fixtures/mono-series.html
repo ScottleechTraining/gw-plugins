@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>QA Fixture — Mono Series — Leon's Fixit Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;900&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    /* Leon's Fixit Shop in Mono Series: accent SUPPRESSED (pack escape hatch) */
+    --ink: #211C16;
+    --paper: #F0E6CE;
+    --dark: #211C16;
+    --gray: #4A3D2E;
+    --font-heading: 'Roboto Slab', Georgia, serif;
+    --font-body: 'Barlow', sans-serif;
+    --slide-scale: 0.389;
+  }
+  body { background: #b9b0a0; font-family: var(--font-body); padding: 0 0 80px; }
+
+  .toolbar { position: sticky; top: 0; z-index: 50; background: var(--dark); color: var(--paper); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 22px; }
+  .toolbar .title { font-family: var(--font-heading); font-weight: 700; font-size: 18px; }
+  .toolbar button { font-family: var(--font-body); font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border: 1px solid rgba(240,230,206,0.4); padding: 10px 14px; background: transparent; color: var(--paper); }
+
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 28px 12px; }
+  .slide-wrap { width: min(420px, 92vw); aspect-ratio: 1080 / 1350; position: relative; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+  .slide { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; transform-origin: top left; transform: scale(var(--slide-scale)); overflow: hidden; }
+
+  /* alternating tones — the pack identity */
+  .slide.tone-dark  { background: var(--dark);  color: var(--paper); }
+  .slide.tone-paper { background: var(--paper); color: var(--ink); }
+  .slide.tone-gray  { background: var(--gray);  color: var(--paper); }
+
+  .slide-label { position: absolute; top: 0; left: 0; font-family: var(--font-body); font-weight: 700; font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 18px; background: rgba(0,0,0,0.55); color: #F0E6CE; z-index: 9; }
+
+  /* header strip */
+  .header-strip { position: absolute; top: 0; left: 0; right: 0; height: 88px; display: flex; align-items: center; justify-content: space-between; padding: 0 64px; font-family: var(--font-body); font-weight: 600; font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; }
+
+  /* ghost number — list-indexed, oversized, low opacity, behind content */
+  .ghost-num { position: absolute; right: 40px; bottom: -40px; font-family: var(--font-heading); font-weight: 900; font-size: 400px; line-height: 1; opacity: 0.15; pointer-events: none; }
+
+  .content { position: absolute; inset: 0; padding: 180px 64px 180px; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
+
+  .mega-cover { font-family: var(--font-heading); font-weight: 900; line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase; display: flex; flex-direction: column; }
+  .mega-cover span { display: block; white-space: nowrap; }
+  .cover-sub { margin-top: 36px; font-family: var(--font-body); font-weight: 500; font-size: 36px; line-height: 1.4; max-width: 20ch; opacity: 0.9; }
+
+  .item-subhead { font-family: var(--font-heading); font-weight: 700; font-size: 92px; line-height: 0.98; text-transform: uppercase; letter-spacing: -0.01em; }
+  .item-body { margin-top: 28px; font-family: var(--font-body); font-weight: 400; font-size: 40px; line-height: 1.45; max-width: 22ch; opacity: 0.9; }
+
+  /* image templates */
+  .image-layer { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 35%, rgba(0,0,0,0.72) 100%); }
+  .hook-content { position: absolute; left: 64px; right: 64px; bottom: 200px; z-index: 3; }
+  .hook-headline { font-family: var(--font-heading); font-weight: 900; font-size: 104px; line-height: 0.95; text-transform: uppercase; color: var(--paper); }
+  .hook-sub { margin-top: 22px; font-family: var(--font-body); font-weight: 500; font-size: 34px; line-height: 1.4; color: var(--paper); opacity: 0.92; max-width: 24ch; }
+
+  /* highlighted-word — mono uses underline in currentColor (no accent) */
+  .hl-body { font-family: var(--font-heading); font-weight: 700; font-size: 88px; line-height: 1.05; text-transform: uppercase; }
+  .hl { border-bottom: 8px solid currentColor; padding-bottom: 6px; }
+
+  /* pull quote */
+  .pull-quote { position: relative; font-family: var(--font-heading); font-weight: 700; font-size: 92px; line-height: 1.02; }
+  .pull-quote::before { content: '\201C'; position: absolute; top: -120px; left: -12px; font-family: var(--font-heading); font-weight: 900; font-size: 220px; line-height: 1; opacity: 0.28; }
+  .quote-attr { margin-top: 40px; font-family: var(--font-body); font-weight: 600; font-size: 30px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.8; }
+
+  /* color block — mono has no accent, so a solid tonal-gray statement */
+  .block-headline { font-family: var(--font-heading); font-weight: 900; font-size: 150px; line-height: 0.9; text-transform: uppercase; letter-spacing: -0.02em; }
+
+  /* long-form reading column */
+  .subhead { font-family: var(--font-heading); font-weight: 700; font-size: 62px; line-height: 1.0; display: flex; align-items: baseline; gap: 18px; text-transform: uppercase; }
+  .subhead .num { font-weight: 900; font-size: 72px; opacity: 0.55; }
+  .hairline { border: 0; border-top: 2px solid currentColor; opacity: 0.6; margin: 32px 0 34px; width: 100%; }
+  .body-column { font-family: var(--font-body); font-weight: 400; font-size: 38px; line-height: 1.5; max-width: 24ch; opacity: 0.92; }
+
+  /* checklist — filled 8x8 square marker in fg */
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 34px; }
+  .check-item { display: flex; align-items: flex-start; gap: 26px; font-family: var(--font-body); font-weight: 500; font-size: 44px; line-height: 1.25; }
+  .check-item::before { content: ''; flex: 0 0 auto; width: 26px; height: 26px; margin-top: 14px; background: currentColor; opacity: 0.55; }
+
+  /* cta */
+  .cta-headline { font-family: var(--font-heading); font-weight: 900; font-size: 120px; line-height: 0.95; text-transform: uppercase; }
+  .cta-body { margin-top: 30px; font-family: var(--font-body); font-weight: 500; font-size: 36px; line-height: 1.4; max-width: 22ch; opacity: 0.9; }
+
+  .progress-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 18px; padding: 26px 64px; z-index: 3; }
+  .brand-logo-text { font-family: var(--font-heading); font-weight: 700; font-size: 22px; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
+  .progress-track { flex: 1; height: 3px; background: currentColor; opacity: 0.25; position: relative; }
+  .progress-fill { position: absolute; inset: 0 auto 0 0; background: currentColor; opacity: 0.9; }
+  .progress-count { font-family: var(--font-body); font-weight: 700; font-size: 18px; letter-spacing: 0.1em; }
+  .swipe-arrow { position: absolute; right: 64px; bottom: 78px; font-family: var(--font-heading); font-weight: 700; font-size: 44px; z-index: 3; }
+  [contenteditable="true"]:hover, [contenteditable="true"]:focus { outline: 2px solid currentColor; outline-offset: 6px; }
+</style>
+</head>
+<body data-pack="mono-series">
+<div class="toolbar"><span class="title">QA Fixture — Mono Series — Leon's</span><button onclick="exportAllPNGs()">Export PNGs</button><button onclick="exportPDF()">Export PDF (Canva)</button><button id="saveChangesBtn" onclick="saveChanges()">💾 Save</button></div>
+<div class="stage" id="stage">
+
+  <!-- mega-cover -->
+  <div class="slide-wrap"><div class="slide tone-dark" data-template="mega-cover" data-i="1" data-total="10">
+    <div class="slide-label">MEGA-COVER</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <h1 class="headline mega-cover"><span contenteditable="true">KEEP ON</span><span contenteditable="true">TRUCKIN'</span></h1>
+      <p class="cover-sub" contenteditable="true">Ten truths for keeping a classic Ford alive.</p>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-count">1 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- image-hook -->
+  <div class="slide-wrap"><div class="slide tone-dark" data-template="image-hook" data-i="2" data-total="10">
+    <div class="slide-label">IMAGE-DOMINANT HOOK</div>
+    <div class="image-layer" style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1080' height='1350' viewBox='0 0 1080 1350'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%233a3128'/><stop offset='1' stop-color='%2313100a'/></linearGradient></defs><rect width='1080' height='1350' fill='url(%23g)'/><circle cx='770' cy='430' r='250' fill='%234A3D2E' opacity='0.55'/><rect x='120' y='900' width='840' height='14' fill='%23F0E6CE' opacity='0.18'/><text x='540' y='690' font-family='monospace' font-size='54' fill='%23F0E6CE' opacity='0.35' text-anchor='middle'>QA PLACEHOLDER PHOTO</text></svg>&quot;);"></div>
+    <div class="overlay"></div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="hook-content">
+      <h1 class="hook-headline" contenteditable="true">Rust never sleeps</h1>
+      <p class="hook-sub" contenteditable="true">It does not die from miles. It dies from the cab corners you ignore.</p>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:20%"></div></div><div class="progress-count">2 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- numbered -->
+  <div class="slide-wrap"><div class="slide tone-paper" data-template="numbered" data-i="3" data-total="10">
+    <div class="slide-label">NUMBERED CONTENT</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="ghost-num">01</div>
+    <div class="content"><div class="item-subhead" contenteditable="true">Grease is cheap</div><div class="item-body" contenteditable="true">Parts are expensive. Grease is not. Hit the zerks, pack the bearings, keep the fluids fresh.</div></div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-count">3 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- split-image -->
+  <div class="slide-wrap"><div class="slide tone-dark" data-template="split-image" data-i="4" data-total="10">
+    <div class="slide-label">SPLIT-IMAGE SPREAD</div>
+    <div class="image-layer" style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='2160' height='1350' viewBox='0 0 2160 1350'><defs><linearGradient id='s' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%23241d14'/><stop offset='0.5' stop-color='%234A3D2E'/><stop offset='1' stop-color='%23120e08'/></linearGradient></defs><rect width='2160' height='1350' fill='url(%23s)'/><rect x='1060' y='0' width='40' height='1350' fill='%23F0E6CE' opacity='0.12'/><text x='540' y='700' font-family='monospace' font-size='60' fill='%23F0E6CE' opacity='0.4' text-anchor='middle'>SPREAD LEFT</text><text x='1620' y='700' font-family='monospace' font-size='60' fill='%23F0E6CE' opacity='0.4' text-anchor='middle'>SPREAD RIGHT</text></svg>&quot;); background-size: 2160px 1350px; background-position: 0 0;"></div>
+    <div class="overlay"></div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="hook-content">
+      <h1 class="hook-headline" contenteditable="true">Drive it</h1>
+      <p class="hook-sub" contenteditable="true">A truck that sits is a truck that seizes. Left panel of a two-slide spread.</p>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:40%"></div></div><div class="progress-count">4 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- highlighted-word -->
+  <div class="slide-wrap"><div class="slide tone-gray" data-template="highlighted-word" data-i="5" data-total="10">
+    <div class="slide-label">HIGHLIGHTED-WORD</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <p class="hl-body" contenteditable="true">The best time to start was <span class="hl">yesterday</span>. The second best time is <span class="hl">today</span>.</p>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:50%"></div></div><div class="progress-count">5 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- pull-quote -->
+  <div class="slide-wrap"><div class="slide tone-dark" data-template="pull-quote" data-i="6" data-total="10">
+    <div class="slide-label">PULL QUOTE</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <div class="pull-quote" contenteditable="true">Old Fords were built to be maintained, not replaced.</div>
+      <div class="quote-attr" contenteditable="true">Leon, 30 years under the hood</div>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:60%"></div></div><div class="progress-count">6 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- color-block -->
+  <div class="slide-wrap"><div class="slide tone-gray" data-template="color-block" data-i="7" data-total="10">
+    <div class="slide-label">COLOR-BLOCK STATEMENT</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <h1 class="block-headline" contenteditable="true">Honor the original.</h1>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:70%"></div></div><div class="progress-count">7 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- long-form -->
+  <div class="slide-wrap"><div class="slide tone-paper" data-template="long-form" data-i="8" data-total="10">
+    <div class="slide-label">LONG-FORM TEXT</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <div class="subhead"><span class="num">05</span> <span contenteditable="true">The floor pans</span></div>
+      <hr class="hairline">
+      <p class="body-column" contenteditable="true">Pull the carpet once a year. Water finds the seams and sits there. A pinhole in spring is a rusted-through floor by fall. Ten minutes of looking saves a panel.</p>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:80%"></div></div><div class="progress-count">8 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- checklist -->
+  <div class="slide-wrap"><div class="slide tone-dark" data-template="checklist" data-i="9" data-total="10">
+    <div class="slide-label">CHECKLIST</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content">
+      <ul class="check-list">
+        <li class="check-item" contenteditable="true">Check the cab corners</li>
+        <li class="check-item" contenteditable="true">Pack the wheel bearings</li>
+        <li class="check-item" contenteditable="true">Flush the brake fluid</li>
+        <li class="check-item" contenteditable="true">Pull the carpet, look for rust</li>
+      </ul>
+    </div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div><div class="progress-count">9 / 10</div></div>
+    <div class="swipe-arrow">&rarr;</div>
+  </div></div>
+
+  <!-- cta -->
+  <div class="slide-wrap"><div class="slide tone-paper" data-template="cta" data-i="10" data-total="10">
+    <div class="slide-label">CTA / FOLLOW</div>
+    <div class="header-strip"><span>@leonsfixitshop</span><span>#classicford</span></div>
+    <div class="content"><h1 class="cta-headline" contenteditable="true">Bring it to Leon's.</h1><p class="cta-body" contenteditable="true">Classic Ford bodywork done right. Austin, TX. Follow @leonsfixitshop for more.</p></div>
+    <div class="progress-bar"><span class="brand-logo-text">Leon's Fixit Shop</span><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div><div class="progress-count">10 / 10</div></div>
+  </div></div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  function updateSlideScale(){const w=document.querySelector('.slide-wrap');if(!w)return;document.documentElement.style.setProperty('--slide-scale',String(w.getBoundingClientRect().width/1080));}
+  updateSlideScale(); window.addEventListener('resize',updateSlideScale);
+  function autoFitMegaCover(){document.querySelectorAll('.mega-cover').forEach(el=>{if(el.dataset.manualSize==='true')return;const c=el.closest('.content');const avail=c?c.clientHeight:1000;let s=220;el.style.fontSize=s+'px';const fits=()=>[...el.querySelectorAll('span')].every(x=>x.scrollWidth<=952)&&el.scrollHeight<=avail;while(s>80&&!fits()){s-=2;el.style.fontSize=s+'px';}});}
+  autoFitMegaCover(); if(document.fonts&&document.fonts.ready)document.fonts.ready.then(autoFitMegaCover);
+  async function captureSlide(el){const p=el.style.transform;el.style.transform='none';try{return await html2canvas(el,{width:1080,height:1350,windowWidth:1080,windowHeight:1350,scale:1,backgroundColor:null,logging:false});}finally{el.style.transform=p;}}
+  async function exportAllPNGs(){const s=[...document.querySelectorAll('.slide')];for(let i=0;i<s.length;i++){const c=await captureSlide(s[i]);const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download=`leons-mono-slide-${i+1}.png`;a.click();await new Promise(r=>setTimeout(r,250));}}
+  async function exportPDF(){const{jsPDF}=window.jspdf;const pdf=new jsPDF({orientation:'portrait',unit:'px',format:[1080,1350]});const s=[...document.querySelectorAll('.slide')];for(let i=0;i<s.length;i++){const c=await captureSlide(s[i]);if(i>0)pdf.addPage([1080,1350],'portrait');pdf.addImage(c.toDataURL('image/png'),'PNG',0,0,1080,1350);}pdf.save('leons-mono-carousel.pdf');}
+  let _fh=null;
+  async function saveChanges(){try{const h='<!DOCTYPE html>\n'+document.documentElement.outerHTML;if(h.length<2000){alert('empty');return;}if(!_fh){if(!window.showSaveFilePicker){alert('Use Chrome/Edge');return;}_fh=await window.showSaveFilePicker({suggestedName:'mono-qa-fixture.html',types:[{description:'HTML',accept:{'text/html':['.html']}}]});}const w=await _fh.createWritable();await w.write(h);await w.close();}catch(e){if(e.name!=='AbortError')alert(e.message);}}
+  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveChanges();}});
+</script>
+<script>
+  /* QA isolation: ?qa=<template> renders only that slide at native 1080x1350 for screenshotting */
+  (function(){
+    var q=new URLSearchParams(location.search).get('qa');
+    if(!q)return;
+    var tb=document.querySelector('.toolbar'); if(tb)tb.style.display='none';
+    var stage=document.querySelector('.stage'); if(stage){stage.style.padding='0';stage.style.gap='0';stage.style.alignItems='flex-start';}
+    document.body.style.background='#fff'; document.body.style.margin='0'; document.body.style.padding='0';
+    var found=false;
+    document.querySelectorAll('.slide-wrap').forEach(function(w){
+      var slide=w.querySelector('.slide');
+      if(slide && slide.getAttribute('data-template')===q){
+        found=true;
+        w.style.width='1080px'; w.style.height='1350px'; w.style.boxShadow='none'; w.style.margin='0';
+        document.documentElement.style.setProperty('--slide-scale','1');
+        slide.style.transform='none';
+        var lbl=slide.querySelector('.slide-label'); if(lbl)lbl.style.display='none';
+      } else { w.style.display='none'; }
+    });
+    if(typeof autoFitMegaCover==='function'){autoFitMegaCover();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(autoFitMegaCover);}
+    window.__qaFound=found;
+  })();
+</script>
+</body>
+</html>
