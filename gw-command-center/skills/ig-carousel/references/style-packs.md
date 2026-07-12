@@ -1,6 +1,6 @@
 # Style Packs — Instagram Carousel Skill v2
 
-Six visual packs. User picks one at Step 0.5. Every pack uses Vitesse Bold (display) and Barlow (body) — only weight/size/casing/color changes.
+Seven visual packs. User picks one at Step 0.5. Packs 1–6 use Vitesse Bold (display) and Barlow (body) — only weight/size/casing/color changes. Pack 7 (Newsprint Bauhaus) swaps the display face to Anton (Google Fonts, same `<link>` as Barlow: add `family=Anton`); Vitesse is not used in that pack.
 
 Each pack defines:
 - Accent color + contrast ink
@@ -163,6 +163,41 @@ Paper background, asphalt body copy in real reading columns, numbered subheads. 
 
 ---
 
+## 7. NEWSPRINT BAUHAUS
+
+Vox-explainer editorial fused with classic Bauhaus. Every slide is a magazine spread, not a corporate slide: aged newsprint paper, oversized condensed black headlines, hand-drawn yellow highlighter strokes, and geometric primary-color primitives used with discipline. Journalistic, opinionated, confident — headlines provoke, they don't describe.
+
+```css
+--bg-dominant: #EFE8D8;       /* aged newsprint */
+--bg-inverse:  #000000;        /* pure black — The Trap slide + callout blocks */
+--fg-dominant: #000000;
+--fg-inverse:  #FFFFFF;
+--red:         #E10600;        /* Bauhaus red — circle/dot only */
+--blue:        #0026CA;        /* Bauhaus blue — rectangle/line only */
+--yellow:      #FFDE00;        /* highlighter strokes only */
+--font-heading: 'Anton', 'Impact', sans-serif;   /* condensed black, replaces Vitesse */
+--font-body:    'Barlow', sans-serif;
+--overlay-dark: none;          /* no gradients anywhere in this pack */
+```
+
+- **Hard palette law:** paper, black, white, plus AT MOST ONE Bauhaus primary per slide region. Red is always a circle or dot. Blue is always a rectangle or line. Yellow is always a hand-drawn highlighter stroke. No gradients, no pastels, no soft tones, no drop shadows, ever.
+- **Typography law:** aggressive scale contrast. Anton headlines are massive, uppercase, tight (`letter-spacing: 0.005em`, line-height 0.92), often full-width. Body is Barlow 400 at ~30–34px (reads ~15–17px at IG display), line-height 1.55, max 46ch. Nothing mid-sized: if a text element is not a headline or small refined body, it should not exist.
+- **Backgrounds:** aged newsprint. Implementation: flat `--bg-dominant` plus a subtle SVG `feTurbulence` noise data-URI at 4–6% opacity, plus (on 2–3 slides max) a faint technical-grid layer: `repeating-linear-gradient` hairlines in black at 5% opacity, 40px spacing, both axes. Grid shows BEHIND content, never over it.
+- **Highlighter strokes:** the signature move. One key phrase per slide (max two) gets an irregular hand-drawn yellow marker stroke BEHIND the text: an inline SVG `<path>` with a wobbly baseline (4–6 anchor points, varying stroke width 0.45–0.6em, `stroke-linecap: round`, opacity 0.85, rotate ~-1deg), absolutely positioned under the words. Never a clean CSS `background` rectangle — it must read as a human hand, not a vector tool.
+- **Black block callouts:** solid pure-black rectangles with white Barlow 600 text inside (~28px), 24–32px padding, rotated -1 to 1deg for a paste-up feel. One per slide max. This is the pack's version of a pull-quote.
+- **Bauhaus primitives as anchors (never decorative):** each primitive has a JOB. Red circle = the point being made (numbered dot on pillar slides, ~72px, white Anton numeral inside). Blue rectangle/line = structure (section divider bar, margin rule, or the frame around the arc diagram). Black square = warning (anchors The Trap slide). One primitive family per slide region; if a shape has no job, delete it.
+- **Hand-drawn marks:** black marker arrows, circles, underlines and scribbles as inline SVG paths — connecting a headline to a stat, circling a number, striking through a myth. Same wobble rule as the highlighter: irregular, organic, never geometric-perfect.
+- **Photo treatment:** B&W editorial (`grayscale(1) contrast(1.1)`), pasted as a collage clipping: contained box (55–75% slide width), torn-edge `clip-path` polygon on 1–2 sides, slight rotation (-2 to 2deg), and a hand-drawn yellow SVG outline stroke tracing the photo's border. Photos never full-bleed, never behind text. No photorealistic 3D, no stock-look, no icon sets.
+- **Slide number:** small black block stamp top-left, white Barlow 700 ("No. 3") — reads like a page marker.
+- **Cover:** headline owns the spread. Anton at ~170–200px, full-width, stacked 3–4 lines, one phrase highlighter-struck. Small Barlow body kicker below (max 2 lines). One red circle anchor. No photo on the cover unless it is a torn clipping smaller than 40% of the slide.
+- **Default slide arc (7 slides):** Cover (provocation) → Core Thesis → Pillar 1 → Pillar 2 → Pillar 3 (red-dot numbered) → The Trap (inverse: pure black slide, white Anton headline, black-square anchor, what NOT to do) → CTA (paper again, black block callout carries the offer).
+- **Editorial tone rule:** one core idea per slide, headline-driven. Write headlines like a Vox cover line: a claim, not a label. "YOUR GASSERS ARE LYING TO YOU", not "CONDITIONING MISTAKES".
+- **Body copy voice rule:** Scott's voice rules still apply in full — no em-dashes, no banned words, short sentences.
+- **Recommend for:** explainer/breakdown content, myth-vs-fact journalism angles, big-idea essays, anything Scott wants to land like a magazine feature.
+- **Note:** centered PowerPoint symmetry is forbidden. Every layout is grid-based and asymmetric: headline block off-axis, body column narrow, primitives balancing the composition.
+
+---
+
 ## Pack selection quick-reference
 
 | User said... | Suggest |
@@ -173,6 +208,7 @@ Paper background, asphalt body copy in real reading columns, numbered subheads. 
 | "essay", "philosophy", "quiet" | Paper Minimal |
 | "5 ways to", "top 7", "3 lessons", "numbered listicle" | Mono Series |
 | "how-to", "guide", "teach", "framework", "long-form teaching" | Editorial Long-Form |
+| "explainer", "breakdown", "magazine", "newsprint", "bauhaus", "vox", "myth vs fact" | Newsprint Bauhaus |
 
 If unclear, ask. Don't guess — the pack shapes everything downstream.
 
@@ -211,6 +247,9 @@ This is the only formula you need. Budgets below apply it per pack. Numbers are 
 | Mono Series | `.content-headline` | ~96px | 21 | 3 | starting estimate |
 | Editorial Long-Form | `.mega-cover` (cover) | ~104px | 19 | 4 | starting estimate |
 | Editorial Long-Form | Numbered subhead | 72px | 28 | 2 | starting estimate (reading-column body has its own 58ch max — different system) |
+| Newsprint Bauhaus | `.mega-cover` (cover, Anton) | ~180px | 11 | 4 | ✅ (pack demo render, 2026-07-12) — Anton is condensed: chars-per-line ≈ 952 / (0.45 × font-size) for this pack, NOT the 0.57 Vitesse factor |
+| Newsprint Bauhaus | `.content-headline` (Anton) | ~112px | 18 | 3 | ✅ (pack demo render, 2026-07-12) |
+| Newsprint Bauhaus | Black block callout (Barlow 600) | 28px | 40 | 3 | ✅ (pack demo render, 2026-07-12) |
 
 **The first time a pack ships, mark its row Verified after Step 5.5 passes.** Update the Verified column when a real carousel renders cleanly at the listed numbers. If reality forces a different size, update the table — don't leave stale numbers.
 
