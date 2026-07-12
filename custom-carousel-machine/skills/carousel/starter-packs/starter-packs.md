@@ -1,6 +1,6 @@
 # Starter Style Packs
 
-Two shipped packs. The buyer authors the rest with the **pack-author** skill. Both are layout only — colors come from the buyer's Brand Profile via palette roles, never literal hex.
+Two shipped packs. The buyer authors the rest with the **pack-author** skill. Both are layout only; colors come from the buyer's Brand Profile via palette roles, never literal hex.
 
 ## Palette roles
 
@@ -22,7 +22,7 @@ A pack paints with roles, not colors. The Brand Profile `palette` supplies the v
 
 ## 1. MONO SERIES
 
-Monochrome, type-and-number driven. Oversized ghosted slide numbers are the hero element. Edge gradients create swipe-continuity. **No accent color — the absence of color is the pack's identity (escape hatch: `--accent` is suppressed, tonal only).**
+Monochrome, type-and-number driven. Oversized ghosted slide numbers are the hero element. Edge gradients create swipe-continuity. **No accent color; the absence of color is the pack's identity (escape hatch: `--accent` is suppressed, tonal only).**
 
 Roles used: `dark` (default dark slide), `paper` (alternates), `accent_secondary` as a third tonal gray. `--accent` is unused.
 
@@ -53,10 +53,10 @@ Roles used: `paper` (bg), `ink` (body + type), `accent_primary` (numbered subhea
 
 - **Cover:** Mega-Cover in ink on paper. Optional small `GUIDE` / `EDITORIAL` eyebrow in accent-primary above the headline.
 - **Content slides:** reading-column layout, max 58ch wide, body font 400 at 36px (renders ~18px in feed), line-height 1.5, left-aligned ragged right. Numbered subhead (`01.` in accent-primary, display font 700 at 72pt) above the paragraph.
-- **Photos:** allowed but small — 100% width × 40% height max, above or below the column every 2–3 slides.
-- **Slide number:** small ink "Page 3 / 8" bottom-left, body font 600 16pt — reads like a magazine folio.
+- **Photos:** allowed but small, 100% width × 40% height max, above or below the column every 2–3 slides.
+- **Slide number:** small ink "Page 3 / 8" bottom-left, body font 600 16pt, reads like a magazine folio.
 - **Ornament:** thin 1px ink hairline between subhead and body column.
-- **Lists:** checkbox square (8×8 ink outline) — the only starter pack where lists are explicitly allowed.
+- **Lists:** checkbox square (8×8 ink outline), the only starter pack where lists are explicitly allowed.
 - **Recommend for:** how-to guides, teaching content, frameworks, multi-point educational posts.
 
 ### Headline budgets
@@ -68,4 +68,4 @@ Roles used: `paper` (bg), `ink` (body + type), `accent_primary` (numbered subhea
 ---
 
 ## Headline budget check (at Step 3B)
-For each plan row: count visible headline characters, divide by the pack's chars-per-line, round up to lines. If it exceeds max lines, tighten the copy (preferred) or split across more `<span class="line">` elements. Do NOT just shrink the font — that breaks the pack's rhythm.
+For each plan row: count visible headline characters, divide by the pack's chars-per-line, round up to lines. If it exceeds max lines, tighten the copy (preferred) or split across more `<span class="line">` elements. Do NOT just shrink the font; that breaks the pack's rhythm.

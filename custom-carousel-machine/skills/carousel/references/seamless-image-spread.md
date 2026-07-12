@@ -6,7 +6,7 @@ Instagram carousel's native swipe creates a built-in reveal effect. One wide pho
 
 - Wide or horizontally-composed photos (landscapes, full-body action, stadium shots)
 - Photos where the subject stretches across the frame
-- Never for tight headshots — they look broken when sliced
+- Never for tight headshots; they look broken when sliced
 
 ## How the slicing works
 
@@ -23,7 +23,7 @@ For each spanning slide `k` (0-indexed) out of N total:
 }
 ```
 
-No need to actually slice the image into separate files — CSS `background-size` + `background-position` does it. Each slide shows a 1080-wide window into the wider image.
+No need to actually slice the image into separate files; CSS `background-size` + `background-position` does it. Each slide shows a 1080-wide window into the wider image.
 
 ## Implementation pattern
 
@@ -57,7 +57,7 @@ No need to actually slice the image into separate files — CSS `background-size
 - **Slide 0 of a spread:** text goes on the left third (where the image's empty/darker zone usually lives after you crop)
 - **Slide 1 of a spread:** text goes on the right third
 - **Slide 2 of a spread (if 3-wide):** either text-free (let the image breathe) or text goes where the photographer left negative space
-- **Overlay:** apply the overlay treatment uniformly across all spanning slides — same gradient, same opacity — or the seam is visible
+- **Overlay:** apply the overlay treatment uniformly across all spanning slides (same gradient, same opacity) or the seam is visible
 
 ## Asking the user
 
@@ -71,4 +71,4 @@ In the slide plan table, mark spanning slides with the `Span` column showing the
 
 ## Preview check
 
-When rendering the HTML preview (all slides in a flex grid), spanning slides should visibly line up if placed next to each other. If they don't line up, the slicing math is off — most likely `background-size` doesn't match N or `background-position` percentages are wrong.
+When rendering the HTML preview (all slides in a flex grid), spanning slides should visibly line up if placed next to each other. If they don't line up, the slicing math is off, most likely `background-size` doesn't match N or `background-position` percentages are wrong.

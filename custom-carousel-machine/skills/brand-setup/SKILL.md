@@ -5,7 +5,7 @@ description: One-time guided setup that writes a buyer's Brand Profile for the C
 
 # Brand Setup
 
-Writes the buyer's **Brand Profile** — the single source of identity the Carousel Engine reads on every run. Run once. Re-run any time to change the brand.
+Writes the buyer's **Brand Profile**, the single source of identity the Carousel Engine reads on every run. Run once. Re-run any time to change the brand.
 
 ## Where it writes
 
@@ -15,22 +15,22 @@ Always to the buyer's **own project**, never inside the engine:
 <buyer project>/carousel/brand-profile.md
 ```
 
-If `carousel/` does not exist in the current working directory, create it. Never write the brand profile inside the engine's own plugin folder (an engine update would wipe it — see ADR 0004 in the source repo).
+If `carousel/` does not exist in the current working directory, create it. Never write the brand profile inside the engine's own plugin folder (an engine update would wipe it, see ADR 0004 in the source repo).
 
 ## Before you start
 
-The file you write has a fixed shape. If `brand-profile.template.md` is present at the engine root, read it — that is the exact template (the marketplace install keeps it). If it is not present (a zip install copies only the skill folders), use the field list below. Either way, do not invent fields.
+The file you write has a fixed shape. If `brand-profile.template.md` is present at the engine root, read it. That is the exact template (the marketplace install keeps it). If it is not present (a zip install copies only the skill folders), use the field list below. Either way, do not invent fields.
 
 ```yaml
 ---
 brand_name: "Your Brand"
 handle: "@yourhandle"
-palette:
-  ink: "#1A1A1A"            # darkest type
-  paper: "#F5F0E8"          # light background
-  dark: "#1A1A1A"           # dark background
-  accent_primary: "#C8A84E"
-  accent_secondary: "#3A3A3A"
+palette:                     # placeholder neutrals; overwrite with the buyer's colors
+  ink: "#222222"            # darkest type
+  paper: "#FAFAF7"          # light background
+  dark: "#222222"           # dark background
+  accent_primary: "#4A7A96"
+  accent_secondary: "#555555"
 fonts:
   display:
     family: "Roboto Slab"
@@ -56,10 +56,10 @@ voice:
 ## The interview (one question at a time, accept defaults fast)
 
 1. **Brand name** and **Instagram handle**.
-2. **Palette** — ask for up to five hex values: ink (darkest type), paper (light background), dark (dark background), accent primary, accent secondary. If the user only has one or two colors, fill the rest with sensible neutrals and tell them what you chose.
-3. **Fonts** — default is Roboto Slab (display) + Barlow (body), both free from Google Fonts. Ask only: "Use the free defaults, or your own font file?" If they supply a font file path, set `source: baked` and base64-encode the file into `custom_base64`. Warn once: they are responsible for that font's license.
-4. **Logo** — ask for an image path. Base64-encode it into `logo.base64` so exported carousels stay self-contained. If they have no logo, leave it empty; the footer falls back to the handle text.
-5. **Voice** — tone (direct / professional / playful / minimal), whether to ban em-dashes, any banned words, and a few sentences of free-text voice notes.
+2. **Palette.** Ask for up to five hex values: ink (darkest type), paper (light background), dark (dark background), accent primary, accent secondary. If the user only has one or two colors, fill the rest with sensible neutrals and tell them what you chose.
+3. **Fonts.** Default is Roboto Slab (display) + Barlow (body), both free from Google Fonts. Ask only: "Use the free defaults, or your own font file?" If they supply a font file path, set `source: baked` and base64-encode the file into `custom_base64`. Warn once: they are responsible for that font's license.
+4. **Logo.** Ask for an image path. Base64-encode it into `logo.base64` so exported carousels stay self-contained. If they have no logo, leave it empty; the footer falls back to the handle text.
+5. **Voice.** Tone (direct / professional / playful / minimal), whether to ban em-dashes, any banned words, and a few sentences of free-text voice notes.
 
 ## Writing the file
 
@@ -73,4 +73,4 @@ Base64-encode an image or font file with the buyer's available tooling. On Windo
 ## Do not
 
 - Do not write GW / Gridiron Warrior values as defaults. The engine is white-label; the only brand is the buyer's.
-- Do not proceed to generate a carousel from this skill — hand back once the profile is written.
+- Do not proceed to generate a carousel from this skill. Hand back once the profile is written.

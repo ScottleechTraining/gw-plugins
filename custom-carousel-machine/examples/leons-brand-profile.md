@@ -3,7 +3,7 @@ brand_name: "Leon's Fixit Shop"
 handle: "@leonsfixitshop"
 
 palette:
-  ink: "#1A1A1A"
+  ink: "#1C1712"
   paper: "#F0E6CE"
   dark: "#211C16"
   accent_primary: "#E8551F"

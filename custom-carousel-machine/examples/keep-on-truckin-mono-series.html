@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Keep on Truckin' — Mono Series — Leon's Fixit Shop</title>
+<title>Keep on Truckin' | Mono Series | Leon's Fixit Shop</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;900&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +27,7 @@
   .slide-wrap { width: min(420px, 92vw); aspect-ratio: 1080 / 1350; position: relative; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
   .slide { position: absolute; top: 0; left: 0; width: 1080px; height: 1350px; transform-origin: top left; transform: scale(var(--slide-scale)); overflow: hidden; }
 
-  /* alternating tones — the pack identity */
+  /* alternating tones, the pack identity */
   .slide.tone-dark  { background: var(--dark);  color: var(--paper); }
   .slide.tone-paper { background: var(--paper); color: var(--ink); }
   .slide.tone-gray  { background: var(--gray);  color: var(--paper); }
@@ -35,7 +35,7 @@
   /* header strip */
   .header-strip { position: absolute; top: 0; left: 0; right: 0; height: 88px; display: flex; align-items: center; justify-content: space-between; padding: 0 64px; font-family: var(--font-body); font-weight: 600; font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; }
 
-  /* ghost number — list-indexed, oversized, low opacity, behind content */
+  /* ghost number, list-indexed, oversized, low opacity, behind content */
   .ghost-num { position: absolute; right: 40px; bottom: -40px; font-family: var(--font-heading); font-weight: 900; font-size: 400px; line-height: 1; opacity: 0.15; pointer-events: none; }
 
   .content { position: absolute; inset: 0; padding: 180px 64px 180px; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-<div class="toolbar"><span class="title">Keep on Truckin' — Mono Series — Leon's</span><button onclick="exportAllPNGs()">Export PNGs</button><button onclick="exportPDF()">Export PDF (Canva)</button><button id="saveChangesBtn" onclick="saveChanges()">💾 Save</button></div>
+<div class="toolbar"><span class="title">Keep on Truckin' | Mono Series | Leon's</span><button onclick="exportAllPNGs()">Export PNGs</button><button onclick="exportPDF()">Export PDF (Canva)</button><button id="saveChangesBtn" onclick="saveChanges()">💾 Save</button></div>
 <div class="stage" id="stage">
 
   <div class="slide-wrap"><div class="slide tone-dark" data-i="1" data-total="5">

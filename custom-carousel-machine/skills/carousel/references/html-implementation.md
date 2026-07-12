@@ -11,7 +11,7 @@ Read the section you need at the step SKILL.md points you to.
 Used at Step 5 (Generate the HTML). Fonts come from the buyer's Brand Profile (`fonts.display` and `fonts.body`).
 
 - A family with `source: google` (the defaults are Roboto Slab display + Barlow body) loads from Google Fonts via the `<link>`.
-- A family with `source: baked` embeds its `custom_base64` inline as an `@font-face` data URL — no external file path.
+- A family with `source: baked` embeds its `custom_base64` inline as an `@font-face` data URL, no external file path.
 
 ```html
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ Used at Step 5 (Generate the HTML). Fonts come from the buyer's Brand Profile (`
   :root {
     --font-heading: '{DISPLAY_FONT}', 'Georgia', serif;   /* Brand Profile fonts.display.family; default Roboto Slab */
     --font-body: '{BODY_FONT}', sans-serif;               /* Brand Profile fonts.body.family; default Barlow */
-    /* pack tokens go here — see Step 2A */
+    /* pack tokens go here (see Step 2A) */
   }
 
   /* rest of stylesheet */
@@ -53,7 +53,7 @@ Substitute `{DISPLAY_FONT}` / `{BODY_FONT}` from the Brand Profile. For a baked 
 
 ## 2. Color system `:root` tokens
 
-Used at Step 2A. All packs share the same structural tokens; only the values shift. Values come from the Brand Profile `palette`, mapped onto the chosen pack's roles — do not improvise hex.
+Used at Step 2A. All packs share the same structural tokens; only the values shift. Values come from the Brand Profile `palette`, mapped onto the chosen pack's roles; do not improvise hex.
 
 ```css
 :root {
@@ -63,7 +63,7 @@ Used at Step 2A. All packs share the same structural tokens; only the values shi
   --fg-inverse:     /* per pack */;
   --accent:         /* Brand Profile palette.accent_primary, or a pack escape-hatch color */;
   --accent-ink:     /* contrast color to read ON the accent */;
-  --overlay-dark:   /* tune per pack — see the chosen pack's section */;
+  --overlay-dark:   /* tune per pack, see the chosen pack's section */;
   --edit-highlight: var(--accent);
 }
 ```
@@ -77,7 +77,7 @@ Used at Step 5. Build the single HTML file in this order:
 1. Doctype and document head with:
    - charset meta tag
    - viewport meta tag set to `width=1080`
-   - title — `{Topic} — {Pack Name} — {brand_name}` (brand_name from the Brand Profile)
+   - title: `{Topic} | {Pack Name} | {brand_name}` (brand_name from the Brand Profile)
    - Google Fonts link for the Brand Profile's google-sourced families (default Roboto Slab + Barlow)
    - **One** inline style block containing, in order:
      1. @font-face for a baked custom font (only if the Brand Profile sets source: baked)
@@ -86,7 +86,7 @@ Used at Step 5. Build the single HTML file in this order:
      4. Typography base (body, h1–h3, paragraph defaults)
      5. Slide frame (`.slide` at 1080x1350, scaled down for preview)
      6. Persistent frame system (slide number, handle, swipe arrow, progress bar, logo)
-     7. Template classes (Mega-Cover, Numbered Content, Long-Form Text, etc. — only the ones used)
+     7. Template classes (Mega-Cover, Numbered Content, Long-Form Text, etc.; only the ones used)
      8. Pack-specific overrides (see the chosen pack's section in `starter-packs/starter-packs.md` or `carousel/packs/`)
      9. Toolbar styles, then the inline resize toolbar CSS (see section 5 below)
      10. Edit highlight states (contenteditable hover / focus)
@@ -97,13 +97,13 @@ Used at Step 5. Build the single HTML file in this order:
    - Resize toolbar element (the resize-toolbar div) immediately before the closing body tag (see section 6 below)
    - Export / edit JS, then the Inline Resize Controls JS block, as the final inline script block
 
-**Pack CSS loads once.** Copy the pack's full CSS block from the chosen pack's section (`starter-packs/starter-packs.md` or `carousel/packs/`) into the inline style block — do not split into a separate file and link it.
+**Pack CSS loads once.** Copy the pack's full CSS block from the chosen pack's section (`starter-packs/starter-packs.md` or `carousel/packs/`) into the inline style block; do not split into a separate file and link it.
 
 ---
 
 ## 4. PDF export script
 
-Used at Step 5 (Toolbar). Add these two script tags — the jsPDF CDN tag plus the export function. html2canvas and jsPDF come from CDN URLs, never relative paths.
+Used at Step 5 (Toolbar). Add these two script tags: the jsPDF CDN tag plus the export function. html2canvas and jsPDF come from CDN URLs, never relative paths.
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -125,9 +125,9 @@ async function exportPDF() {
 
 ---
 
-## 5. Inline Resize Controls — CSS
+## 5. Inline Resize Controls: CSS
 
-Add after the existing toolbar rules in style slot 9. For Paper Minimal and Editorial Long-Form (paper-dominant packs) the dark toolbar still works — do not invert it per pack.
+Add after the existing toolbar rules in style slot 9. For Editorial Long-Form (a paper-dominant pack) the dark toolbar still works; do not invert it per pack.
 
 ```css
 .resize-toolbar {
@@ -135,8 +135,8 @@ Add after the existing toolbar rules in style slot 9. For Paper Minimal and Edit
   display: none;
   align-items: center;
   gap: 6px;
-  background: #1A1A1A;
-  border: 1px solid rgba(245, 240, 232, 0.25);
+  background: #222222;
+  border: 1px solid rgba(250, 250, 247, 0.25);
   padding: 6px 8px;
   z-index: 9999;
   font-family: var(--font-body);
@@ -145,19 +145,19 @@ Add after the existing toolbar rules in style slot 9. For Paper Minimal and Edit
 }
 .resize-toolbar.active { display: flex; }
 .resize-toolbar .resize-label {
-  color: rgba(245, 240, 232, 0.45);
+  color: rgba(250, 250, 247, 0.45);
   font-size: 10px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 700;
-  border-right: 1px solid rgba(245, 240, 232, 0.18);
+  border-right: 1px solid rgba(250, 250, 247, 0.18);
   padding-right: 8px;
   margin-right: 2px;
 }
 .resize-toolbar button {
   background: transparent;
-  border: 1px solid rgba(245, 240, 232, 0.3);
-  color: #F5F0E8;
+  border: 1px solid rgba(250, 250, 247, 0.3);
+  color: #FAFAF7;
   font-family: var(--font-body);
   font-weight: 700;
   padding: 4px 10px;
@@ -166,12 +166,12 @@ Add after the existing toolbar rules in style slot 9. For Paper Minimal and Edit
   letter-spacing: 0.5px;
 }
 .resize-toolbar button:hover {
-  background: rgba(245, 240, 232, 0.12);
+  background: rgba(250, 250, 247, 0.12);
   border-color: var(--accent);
   color: var(--accent);
 }
 .resize-toolbar .size-display {
-  color: rgba(245, 240, 232, 0.7);
+  color: rgba(250, 250, 247, 0.7);
   font-size: 11px;
   letter-spacing: 1px;
   font-weight: 600;
@@ -184,7 +184,7 @@ Add after the existing toolbar rules in style slot 9. For Paper Minimal and Edit
 
 ---
 
-## 6. Inline Resize Controls — HTML
+## 6. Inline Resize Controls: HTML
 
 Add once, immediately before the closing body tag.
 
@@ -200,7 +200,7 @@ Add once, immediately before the closing body tag.
 
 ---
 
-## 7. Inline Resize Controls — JavaScript
+## 7. Inline Resize Controls: JavaScript
 
 Add inside the final script block, after the export functions and after `autoFitMegaCover()`.
 
@@ -326,7 +326,7 @@ Add inside the final script block, after the export functions and after `autoFit
 
 ---
 
-## 8. Auto-fit Mega-Cover — JavaScript
+## 8. Auto-fit Mega-Cover: JavaScript
 
 Used at Step 5. The cover headline shrinks to fit the safe zone. Copy this function and its three call sites VERBATIM into the final script block (before the section 7 resize-controls JS). Do not re-derive it from the prose in `slide-architecture.md`. A from-scratch version reliably reintroduces the width-only bug (top word clipped, words break mid-word, last line collides with the footer/handle).
 
@@ -393,7 +393,7 @@ Used at Step 5 (toolbar + final script block). Every generated carousel ships wi
 
 Copy both blocks VERBATIM from below. Do not retype or "improve" them.
 
-**Button HTML — add into the toolbar, immediately after the `EXPORT PDF (Canva)` button:**
+**Button HTML, add into the toolbar immediately after the `EXPORT PDF (Canva)` button:**
 
 ```html
 <button id="saveChangesBtn" onclick="saveChanges()" style="background:#FFD700;color:#0a0a0a;font-weight:800;">💾 SAVE CHANGES</button>
@@ -401,7 +401,7 @@ Copy both blocks VERBATIM from below. Do not retype or "improve" them.
 <span id="dirtyDot" style="display:none;color:#FFD700;font-weight:bold;margin-left:4px;">●</span>
 ```
 
-**Save script — add as its own block immediately before the closing `</body>` tag (after the final inline script):**
+**Save script, add as its own block immediately before the closing `</body>` tag (after the final inline script):**
 
 ```html
 <script>
@@ -409,7 +409,7 @@ Copy both blocks VERBATIM from below. Do not retype or "improve" them.
   let fileHandle = null;
   let isDirty = false;
   // Version marker so the patcher can detect old vs new
-  /* standalone save feature — no external patcher to version-match */
+  /* standalone save feature, no external patcher to version-match */
 
   document.addEventListener('input', (e) => {
     if (e.target && (e.target.isContentEditable || e.target.contentEditable === 'true')) {
@@ -552,4 +552,4 @@ Copy both blocks VERBATIM from below. Do not retype or "improve" them.
 </script>
 ```
 
-The save button and its script are standalone — there is no external patcher. Emit both blocks (the button HTML and the save script) so in-browser edits persist to disk.
+The save button and its script are standalone; there is no external patcher. Emit both blocks (the button HTML and the save script) so in-browser edits persist to disk.

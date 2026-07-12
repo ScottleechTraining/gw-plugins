@@ -1,16 +1,16 @@
-# Slide Architecture — Instagram Carousel Skill v2
+# Slide Architecture: Instagram Carousel Skill v2
 
 Shared HTML structure, component patterns, and template definitions. Style packs (see `starter-packs/starter-packs.md` or the buyer's `carousel/packs/`) override tokens but not structure.
 
 ---
 
-## Slide sizing — CANONICAL PATTERN (copy verbatim, do not improvise)
+## Slide sizing: CANONICAL PATTERN (copy verbatim, do not improvise)
 
 Every slide renders at native **1080×1350px**. The browser displays it at preview size by scaling the slide element; html2canvas captures at native size by clearing the scale transform on capture.
 
 **Why this section exists:** earlier versions of the skill let each run write its own scaling math. Two failure modes kept appearing:
-- `position: absolute; inset: 0` on `.slide` — the `inset` shorthand overrides `width/height`, so the slide collapses to the wrap size and everything inside breaks.
-- `transform: scale(calc(720px / 1080))` — `scale()` requires a unitless number, not a pixel ratio. The transform silently fails to apply.
+- `position: absolute; inset: 0` on `.slide`: the `inset` shorthand overrides `width/height`, so the slide collapses to the wrap size and everything inside breaks.
+- `transform: scale(calc(720px / 1080))`: `scale()` requires a unitless number, not a pixel ratio. The transform silently fails to apply.
 
 The pattern below is the only one that ships. Don't substitute.
 
@@ -66,7 +66,7 @@ async function captureSlide(slideEl) {
 }
 ```
 
-This combination is tested and works. If you find yourself reaching for `inset: 0`, `calc()` inside `scale()`, or a non-unitless scale factor — stop, come back to this section, copy what's here.
+This combination is tested and works. If you find yourself reaching for `inset: 0`, `calc()` inside `scale()`, or a non-unitless scale factor, stop, come back to this section, copy what's here.
 
 ---
 
@@ -104,7 +104,7 @@ This combination is tested and works. If you find yourself reaching for `inset: 
 </div>
 ```
 
-Hide `.slide-number-ghost` by default; individual pack CSS un-hides it. Mono Series uses its own `.mono-ghost-num` element with different positioning rules — see the pack spec.
+Hide `.slide-number-ghost` by default; individual pack CSS un-hides it. Mono Series uses its own `.mono-ghost-num` element with different positioning rules; see the pack spec.
 
 Hide `.slide-number-stamp` where the pack uses the ghost version instead, OR where the pack strips the stamp entirely (some packs remove slide-number-stamp, swipe-arrow, and handle-stamp on inner slides).
 
@@ -134,7 +134,7 @@ Stacked headline, auto-fit to safe zone. Each line is a `<span>` inside the `<h1
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
-  /* font-size set by auto-fit JS — starts at 220pt, shrinks until fits */
+  /* font-size set by auto-fit JS; starts at 220pt, shrinks until fits */
 }
 .mega-cover span { display: block; white-space: nowrap; }
 ```
@@ -167,7 +167,7 @@ Body copy with specific words wrapped in `<span class="hl">` for an accent-block
   padding: 0.05em 0.25em;
 }
 
-/* Underline highlight modifier — color shift + underline, no block */
+/* Underline highlight modifier: color shift + underline, no block */
 .hl--underline {
   background: transparent;
   color: var(--accent);
@@ -182,7 +182,7 @@ Body copy with specific words wrapped in `<span class="hl">` for an accent-block
 Large display-font quote, attribution below in the body font small caps. Quote marks are a separate `::before` element in the display font at 2x the quote size.
 
 ### Color-Block Statement
-Solid accent background, huge contrast text. No photo. Used sparingly — max one per carousel.
+Solid accent background, huge contrast text. No photo. Used sparingly, max one per carousel.
 
 ### Long-Form Text
 Reading column, numbered subhead. Editorial Long-Form pack leans on this.
@@ -222,9 +222,9 @@ Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow {handle
 .progress-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
 .progress-count { font-family: var(--font-body); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
 
-/* logo blend — dark slides */
+/* logo blend, dark slides */
 .slide.dark .brand-logo { mix-blend-mode: screen; opacity: 0.8; }
-/* logo blend — light slides */
+/* logo blend, light slides */
 .slide.light .brand-logo { mix-blend-mode: multiply; filter: invert(1); opacity: 0.65; }
 ```
 
@@ -244,13 +244,13 @@ Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow {handle
 
 ## Safe zone
 
-40px on all edges at 1080×1350. All text and critical elements respect it. The frame system (progress bar, handle, slide number) sits at the edge by design — those are frame, not content.
+40px on all edges at 1080×1350. All text and critical elements respect it. The frame system (progress bar, handle, slide number) sits at the edge by design; those are frame, not content.
 
 ---
 
-## Verification snippets (used by Step 5.5)
+## Verification snippets (optional self-check)
 
-These are paste-into-`preview_eval` blocks. They exist so every run audits the rendered file the same way.
+Paste these into your browser's DevTools console to audit the rendered file the same way each run. Optional but recommended before you export.
 
 ### Overlap-checker JS snippet
 
@@ -289,7 +289,7 @@ The audit also flags any non-footer element whose bottom edge falls inside the f
 
 ### Grid-view snippet (for a single all-slides screenshot)
 
-Temporarily rearranges the stage into a 4-column grid so all 7 slides fit in one screenshot. Non-persistent — page reload restores the normal stacked view.
+Temporarily rearranges the stage into a 4-column grid so all 7 slides fit in one screenshot. Non-persistent; page reload restores the normal stacked view.
 
 ```javascript
 (() => {
@@ -303,8 +303,8 @@ Temporarily rearranges the stage into a 4-column grid so all 7 slides fit in one
   const wrap = document.querySelector('.slide-wrap');
   document.documentElement.style.setProperty('--slide-scale', String(wrap.getBoundingClientRect().width / 1080));
   window.scrollTo(0, 0);
-  return 'grid view active — screenshot now, then reload';
+  return 'grid view active, screenshot now, then reload';
 })()
 ```
 
-Call this, then `mcp__Claude_Preview__preview_screenshot`, then reload the page to restore the normal view.
+Call this, then screenshot the page, then reload it to restore the normal view.

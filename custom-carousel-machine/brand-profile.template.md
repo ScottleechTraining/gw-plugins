@@ -1,21 +1,22 @@
 ---
-# BRAND PROFILE — the single source of your identity. The engine reads this every run.
+# BRAND PROFILE: the single source of your identity. The engine reads this every run.
 # Brand Setup writes a filled copy to your project at: carousel/brand-profile.md
 # Edit by hand any time, or re-run /brand-setup.
 
 brand_name: "Your Brand"
 handle: "@yourhandle"
 
-# PALETTE — the engine paints Style Pack "palette roles" with these.
+# PALETTE: the engine paints Style Pack "palette roles" with these.
 # Use hex. ink = darkest type, paper = light background, dark = dark background.
+# These are placeholder neutrals. Replace every value with your own brand's colors.
 palette:
-  ink: "#1A1A1A"
-  paper: "#F5F0E8"
-  dark: "#1A1A1A"
-  accent_primary: "#C8A84E"
-  accent_secondary: "#3A3A3A"
+  ink: "#222222"
+  paper: "#FAFAF7"
+  dark: "#222222"
+  accent_primary: "#4A7A96"
+  accent_secondary: "#555555"
 
-# FONTS — defaults are free and load from Google Fonts. To use your own font,
+# FONTS: defaults are free and load from Google Fonts. To use your own font,
 # set source: baked and Brand Setup fills custom_base64 from your font file.
 # You are responsible for the license of any font you supply.
 fonts:
@@ -28,13 +29,13 @@ fonts:
     source: google
     custom_base64: ""
 
-# LOGO — base64-baked by Brand Setup so output files stay portable.
+# LOGO: base64-baked by Brand Setup so output files stay portable.
 # Leave empty to fall back to the handle text in the footer.
 logo:
   base64: ""
   alt: "Your Brand logo"
 
-# VOICE — defaults the engine writes copy with. These are yours, not anyone else's.
+# VOICE: defaults the engine writes copy with. These are yours, not anyone else's.
 voice:
   tone: "direct"          # direct | professional | playful | minimal
   no_em_dashes: false     # set true if your brand bans em-dashes
