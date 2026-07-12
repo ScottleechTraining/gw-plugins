@@ -16,6 +16,16 @@
       "category": "productivity",
       "source": "./gw-command-center",
       "homepage": "https://scottleechtraining.com"
+    },
+    {
+      "name": "custom-carousel-machine",
+      "description": "The Custom Carousel Machine: a white-label Instagram carousel engine. Generate editable, export-ready IG carousels as a single self-contained HTML file, wearing your own brand. Run Brand Setup once, then make carousels in any of your style packs.",
+      "author": {
+        "name": "Scott Leech Training LLC"
+      },
+      "category": "productivity",
+      "source": "./custom-carousel-machine",
+      "homepage": "https://scottleechtraining.com"
     }
   ]
 }
