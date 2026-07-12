@@ -12,13 +12,11 @@ See `examples/` for two real carousels the engine produced from one sample brand
 
 ## Install
 
-**Free / your own use, via marketplace:**
-```
-claude plugin marketplace add <your-marketplace-repo>
-claude plugin install custom-carousel-machine@<your-marketplace>
-```
+You bought (or were gifted) this as a zip download. Install takes two minutes:
 
-**Paid, zip download (Gumroad / Thinkific):** unzip anywhere, then copy the three folders **inside** the `skills/` folder (`carousel`, `brand-setup`, and `pack-author`) into `~/.claude/skills/` (Windows: `C:\Users\YOURNAME\.claude\skills\`). Claude Code discovers personal skills only at `~/.claude/skills/<skill-name>/SKILL.md`, so the skill folders must sit directly under `skills/`, not nested inside a `custom-carousel-machine` folder. Restart Claude Code afterward. Price: **$27**.
+1. Unzip it anywhere.
+2. Copy the three folders **inside** the `skills/` folder (`carousel`, `brand-setup`, and `pack-author`) into `~/.claude/skills/` (Windows: `C:\Users\YOURNAME\.claude\skills\`). Claude Code discovers personal skills only at `~/.claude/skills/<skill-name>/SKILL.md`, so the skill folders must sit directly under `skills/`, not nested inside a `custom-carousel-machine` folder.
+3. Restart Claude Code.
 
 There is no license key and no phone-home. The engine runs identically whether it was given away or bought. Don't redistribute what you didn't pay for.
 
