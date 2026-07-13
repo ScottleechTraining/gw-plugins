@@ -185,6 +185,13 @@ confirmed - do not re-ask. After applying the string, if any polish note
 starts with `restyle:`, tell the user those topics are queued for a rebuild
 and that running `/gw-carousel-batch` will do it now.
 
+**Cover notes.** A polish note starting with `cover:` means the COVER only:
+the body slides are fine but slide 1 does not stop the thumb. `/gw-carousel-batch`
+rebuilds slide 1 per the note using the ig-carousel skill's
+`references/cover-treatments.md` (e.g. `cover: try torn paste-up` or
+`cover: weak photo, use the huddle shot with spotlight`). Same follow-up:
+tell the user cover rebuilds are queued for `/gw-carousel-batch`.
+
 ## Step 5: Commit (optional, ask first)
 
 If Scott wants it committed:

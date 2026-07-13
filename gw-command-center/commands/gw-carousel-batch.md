@@ -18,8 +18,9 @@ Two ways in:
 
 1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and wait for confirmation or swaps before building.
 2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
+3. **Cover rebuilds:** topics where `carousel_needs_polish` is true and `polish_note` starts with `cover:`. Rebuild ONLY slide 1 per the note (new treatment and/or photo from the ig-carousel skill's `references/cover-treatments.md`); body slides stay untouched.
 
-If nothing is waiting in either bucket, say so and stop.
+If nothing is waiting in any bucket, say so and stop.
 
 Pack rules for both modes:
 
@@ -42,6 +43,7 @@ Each subagent builds ONE carousel using the `ig-carousel` skill. Spawn with `mod
 Give each subagent:
 - the content-pack path
 - the chosen style pack
+- the chosen cover treatment (from the ig-carousel skill's `references/cover-treatments.md` quick-reference, matched to the topic and the photo's character; Type Plate is the fallback when the photo can't carry a treatment)
 - the assigned hero photo path
 - the instruction to prepare the hero as a brightened ~230KB JPEG (quality ~80, resized to slide dimensions), never a PNG
 - the instruction to kill any server or browser process it starts, even on failure
@@ -51,8 +53,8 @@ Give each subagent:
 When a wave finishes:
 
 1. Render every produced carousel's slides to PNG, respecting the headless quirks documented in the `ig-carousel` skill's "Known traps" section (`--headless=new`, kill stray processes, unique `--user-data-dir`, `127.0.0.1`, fresh port, window sized to exact slide width).
-2. LOOK at every cover image (Read the PNG files).
-3. Any dark or blank hero, clipped text, or broken layout goes back for a fix in the next wave.
+2. LOOK at every cover image (Read the PNG files). Judge the cover FIRST and on one question: would it stop a coach's thumb in a feed full of workout clips? Layout-correct but flat goes back with a stronger treatment or better photo, same as a broken one.
+3. Any dark or blank hero, clipped text, broken layout, or flat cover goes back for a fix in the next wave.
 
 Do not report done on trust. A file passing a portability or lint check can still render wrong.
 

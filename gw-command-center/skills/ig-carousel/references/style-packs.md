@@ -2,6 +2,8 @@
 
 Seven visual packs. User picks one at Step 0.5. Packs 1–6 use Vitesse Bold (display) and Barlow (body) — only weight/size/casing/color changes. Pack 7 (Newsprint Bauhaus) swaps the display face to Anton (Google Fonts, same `<link>` as Barlow: add `family=Anton`); Vitesse is not used in that pack.
 
+**The cover is planned separately.** Every carousel also picks a COVER TREATMENT — the scroll-stopper layer for slide 1 — from `cover-treatments.md`. The pack governs slides 2+; the treatment governs the cover and inherits the pack's palette and faces. Type Plate (the pack's own mega-cover) is the default treatment.
+
 Each pack defines:
 - Accent color + contrast ink
 - Dominant background / inverse background
