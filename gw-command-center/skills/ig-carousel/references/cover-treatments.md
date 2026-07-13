@@ -4,6 +4,10 @@ The cover is the ad for the carousel. Body slides teach; the cover has one job: 
 
 Treatments inherit the pack's palette and typefaces unless a treatment says otherwise. One treatment per cover. Never stack two.
 
+**Two standing laws, no exceptions:**
+1. **Type Plate is always on the menu.** Every pack's own default cover is a permanent, first-class option — never a downgrade. If a treatment's guardrails can't be met with the available photo and copy, Type Plate is the REQUIRED fallback. A clean default beats a strained treatment every time.
+2. **The edge rule.** No headline glyph may touch or cross the slide edge, in any treatment. Oversized display type keeps a visible margin (≥40px) on both sides. Edge-bleed type is a rework, not a style. When sizing a giant word, verify against real rendered width — condensed and slab faces run wider than the budget formula suggests; when in doubt, size down and re-render.
+
 ## Selection quick-reference
 
 | Cover material | Treatment |
