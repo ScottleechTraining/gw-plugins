@@ -29,24 +29,24 @@ If `$ARGUMENTS` is empty, fall through to Step 0 to pop a topic from the queue.
 
 ## Vault paths
 
-- **Topic queue:** `D:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md`
-- **Brief output:** `D:\Claude Projects\Gridiron Warrior\Research\Film Study\YYYY-MM-DD-<topic-slug>-film-study-brief.md`
-- **Corpus query feedstock (from `/gw-everything-on`):** `D:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-<topic-slug>.md`
-- **Wiki log (append one line):** `D:\Claude Projects\Gridiron Warrior\wiki\log.md`
-- **Wiki summary output:** `D:\Claude Projects\Gridiron Warrior\wiki\summaries\film-study-<topic-slug>.md`
-- **Wiki concept stubs:** `D:\Claude Projects\Gridiron Warrior\wiki\concepts\<concept-slug>.md`
-- **Wiki index:** `D:\Claude Projects\Gridiron Warrior\wiki\index.md`
-- **Deliverables (content pack / Substack / carousel / freebie):** `D:\Claude Projects\Gridiron Warrior\Deliverables\`
-- **Status file:** `D:\Claude Projects\Gridiron Warrior\scripts\health\film-study-brief-YYYY-MM-DD.status.json`
+- **Topic queue:** `C:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md`
+- **Brief output:** `C:\Claude Projects\Gridiron Warrior\Research\Film Study\YYYY-MM-DD-<topic-slug>-film-study-brief.md`
+- **Corpus query feedstock (from `/gw-everything-on`):** `C:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-<topic-slug>.md`
+- **Wiki log (append one line):** `C:\Claude Projects\Gridiron Warrior\wiki\log.md`
+- **Wiki summary output:** `C:\Claude Projects\Gridiron Warrior\wiki\summaries\film-study-<topic-slug>.md`
+- **Wiki concept stubs:** `C:\Claude Projects\Gridiron Warrior\wiki\concepts\<concept-slug>.md`
+- **Wiki index:** `C:\Claude Projects\Gridiron Warrior\wiki\index.md`
+- **Deliverables (content pack / Substack / carousel / freebie):** `C:\Claude Projects\Gridiron Warrior\Deliverables\`
+- **Status file:** `C:\Claude Projects\Gridiron Warrior\scripts\health\film-study-brief-YYYY-MM-DD.status.json`
 
 Slug rules: kebab-case, truncate to 50 chars, strip special chars.
 
 ## Preflight gate
 
-If `D:\Claude Projects\Gridiron Warrior\scripts\preflight.py` exists, call it first:
+If `C:\Claude Projects\Gridiron Warrior\scripts\preflight.py` exists, call it first:
 
 ```bash
-python "D:\Claude Projects\Gridiron Warrior\scripts\preflight.py" --gate film-study-brief
+python "C:\Claude Projects\Gridiron Warrior\scripts\preflight.py" --gate film-study-brief
 ```
 
 - Exit code 0 → proceed.
@@ -60,7 +60,7 @@ If `preflight.py` does not yet exist (Phase 1 not complete), skip and proceed �
 If `$ARGUMENTS` is non-empty: set `topic = $ARGUMENTS`, set `topic_source = "argument"`, skip to Step 1.
 
 If `$ARGUMENTS` is empty:
-1. Read `D:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md`.
+1. Read `C:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md`.
 2. Find the first non-placeholder line under `## Active Queue` (skip any line starting with `(placeholder` or empty bullets).
 3. Parse line format: `- topic name [topic-slug]`. Extract both the human topic and the slug.
 4. If a valid topic is found: set `topic = <parsed topic>`, set `topic_source = "queue"`, proceed to Step 1.
@@ -68,7 +68,7 @@ If `$ARGUMENTS` is empty:
 
    > Queue is empty and no topic was supplied. Either:
    >
-   > 1. Add topics to `D:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md` under `## Active Queue`, then re-run `/gw-film-study-brief`.
+   > 1. Add topics to `C:\Claude Projects\Gridiron Warrior\Research\Film Study\_topic-queue.md` under `## Active Queue`, then re-run `/gw-film-study-brief`.
    > 2. Or supply a topic directly: `/gw-film-study-brief "deceleration mechanics"`.
    >
    > No auto-pick — this command is demand-driven by design.
@@ -157,7 +157,7 @@ A loose outline Scott can use as a starting point for the Film Study recording i
 
 ## Step 4 — Append to wiki log
 
-Append ONE line to `D:\Claude Projects\Gridiron Warrior\wiki\log.md`:
+Append ONE line to `C:\Claude Projects\Gridiron Warrior\wiki\log.md`:
 
 ```
 YYYY-MM-DD /gw-film-study-brief: [topic-slug] (corpus N, NL: ok|empty|failed, chain: pending)
@@ -167,7 +167,7 @@ The chain status is updated at Step 11. For now write `chain: pending`.
 
 ## Step 5 — Write initial status file
 
-Write `D:\Claude Projects\Gridiron Warrior\scripts\health\film-study-brief-YYYY-MM-DD.status.json` with status `in_progress`:
+Write `C:\Claude Projects\Gridiron Warrior\scripts\health\film-study-brief-YYYY-MM-DD.status.json` with status `in_progress`:
 
 ```json
 {

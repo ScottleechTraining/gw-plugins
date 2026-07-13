@@ -20,11 +20,11 @@ Write THREE files (all overwritten each morning):
 
 
 
-1. `D:\Claude Projects\Gridiron Warrior\_morning-briefing.md` - markdown source-of-truth, archived to git
+1. `C:\Claude Projects\Gridiron Warrior\_morning-briefing.md` - markdown source-of-truth, archived to git
 
-2. `D:\Claude Projects\Gridiron Warrior\_morning-briefing.html` - phone-optimized HTML used by the email sender
+2. `C:\Claude Projects\Gridiron Warrior\_morning-briefing.html` - phone-optimized HTML used by the email sender
 
-3. `D:\Claude Projects\Gridiron Warrior\_dashboard-index.html` - self-contained dashboard page (4-panel dropdown) that the `build-gw-dashboard.ps1` script deploys to Netlify each morning
+3. `C:\Claude Projects\Gridiron Warrior\_dashboard-index.html` - self-contained dashboard page (4-panel dropdown) that the `build-gw-dashboard.ps1` script deploys to Netlify each morning
 
 
 
@@ -72,7 +72,7 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 - If no status file exists for a normally scheduled gate after its scheduled time, report `<lane> missing status file` and list the gate name.
 
-- Queue files must be checked by exact path. Never report "S&C no queue file" unless `D:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.md` cannot be read. If a queue read fails, include the exact path and error.
+- Queue files must be checked by exact path. Never report "S&C no queue file" unless `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.md` cannot be read. If a queue read fails, include the exact path and error.
 
 - The retired Sunday Film Study weekly-batch flow is dead. Do not recommend opening `wiki\pending\weekly-batch-*.md`. Do not reference Sunday/Tuesday/Thursday batch production. The active Film Study lane is `/gw-film-study-brief "<topic>"`, then manual `/gw-content-forge "<brief path>"` if Scott wants assets.
 
@@ -757,7 +757,7 @@ from datetime import date
 titles = [
     # FILL IN: exact text inside each /gw-content-forge \"...\" you printed today.
 ]
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 backlog = data.setdefault('forge_backlog', [])
 existing = {e['slug'] for e in backlog}

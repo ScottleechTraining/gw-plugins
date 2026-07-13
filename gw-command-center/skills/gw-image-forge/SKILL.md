@@ -266,7 +266,7 @@ Add `--dry-run` to the shell call to validate the config and print the construct
 - You want to confirm the size, quality, and output path are right
 
 ```bash
-echo '<config json>' | python "D:/Claude Projects/plugins/gw-command-center/skills/gw-image-forge/scripts/generate.py" --config - --dry-run
+echo '<config json>' | python "C:/Claude Projects/plugins/gw-command-center/skills/gw-image-forge/scripts/generate.py" --config - --dry-run
 ```
 
 Returns JSON with `mode: "dry-run"`, the full constructed prompt, prompt length, target output path, and API endpoint that would be hit. No PNG is written.
@@ -280,7 +280,7 @@ Run live only when Scott confirms the dry-run prompt looks right.
 The script returns nonzero exit codes:
 
 - `2` — config validation failed (bad JSON, missing required key, invalid size/quality, etc.)
-- `3` — `OPENAI_API_KEY` missing from `D:\Claude Projects\Gridiron Warrior\scripts\.env`
+- `3` — `OPENAI_API_KEY` missing from `C:\Claude Projects\Gridiron Warrior\scripts\.env`
 - `4` — OpenAI API call failed (network, HTTP error, or empty response)
 
 On `3`, tell Scott to add the key to the .env file. Don't try to work around it.

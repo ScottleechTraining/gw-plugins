@@ -12,10 +12,10 @@ report.
 
 ## Paths
 
-- **Deliverables:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
+- **Deliverables:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
 - **Scanner module:** `scripts.gwqueue.scan_folders`
-- **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Dashboard state copy:** `D:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (Phase 9+)
+- **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
+- **Dashboard state copy:** `C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (Phase 9+)
 
 ## Step 0: Apply any pending stage mutations from dashboard exports
 
@@ -24,7 +24,7 @@ Phase 11 adds an `apply_state.py` script. Until then, this step is a no-op.
 If `scripts/gwqueue/apply_state.py` exists, run it:
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 if [ -f "scripts/gwqueue/apply_state.py" ]; then
   python -m scripts.gwqueue.apply_state
 else
@@ -39,7 +39,7 @@ Read the current `queue-state.json` (BEFORE re-scanning) to capture the slugs in
 ```bash
 python -c "
 import json, pathlib
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 if p.exists():
     data = json.loads(p.read_text(encoding='utf-8'))
     inbox_slugs = sorted([t['slug'] for t in data.get('topics', []) if t.get('stage') == '_inbox'])
@@ -54,7 +54,7 @@ Remember this list (call it `prior_inbox`).
 ## Step 2: Run the scanner
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.scan_folders
 ```
 
@@ -63,7 +63,7 @@ Expected output: `Scanned N topics. Wrote .../queue-state.json.`
 ## Step 3: Render carousel slides + split captions (skipped until Phase 6+7)
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 if [ -f "scripts/gwqueue/render_carousel.py" ]; then
   python -m scripts.gwqueue.render_carousel
 else
@@ -80,7 +80,7 @@ fi
 ## Step 4: Drive sync (skipped until Phase 8)
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 if [ -f "scripts/gwqueue/sync_to_drive.py" ]; then
   python -m scripts.gwqueue.sync_to_drive
   # Re-run scanner to pick up drive_folder_id updates
@@ -96,7 +96,7 @@ The contract: when Scott drags a topic folder into the `used` subfolder under
 `GW Posting Queue` on Drive (or trashes it), that retires the topic locally.
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 if [ -f "scripts/gwqueue/retire_from_drive.py" ]; then
   python -m scripts.gwqueue.retire_from_drive
   # Re-scan to reflect the archived stage changes in queue-state.json
@@ -109,7 +109,7 @@ fi
 ```bash
 python -c "
 import json, pathlib
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 topics = data['topics']
 
@@ -180,7 +180,7 @@ The CLI is already authenticated (`netlify status` to confirm). The site is link
 Detect whether anything in the dashboard folder changed since the last deploy. If yes, deploy. If no, no-op.
 
 ```bash
-cd "D:/Claude Projects/websites/scottleechtraining.com/tools/queue"
+cd "C:/Claude Projects/websites/scottleechtraining.com/tools/queue"
 
 # Check if anything in the dashboard folder changed in the last 5 minutes
 # (proxy for "did /gw-queue update the mirror?")
@@ -190,7 +190,7 @@ if [ -z "$recent_changes" ]; then
   echo "No dashboard changes to deploy."
 else
   echo "Dashboard changed. Deploying via Netlify CLI..."
-  cd "D:/Claude Projects/websites/scottleechtraining.com"
+  cd "C:/Claude Projects/websites/scottleechtraining.com"
   netlify deploy --prod --dir=. 2>&1 | tail -8
   echo ""
   echo "Deployed. Live dashboard should reflect changes within ~15s."
@@ -203,4 +203,4 @@ This step ALWAYS runs after Steps 0-7, even if no Drive sync happened, because t
 
 ## Voice
 
-Output should follow Scott's voice rules from `D:/Claude Projects/CLAUDE.md` when applicable. No em-dashes. Short. Direct. The status report itself is mechanical, not voice-driven — but any recommendations or warnings stay in Scott's tone (e.g., "Inbox is backing up. Triage tonight." beats "Your inbox has unaddressed items.").
+Output should follow Scott's voice rules from `C:/Claude Projects/CLAUDE.md` when applicable. No em-dashes. Short. Direct. The status report itself is mechanical, not voice-driven — but any recommendations or warnings stay in Scott's tone (e.g., "Inbox is backing up. Triage tonight." beats "Your inbox has unaddressed items.").

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """GW Image Forge — OpenAI Images backend (gpt-image-1).
 
-Mirrors the fal.ai pattern from D:\\Claude Projects\\_archive\\2026-05-12\\misc\\
+Mirrors the fal.ai pattern from C:\\Claude Projects\\_archive\\2026-05-12\\misc\\
 GW-Design-Studio\\scripts\\generate_images.py. Lifts the .env loader pattern
-from D:\\Claude Projects\\Gridiron Warrior\\scripts\\send_lint_email.py.
+from C:\\Claude Projects\\Gridiron Warrior\\scripts\\send_lint_email.py.
 
 Stdlib only. No pip install.
 
@@ -21,7 +21,7 @@ Config schema:
     }
 
 Output:
-    PNG files written to D:\\Claude Projects\\Gridiron Warrior\\Images\\
+    PNG files written to C:\\Claude Projects\\Gridiron Warrior\\Images\\
     Filename pattern: {name}_{i}.png  (1-indexed when n > 1; just {name}.png when n == 1)
 
 On success, stdout receives:
@@ -40,8 +40,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-ENV_FILE = Path(r"D:\Claude Projects\Gridiron Warrior\scripts\.env")
-OUT_DIR = Path(r"D:\Claude Projects\Gridiron Warrior\Images")
+ENV_FILE = Path(r"C:\Claude Projects\Gridiron Warrior\scripts\.env")
+OUT_DIR = Path(r"C:\Claude Projects\Gridiron Warrior\Images")
 API_URL = "https://api.openai.com/v1/images/generations"
 MODEL = "gpt-image-1"
 

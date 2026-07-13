@@ -1,6 +1,6 @@
 ---
 name: gw-youtube-takeaways
-description: "Scott Leech's video review and takeaway engine for Gridiron Warrior. Extracts content from YouTube videos or NotebookLM notebooks via the native notebooklm MCP, generates 8 specific takeaways per video plus one 10x business insight tied to GW (Insiders, DFY, Courses, Summit), gives a watch verdict per video, and produces a GW-branded PDF saved to D:\\Claude Projects\\Gridiron Warrior AND uploaded to Google Drive. Use this skill aggressively whenever Scott pastes one or more YouTube URLs, says 'review this video', 'review these videos', 'watch this for me', 'give me the takeaways', 'review my notebook', 'review the new videos in my notebook', 'build a video PDF', 'summarize these videos for the business', or asks any variant of 'what should I take from these videos.' Also trigger on 'review the youtube videos notebook' or any reference to a NotebookLM notebook full of video sources. Default to the full PDF + Drive upload workflow unless Scott explicitly asks for inline-only review."
+description: "Scott Leech's video review and takeaway engine for Gridiron Warrior. Extracts content from YouTube videos or NotebookLM notebooks via the native notebooklm MCP, generates 8 specific takeaways per video plus one 10x business insight tied to GW (Insiders, DFY, Courses, Summit), gives a watch verdict per video, and produces a GW-branded PDF saved to C:\\Claude Projects\\Gridiron Warrior AND uploaded to Google Drive. Use this skill aggressively whenever Scott pastes one or more YouTube URLs, says 'review this video', 'review these videos', 'watch this for me', 'give me the takeaways', 'review my notebook', 'review the new videos in my notebook', 'build a video PDF', 'summarize these videos for the business', or asks any variant of 'what should I take from these videos.' Also trigger on 'review the youtube videos notebook' or any reference to a NotebookLM notebook full of video sources. Default to the full PDF + Drive upload workflow unless Scott explicitly asks for inline-only review."
 ---
 
 # GW Video Takeaways
@@ -111,7 +111,7 @@ Helvetica family throughout. No Unicode subscripts/superscripts — those render
 
 Two outputs every run, no exceptions unless Scott explicitly asks for inline-only:
 
-1. **Local file** at `D:\Claude Projects\Gridiron Warrior\<filename>.pdf`. Filename pattern: `Youtube_Videos_Notebook_Takeaways_<descriptor>.pdf` where descriptor is either a version (`v1`, `v2`, etc.) or a date (`2026-05-02`) or a topic if Scott specified one.
+1. **Local file** at `C:\Claude Projects\Gridiron Warrior\<filename>.pdf`. Filename pattern: `Youtube_Videos_Notebook_Takeaways_<descriptor>.pdf` where descriptor is either a version (`v1`, `v2`, etc.) or a date (`2026-05-02`) or a topic if Scott specified one.
 
 2. **Google Drive root.** Use `mcp__e432adf7-cb86-45a0-a515-5c44c49c2b8d__create_file` with `contentMimeType: application/pdf` and the file content as `base64Content`. To produce the base64 string from the local PDF, run `base64 -w 0 <path>` in bash. Don't include `parentId` — that puts the file in My Drive root.
 
@@ -123,7 +123,7 @@ Keep the post-amble short. Scott reads the PDF himself.
 
 ## Run log
 
-To support the "review the new videos" pattern (skip what we've already done), maintain a log at `D:\Claude Projects\Gridiron Warrior\wiki\log.md` per the project CLAUDE.md convention.
+To support the "review the new videos" pattern (skip what we've already done), maintain a log at `C:\Claude Projects\Gridiron Warrior\wiki\log.md` per the project CLAUDE.md convention.
 
 After every run, append an entry:
 

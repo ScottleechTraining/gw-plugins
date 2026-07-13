@@ -21,7 +21,7 @@ Run the helper at its real path (sources `~/.bashrc` for `DEWEY_SHEET_ID` + `GOO
 
 ```bash
 source ~/.bashrc
-python "D:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" list-unprocessed
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" list-unprocessed
 ```
 
 Get rows with `Processed: FALSE` OR `Processed` not set. (Path note: the helper lives under `Skills/tools/`, not `tools/` — the `tools/` dir was removed in the 2026-05-12 cleanup.)

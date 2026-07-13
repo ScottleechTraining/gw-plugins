@@ -15,7 +15,7 @@ Fires daily. Reads everything new in the vault from the last 24h. Writes 1-3 spe
 Use git log to find files changed in the last 24 hours:
 
 ```bash
-cd "D:\Claude Projects\Gridiron Warrior" && git log --since="24 hours ago" --name-only --pretty=format: | sort -u
+cd "C:\Claude Projects\Gridiron Warrior" && git log --since="24 hours ago" --name-only --pretty=format: | sort -u
 ```
 
 Plus any files modified but not committed (git status). Filter to relevant additions:
@@ -28,7 +28,7 @@ Plus any files modified but not committed (git status). Filter to relevant addit
 
 ### 2. Read CLAUDE.md voice rules first
 
-Read `D:\Claude Projects\CLAUDE.md` — internalize:
+Read `C:\Claude Projects\CLAUDE.md` — internalize:
 - Voice rules: short sentences, active verbs, plain language
 - No em-dashes ever
 - Banned words list
@@ -106,7 +106,7 @@ After all angles are scored, pick the single angle with the highest **Total** sc
 
 ### 4. Write the seed file
 
-Save to `D:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md`:
+Save to `C:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md`:
 
 ```markdown
 ---
@@ -170,7 +170,7 @@ If an angle doesn't pass, kill it and try another. Better to produce 1 strong an
 After writing the seed file, run the voice-check guard against the output:
 
 ```bash
-python "D:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "D:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md"
+python "C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "C:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md"
 ```
 
 Exit codes:
@@ -193,7 +193,7 @@ new_entries = [
     # FILL THIS IN per today's angles. Example:
     # {'title': '...', 'format': 'Twitter thread', 'score': '19/20'},
 ]
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 backlog = data.setdefault('forge_backlog', [])
 existing_slugs = {e['slug'] for e in backlog}

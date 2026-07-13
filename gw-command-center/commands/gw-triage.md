@@ -12,9 +12,9 @@ folder moves happen.
 
 ## Paths
 
-- **Inbox:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/`
-- **Ready:** `D:/Claude Projects/Gridiron Warrior/Deliverables/ready/`
-- **Cold:** `D:/Claude Projects/Gridiron Warrior/Deliverables/cold-storage/`
+- **Inbox:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/`
+- **Ready:** `C:/Claude Projects/Gridiron Warrior/Deliverables/ready/`
+- **Cold:** `C:/Claude Projects/Gridiron Warrior/Deliverables/cold-storage/`
 
 ## Promotion rubric (score each topic before you preview it)
 
@@ -38,7 +38,7 @@ Scott makes the final R/C/K/S call, but every preview must carry a suggested ver
 ## Step 1: Check the inbox
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox"
+cd "C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox"
 ls -1 | grep -v "^\." | grep -v "^_"
 ```
 
@@ -108,7 +108,7 @@ If no: print "Aborted. Nothing changed." and stop.
 ## Step 5: Execute the moves
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior/Deliverables"
+cd "C:/Claude Projects/Gridiron Warrior/Deliverables"
 
 # For each R or R+ decision:
 git mv "_inbox/<slug>" "ready/<slug>"
@@ -124,7 +124,7 @@ For R+ decisions, also update `queue-state.json` to set `carousel_needs_polish: 
 
 ```python
 import json, pathlib
-p = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
+p = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
 data = json.loads(p.read_text(encoding="utf-8"))
 polish_slugs = ["slug-a", "slug-b"]
 for t in data["topics"]:
@@ -140,7 +140,7 @@ Invoke `/gw-queue` (or directly run `python -m scripts.gwqueue.scan_folders`) to
 ## Step 7: Commit
 
 ```bash
-cd "D:/Claude Projects"
+cd "C:/Claude Projects"
 git add -A
 git commit -m "triage: sort <N> topics from inbox"
 ```

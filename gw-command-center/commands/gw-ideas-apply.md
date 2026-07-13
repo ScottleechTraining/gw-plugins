@@ -13,9 +13,9 @@ string and mutates `queue-state.json`'s `forge_backlog`. Page:
 
 ## Paths
 
-- **Deliverables:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
-- **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Ideas page:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/ideas.html`
+- **Deliverables:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
+- **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
+- **Ideas page:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/ideas.html`
 
 ## Input: the pasted string
 
@@ -53,7 +53,7 @@ import json, re, sys, pathlib
 raw = sys.argv[1]
 manual_reason = (sys.argv[2].strip() if len(sys.argv) > 2 else "") or "manual skip from ideas review"
 
-STATE = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
+STATE = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
 
 def bucket(name):
     m = re.search(name + r"=\[(.*?)\](?=\s+\w+=\[|\s*$)", raw)
@@ -117,7 +117,7 @@ The scan auto-marks any freshly forged slug as `forged` and refreshes the
 ideas page.
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.scan_folders
 python -m scripts.gwqueue.build_ideas_page
 ```

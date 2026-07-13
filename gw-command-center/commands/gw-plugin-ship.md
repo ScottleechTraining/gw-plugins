@@ -8,14 +8,14 @@ description: "Ship a gw-command-center plugin change: validate, version bump, lo
 
 The exact "code is truth" edit flow, turned into ordered steps. Run it after editing any skill or command in the plugin so the change reaches all three surfaces (Code, Cowork, claude.ai chat) without drift.
 
-Single source of truth: `D:\Claude Projects\plugins\gw-command-center\`. If the same file lives anywhere else, the plugin is broken — see Step 1.
+Single source of truth: `C:\Claude Projects\plugins\gw-command-center\`. If the same file lives anywhere else, the plugin is broken — see Step 1.
 
 ## Step 1 — Confirm edits live ONLY in the plugin folder
 
-The change must be in `D:\Claude Projects\plugins\gw-command-center\` and nowhere else. Loose copies are the drift source the plugin exists to kill. Verify no shadow copies exist for the files you touched:
+The change must be in `C:\Claude Projects\plugins\gw-command-center\` and nowhere else. Loose copies are the drift source the plugin exists to kill. Verify no shadow copies exist for the files you touched:
 
 - NEVER `~/.claude/commands/gw-*.md` or `~/.claude/skills/gw-*` (deleted in v0.1 migration).
-- NEVER `D:\Claude Projects\.claude\commands\gw-*.md` (the old project-level shadow).
+- NEVER `C:\Claude Projects\.claude\commands\gw-*.md` (the old project-level shadow).
 
 If you find a loose `gw-*` file outside the plugin folder, the install is broken. Delete the loose file and fix the install — do not edit it, and do not let it survive this ship.
 
@@ -24,17 +24,17 @@ If you find a loose `gw-*` file outside the plugin folder, the install is broken
 For any non-trivial change, bump `version` in:
 
 ```
-D:\Claude Projects\plugins\gw-command-center\.claude-plugin\plugin.json
+C:\Claude Projects\plugins\gw-command-center\.claude-plugin\plugin.json
 ```
 
-Then add a row to the **Versioning** table at the bottom of `D:\Claude Projects\plugins\gw-command-center\README.md` describing what changed. Keep the description concrete (which skill/command, what behavior moved).
+Then add a row to the **Versioning** table at the bottom of `C:\Claude Projects\plugins\gw-command-center\README.md` describing what changed. Keep the description concrete (which skill/command, what behavior moved).
 
 ## Step 3 — Validate
 
 From the plugins directory:
 
 ```bash
-cd "D:\Claude Projects\plugins" && claude plugin validate gw-command-center
+cd "C:\Claude Projects\plugins" && claude plugin validate gw-command-center
 ```
 
 Fix anything it flags before going further. A dirty validation does not ship.
@@ -56,9 +56,9 @@ Note: the refreshed plugin takes effect NEXT session, not the current one. Do no
 Cowork and claude.ai chat pull from GitHub on their next refresh, so the change is not live on those surfaces until it is pushed:
 
 ```bash
-git -C "D:\Claude Projects\plugins" add -A
-git -C "D:\Claude Projects\plugins" commit -m "<what changed>"
-git -C "D:\Claude Projects\plugins" push
+git -C "C:\Claude Projects\plugins" add -A
+git -C "C:\Claude Projects\plugins" commit -m "<what changed>"
+git -C "C:\Claude Projects\plugins" push
 ```
 
 This repo pushes clean. It is a SEPARATE repo from the main GW vault repo — the main-repo local/origin divergence and fast-forward-only rules do NOT apply here. A plain `push` is correct.

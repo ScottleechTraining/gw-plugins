@@ -12,7 +12,7 @@ Fires daily. Processes any images sitting in the GW vault's screenshot inbox.
 
 ### 1. Read the inbox
 
-Path: `D:\Claude Projects\Gridiron Warrior\External Library\Screenshots\inbox\`
+Path: `C:\Claude Projects\Gridiron Warrior\External Library\Screenshots\inbox\`
 
 List all `.png`, `.jpg`, `.jpeg`, `.PNG`, `.JPG`, `.JPEG` files.
 

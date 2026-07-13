@@ -31,7 +31,7 @@ Pack rules for both modes:
 
 Before spawning any agents:
 
-1. List available photos in `D:\IMAGES\Football` and `D:\IMAGES\Gym`.
+1. List available photos in `C:\IMAGES\Football` and `C:\IMAGES\Gym`.
 2. Pick one hero photo per carousel, matched to the topic.
 3. Never assign the same photo to two carousels in the batch.
 4. Record the full assignment table (slug, style pack, content-pack path, assigned photo path) before anything is spawned. This table is the source of truth for the whole run.

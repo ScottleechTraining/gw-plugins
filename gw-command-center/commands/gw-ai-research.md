@@ -12,7 +12,7 @@ Mirror of `/gw-business-research` but for AI topics.
 
 ### 1. Read the queue
 
-Open `D:\Claude Projects\Gridiron Warrior\External Library\AI\_topic-queue.md`. Find first topic under `## Active Queue`.
+Open `C:\Claude Projects\Gridiron Warrior\External Library\AI\_topic-queue.md`. Find first topic under `## Active Queue`.
 
 If empty: auto-pick a trending AI topic relevant to a small-business AI user (Claude, Anthropic SDK, Obsidian + AI, prompting, automation, MCP, agent design). Flag `auto_picked: true`.
 
@@ -45,7 +45,7 @@ Structured query:
 
 ### 3. Write brief
 
-Save to `D:\Claude Projects\Gridiron Warrior\External Library\AI\YYYY-MM-DD-[topic-slug]-brief.md`:
+Save to `C:\Claude Projects\Gridiron Warrior\External Library\AI\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 ```markdown
 ---

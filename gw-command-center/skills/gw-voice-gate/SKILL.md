@@ -7,7 +7,7 @@ description: PASS/FAIL QA gate for any draft written as Scott Leech. Runs a mech
 
 A mechanical, verifiable QA gate. It runs on any draft written as Scott and returns PASS or FAIL. It edits mechanically to fix the listed violations. It never rewrites voice, restructures content, or invents ideas beyond the fixes below.
 
-The reference voice rules live in `D:\Claude Projects\CLAUDE.md` (VOICE RULES, BANNED WORDS, SIGNATURE PHRASES, EMAIL VOICE EXAMPLES). This gate is the executable version of those rules.
+The reference voice rules live in `C:\Claude Projects\CLAUDE.md` (VOICE RULES, BANNED WORDS, SIGNATURE PHRASES, EMAIL VOICE EXAMPLES). This gate is the executable version of those rules.
 
 ## Input
 

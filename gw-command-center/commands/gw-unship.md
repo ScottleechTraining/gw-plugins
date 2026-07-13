@@ -24,7 +24,7 @@ Examples:
 python -c "
 import json, pathlib, sys
 slug_query = 'REPLACE_ME'
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 matches = [t for t in data['topics'] if slug_query.lower() in t['slug'].lower() and t['stage'] == 'ready']
 if not matches:
@@ -47,7 +47,7 @@ If no match or multiple matches, stop and report. Otherwise, continue with the m
 python -c "
 import json, pathlib
 slug = 'EXACT_SLUG'
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 topic = next(t for t in data['topics'] if t['slug'] == slug)
 topic['ready_to_ship'] = False

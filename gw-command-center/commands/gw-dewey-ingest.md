@@ -36,8 +36,8 @@ These reference notes just contain a wikilink to the primary note + a one-line s
 - **Daily automated**: `/gw-dewey-daily` (sister command). Same logic but triggered by scheduled task, processes only rows newer than `.dewey-cursor.txt`.
 - **One-time backfill**: `/gw-dewey-backfill` (sister command). Re-runs the 2,677-row backlog hunting for Business + AI saves missed on first S&C-focused pass.
 
-**Project:** `D:/Claude Projects/Skills/tools/dewey_ingest/`
-**Output:** `D:/Claude Projects/Gridiron Warrior/External Library/Twitter-Instagram Saves/`
+**Project:** `C:/Claude Projects/Skills/tools/dewey_ingest/`
+**Output:** `C:/Claude Projects/Gridiron Warrior/External Library/Twitter-Instagram Saves/`
 
 ---
 
@@ -72,7 +72,7 @@ The helper's `list-unprocessed` returns each row with `media_url` and `media_kin
 
 ```bash
 source ~/.bashrc
-python "D:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" --help
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" --help
 ```
 
 No flags. No `--with-images`. The Media column is the only signal.
@@ -84,7 +84,7 @@ No flags. No `--with-images`. The Media column is the only signal.
 ### 1. Pull batch
 
 ```bash
-python "D:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" list-unprocessed
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" list-unprocessed
 ```
 
 Parse JSON. Each row has: `row, url, caption, author, posted, source, notes, tags, media_url, media_kind`.
@@ -101,7 +101,7 @@ Report `Found N unprocessed rows. <count by media_kind>`. If 0, exit cleanly.
 
 ### 2. Cache the wiki concept index
 
-Read `D:/Claude Projects/Gridiron Warrior/wiki/index.md` once. Reuse for every row's `wiki_links`.
+Read `C:/Claude Projects/Gridiron Warrior/wiki/index.md` once. Reuse for every row's `wiki_links`.
 
 ### 3. Per-row loop
 
@@ -116,7 +116,7 @@ For each row:
 #### 3b. Tier 1 (image): fetch + OCR
 
 ```bash
-python "D:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" fetch-media-url "<media_url>" "<author>" "<post_id>"
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" fetch-media-url "<media_url>" "<author>" "<post_id>"
 ```
 
 The helper handles both single URLs and `;`-separated carousel URLs server-side. Pass the whole `media_url` value from the sheet — no bash splitting needed.
@@ -289,7 +289,7 @@ Default: do NOT promote.
 #### 3j. Mark processed
 
 ```bash
-python "D:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" mark-processed <row> <status>
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" mark-processed <row> <status>
 ```
 
 Status values:

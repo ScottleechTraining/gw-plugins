@@ -29,7 +29,7 @@ stop and report that substring; process the rest.
 python -c "
 import json, pathlib, sys
 slug_query = 'REPLACE_ME'
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 matches = [t for t in data['topics'] if slug_query.lower() in t['slug'].lower() and t['stage'] in ('_inbox', 'ready')]
 if not matches:
@@ -56,7 +56,7 @@ HTML still has an empty photo placeholder slot).
 python -c "
 import json, pathlib, shutil
 slug = 'EXACT_SLUG'
-DEL = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables')
+DEL = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables')
 p = DEL / 'queue-state.json'
 data = json.loads(p.read_text(encoding='utf-8'))
 topic = next(t for t in data['topics'] if t['slug'] == slug)
@@ -78,7 +78,7 @@ print(f'{slug}: stage=ready, ready_to_ship=true')
 ## Step 4: Render slides + split captions (idempotent)
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.render_carousel
 python -m scripts.gwqueue.split_captions
 ```
@@ -86,14 +86,14 @@ python -m scripts.gwqueue.split_captions
 ## Step 5: Sync THIS topic to Drive
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.sync_to_drive --slug "EXACT_SLUG"
 ```
 
 ## Step 6: Rescan and confirm
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.scan_folders
 ```
 

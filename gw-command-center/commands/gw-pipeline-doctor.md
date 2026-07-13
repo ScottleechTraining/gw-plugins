@@ -11,7 +11,7 @@ When the overnight pipeline broke and Scott needs it fixed. Work the steps IN OR
 `/gw-morning-readiness` tells you IF it broke. This tells you WHY and fixes it.
 
 Paths (all real, confirmed against the code):
-- Health status files: `D:\Claude Projects\Gridiron Warrior\scripts\health\<gate>-<YYYY-MM-DD>.status.json`
+- Health status files: `C:\Claude Projects\Gridiron Warrior\scripts\health\<gate>-<YYYY-MM-DD>.status.json`
 - Sched logs: `C:\Users\scott\.claude\sched-logs\gw-<gate>.log`
 - Token marker: `C:\Users\scott\.claude\sched-state\setup-token-created.json`
 
@@ -20,7 +20,7 @@ Paths (all real, confirmed against the code):
 The D: drive (GW_Har) intermittently dismounts and takes the whole vault and repo with it. Every gate reads from D:. If the drive dropped, nothing else is diagnosable and every downstream symptom is a lie.
 
 ```bash
-test -d "D:\Claude Projects\Gridiron Warrior" && echo "VAULT PRESENT" || echo "VAULT MISSING"
+test -d "C:\Claude Projects\Gridiron Warrior" && echo "VAULT PRESENT" || echo "VAULT MISSING"
 ```
 
 If MISSING: report **"D: drive (GW_Har) dropped — reconnect it, then re-run the pipeline."** and STOP. Do not diagnose code, do not read logs, do not rerun. Nothing else matters until the drive is back.
@@ -32,7 +32,7 @@ If PRESENT: continue.
 Every gate writes a terminal status JSON. Read today's (and yesterday's, in case the run straddled midnight) and list every gate whose `status` is not `complete`.
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" -c "import json,glob,datetime; d=datetime.date.today().strftime('%Y-%m-%d'); [print(g, json.load(open(g)).get('status'), '|', json.load(open(g)).get('root_cause')) for g in sorted(glob.glob(rf'Gridiron Warrior\scripts\health\*-{d}.status.json'))]"
+cd "C:\Claude Projects" && "C:\Python314\python.exe" -c "import json,glob,datetime; d=datetime.date.today().strftime('%Y-%m-%d'); [print(g, json.load(open(g)).get('status'), '|', json.load(open(g)).get('root_cause')) for g in sorted(glob.glob(rf'Gridiron Warrior\scripts\health\*-{d}.status.json'))]"
 ```
 
 Terminal statuses that mean trouble: `failed`, `blocked`, `running` (stuck — killed mid-run), or a missing file entirely (gate never fired). `complete` is the only clean one.
@@ -81,19 +81,19 @@ Do NOT invoke gates by hand or re-run schtasks one at a time. Use the rerunner �
 Dry run first, always:
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today --dry-run
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today --dry-run
 ```
 
 Then drop `--dry-run` to actually rerun:
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today
 ```
 
 One stubborn gate only:
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --gate <gate>
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --gate <gate>
 ```
 
 A `complete` gate is never rerun. Weekly gates read on a grace day are reported but not auto-rerun (rerun them on their fire day). After the rerun, go back to Step 2 and confirm the gates went `complete`.

@@ -19,10 +19,10 @@ The user provides a coaching topic as $ARGUMENTS (e.g., "box squat programming",
 
 ## Vault Paths
 
-- **Research output:** `D:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
-- **Wiki summaries:** `D:/Claude Projects/Gridiron Warrior/wiki/summaries/`
-- **Wiki index:** `D:/Claude Projects/Gridiron Warrior/wiki/index.md`
-- **Wiki log:** `D:/Claude Projects/Gridiron Warrior/wiki/log.md`
+- **Research output:** `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
+- **Wiki summaries:** `C:/Claude Projects/Gridiron Warrior/wiki/summaries/`
+- **Wiki index:** `C:/Claude Projects/Gridiron Warrior/wiki/index.md`
+- **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`
 
 ## Environment
 
@@ -30,7 +30,7 @@ All `nlm` and `yt-dlp` commands require `source ~/.bashrc` first (loads PATH and
 
 ## Step 1: Check the Wiki First
 
-Read `D:/Claude Projects/Gridiron Warrior/wiki/index.md`. If a summary page already exists for this topic, tell Scott and ask if he wants to run a fresh research pass anyway or just use what's there.
+Read `C:/Claude Projects/Gridiron Warrior/wiki/index.md`. If a summary page already exists for this topic, tell Scott and ask if he wants to run a fresh research pass anyway or just use what's there.
 
 ## Step 2: Gather YouTube Sources
 
@@ -68,7 +68,7 @@ Parse the answer from the JSON response (`value.answer` field).
 
 ## Step 6: Save to Vault
 
-Save as: `D:/Claude Projects/Gridiron Warrior/Research/NotebookLM/[TOPIC-SLUG]-brief.md`
+Save as: `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/[TOPIC-SLUG]-brief.md`
 
 Where TOPIC-SLUG is the topic lowercased with spaces replaced by hyphens.
 
@@ -92,7 +92,7 @@ pipeline: gw-research
 
 ## Step 7: Ingest into Wiki
 
-Write a summary page to `D:/Claude Projects/Gridiron Warrior/wiki/summaries/research-[topic-slug].md`:
+Write a summary page to `C:/Claude Projects/Gridiron Warrior/wiki/summaries/research-[topic-slug].md`:
 
 ```markdown
 ---

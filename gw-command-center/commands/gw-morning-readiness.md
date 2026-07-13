@@ -11,7 +11,7 @@ Answers one question: did the overnight pipeline do its job, and if not, what is
 ## Step 1 — Run the deterministic check
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/morning_readiness.py"
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/morning_readiness.py"
 ```
 
 This reads the same sources of truth the health check uses — per-gate status JSON, schtasks Last Result — plus live topic-queue counts, and prints a verdict:
@@ -25,7 +25,7 @@ This reads the same sources of truth the health check uses — per-gate status J
 Relay the verdict and the single `next action` line verbatim. Do NOT soften RED into "mostly fine." If RED, the recommended recovery is almost always:
 
 ```bash
-cd "D:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today --dry-run
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Gridiron Warrior/scripts/rerun_failed_jobs.py" --date today --dry-run
 ```
 
 then drop `--dry-run` to actually rerun the failed/missing gates (run_type=recovery).

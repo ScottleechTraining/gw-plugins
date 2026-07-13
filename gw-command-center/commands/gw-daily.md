@@ -13,14 +13,14 @@ Run this every weekday evening when you fire up Claude Code. Catches up on every
 ### 1. Sync the vault Git repo
 
 ```bash
-cd "D:\Claude Projects\Gridiron Warrior" && git pull --rebase
+cd "C:\Claude Projects\Gridiron Warrior" && git pull --rebase
 ```
 
 Report any conflicts. Do not auto-resolve — surface to Scott.
 
 ### 2. Sweep Screenshot Inbox
 
-Check `D:\Claude Projects\Gridiron Warrior\External Library\Screenshots\inbox\` for new images.
+Check `C:\Claude Projects\Gridiron Warrior\External Library\Screenshots\inbox\` for new images.
 
 For each image:
 - OCR via Read tool (multi-modal)
@@ -35,7 +35,7 @@ Report counts: `N processed, M skipped, K skipped-personal`.
 
 ### 3. Sweep Voice Note Inbox
 
-Check `D:\Claude Projects\Gridiron Warrior\Voice Corpus\_pocket-inbox\` for new files.
+Check `C:\Claude Projects\Gridiron Warrior\Voice Corpus\_pocket-inbox\` for new files.
 
 For each file:
 - If audio (.mp3, .m4a, .wav, .ogg): transcribe via best available method (Whisper API if configured; otherwise flag for Scott)
@@ -51,7 +51,7 @@ Report count: `N voice notes processed`.
 
 ### 4. Read Today's Daily Seed
 
-Read `D:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md` (today's date) and present its content angles to Scott.
+Read `C:\Claude Projects\Gridiron Warrior\Deliverables\_daily-seeds\YYYY-MM-DD.md` (today's date) and present its content angles to Scott.
 
 If file missing: report "No seed file today — `/gw-seed-writer` did not fire (laptop may have been closed). Want me to run it now?"
 

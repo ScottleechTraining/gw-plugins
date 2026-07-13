@@ -514,7 +514,7 @@ Copy both blocks VERBATIM from below (they are sourced from the patcher) so gene
           'SAVE FAILED MID-WRITE: ' + err.message + '\n\n' +
           'YOUR FILE MAY BE CORRUPTED.\n\n' +
           'To restore from git:\n' +
-          '  cd "D:/Claude Projects"\n' +
+          '  cd "C:/Claude Projects"\n' +
           '  git checkout HEAD -- "' + filename + '"\n\n' +
           'Then reopen the file and try editing again. ' +
           'If this happens repeatedly, tell Claude.'

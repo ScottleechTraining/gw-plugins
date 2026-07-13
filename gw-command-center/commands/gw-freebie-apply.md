@@ -15,10 +15,10 @@ is this command's job).
 
 ## Paths
 
-- **Deliverables:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
-- **Sidecar state:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/freebie-state.json`
-- **Freebies page:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/freebies.html`
-- **Killed freebies:** `D:/Claude Projects/Gridiron Warrior/Deliverables/killed/_freebies/`
+- **Deliverables:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
+- **Sidecar state:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/freebie-state.json`
+- **Freebies page:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/freebies.html`
+- **Killed freebies:** `C:/Claude Projects/Gridiron Warrior/Deliverables/killed/_freebies/`
 
 ## Input: the pasted string
 
@@ -55,7 +55,7 @@ python - "$RESULT_STRING" <<'PY'
 import json, re, shutil, sys, pathlib
 raw = sys.argv[1]
 
-DELIV = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables")
+DELIV = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables")
 SIDECAR = DELIV / "_system" / "review" / "freebie-state.json"
 KILLED = DELIV / "killed" / "_freebies"
 
@@ -133,7 +133,7 @@ Decided items re-render muted with their status badge so Scott can change his
 mind later.
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.build_freebie_review_page
 ```
 

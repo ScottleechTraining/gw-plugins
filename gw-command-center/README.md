@@ -77,7 +77,7 @@ These skills rely on tooling outside the plugin:
 
 | Skill | Dependency | Install |
 |---|---|---|
-| `gw-image-forge` | `OPENAI_API_KEY` in `D:\Claude Projects\Gridiron Warrior\scripts\.env` | Get key from https://platform.openai.com/api-keys, add billing |
+| `gw-image-forge` | `OPENAI_API_KEY` in `C:\Claude Projects\Gridiron Warrior\scripts\.env` | Get key from https://platform.openai.com/api-keys, add billing |
 | `pdf` | `pypdf`, `reportlab` | `pip install pypdf reportlab` |
 | `pptx` | `soffice` (LibreOffice) for PDF conversion | Install LibreOffice; everything else works without it |
 | `gw-youtube-takeaways` | `reportlab` for PDF, native `notebooklm` MCP (`mcp__notebooklm__*`) for extraction, `Claude in Chrome` MCP as legacy fallback | Already in stack — run `nlm login` once if auth expires |
@@ -88,14 +88,14 @@ These skills rely on tooling outside the plugin:
 ## Edit flow (code is truth)
 
 ```
-1. Edit the file in D:\Claude Projects\plugins\gw-command-center\
+1. Edit the file in C:\Claude Projects\plugins\gw-command-center\
 2. Validate:        claude plugin validate gw-command-center
 3. Refresh local:   claude plugin marketplace update gw-plugins
                     claude plugin uninstall gw-command-center
                     claude plugin install gw-command-center@gw-plugins
-4. Commit + push:   git -C "D:\Claude Projects\plugins" add -A
-                    git -C "D:\Claude Projects\plugins" commit -m "..."
-                    git -C "D:\Claude Projects\plugins" push
+4. Commit + push:   git -C "C:\Claude Projects\plugins" add -A
+                    git -C "C:\Claude Projects\plugins" commit -m "..."
+                    git -C "C:\Claude Projects\plugins" push
 5. Cowork + chat refresh themselves from github on next session.
 ```
 
@@ -113,7 +113,7 @@ After install, run any of these to confirm the plugin is hot:
 - "generate an image of X, dry run only" → `gw-image-forge --dry-run` (no cost, prints prompt only)
 
 The image-forge smoke test image (locker room at 5am, SI '87 B&W) lives at:
-`D:\Claude Projects\Gridiron Warrior\Images\locker-room-5am.png`
+`C:\Claude Projects\Gridiron Warrior\Images\locker-room-5am.png`
 
 ---
 
@@ -123,7 +123,7 @@ Before v0.1, the same skill lived in three places: Code user-level `~/.claude/sk
 
 This plugin ends that. One file, one git history, three surfaces. If you find a loose `gw-*.md` outside this folder, the plugin install is broken — fix the install, don't recreate the loose file.
 
-The non-negotiable rule lives in `D:\Claude Projects\CLAUDE.md` under "PLUGIN & SKILL DISTRIBUTION (CODE IS TRUTH)".
+The non-negotiable rule lives in `C:\Claude Projects\CLAUDE.md` under "PLUGIN & SKILL DISTRIBUTION (CODE IS TRUTH)".
 
 ---
 

@@ -15,7 +15,7 @@ This skill's only write surface is `Gridiron Warrior/wiki/`. Check that path for
 Before reading or writing anything, run:
 
 ```bash
-git -C "D:\Claude Projects" status --porcelain -- "Gridiron Warrior/wiki/"
+git -C "C:\Claude Projects" status --porcelain -- "Gridiron Warrior/wiki/"
 ```
 
 If the output is not empty, STOP. Do not edit files. Do not stage files. Do not commit. Report:
@@ -37,7 +37,7 @@ Raw `git commit` is forbidden inside this command.
 ### 1. Pull week's deltas
 
 ```bash
-cd "D:\Claude Projects\Gridiron Warrior" && git log --since="7 days ago" --name-only --pretty=format: | sort -u
+cd "C:\Claude Projects\Gridiron Warrior" && git log --since="7 days ago" --name-only --pretty=format: | sort -u
 ```
 
 Filter to new content (Dewey notes, screenshots, voice notes, research briefs, daily seeds).
@@ -151,7 +151,7 @@ The wiki's stub rate is the "wide but shallow" risk. This step burns it down 3-5
 
 ### 5. Write weekly synthesis report
 
-Save to `D:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
+Save to `C:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
 
 ```markdown
 ---
@@ -205,7 +205,7 @@ Do not commit automatically. Leave the changes unstaged and report the exact fil
 If Scott explicitly asks for the commit later, use:
 
 ```bash
-python "D:\Claude Projects\Gridiron Warrior\scripts\git_safe_commit.py" --paths "Gridiron Warrior/wiki" "Gridiron Warrior/External Library/BusinessDocuments/_topic-queue.md" "Gridiron Warrior/External Library/AI/_topic-queue.md" --message "synthesis: weekly synthesis week of YYYY-MM-DD"
+python "C:\Claude Projects\Gridiron Warrior\scripts\git_safe_commit.py" --paths "Gridiron Warrior/wiki" "Gridiron Warrior/External Library/BusinessDocuments/_topic-queue.md" "Gridiron Warrior/External Library/AI/_topic-queue.md" --message "synthesis: weekly synthesis week of YYYY-MM-DD"
 ```
 
 ### 7. Print the completion marker (ALWAYS last)

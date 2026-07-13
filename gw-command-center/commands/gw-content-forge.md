@@ -19,21 +19,21 @@ The user will provide one of:
 
 ## Vault Paths
 
-- **Wiki:** `D:/Claude Projects/Gridiron Warrior/wiki/`
-- **Wiki index:** `D:/Claude Projects/Gridiron Warrior/wiki/index.md`
-- **Wiki summaries:** `D:/Claude Projects/Gridiron Warrior/wiki/summaries/`
-- **Wiki log:** `D:/Claude Projects/Gridiron Warrior/wiki/log.md`
-- **Wiki business domain:** `D:/Claude Projects/Gridiron Warrior/wiki/business/`
-- **Wiki AI domain:** `D:/Claude Projects/Gridiron Warrior/wiki/ai/`
-- **Second Brain:** `D:/Claude Projects/Gridiron Warrior/Second Brain/`
-- **Research briefs (S&C):** `D:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
-- **Business research briefs:** `D:/Claude Projects/Gridiron Warrior/External Library/BusinessDocuments/`
-- **AI research briefs:** `D:/Claude Projects/Gridiron Warrior/External Library/AI/`
-- **Dewey saves (Twitter + IG):** `D:/Claude Projects/Gridiron Warrior/External Library/Twitter-Instagram Saves/`
-- **Voice corpus (Scott-original):** `D:/Claude Projects/Gridiron Warrior/Voice Corpus/Voice Notes/`
-- **Daily content seeds:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_daily-seeds/`
-- **Deliverables output (new content lands here):** `D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/`
-- **Voice rules:** `D:/Claude Projects/CLAUDE.md`
+- **Wiki:** `C:/Claude Projects/Gridiron Warrior/wiki/`
+- **Wiki index:** `C:/Claude Projects/Gridiron Warrior/wiki/index.md`
+- **Wiki summaries:** `C:/Claude Projects/Gridiron Warrior/wiki/summaries/`
+- **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`
+- **Wiki business domain:** `C:/Claude Projects/Gridiron Warrior/wiki/business/`
+- **Wiki AI domain:** `C:/Claude Projects/Gridiron Warrior/wiki/ai/`
+- **Second Brain:** `C:/Claude Projects/Gridiron Warrior/Second Brain/`
+- **Research briefs (S&C):** `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
+- **Business research briefs:** `C:/Claude Projects/Gridiron Warrior/External Library/BusinessDocuments/`
+- **AI research briefs:** `C:/Claude Projects/Gridiron Warrior/External Library/AI/`
+- **Dewey saves (Twitter + IG):** `C:/Claude Projects/Gridiron Warrior/External Library/Twitter-Instagram Saves/`
+- **Voice corpus (Scott-original):** `C:/Claude Projects/Gridiron Warrior/Voice Corpus/Voice Notes/`
+- **Daily content seeds:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_daily-seeds/`
+- **Deliverables output (new content lands here):** `C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/`
+- **Voice rules:** `C:/Claude Projects/CLAUDE.md`
 
 ---
 
@@ -49,7 +49,7 @@ This context shapes everything that follows. It prevents repeating angles he's a
 
 ## Step 0.5: Check NotebookLM for Depth (if relevant)
 
-If the topic is a coaching/S&C concept (not just a product pitch), check whether there is a matching research brief in `D:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`.
+If the topic is a coaching/S&C concept (not just a product pitch), check whether there is a matching research brief in `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`.
 
 - If a brief exists for this topic, read it and pull the strongest coaching insight or evidence point into the content pack
 - If no brief exists and the topic warrants it, note in the final report that running `/gw-research [topic]` first would strengthen the content
@@ -108,7 +108,7 @@ Read or accept the pasted transcript. Extract:
 
 ### 2A.3: Voice Rules (apply to every asset)
 
-Read voice rules from `D:/Claude Projects/CLAUDE.md` before writing.
+Read voice rules from `C:/Claude Projects/CLAUDE.md` before writing.
 
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
@@ -228,7 +228,7 @@ Write all assets in Scott's voice before outputting anything. Then output all at
 
 ### 2A.4: Save TRANSCRIPT MODE Output
 
-Save to: `D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/[CONTENT-TYPE]-[TOPIC-SLUG]/[CONTENT-TYPE]-[TOPIC-SLUG]-[YYYY-MM-DD].md`
+Save to: `C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/[CONTENT-TYPE]-[TOPIC-SLUG]/[CONTENT-TYPE]-[TOPIC-SLUG]-[YYYY-MM-DD].md`
 
 Where `[CONTENT-TYPE]` is `podcast`, `film-study`, or `wildcat-webinar`. Creates the `_inbox/` folder if it doesn't exist.
 
@@ -322,7 +322,7 @@ Concepts and structure only. Scott fills in the coaching specifics.
 
 ### 2B.5: Save CONTENT PACK MODE Output
 
-Save as: `D:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/[TOPIC-SLUG]/[TOPIC-SLUG]-content-pack-[YYYY-MM-DD].md`
+Save as: `C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/[TOPIC-SLUG]/[TOPIC-SLUG]-content-pack-[YYYY-MM-DD].md`
 
 Create the `_inbox/[TOPIC-SLUG]/` folder if it doesn't exist. New content lands in `_inbox/` so Scott can triage it (Ready / Cold / Kill) before it enters the working set.
 
@@ -460,7 +460,7 @@ If the topic you just forged was suggested by a daily seed (i.e., it appears in 
 python -c "
 import json, pathlib, sys, re
 new_slug = 'REPLACE_WITH_TOPIC_SLUG'  # e.g., 'stop-running-your-linemen'
-p = pathlib.Path('D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
+p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 backlog = data.get('forge_backlog', [])
 hits = [e for e in backlog if e['slug'] == new_slug]

@@ -161,4 +161,4 @@ When writing as Scott:
 3. **Do NOT read `External Library/`** unless Scott explicitly says so ("pull from External Library", "pull from screenshots", "use my IG saves").
 4. **Never quote external content as Scott's words.** Attribute on publication only.
 
-These rules are defined in `D:\Claude Projects\Gridiron Warrior\CLAUDE.md`. They override anything in this SKILL.md that conflicts.
+These rules are defined in `C:\Claude Projects\Gridiron Warrior\CLAUDE.md`. They override anything in this SKILL.md that conflicts.

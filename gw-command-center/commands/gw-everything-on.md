@@ -23,7 +23,7 @@ This skill READS the wiki but NEVER writes to it. Output goes ONLY to `Deliverab
 
 ## Output target
 
-Write ONE file: `D:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-[topic-slug].md`
+Write ONE file: `C:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-[topic-slug].md`
 
 Slug rules: kebab-case the topic, truncate to 40 chars, no special chars. "GPS for film study insiders" → `gps-for-film-study-insiders`.
 
@@ -162,7 +162,7 @@ YYYY-MM-DD /gw-everything-on: [topic-slug] (N matches across M sources)
 ### 8. Commit
 
 ```bash
-cd "D:\Claude Projects\Gridiron Warrior" && git add "Deliverables/_corpus-queries/" "wiki/log.md" && git commit -m "corpus: query YYYY-MM-DD ([topic-slug], N matches)"
+cd "C:\Claude Projects\Gridiron Warrior" && git add "Deliverables/_corpus-queries/" "wiki/log.md" && git commit -m "corpus: query YYYY-MM-DD ([topic-slug], N matches)"
 ```
 
 ## Voice and tone (for the synthesis sections)

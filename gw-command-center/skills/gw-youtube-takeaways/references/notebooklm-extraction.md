@@ -31,7 +31,7 @@ The returned notebook object includes a `sources` list. Each source has at minim
 - `title` (full title, no truncation — unlike the DOM-scraped version)
 - `source_type` (you want `youtube` or `url` entries)
 
-For "review the new videos" runs, read `D:\Claude Projects\Gridiron Warrior\wiki\log.md` and filter out source titles that appear in recent `ingest | youtube-takeaways` entries.
+For "review the new videos" runs, read `C:\Claude Projects\Gridiron Warrior\wiki\log.md` and filter out source titles that appear in recent `ingest | youtube-takeaways` entries.
 
 ## Step 3: Extract raw transcript
 

@@ -17,17 +17,18 @@ you what to do Monday, and a URI war story proves he lives it.
 
 ## Paths
 
-- Page output: `D:\Claude Projects\websites\scottleechtraining.com	ools\<slug>\index.html`
+- Page output: `C:\Claude Projects\websites\scottleechtraining.com	ools\<slug>\index.html`
 - Design system (REUSE, never fork): `websites\scottleechtraining.com	ools\_shared\gw-tools.css` + `insiders-resource.css` + `insiders-resource.js`
 - Template origin to study: `websites\scottleechtraining.com	ools\hamstring-resource\index.html`
-- Research audit trail: `D:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-<slug>.md`
+- Research audit trail: `C:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-<slug>.md`
 - Wiki log line: `Gridiron Warrior\wiki\log.md`
 
 ## Phase 0 - Dedup gate
 
 List existing deep-dive pages (folders under tools\ whose index.html links
 insiders-resource.css). If the topic is already covered, stop and say so.
-Check the freebie ledger (`Deliverables\_systemeviewreebie-state.json`)
+Check the freebie ledger (`Deliverables\_system
+eviewreebie-state.json`)
 for killed adjacent assets - killed stays dead unless Scott revives.
 
 ## Phase 1 - Research (mine first, write second - never start from a blank page)

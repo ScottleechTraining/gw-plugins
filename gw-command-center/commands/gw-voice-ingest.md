@@ -13,7 +13,7 @@ Processes voice notes from `Voice Corpus\_pocket-inbox\`. These are Scott's firs
 ### 1. Find files in inbox
 
 ```bash
-ls "D:\Claude Projects\Gridiron Warrior\Voice Corpus\_pocket-inbox\"
+ls "C:\Claude Projects\Gridiron Warrior\Voice Corpus\_pocket-inbox\"
 ```
 
 Filter to: `.mp3`, `.m4a`, `.wav`, `.ogg`, `.txt`, `.md`. Skip `.processed/` subfolder.

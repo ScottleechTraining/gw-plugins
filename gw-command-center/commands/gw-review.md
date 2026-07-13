@@ -13,16 +13,16 @@ decision. No server, no upload, all local.
 
 ## Paths
 
-- **Deliverables:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
+- **Deliverables:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
 - **Builder module:** `scripts.gwqueue.build_review_page`
-- **Review page:** `D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/review.html`
-- **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Killed:** `D:/Claude Projects/Gridiron Warrior/Deliverables/killed/` (terminal, never rescanned, no restore)
+- **Review page:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/review.html`
+- **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
+- **Killed:** `C:/Claude Projects/Gridiron Warrior/Deliverables/killed/` (terminal, never rescanned, no restore)
 
 ## Step 1: Build the page
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.build_review_page
 ```
 
@@ -34,7 +34,7 @@ and not yet `ready_to_ship`), and writes `review.html`. It never mutates
 ## Step 2: Open it
 
 ```bash
-start "" "D:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/review.html"
+start "" "C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/review.html"
 ```
 
 Tell Scott:
@@ -68,7 +68,7 @@ python - "$RESULT_STRING" <<'PY'
 import json, re, shutil, sys, pathlib
 raw = sys.argv[1]
 
-DELIV = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables")
+DELIV = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables")
 STATE = DELIV / "queue-state.json"
 KILLED = DELIV / "killed"
 
@@ -155,7 +155,7 @@ Ships and kills moved folders on disk. Render/split (idempotent), then sync
 EACH shipped slug so ready/ topics land on Drive immediately, then refresh:
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.render_carousel
 python -m scripts.gwqueue.split_captions
 # one per shipped slug:
@@ -197,7 +197,7 @@ tell the user cover rebuilds are queued for `/gw-carousel-batch`.
 If Scott wants it committed:
 
 ```bash
-cd "D:/Claude Projects"
+cd "C:/Claude Projects"
 git add -A
 git commit -m "review: apply carousel decisions (<n> ship, <n> polish, <n> kill)"
 ```

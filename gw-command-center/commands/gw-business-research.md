@@ -12,7 +12,7 @@ Fires daily. Pulls the top topic from `External Library\BusinessDocuments\_topic
 
 ### 1. Read the queue
 
-Open `D:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\_topic-queue.md`.
+Open `C:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\_topic-queue.md`.
 
 Find the first topic under `## Active Queue`. Extract topic name + slug from format `- topic name [topic-slug]`.
 
@@ -44,7 +44,7 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 
 ### 3. Write brief
 
-Save to `D:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\YYYY-MM-DD-[topic-slug]-brief.md`:
+Save to `C:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 ```markdown
 ---

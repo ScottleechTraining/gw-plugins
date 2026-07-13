@@ -16,14 +16,14 @@ The user provides a file path. Typical inputs:
 - A Voice Corpus transcript
 - Any markdown file with coaching content
 
-If empty, abort with: "Provide a source file path. Example: `/gw-freebie-forge \"D:\\Claude Projects\\Gridiron Warrior\\Research\\Film Study\\2026-05-25-deceleration-film-study-brief.md\"`."
+If empty, abort with: "Provide a source file path. Example: `/gw-freebie-forge \"C:\\Claude Projects\\Gridiron Warrior\\Research\\Film Study\\2026-05-25-deceleration-film-study-brief.md\"`."
 
 ## Vault paths
 
-- **Voice rules:** `D:\Claude Projects\CLAUDE.md`
-- **Output:** `D:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`
-- **Wiki for product targeting:** `D:\Claude Projects\Gridiron Warrior\wiki\` (read entities/Insiders, entities/GW-2-0, entities/Contact-Prep, entities/Scores-and-Stops, entities/Summit to pick the right CTA)
-- **Voice check guard:** `D:\Claude Projects\Gridiron Warrior\scripts\voice_check.py`
+- **Voice rules:** `C:\Claude Projects\CLAUDE.md`
+- **Output:** `C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`
+- **Wiki for product targeting:** `C:\Claude Projects\Gridiron Warrior\wiki\` (read entities/Insiders, entities/GW-2-0, entities/Contact-Prep, entities/Scores-and-Stops, entities/Summit to pick the right CTA)
+- **Voice check guard:** `C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py`
 
 ## CREATION RULES (2026-07-06, Scott-approved - these outrank everything below)
 
@@ -33,11 +33,11 @@ written for whichever model runs this command - no session memory required.
 
 **Rule 0 - THE DEDUP GATE. Run it before creating anything.**
 Check, in order:
-1. `D:\Claude Projects\websites\scottleechtraining.com	ools\index.html` - the Toolbox
+1. `C:\Claude Projects\websites\scottleechtraining.com	ools\index.html` - the Toolbox
    inventory (interactive tools: program audit, high/low CNS planner, training age sort,
    missed lifts tree, session conductor, floor clock, sled load calculator, tri-set timer,
    8-week team talks, hamstring resource, GPS for football).
-2. `D:\Claude Projects\Gridiron Warrior\Deliverables\_system
+2. `C:\Claude Projects\Gridiron Warrior\Deliverables\_system
 eviewreebie-state.json` -
    the freebie ledger. `killed` means dead: never rebuild without Scott explicitly reviving it.
 3. `Deliverables\projects\insiders-vault\VAULT-MANIFEST.md` - what members already have.
@@ -88,7 +88,7 @@ If the source is a Film Study brief, the "Bottom-line takeaways" section is the 
 
 ### Step 2 — Read voice rules
 
-Read `D:\Claude Projects\CLAUDE.md`. Internalize:
+Read `C:\Claude Projects\CLAUDE.md`. Internalize:
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
 - Banned words: delve, tapestry, vibrant, transformative, unlock, leverage (as verb), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, fluff
@@ -171,14 +171,14 @@ Leech
 *scottleechtraining.com*
 ```
 
-Write to `D:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`. If same-day same-topic file exists, append `-2`, `-3` like the other forges.
+Write to `C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`. If same-day same-topic file exists, append `-2`, `-3` like the other forges.
 
 ### Step 5 — Voice check
 
 If `scripts\voice_check.py` exists, run it against the produced freebie:
 
 ```bash
-python "D:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "D:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md"
+python "C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md"
 ```
 
 If voice_check returns non-zero (banned words, em-dashes, or other violations), rewrite the offending sections and re-run. Loop max twice. If still failing, surface the voice_check output to Scott and stop.

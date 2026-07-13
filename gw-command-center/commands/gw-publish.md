@@ -17,16 +17,16 @@ Run this AFTER you've scheduled or shipped a campaign's social/email/Substack as
 
 The user provides one of:
 - A topic slug matching a Deliverables folder name (e.g., `jumps-by-force-vector`)
-- A full folder path (e.g., `D:/Claude Projects/Gridiron Warrior/Deliverables/2026-05-07-jumps-by-force-vector`)
+- A full folder path (e.g., `C:/Claude Projects/Gridiron Warrior/Deliverables/2026-05-07-jumps-by-force-vector`)
 - Nothing — in which case, list the topic folders in `Deliverables/` (excluding `archived/`, `_templates/`) and ask which to publish
 
 ## Vault Paths
 
-- **Deliverables source:** `D:/Claude Projects/Gridiron Warrior/Deliverables/`
-- **Archive destination:** `D:/Claude Projects/Gridiron Warrior/Deliverables/archived/`
-- **Wiki summaries:** `D:/Claude Projects/Gridiron Warrior/wiki/summaries/`
-- **Wiki index:** `D:/Claude Projects/Gridiron Warrior/wiki/index.md`
-- **Wiki log:** `D:/Claude Projects/Gridiron Warrior/wiki/log.md`
+- **Deliverables source:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
+- **Archive destination:** `C:/Claude Projects/Gridiron Warrior/Deliverables/archived/`
+- **Wiki summaries:** `C:/Claude Projects/Gridiron Warrior/wiki/summaries/`
+- **Wiki index:** `C:/Claude Projects/Gridiron Warrior/wiki/index.md`
+- **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`
 
 ## Step 1: Resolve the Topic Folder
 
@@ -115,8 +115,8 @@ Flat archive, no dated subfolders. The scanner treats `archived/` as a stage
 
 Use PowerShell:
 ```powershell
-$src = 'D:/Claude Projects/Gridiron Warrior/Deliverables/[folder-name]'
-$dst = 'D:/Claude Projects/Gridiron Warrior/Deliverables/archived/[folder-name]'
+$src = 'C:/Claude Projects/Gridiron Warrior/Deliverables/[folder-name]'
+$dst = 'C:/Claude Projects/Gridiron Warrior/Deliverables/archived/[folder-name]'
 New-Item -ItemType Directory -Force -Path (Split-Path $dst -Parent) | Out-Null
 Move-Item $src $dst
 ```
@@ -130,7 +130,7 @@ sync stays consistent: drag its Drive folder into the `used` subfolder under
 Pass the topic slug (the folder name with any leading `YYYY-MM-DD-` prefix stripped):
 
 ```bash
-cd "D:/Claude Projects/Gridiron Warrior"
+cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.retire_from_drive --push-slug "[topic-slug]"
 ```
 

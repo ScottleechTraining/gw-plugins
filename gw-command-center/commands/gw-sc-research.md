@@ -16,7 +16,7 @@ This pipeline writes ONLY to `External Library\S-and-C\`. It NEVER writes to `wi
 
 ### 1. Read the queue
 
-Open `D:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.md`. Find the first topic under `## Active Queue`.
+Open `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.md`. Find the first topic under `## Active Queue`.
 
 If empty: auto-pick a relevant S&C topic informed by the wiki's coaching themes (in-season programming, contact prep, deceleration, energy systems, recovery, high-school constraints). Flag `auto_picked: true`.
 
@@ -52,7 +52,7 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 
 ### 3. Write brief
 
-Save to `D:\Claude Projects\Gridiron Warrior\External Library\S-and-C\YYYY-MM-DD-[topic-slug]-brief.md`:
+Save to `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 ```markdown
 ---

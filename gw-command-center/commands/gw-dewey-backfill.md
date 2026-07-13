@@ -59,7 +59,7 @@ still_skipped: <N>
 ### 5. Commit
 
 ```bash
-cd "D:\Claude Projects\Gridiron Warrior" && git add -A && git commit -m "dewey: backfill complete — N business, M ai notes added"
+cd "C:\Claude Projects\Gridiron Warrior" && git add -A && git commit -m "dewey: backfill complete — N business, M ai notes added"
 ```
 
 ## Cost guardrails

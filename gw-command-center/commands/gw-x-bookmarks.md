@@ -1,15 +1,15 @@
 ---
 name: gw-x-bookmarks
 model: sonnet
-description: "Convert X (Twitter) bookmarks into richly connected Obsidian notes with full threads, extracted articles, GW football/S&C tags, and wikilinks. Pipeline runs from D:/Claude Projects/GW-X-Bookmarks/ and writes to D:/Claude Projects/Gridiron Warrior/X-Bookmarks/ in the vault."
+description: "Convert X (Twitter) bookmarks into richly connected Obsidian notes with full threads, extracted articles, GW football/S&C tags, and wikilinks. Pipeline runs from C:/Claude Projects/GW-X-Bookmarks/ and writes to C:/Claude Projects/Gridiron Warrior/X-Bookmarks/ in the vault."
 ---
 
 # GW X Bookmarks Pipeline
 
 Converts X bookmarks into richly connected Obsidian notes with full threads, extracted articles, GW football/S&C tags, and wikilinks.
 
-**Project:** `D:/Claude Projects/GW-X-Bookmarks/`
-**Output:** `D:/Claude Projects/Gridiron Warrior/X-Bookmarks/` in vault
+**Project:** `C:/Claude Projects/GW-X-Bookmarks/`
+**Output:** `C:/Claude Projects/Gridiron Warrior/X-Bookmarks/` in vault
 
 ---
 
@@ -26,7 +26,7 @@ Converts X bookmarks into richly connected Obsidian notes with full threads, ext
 ## Run the Pipeline
 
 ```bash
-cd "D:/Claude Projects/GW-X-Bookmarks"
+cd "C:/Claude Projects/GW-X-Bookmarks"
 
 # Full pipeline (runs all 5 stages in sequence)
 npm run pipeline

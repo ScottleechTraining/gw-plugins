@@ -17,10 +17,10 @@ The user provides one of:
 
 ## Vault Paths
 
-- **Transcript sources:** `D:/Claude Projects/Gridiron Warrior/Voice Corpus/`, `D:/Claude Projects/Gridiron Warrior/raw-sources/`
-- **Output:** `D:/Claude Projects/Gridiron Warrior/wiki/extracted/`
-- **Voice rules:** `D:/Claude Projects/CLAUDE.md`
-- **Wiki log:** `D:/Claude Projects/Gridiron Warrior/wiki/log.md`
+- **Transcript sources:** `C:/Claude Projects/Gridiron Warrior/Voice Corpus/`, `C:/Claude Projects/Gridiron Warrior/raw-sources/`
+- **Output:** `C:/Claude Projects/Gridiron Warrior/wiki/extracted/`
+- **Voice rules:** `C:/Claude Projects/CLAUDE.md`
+- **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`
 
 ## Step 1: Read the Transcript
 

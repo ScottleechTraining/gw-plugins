@@ -30,8 +30,8 @@ Optional: `twitter_single`, `reel`
 
 ## Paths
 
-- **State file:** `D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Dashboard copy:** `D:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (sync if folder exists)
+- **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
+- **Dashboard copy:** `C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (sync if folder exists)
 
 ## Step 1: Parse $ARGUMENTS
 
@@ -73,7 +73,7 @@ channel = "REPLACE_ME"
 state = "REPLACE_ME"
 explicit_date = None               # or "YYYY-MM-DD" if provided
 
-p = pathlib.Path("D:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
+p = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
 data = json.loads(p.read_text(encoding="utf-8"))
 topic = next(t for t in data["topics"] if t["slug"] == slug_input)
 
@@ -87,7 +87,7 @@ topic["last_activity"] = date.today().isoformat()
 p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
 # Also write to dashboard copy if it exists
-dash = pathlib.Path("D:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json")
+dash = pathlib.Path("C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json")
 if dash.parent.exists():
     dash.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
