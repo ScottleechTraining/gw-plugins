@@ -60,6 +60,7 @@ If file missing: report "No seed file today — `/gw-seed-writer` did not fire (
 Check:
 - `External Library\BusinessDocuments\_topic-queue.md` — count active topics. If < 5: warn.
 - `External Library\AI\_topic-queue.md` — count active topics. If < 5: warn.
+- `External Library\S-and-C\_topic-queue.md` — count active topics. If < 5: warn.
 - Any new error logs in `wiki\log.md`
 - Pending `External Library\_promotion-candidates.md` items
 
@@ -74,7 +75,7 @@ GIT SYNC      : <ok / conflicts>
 SCREENSHOTS   : N processed (coaching: X, business: Y, ai: Z), M personal-skipped
 VOICE NOTES   : N processed
 SEED FILE     : <present / missing>
-QUEUES        : Business: N | AI: M  (warn if either < 5)
+QUEUES        : Business: N | AI: M | S&C: K  (warn if any < 5)
 ATTENTION     : <bullet list of anything Scott should look at, or "nothing">
 
 TODAY'S SEED ANGLES:
