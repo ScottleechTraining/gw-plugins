@@ -179,6 +179,8 @@ The CLI is already authenticated (`netlify status` to confirm). The site is link
 
 Detect whether anything in the dashboard folder changed since the last deploy. If yes, deploy. If no, no-op.
 
+> This autonomous `netlify deploy --prod` is the documented exception to the "nothing ships autonomously" rule (blessed by Scott 2026-07-14, audit 2026-07-14 finding P3). It only publishes the internal queue dashboard, which sits behind the queue-auth edge gate; it never touches public marketing pages.
+
 ```bash
 cd "C:/Claude Projects/websites/scottleechtraining.com/tools/queue"
 

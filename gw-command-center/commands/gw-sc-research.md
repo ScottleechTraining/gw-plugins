@@ -32,7 +32,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
 
 3. **(Optional, only if master returns thin results)** Create a fresh topic-scoped notebook to supplement: `mcp__notebooklm__notebook_create` with title `S&C Research: [topic name]`, add 3-5 sources via `mcp__notebooklm__source_add` (yt-dlp + web search for high-signal sources), then query. Cross-reference its results with the master via `mcp__notebooklm__cross_notebook_query` if helpful.
 
-4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\strength-conditioning\` for anchor authors / recent reels relevant to the topic.
+4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\s-and-c\` for anchor authors / recent reels relevant to the topic.
 
 **HARD RULE — NotebookLM errors (identical across gw-sc/ai/business-research):** Never fall back to web-search-only or memory-only synthesis and never present a fallback as a normal brief. But before blocking, classify the error correctly — a transient blip is NOT an auth failure, and the two get different fixes:
 

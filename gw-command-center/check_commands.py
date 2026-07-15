@@ -12,6 +12,9 @@ Rules enforced:
   R2. The frontmatter MUST contain a `name:` field equal to the filename stem.
   R3. The frontmatter description (if present) MUST be ASCII-safe — no
       em-dash (—), no en-dash (–), no Unicode arrow (→). Use - and -> instead.
+  R4. The frontmatter MUST contain `model: opus` or `model: sonnet`
+      (CLAUDE.md MODEL POLICY: Fable is pay-per-use; no command may silently
+      inherit the session model). Added per audit 2026-07-14 finding P2.
 
 Exit codes:
   0 = all green
@@ -84,6 +87,12 @@ def check_file(path: Path) -> list[str]:
     for ch, label in UNSAFE_CHARS.items():
         if ch in desc:
             violations.append(f"R3: description contains {label} — use ASCII")
+
+    model = fm.get("model")
+    if not model:
+        violations.append("R4: missing `model:` field (must be `model: opus` or `model: sonnet`)")
+    elif model not in ("opus", "sonnet"):
+        violations.append(f"R4: model '{model}' not allowed (must be opus or sonnet)")
     return violations
 
 
