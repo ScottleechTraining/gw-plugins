@@ -1,6 +1,6 @@
 ---
 name: gw-weekly-synthesis
-model: opus
+model: claude-opus-5
 description: "Sunday synthesis - promote best vault material to wiki concepts, write weekly themes"
 ---
 
@@ -15,8 +15,10 @@ This skill's only write surface is `Gridiron Warrior/wiki/`. Check that path for
 Before reading or writing anything, run:
 
 ```bash
-git -C "C:\Claude Projects" status --porcelain -- "Gridiron Warrior/wiki/"
+git -C "C:\Claude Projects" status --porcelain -- "Gridiron Warrior/wiki/" ":(exclude)Gridiron Warrior/wiki/log.md"
 ```
+
+(`log.md` is excluded on purpose: it is append-only and the daily jobs legitimately dirty it every day — it blocked the 2026-07-12 run for nothing. The nightly closeout commits it.)
 
 If the output is not empty, STOP. Do not edit files. Do not stage files. Do not commit. Report:
 
@@ -60,6 +62,22 @@ For each new Dewey note in the week:
 - Score 1-10 on: clarity of teaching, originality, applicability to GW ICP, voice fit, completeness
 - Top 5 of the week get promoted to proper wiki concept pages (in the right domain folder)
 - Others stay in External Library as references
+
+### 2.5. Surface pending promotion drafts for decision
+
+The Dewey pipeline (v3.2) auto-drafts promotion candidates into `External Library\_promotion-drafts\*.md` the moment they're flagged, each with `connection_strength` and a `## The Call` recommendation. This step is READ-ONLY on the drafts (this command writes to wiki/ only) — its job is putting them in front of Scott as quick decisions.
+
+Scan `_promotion-drafts/` for `status: draft-pending-scott`. Add a decision table to the Step 5 report:
+
+```markdown
+## Promotion drafts awaiting your call
+
+| Draft | Strength | The Call | Why (one line) |
+|---|---|---|---|
+| [[_promotion-drafts/<slug>]] | strong | PROMOTE | <from the draft's Call section> |
+```
+
+Order: strong first, then medium, then weak. Weak drafts also list their `## Questions for Scott` count. If none pending, write "No promotion drafts pending." Scott replies with approve/toss per draft; approval moves the draft to `wiki/concepts/`, indexes and logs it, and checks it off in `_promotion-candidates.md` — that execution happens in the session where he answers, not autonomously here.
 
 ### 3. Weave research briefs into concept pages
 
@@ -163,9 +181,28 @@ pipeline: gw-weekly-synthesis
 
 # Weekly Synthesis — Week ending YYYY-MM-DD
 
+## Your moves (paste into Claude)
+
+<This section is the whole point of the email: every decision or task this synthesis
+is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
+- One fenced code block per move, each a COMPLETE self-contained instruction with
+  real slugs/names/paths — never "<placeholder>" Scott has to fill beyond his own
+  yes/no calls.
+- Cover: promotion drafts awaiting decision (one combined prompt listing each slug
+  with its Call, e.g. "Apply my promotion decisions: promote total-athlete-development,
+  toss foo-bar because ___."), stub expansions that were skipped for lack of sources,
+  queue additions recommended below, and any "Recommended focus" item that needs
+  his input to start.
+- Order by leverage: revenue-touching first, housekeeping last.
+- If nothing needs him: "Nothing needs you this week. The machine ran clean.">
+
 ## Themes of the week
 
 <2-4 themes that recurred across multiple sources>
+
+## Promotion drafts awaiting your call
+
+<the decision table from Step 2.5, or "No promotion drafts pending.">
 
 ## What got promoted to wiki this week
 
@@ -222,4 +259,4 @@ Print it once the synthesis report is written and the wiki log line is appended.
 
 - This is the cadence that keeps the wiki tight as the vault grows
 - Without it, External Library bloats and concept pages go stale
-- Output is a 1-page summary Scott reads on Sunday evening
+- The report is EMAILED to Scott automatically: the weekly-synthesis gate runs `scripts/email_weekly_synthesis.py` as its next step, which sends the newest `weekly-synthesis-*.md` to his inbox. You don't send anything — just make sure "Your moves" is sharp, because that section is what he acts on from his phone

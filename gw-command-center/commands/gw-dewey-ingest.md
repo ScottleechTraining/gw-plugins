@@ -4,9 +4,17 @@ model: sonnet
 description: "GW Dewey Ingest Pipeline (v3.1 - 3-Domain Classifier). Converts hand-curated Twitter/Instagram saves from the Dewey Google Sheet into richly tagged Obsidian notes in External Library/Twitter-Instagram Saves/. Classifies each row into s-and-c, business, ai, or skip. Never auto-promotes to wiki. Never writes in Scott's voice."
 ---
 
-# GW Dewey Ingest Pipeline (v3.1 — 3-Domain Classifier)
+# GW Dewey Ingest Pipeline (v3.2 — Video Transcription + Promotion Drafts)
 
 Converts hand-curated Twitter/Instagram saves from the **Dewey Google Sheet** into richly tagged Obsidian notes inside `External Library/Twitter-Instagram Saves/`. One-way link to the wiki concept layer. Never auto-promotes. Never writes in Scott's voice.
+
+## v3.2 update (2026-07-14): Tier 2.5 video transcription, Twitter images, promotion auto-drafts
+
+Three changes, all built the same night:
+
+1. **Videos are no longer skipped.** Reels and tweet videos route to **Tier 2.5**: the helper's `transcribe-video` subcommand downloads the video (yt-dlp, guardrailed), extracts a Whisper transcript + 4 keyframes, then deletes the video. The note gets `## Transcript (Whisper)` + `## Keyframes` sections and you OCR the keyframes in-session. Fallback on failure is the old `video-skip`.
+2. **Twitter images fetch.** `pbs.twimg.com` is now an allowed Tier-1 host (`media_kind: twitter-image`) — treat it exactly like `dewey-cdn-image`.
+3. **Promotion candidates get drafted immediately** (step 3i): flagging a candidate now also writes a full Bucket-B draft with a `connection_strength` rating and `## The Call` recommendation, so Scott's only touch is a yes/no.
 
 ## v3.1 update (2026-05-13): 3-Domain Classification
 
@@ -48,13 +56,14 @@ The Dewey sheet's **`Media`** column already contains a direct URL to the asset:
 | Pattern | Tier | What we do |
 |---|---|---|
 | `https://static.getdewey.co/upload/<hash>.<ext>` | **Tier 1** | Plain HTTP GET from Dewey's public S3. Save image, embed `![[ ]]`, OCR via Read tool. Zero IG exposure. |
-| Contains `cdninstagram.com` or `fbcdn.net` (`.mp4` etc) | **Tier 2** | Video. No download. Note `media_handling: video-skip`. |
+| `pbs.twimg.com` (Twitter image CDN) | **Tier 1** | Same fetch path as the Dewey CDN (`media_kind: twitter-image`). |
+| Contains `cdninstagram.com`, `fbcdn.net`, or `video.twimg.com` | **Tier 2.5** | Video. `transcribe-video` helper: yt-dlp download → Whisper transcript + 4 keyframes → video deleted. Note gets transcript + keyframe OCR. Fallback on failure: `video-skip`. |
 | Empty | **Tier 0** | No media. Caption-only note. |
 | Anything else | **Tier 0** | Refuse to fetch from unknown hosts. Caption-only. |
 
-The helper's `list-unprocessed` returns each row with `media_url` and `media_kind` already classified (`dewey-cdn-image | video-url | none | other`). The slash command just dispatches.
+The helper's `list-unprocessed` returns each row with `media_url` and `media_kind` already classified (`dewey-cdn-image | twitter-image | video-url | none | other`). The slash command just dispatches.
 
-**No gallery-dl, no Chrome juggling, no Instagram cookies, no rate-limit guardrails.** Those exist as legacy fallbacks in the helper but the default flow doesn't touch them.
+**Tier 1 needs no gallery-dl, no Chrome juggling, no Instagram cookies.** Tier 2.5 does touch the platforms (yt-dlp), so the helper enforces its own guardrails: hard cap per run (`DEWEY_VIDEO_CAP`, default 60), randomized 5-12s sleeps, session halt on a 429. Videos and audio are deleted after transcription; only keyframe JPEGs stay in `_media/` (git-ignored).
 
 ---
 
@@ -109,8 +118,8 @@ For each row:
 
 #### 3a. Dispatch on `media_kind`
 
-- **`dewey-cdn-image`** → call helper, fetch image, OCR.
-- **`video-url`** → Tier 2. No fetch.
+- **`dewey-cdn-image` / `twitter-image`** → call helper, fetch image, OCR.
+- **`video-url`** → Tier 2.5. Transcribe (3c).
 - **`none` / `other`** → Tier 0. No fetch.
 
 #### 3b. Tier 1 (image): fetch + OCR
@@ -130,14 +139,25 @@ Branch on returned top-level `status`:
 - `empty` / `other` → fall through to Tier 0.
 - `failed` → Tier 0 fallback. Mark `success-no-media` and log the error.
 
-#### 3c. Tier 2 (video)
+#### 3c. Tier 2.5 (video): transcribe
 
-No fetch. `## Media` section reads:
+```bash
+python "C:/Claude Projects/Skills/tools/dewey_ingest/dewey_ingest.py" transcribe-video "<post_url>" "<author>" "<post_id>"
 ```
-Post: <URL>
-*Video / reel — media not extracted. Open the post URL above to view.*
-```
-Set `media_handling: video-skip`. Mark row `success-video-skip`.
+
+Branch on returned `status`:
+
+- **`ok`** → the JSON carries `transcript`, `frames` (vault-relative paths), `duration`. Build the note with:
+  - `## Media` section: `Post: <URL>` + `*Video / reel — transcribed. Keyframes below.*`
+  - `## Transcript (Whisper)` — the transcript verbatim. If `transcript` is empty, write `*No speech detected (<transcript_error>).*` (music-only reels are common; the keyframes carry the signal there).
+  - `## Keyframes` — one `![[<frame path>]]` embed per frame.
+  - `## Keyframe Text (OCR)` — Read each frame now and OCR it: `**Frame N:**` + verbatim on-screen text, or a one-sentence visual description if no legible text. Coaching reels put the actual program in text overlays; this section is what makes the save searchable.
+  - Frontmatter: `media_handling: video-transcribed`, `keyframe_ocr: done`.
+  - Mark row `success-video-transcribed`.
+  - **Classify (3e) using caption + transcript + keyframe OCR together** — the transcript usually outranks the caption for content_type/quality decisions.
+- **`login-required` / `deleted` / `too-long`** → fall back to the old Tier 2 note: `## Media` reads `Post: <URL>` + `*Video / reel — media not extracted (<status>). Open the post URL above to view.*`, set `media_handling: video-skip`, mark row `success-video-skip`.
+- **`cap-reached` / `halted`** → stop transcribing for this run (guardrail). Remaining video rows this batch get the fallback note above; the nightly backfill will pick them up.
+- **`failed`** → same fallback as login-required, but note the error in the run summary.
 
 #### 3d. Tier 0 (no media)
 
@@ -278,13 +298,44 @@ media_handling: caption-only | image-ocr | video-skip
 
 **Step 3g (related saves grep) is skipped for `medium` and `skip`.** Only run it for `high`.
 
-#### 3i. Promotion check
+#### 3i. Promotion check + auto-draft
 
-If genuinely warrants its own wiki concept page, append ONE line to `External Library/_promotion-candidates.md`:
+Default: do NOT promote. But when a save genuinely warrants its own wiki concept page, do BOTH steps now, in this session — Scott's only remaining touch is the decision:
+
+1. Append ONE line to `External Library/_promotion-candidates.md`:
 ```
-- [[author_postID]] - YYYY-MM-DD - rationale (proposed: kebab-case-suggestion)
+- [[author_postID]] - YYYY-MM-DD - rationale (proposed: kebab-case-suggestion) - draft: [[_promotion-drafts/<slug>]]
 ```
-Default: do NOT promote.
+
+2. Write the full draft to `External Library/_promotion-drafts/<slug>.md` (NOT wiki/ — drafting is not promoting):
+
+```markdown
+---
+title: "<Framework Name>"
+external_origin: true
+status: draft-pending-scott
+connection_strength: strong | medium | weak
+sources: [[author_postID]], [[other_postID]]
+proposed_path: wiki/concepts/<slug>.md
+drafted: YYYY-MM-DD
+---
+
+# <Framework Name>
+
+**Origin:** <who created it, where it came from>
+
+<Full framework body in neutral prose — everything usable from the caption, OCR, and transcript. Reference-grade, not summary-grade.>
+
+## How Scott uses this in GW
+
+<Concrete application to Insiders / Schools / Courses / Summit / Film Study. NEVER invent the connection: if it's faint, rate connection_strength weak and add a `## Questions for Scott` section instead — his answers become this block, in his words.>
+
+## The Call
+
+**PROMOTE** | **LEAN PROMOTE** | **LEAN DECLINE** — <max 2 sentences: why, and what it would displace or duplicate if anything. Check wiki/index.md for near-duplicates before making the call.>
+```
+
+Rules: `connection_strength: strong` needs a real, specific GW application; `weak` requires the Questions section. The Call must take a position — no fence-sitting. Approved drafts move to `wiki/concepts/`, get indexed and logged; tossed drafts are deleted and the candidates line marked ❌ with the reason. `/gw-weekly-synthesis` surfaces all pending drafts every Sunday.
 
 #### 3j. Mark processed
 
@@ -296,7 +347,8 @@ Status values:
 - `success-caption-only` — Tier 0
 - `success-with-image` — Tier 1 ok
 - `success-no-media` — Tier 1 fell back
-- `success-video-skip` — Tier 2
+- `success-video-transcribed` — Tier 2.5 ok
+- `success-video-skip` — Tier 2.5 fell back (login/deleted/cap/failed)
 - `skip-low-quality` — quality: skip
 - `fail-other` — unhandled failure
 
@@ -328,7 +380,8 @@ Counts by tier and status. Promotion candidates flagged.
 | gw_use | film-study-fuel \| hook-bank \| exercise-bank \| research-citation \| competitor-intel |
 | audience | "HS football coach" by default |
 | quality | high \| medium \| skip |
-| media_handling | caption-only \| image-ocr \| video-skip |
+| media_handling | caption-only \| image-ocr \| video-transcribed \| video-skip \| video-unavailable |
+| keyframe_ocr | pending \| done — only on video-transcribed notes; `pending` means the nightly OCR pass still owes this note its `## Keyframe Text (OCR)` section |
 
 ---
 
