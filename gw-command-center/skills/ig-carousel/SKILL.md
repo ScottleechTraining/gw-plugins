@@ -1,9 +1,9 @@
 ---
 name: ig-carousel
-description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080x1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports 6 distinct visual style packs selected at Step 0.5, plus seamless image spreads across multiple slides.
+description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080x1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports content archetypes selected at Step 0.25 (what the post is, picked by the outcome it should win), visual style packs selected at Step 0.5 (what it looks like), and seamless image spreads across multiple slides.
 ---
 
-# Instagram Carousel Skill — v3.5
+# Instagram Carousel Skill — v3.6
 
 Create editable, export-ready Instagram carousels as self-contained HTML files.
 
@@ -13,7 +13,7 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 
 The very first thing you output when this skill runs, before Step 0 or anything else, must be this line, verbatim:
 
-`▶ ig-carousel v3.5 · gw-command-center plugin · canonical single source`
+`▶ ig-carousel v3.6 · gw-command-center plugin · canonical single source`
 
 This is Scott's guarantee that the canonical plugin skill ran, not a loose shadow. If you are following carousel instructions and this IDENTITY block is not in the skill file you loaded, you are running a stale copy: stop and tell Scott the exact file path you loaded from.
 
@@ -32,6 +32,11 @@ Five ways carousel builds fail silently. Every one has cost real time. Check the
 ---
 
 **All raw markup (HTML, CSS, JS) lives in `references/html-implementation.md`.** SKILL.md stays prose-only. When a step needs the actual code, it points you to a numbered section in that reference. Do not inline raw markup into this file.
+
+**What's new in v3.6 (content archetypes):**
+- New Step 0.25: content archetype selection, outcome-first (saves / shares / comments+DMs / follows), before the visual pack is chosen. The archetypes live in `references/content-archetypes.md` and nowhere else, same anti-drift rule as style packs.
+- New comment-trigger CTA option ("Comment WORD and I'll send you X"), default for The Template archetype. Fulfillment is manual by design; see the reference file.
+- Step 3B slide plan now names the archetype, and the compliance pass checks archetype structure alongside pack architecture.
 
 **What's new in v3.4 (cover headline overflow fix):**
 - The Mega-Cover auto-fit is now a verbatim, copy-exactly block (section 8 of `references/html-implementation.md`) instead of a prose description that each run re-derived. The re-derived version only fit per-span WIDTH, so multi-line headlines overflowed the frame (top word clipped, words breaking mid-word, last line colliding with the footer/handle).
@@ -65,6 +70,8 @@ Five ways carousel builds fail silently. Every one has cost real time. Check the
 This SKILL.md must NEVER hardcode pack names ("Asphalt Editorial", "Mono Series", etc.), descriptions, color values, or architecture rules. Every place a pack is referenced, this file instructs the agent to read `references/style-packs.md`. If you find a hardcoded pack name or description in this SKILL.md outside of an example illustrating how to read style-packs.md, that's drift — fix it.
 
 **Why:** for months the pack list lived in three places that drifted independently. Packs were renamed (High Contrast Hype to The Case, Dark Project to Mono Series) and SKILL.md kept presenting the old names to users. The structural fix is delegation, not vigilance.
+
+**Same rule for content archetypes:** `references/content-archetypes.md` is the only place the archetypes are defined. This SKILL.md never hardcodes archetype names, outcomes, or structures.
 
 ---
 
@@ -134,6 +141,18 @@ Check whether the user has provided images or references an image folder.
 
 ---
 
+### Step 0.25: Content Archetype Selection (outcome first)
+
+Before picking a look, pick the job. Read `references/content-archetypes.md` — the only place archetypes are defined — and choose what the carousel IS:
+
+1. From the topic or brief, infer what the post should WIN: saves, shares, comments and DMs, or follows.
+2. Recommend ONE archetype using the outcome table in that file. If the brief makes it obvious, state the pick and the reason in one line. If two genuinely fit, ask one short either/or question.
+3. Carry the choice forward: the archetype's structure shapes the Step 3B slide plan, its CTA guidance shapes the final slide, and its pack-fit suggestions seed the Step 0.5 recommendation.
+
+This is a one-breath step, not a second gate. Present the archetype pick together with the Step 0.5 pack menu in a single message, so the user confirms both in one reply.
+
+---
+
 ### Step 0.5: Style Pack Selection — HARD GATE
 
 **Do not proceed past this step without a pack choice.** No color derivation, no slide planning, no HTML. The pack shapes every downstream decision.
@@ -168,7 +187,7 @@ Check conversation history first. Confirm any missing:
 3. **Instagram handle** — default: @Sleech72
 4. **Accent color override** *(optional)* — each pack has a locked default; only override if the user explicitly asks
 5. **Tone** — coach-tough, professional, playful, minimal
-6. **CTA** — follow, link in bio, DM, etc.
+6. **CTA** — follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`). The Step 0.25 archetype sets the default.
 7. **Image folder** *(Image Mode only)* — default: `Gridiron Warrior/Images/carousels/`
 8. **Seamless spreads?** — ask: "Want any photos to span multiple slides for a swipe-reveal effect? e.g., 'slide 3–4' or 'slide 2–3–4'." Default: none.
 
@@ -218,7 +237,7 @@ Read `references/slide-architecture.md` for the full template structure and comp
 ### Step 3B: Generate the Slide Plan — CHECKPOINT
 
 ```
-SLIDE PLAN — [Topic] Carousel — [Style Pack]
+SLIDE PLAN — [Topic] Carousel — [Archetype] — [Style Pack]
 
 | # | Role | Template | Headline | Image | Treatment | Span |
 |---|------|----------|----------|-------|-----------|------|
@@ -238,6 +257,8 @@ Before showing the plan to the user, run it against the selected pack's architec
 Read the chosen pack's section in `references/style-packs.md` and confirm the plan respects every architecture bullet listed there (photo treatment, slide-number treatment, ornaments, body-copy alignment, list markers, header strips, alternating-tone rhythms, hero-photo systems, etc.). Do not paraphrase the rules into this file — go read the source.
 
 If any row in the plan violates a pack rule, fix it before the checkpoint. Do not ask the user to approve a plan that breaks pack architecture.
+
+**Archetype check (same pass):** confirm the plan delivers the Step 0.25 archetype's structure and the CTA slide matches the archetype's outcome, per `references/content-archetypes.md`. A Vault plan with four items, or a Template plan whose CTA is just "follow me", fails this check.
 
 **Do not write any HTML until the user says "Approved" or equivalent.**
 

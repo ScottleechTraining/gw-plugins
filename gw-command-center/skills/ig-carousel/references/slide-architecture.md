@@ -201,6 +201,8 @@ Editorial Long-Form only. Items use a square outline marker instead of a bullet.
 ### CTA / Follow
 Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow @Sleech72 for more.").
 
+Comment-trigger variant (default for The Template archetype, available to any): "Comment WORD and I'll send you X." Rules in `content-archetypes.md`: the asset must exist, the trigger word is one uppercase easy word, and fulfillment is manual by design.
+
 ---
 
 ## The Case — Pack-specific components
