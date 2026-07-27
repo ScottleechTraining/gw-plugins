@@ -1,6 +1,6 @@
 ---
 name: gw-morning-digest
-model: opus
+model: claude-opus-5
 description: "Daily morning digest - synthesize the overnight pipeline output into a 'what to dig into first' briefing. Fires at 7:15am after the rest of the morning pipeline finishes. Writes a markdown source-of-truth, a phone-optimized HTML for email, and a self-contained 4-panel dashboard page deployed to Netlify."
 ---
 

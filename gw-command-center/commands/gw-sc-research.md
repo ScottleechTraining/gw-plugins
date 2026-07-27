@@ -1,6 +1,6 @@
 ---
 name: gw-sc-research
-model: opus
+model: claude-opus-5
 description: "Daily S&C research - pull top topic from queue, NotebookLM -> brief"
 ---
 

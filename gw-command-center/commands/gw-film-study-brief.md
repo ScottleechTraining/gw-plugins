@@ -1,6 +1,6 @@
 ---
 name: gw-film-study-brief
-model: opus
+model: claude-opus-5
 description: "Film Study full production chain - brief + wiki ingest + content pack + Substack + IG carousel + freebie. Manual invocation, no email, no commit."
 ---
 

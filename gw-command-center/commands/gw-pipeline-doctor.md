@@ -1,6 +1,6 @@
 ---
 name: gw-pipeline-doctor
-model: opus
+model: claude-opus-5
 description: "Diagnose and repair overnight GW pipeline failures. Ordered runbook: drive check, health status files, sched logs, auth expiry, rerun, known traps."
 ---
 

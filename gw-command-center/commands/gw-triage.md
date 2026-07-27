@@ -1,6 +1,6 @@
 ---
 name: gw-triage
-model: opus
+model: claude-opus-5
 description: "Walk the Deliverables inbox and decide Ready/Cold/Kill per topic. Terminal mirror of the dashboard's Inbox view. Decisions are batched and reviewed before any folder moves happen."
 ---
 

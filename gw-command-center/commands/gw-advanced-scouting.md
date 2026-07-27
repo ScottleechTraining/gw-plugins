@@ -1,6 +1,6 @@
 ---
 name: gw-advanced-scouting
-model: opus
+model: claude-opus-5
 description: "Build an Advanced Scouting deep-dive resource: corpus + NotebookLM research synthesized into a 3-5k word cited reference page at the insiders-resource standard (hamstring-resource / gps-for-football pattern), shipped as an unlisted noindex page under /tools/ for the Insiders community. Research and build only - never deploys, never publishes."
 ---
 

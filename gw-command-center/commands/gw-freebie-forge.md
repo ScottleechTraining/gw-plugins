@@ -1,6 +1,6 @@
 ---
 name: gw-freebie-forge
-model: opus
+model: claude-opus-5
 description: "Generate a lead magnet from a brief or content source. Interactive Toolbox-standard HTML is the default format; one-page PDF only when the teaching is list-shaped. Dedup gate against site tools + freebie ledger is mandatory. Funnels into Insiders, a course, or Summit."
 ---
 

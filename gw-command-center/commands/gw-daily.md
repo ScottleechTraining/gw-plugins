@@ -1,6 +1,6 @@
 ---
 name: gw-daily
-model: opus
+model: claude-opus-5
 description: "Evening ritual - pull cloud results, process screenshots + voice notes, report"
 ---
 

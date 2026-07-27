@@ -1,6 +1,6 @@
 ---
 name: gw-ask
-model: opus
+model: claude-opus-5
 description: "Ask the GW second brain any question. Searches wiki + Voice Corpus, answers with citations to specific pages, flags gaps as stub candidates. Use when Scott asks 'what do I know about X', 'what have I said about X', or 'ask the brain'."
 ---
 

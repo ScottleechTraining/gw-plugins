@@ -1,6 +1,6 @@
 ---
 name: gw-everything-on
-model: opus
+model: claude-opus-5
 description: "On-demand corpus search - pull every relevant snippet from across the GW archive on one topic into a single reference doc"
 ---
 

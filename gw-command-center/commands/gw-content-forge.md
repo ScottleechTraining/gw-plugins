@@ -1,6 +1,6 @@
 ---
 name: gw-content-forge
-model: opus
+model: claude-opus-5
 description: "Scott Leech's content production engine. Two modes. TRANSCRIPT MODE: paste a transcript (podcast, Film Study, or Wildcat Webinar) and get the correct asset set for that content type, ready to schedule. CONTENT PACK MODE: give a topic, file path, or Second Brain reference and get a full content pack (3 Twitter threads, 2 Instagram carousels, 3 reel ideas, 1 email). All in Scott Leech's voice. Wiki-first, cross-domain integrated, queue-aware. Use when Scott pastes a transcript, says 'content forge', 'run the forge', 'make content from', or asks for Twitter threads, carousels, emails, or reels from any GW source or coaching topic."
 ---
 
