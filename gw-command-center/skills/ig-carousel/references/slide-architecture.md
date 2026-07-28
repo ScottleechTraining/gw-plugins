@@ -110,6 +110,8 @@ Hide `.slide-number-stamp` where the pack uses the ghost version instead, OR whe
 
 Last slide: hide `.swipe-arrow`, fill progress to 100%.
 
+**Handle-stamp clearance law (every pack that keeps the stamp):** the `.handle-stamp` box occupies roughly x=868–1016, y=56–85 (top:56, right:64, ~148px wide). Any text element whose FIRST rendered line can start above y=100 MUST carry `max-width: 800px` (or equivalent right clearance) so that line cannot run under the stamp. This bit for real on Editorial Long-Form's `.subhead` (stop-maxing-out-60-kids build, 2026-07-28): the reference example's subhead phrases were coincidentally short, longer first lines collided with `@Sleech72` on 5 of 5 content slides. The Case is immune (it strips the stamp on inner slides) and Newsprint Bauhaus clears it structurally (kicker chip pushes headlines below the band); every other pack follows the law.
+
 ---
 
 ## Templates
@@ -185,7 +187,7 @@ Large display-font quote, attribution below in Barlow small caps. Quote marks ar
 Solid accent background, huge contrast text. No photo. Used sparingly — max one per carousel.
 
 ### Long-Form Text
-Reading column, numbered subhead. Editorial Long-Form pack leans on this.
+Reading column, numbered subhead. Editorial Long-Form pack leans on this. `.subhead` MUST carry `max-width: 800px` — its first line starts inside the handle-stamp band (see the clearance law in the Persistent frame section).
 
 ```html
 <div class="content long-form">

@@ -156,7 +156,7 @@ Paper background, asphalt body copy in real reading columns, numbered subheads. 
 ```
 
 - **Cover:** Mega-Cover in asphalt on paper. Can include a small `EDITORIAL` or `GUIDE` eyebrow label in gold above the headline.
-- **Content slides:** reading-column layout. Max 58ch width. Barlow 400 at 36px (renders ~18px at IG display), line-height 1.5, left-aligned ragged right. Numbered subhead (`01.` in gold, Vitesse 700 at 72pt) sits above the paragraph.
+- **Content slides:** reading-column layout. Max 58ch width. Barlow 400 at 36px (renders ~18px at IG display), line-height 1.5, left-aligned ragged right. Numbered subhead (`01.` in gold, Vitesse 700 at 72pt) sits above the paragraph and MUST carry `max-width: 800px` so its first line clears the `@Sleech72` handle-stamp (clearance law: `slide-architecture.md`, Persistent frame section).
 - **Photo treatment:** Photos allowed but kept small — 100% width × 40% height max, positioned above or below the text column as a visual break every 2–3 slides.
 - **Slide number:** Small asphalt "Page 3 / 8" bottom-left, Barlow 600 16pt. Reads like a magazine folio.
 - **Ornament:** Thin 1px asphalt hairline between the subhead and the body column on content slides.
@@ -256,7 +256,7 @@ This is the only formula you need. Budgets below apply it per pack. Numbers are 
 | Mono Series | `.mega-cover` (cover) | ~150px | 13 | 3 | starting estimate (oversized headline paired with ghost number) |
 | Mono Series | `.content-headline` | ~96px | 21 | 3 | starting estimate |
 | Editorial Long-Form | `.mega-cover` (cover) | ~104px | 19 | 4 | starting estimate |
-| Editorial Long-Form | Numbered subhead | 72px | 28 | 2 | starting estimate (reading-column body has its own 58ch max — different system) |
+| Editorial Long-Form | Numbered subhead | 72px | 19 | 2 | ✅ (stop-maxing-out-60-kids, 2026-07-28) — stamp-safe width is 800px, so 800 / (0.57 × 72) ≈ 19; the old "28" overflowed both the 952px column (own-formula max 23) and the handle-stamp. Reading-column body has its own 58ch max — different system |
 | Newsprint Bauhaus | `.mega-cover` (cover, Anton) | ~180px | 11 | 4 | ✅ (pack demo render, 2026-07-12) — Anton is condensed: chars-per-line ≈ 952 / (0.45 × font-size) for this pack, NOT the 0.57 Vitesse factor |
 | Newsprint Bauhaus | `.content-headline` (Anton) | ~112px | 18 | 3 | ✅ (pack demo render, 2026-07-12) |
 | Newsprint Bauhaus | Black block callout (Barlow 600) | 28px | 40 | 3 | ✅ (pack demo render, 2026-07-12) |
