@@ -47,9 +47,11 @@ Structured query:
 
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\AI\YYYY-MM-DD-[topic-slug]-brief.md`:
 
+The `: AI Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
 ```markdown
 ---
-title: "[Topic Name] — AI Research Brief"
+title: "[Topic Name]: AI Research Brief"
 tags: [ai, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
@@ -91,7 +93,16 @@ pipeline: gw-ai-research
 
 ### 4. Update queue + index
 
-Same pattern as business research.
+In `_topic-queue.md`:
+- Remove the topic from `## Active Queue`
+- Add to `## Completed` as `- YYYY-MM-DD - topic name [topic-slug]`
+
+Note this is NOT byte-identical to the business queue line: the AI queue uses a dash after the date and carries no wikilink, while business uses a colon and links the brief. Match the format already in the file you are editing. What both share is the mandatory trailing `[topic-slug]`, which is what `/gw-weekly-synthesis` Step 3 greps for to avoid re-queueing a researched topic.
+
+**Encoding warning:** the AI queue is UTF-16LE with a BOM and **LF-only** line endings. Splitting it on CRLF wipes the file. Read and write with explicit encoding.
+
+In `_index.md`:
+- Add link under `## Daily Research Briefs`: `- YYYY-MM-DD: [[YYYY-MM-DD-topic-slug-brief|topic name]]`
 
 ### 5. Append to wiki log
 

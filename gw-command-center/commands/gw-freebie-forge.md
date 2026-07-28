@@ -161,7 +161,7 @@ No bullet salad. Read like a coach talking to a coach after practice.]
 - Contact Prep: "$87. 60+ videos. Three-phase progression. [LINK]"
 - Scores and Stops: "$104. Agility drills for creating and closing space. [LINK]"
 - GW 2.0: "$197. Win the summer. Win the season. [LINK]"
-- Summit: "July 18 at URI. Six Super Bowl rings on the keynote card. [LINK]"]
+- Summit: "July 18 at URI. Five Super Bowl rings on the keynote card. [LINK]"]
 
 Keep the Fire Burning,
 

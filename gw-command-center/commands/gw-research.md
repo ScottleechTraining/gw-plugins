@@ -96,7 +96,7 @@ Write a summary page to `C:/Claude Projects/Gridiron Warrior/wiki/summaries/rese
 
 ```markdown
 ---
-title: Research Brief — [TOPIC]
+title: "Research Brief: [TOPIC]"
 type: summary
 source: Research/NotebookLM/[topic-slug]-brief.md
 date: [YYYY-MM-DD]

@@ -46,9 +46,11 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\YYYY-MM-DD-[topic-slug]-brief.md`:
 
+The `: Business Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
 ```markdown
 ---
-title: "[Topic Name] — Business Research Brief"
+title: "[Topic Name]: Business Research Brief"
 tags: [business, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
@@ -91,7 +93,11 @@ pipeline: gw-business-research
 
 In `_topic-queue.md`:
 - Remove the topic from `## Active Queue`
-- Add to `## Completed` as `- YYYY-MM-DD: topic name → [[YYYY-MM-DD-topic-slug-brief|brief]]`
+- Add to `## Completed` as `- YYYY-MM-DD: topic name -> [[YYYY-MM-DD-topic-slug-brief|brief]] [topic-slug]`
+
+**The trailing `[topic-slug]` is mandatory.** `/gw-weekly-synthesis` Step 3 greps the Active Queue and Completed sections for `[<topic-slug>]` to decide whether a brief is already queued. Without the bracket, that check never matches, synthesis re-queues topics that were already researched, and the queue fills with duplicates. All 68 historical Business entries were backfilled with their slugs on 2026-07-26; do not write a new entry without one. Use `->`, not a Unicode arrow.
+
+**Encoding warning:** this file is UTF-16LE with a BOM and CRLF line endings (the AI queue is UTF-16LE with LF only). Read and write it with explicit encoding. A naive write has already truncated a sibling queue to 2 bytes.
 
 In `_index.md`:
 - Add link under `## Daily Research Briefs`: `- YYYY-MM-DD: [[YYYY-MM-DD-topic-slug-brief|topic name]]`

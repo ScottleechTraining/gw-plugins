@@ -87,7 +87,7 @@ For each new research brief (business, AI, S&C), check if a concept page already
 
 **If no** → **do not create a wiki page.** Wiki pages are reserved for concepts with real synthesized content; one brief alone doesn't justify a page. Instead, requeue the topic so it can mature with more briefs:
 
-- Read the brief's frontmatter. Topic slug comes from `topic:`. Topic name comes from `title:` with the trailing ` — Business Research Brief` / ` — AI Research Brief` / ` — S&C Research Brief` suffix stripped.
+- Read the brief's frontmatter. Topic slug comes from `topic:`. Topic name comes from `title:` with the trailing brief suffix stripped. Accept BOTH suffix forms: current `: Business Research Brief` / `: AI Research Brief` / `: S&C Research Brief` (colon delimiter, briefs dated 2026-07-27 or later) and legacy ` — Business Research Brief` / ` — AI Research Brief` / ` — S&C Research Brief` (em-dash, every earlier brief on disk). Strip the suffix from the END of the title only; a colon inside the topic name itself is part of the name, not the delimiter.
 - Build the line: `- <topic name> [<topic-slug>]`
 - Route by brief domain:
   - `business` → append under `## Active Queue` in `External Library\BusinessDocuments\_topic-queue.md`

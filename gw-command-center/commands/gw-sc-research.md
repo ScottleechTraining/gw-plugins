@@ -54,9 +54,11 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\YYYY-MM-DD-[topic-slug]-brief.md`:
 
+The `: S&C Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
 ```markdown
 ---
-title: "[Topic Name] — S&C Research Brief"
+title: "[Topic Name]: S&C Research Brief"
 tags: [s-and-c, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
