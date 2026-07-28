@@ -240,6 +240,8 @@ Slide content width at 1080×1350 with 64px left/right margins = **952px**. Vite
 
 This is the only formula you need. Budgets below apply it per pack. Numbers are conservative — assume punctuation/highlight underlines eat 1–2 chars per line.
 
+**When a row disagrees with the formula, the formula wins.** Several "starting estimate" rows predate the formula and run 15–20% hot (two were caught by real-glyph measurement on 2026-07-28: Ed LF subhead 28→19, Asphalt content-headline 22→18). Compute before you plan; update the row when a real render proves the number.
+
 ### Per-pack budgets
 
 | Pack | Element | Font size | Chars per line | Max lines | Verified? |
@@ -248,7 +250,7 @@ This is the only formula you need. Budgets below apply it per pack. Numbers are 
 | **The Case** | `.content-headline` | 88px | 22 | 3 | ✅ (Marshall carousel, 2026-05-11) |
 | **The Case** | `.cta-headline` | 96px | 20 | 2 | ✅ (Marshall carousel, 2026-05-11) |
 | Asphalt Editorial | `.mega-cover` (cover) | ~120px (auto-fit) | 16 | 4 | starting estimate |
-| Asphalt Editorial | `.content-headline` | ~92px | 22 | 3 | starting estimate |
+| Asphalt Editorial | `.content-headline` | ~92px | 18 | 3 | ✅ (push-up-bench-max build, 2026-07-28) — real-glyph measurement showed 22 chars ran 1016-1106px against the 952px safe zone; 18 matches the formula |
 | Acid Block | `.mega-cover` (cover) | ~120px | 16 | 4 | starting estimate |
 | Acid Block | `.content-headline` | ~92px | 22 | 3 | starting estimate |
 | Paper Minimal | `.mega-cover` (cover) | ~140px | 14 | 4 | starting estimate (bigger headline allowed — no photo competing) |
