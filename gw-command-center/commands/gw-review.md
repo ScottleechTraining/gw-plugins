@@ -55,99 +55,37 @@ The pasted string looks like:
 gw-review-result: ship=[slug1,slug2] polish=[slug3:"note",slug4] kill=[slug5]
 ```
 
-Parse the three buckets. `polish` entries may carry an optional
-`:"note"` suffix (double-quoted, may contain commas, so split on the bracket
-structure not naively on commas). Any bucket may be empty.
+`polish` entries may carry an optional `:"note"` suffix (double-quoted, may
+contain commas and `\"` escapes). Any bucket may be empty.
 
-Apply each bucket with the SAME mechanisms the existing commands use. Run this
-one script (it mirrors `/gw-ship` for ship, records the polish note, and kills
-by moving the folder to the terminal `killed/` folder):
+Apply it with the applier module. It mirrors `/gw-ship` for ship (moves
+`_inbox` topics into `ready/`, flips `ready_to_ship`, clears polish flags),
+records the polish note on the topic entry, and kills by moving the folder to
+the terminal `killed/` folder. Pass the whole pasted line, `gw-review-result:`
+prefix included, as ONE argument:
 
 ```bash
-python - "$RESULT_STRING" <<'PY'
-import json, re, shutil, sys, pathlib
-raw = sys.argv[1]
-
-DELIV = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables")
-STATE = DELIV / "queue-state.json"
-KILLED = DELIV / "killed"
-
-def bucket(name):
-    m = re.search(name + r"=\[(.*?)\](?=\s+\w+=\[|\s*$)", raw)
-    return m.group(1).strip() if m else ""
-
-# ship / kill: plain comma-separated slugs
-ship = [s.strip() for s in bucket("ship").split(",") if s.strip()]
-kill = [s.strip() for s in bucket("kill").split(",") if s.strip()]
-
-# polish: slug or slug:"note", note may contain commas -> parse with a regex
-polish = {}
-for m in re.finditer(r'([^,\[\]]+?)(?::"((?:[^"\\]|\\.)*)")?(?=,|$)', bucket("polish")):
-    slug = m.group(1).strip()
-    if not slug:
-        continue
-    polish[slug] = (m.group(2) or "").replace('\\"', '"')
-
-data = json.loads(STATE.read_text(encoding="utf-8"))
-topics = {t["slug"]: t for t in data["topics"]}
-actions = []
-
-# SHIP: mirror /gw-ship atomically - move _inbox topics into ready/, flip the
-# flag, clear any polish note. Folder contract: ready/ only holds approved,
-# Drive-synced topics (the per-slug Drive sync runs right after this script).
-for slug in ship:
-    t = topics.get(slug)
-    if not t:
-        actions.append(f"SKIP ship {slug} (not in state)"); continue
-    if t["stage"] == "_inbox":
-        src = DELIV / t["folder"]
-        dst = DELIV / "ready" / src.name
-        if dst.exists():
-            actions.append(f"SKIP ship {slug} (ready/{src.name} already exists)"); continue
-        shutil.move(str(src), str(dst))
-        t["stage"] = "ready"
-        t["folder"] = f"ready/{src.name}"
-    t["ready_to_ship"] = True
-    t["carousel_needs_polish"] = False
-    t["polish_note"] = None
-    actions.append(f"ship {slug} -> ready/, ready_to_ship=true")
-
-# POLISH: keep the flag, stash the note on the topic entry
-for slug, note in polish.items():
-    t = topics.get(slug)
-    if not t:
-        actions.append(f"SKIP polish {slug} (not in state)"); continue
-    t["carousel_needs_polish"] = True
-    if note:
-        t["polish_note"] = note
-    actions.append(f"polish {slug}" + (f' -> "{note}"' if note else ""))
-
-# KILL: move folder to the terminal killed/ folder. killed/ is never scanned,
-# so the entry drops out of state on the next scan (no stage write needed, no
-# restore path). This is a one-way door - to run the idea again, start fresh
-# through the forge (per the novelty rules).
-KILLED.mkdir(parents=True, exist_ok=True)
-for slug in kill:
-    t = topics.get(slug)
-    if not t:
-        actions.append(f"SKIP kill {slug} (not in state)"); continue
-    src = DELIV / t["folder"]
-    if not src.exists():
-        actions.append(f"SKIP kill {slug} (folder gone)"); continue
-    dst = KILLED / src.name
-    # dedup collision (suffix)
-    if dst.exists():
-        dst = KILLED / (src.name + "__review")
-    shutil.move(str(src), str(dst))
-    actions.append(f"kill {slug} -> killed/{dst.name}")
-
-STATE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-print("\n".join(actions) if actions else "no decisions to apply")
-PY
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.apply_review "PASTED_STRING"
 ```
 
-Pass the pasted string as `$RESULT_STRING` (the whole line, including the
-`gw-review-result:` prefix - the regex ignores the prefix).
+Quoting rule for Git Bash: use SINGLE quotes around the string if any polish
+note carries `\"` escapes (double quotes strip the backslashes before python
+sees them). If quoting gets awkward, skip it entirely: write the pasted line
+to a temp file and feed it on stdin, which the module reads when no argument
+is given:
+
+```bash
+python -m scripts.gwqueue.apply_review < path/to/result.txt
+```
+
+The module prints one action line per decision (`ship` / `polish` / `kill`,
+or `SKIP` with a reason). Parser and apply logic live in
+`scripts/gwqueue/apply_review.py` with tests in
+`scripts/gwqueue/tests/test_apply_review.py`. Do not re-inline this logic as
+a bash heredoc: on Windows Git Bash the heredoc mangled the backslash-heavy
+polish regex into an invalid pattern, which is exactly the crash the module
+replaced.
 
 ## Step 4: Render, sync shipped topics to Drive, re-scan
 
