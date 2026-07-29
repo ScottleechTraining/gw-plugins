@@ -15,21 +15,13 @@ report.
 - **Deliverables:** `C:/Claude Projects/Gridiron Warrior/Deliverables/`
 - **Scanner module:** `scripts.gwqueue.scan_folders`
 - **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
-- **Dashboard state copy:** `C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json` (Phase 9+)
+- **Dashboard state copy:** `C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json`
 
 ## Step 0: Apply any pending stage mutations from dashboard exports
 
-Phase 11 adds an `apply_state.py` script. Until then, this step is a no-op.
-
-If `scripts/gwqueue/apply_state.py` exists, run it:
-
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/gwqueue/apply_state.py" ]; then
-  python -m scripts.gwqueue.apply_state
-else
-  echo "apply_state.py not yet implemented (Phase 11); skipping"
-fi
+python -m scripts.gwqueue.apply_state
 ```
 
 ## Step 1: Capture the prior state for diff
@@ -60,34 +52,23 @@ python -m scripts.gwqueue.scan_folders
 
 Expected output: `Scanned N topics. Wrote .../queue-state.json.`
 
-## Step 3: Render carousel slides + split captions (skipped until Phase 6+7)
+## Step 3: Render carousel slides + split captions
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/gwqueue/render_carousel.py" ]; then
-  python -m scripts.gwqueue.render_carousel
-else
-  echo "render_carousel.py not yet implemented (Phase 6); skipping slide rendering"
-fi
-
-if [ -f "scripts/gwqueue/split_captions.py" ]; then
-  python -m scripts.gwqueue.split_captions
-else
-  echo "split_captions.py not yet implemented (Phase 7); skipping caption split"
-fi
+python -m scripts.gwqueue.render_carousel
+python -m scripts.gwqueue.split_captions
 ```
 
-## Step 4: Drive sync (skipped until Phase 8)
+## Step 4: Drive sync
+
+`sync_to_drive` only uploads topics whose `ready_to_ship` flag is set (flipped by `/gw-ship`); everything else prints a skip line. Prefer per-topic syncs with `--slug <slug>` when you know which topic changed — a full pass walks every ready topic and takes 5+ minutes.
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/gwqueue/sync_to_drive.py" ]; then
-  python -m scripts.gwqueue.sync_to_drive
-  # Re-run scanner to pick up drive_folder_id updates
-  python -m scripts.gwqueue.scan_folders
-else
-  echo "sync_to_drive.py not yet implemented (Phase 8); skipping Drive sync"
-fi
+python -m scripts.gwqueue.sync_to_drive
+# Re-run scanner to pick up drive_folder_id updates
+python -m scripts.gwqueue.scan_folders
 ```
 
 ## Step 4.5: Retire topics Scott dragged to `used` on Drive (Drive -> local)
@@ -97,11 +78,9 @@ The contract: when Scott drags a topic folder into the `used` subfolder under
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
-if [ -f "scripts/gwqueue/retire_from_drive.py" ]; then
-  python -m scripts.gwqueue.retire_from_drive
-  # Re-scan to reflect the archived stage changes in queue-state.json
-  python -m scripts.gwqueue.scan_folders
-fi
+python -m scripts.gwqueue.retire_from_drive
+# Re-scan to reflect the archived stage changes in queue-state.json
+python -m scripts.gwqueue.scan_folders
 ```
 
 ## Step 5: Read fresh state and build the report
