@@ -180,6 +180,8 @@ Body copy with specific words wrapped in `<span class="hl">` for the accent-bloc
 }
 ```
 
+**Newsprint Bauhaus highlights are a different mechanism** (`.hl-line` + `.hl-svg` yellow stroke behind headline words; markup lives in `style-packs.md` section 7). One law repeated here because it shipped broken once: on that pack's INVERSE slide (The Trap, pure black), the highlighted word must be `color:#000` AND must use the flat stroke-width-36 path variant from `style-packs.md`, never the default wobbly stroke. White text on the yellow band is roughly 1.9:1, unreadable; black text under the wobbly stroke falls into the band's gaps and vanishes against the black slide. Copy the inverse variant verbatim from the pack spec.
+
 ### Pull Quote
 Large display-font quote, attribution below in Barlow small caps. Quote marks are a separate `::before` element in Vitesse at 2x the quote size.
 
