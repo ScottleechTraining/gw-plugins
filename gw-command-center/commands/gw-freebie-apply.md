@@ -48,84 +48,33 @@ relative to `Deliverables/`, extension dropped, slashes replaced with `__`
 
 ## Step 1: Parse and apply
 
-Run once. Pass the whole pasted line as `$RESULT_STRING`.
+Apply it with the applier module. Pass the whole pasted line,
+`gw-freebie-result:` prefix included, as ONE argument:
 
 ```bash
-python - "$RESULT_STRING" <<'PY'
-import json, re, shutil, sys, pathlib
-raw = sys.argv[1]
-
-DELIV = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables")
-SIDECAR = DELIV / "_system" / "review" / "freebie-state.json"
-KILLED = DELIV / "killed" / "_freebies"
-
-def bucket(name):
-    m = re.search(name + r"=\[(.*?)\](?=\s+\w+=\[|\s*$)", raw)
-    return m.group(1).strip() if m else None
-
-approve_b, edit_b, kill_b = bucket("approve"), bucket("edit"), bucket("kill")
-if approve_b is None or edit_b is None or kill_b is None:
-    sys.exit("MALFORMED: expected approve=[...] edit=[...] kill=[...], got: " + raw)
-
-def plain_ids(s):
-    return [x.strip() for x in s.split(",") if x.strip()]
-
-approve = plain_ids(approve_b)
-kill = plain_ids(kill_b)
-
-# edit: id or id:"note", note may contain commas -> same regex gw-review uses for polish
-edit = {}
-for m in re.finditer(r'([^,\[\]]+?)(?::"((?:[^"\\]|\\.)*)")?(?=,|$)', edit_b):
-    fid = m.group(1).strip()
-    if not fid:
-        continue
-    edit[fid] = (m.group(2) or "").replace('\\"', '"')
-
-state = {}
-if SIDECAR.exists():
-    try:
-        state = json.loads(SIDECAR.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        state = {}
-
-def resolve(fid):
-    """id -> Path. id is rel path (ext dropped, '/'->'__'). Glob back the file."""
-    rel = fid.replace("__", "/")
-    matches = sorted((DELIV).glob(rel + ".*"))
-    return matches[0] if matches else None
-
-actions = []
-
-for fid in approve:
-    state[fid] = {"status": "approved"}
-    actions.append(f"approve {fid}")
-
-for fid, note in edit.items():
-    state[fid] = {"status": "edit", "note": note}
-    actions.append(f"edit {fid}" + (f' -> "{note}"' if note else ""))
-
-KILLED.mkdir(parents=True, exist_ok=True)
-for fid in kill:
-    entry = {"status": "killed"}
-    p = resolve(fid)
-    is_standalone_md = p is not None and p.suffix.lower() == ".md" and "lead-magnet" not in fid
-    if is_standalone_md:
-        dst = KILLED / p.name
-        if dst.exists():
-            dst = KILLED / (p.stem + "__dup" + p.suffix)
-        shutil.move(str(p), str(dst))
-        entry["moved_to"] = str(dst.relative_to(DELIV)).replace("\\", "/")
-        actions.append(f"kill {fid} -> {entry['moved_to']}")
-    else:
-        where = "file gone" if p is None else "marked killed (stays in place)"
-        actions.append(f"kill {fid} ({where})")
-    state[fid] = entry
-
-SIDECAR.parent.mkdir(parents=True, exist_ok=True)
-SIDECAR.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
-print("\n".join(actions) if actions else "no decisions to apply")
-PY
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.apply_freebie "PASTED_STRING"
 ```
+
+Quoting rule for Git Bash: use SINGLE quotes around the string if any edit
+note carries `\"` escapes (double quotes strip the backslashes before python
+sees them). If quoting gets awkward, skip it entirely: write the pasted line
+to a temp file and feed it on stdin, which the module reads when no argument
+is given:
+
+```bash
+python -m scripts.gwqueue.apply_freebie < path/to/result.txt
+```
+
+The module prints one action line per decision (`approve` / `edit` / `kill`).
+A missing bucket exits with a `MALFORMED:` line, and a corrupt sidecar stops
+it cold (the sidecar is the full decision history; it is never silently
+reset). Report either error and STOP. Parser and apply logic live in
+`scripts/gwqueue/apply_freebie.py` with tests in
+`scripts/gwqueue/tests/test_apply_freebie.py`. Do not re-inline this logic as
+a bash heredoc: on Windows Git Bash the heredoc mangles the backslash-heavy
+note regex into an invalid pattern, which is exactly the crash the gw-review
+module replaced.
 
 ## Step 2: Rebuild the page
 

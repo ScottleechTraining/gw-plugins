@@ -43,67 +43,26 @@ what you got and STOP. Do not guess.
 
 ## Step 1: Apply the top and skip buckets to state
 
-Run this once. Pass the whole pasted line as `$RESULT_STRING` (the regex
-ignores the `gw-ideas-result:` prefix). If Scott gave a spoken skip reason,
-also pass it as `$SKIP_REASON`; otherwise leave it empty.
+Apply it with the applier module. Pass the whole pasted line,
+`gw-ideas-result:` prefix included, as the FIRST argument. If Scott gave a
+spoken skip reason, pass it as the second argument; otherwise leave it off
+and every skip records `manual skip from ideas review`.
 
 ```bash
-python - "$RESULT_STRING" "${SKIP_REASON:-}" <<'PY'
-import json, re, sys, pathlib
-raw = sys.argv[1]
-manual_reason = (sys.argv[2].strip() if len(sys.argv) > 2 else "") or "manual skip from ideas review"
-
-STATE = pathlib.Path("C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json")
-
-def bucket(name):
-    m = re.search(name + r"=\[(.*?)\](?=\s+\w+=\[|\s*$)", raw)
-    return m.group(1).strip() if m else None
-
-forge_b, top_b, skip_b = bucket("forge"), bucket("top"), bucket("skip")
-if forge_b is None or top_b is None or skip_b is None:
-    sys.exit("MALFORMED: expected forge=[...] top=[...] skip=[...], got: " + raw)
-
-def slugs(s):
-    return [x.strip() for x in s.split(",") if x.strip()]
-
-forge = slugs(forge_b)
-top = slugs(top_b)
-skip = slugs(skip_b)
-
-data = json.loads(STATE.read_text(encoding="utf-8"))
-backlog = {e.get("slug"): e for e in data.get("forge_backlog", []) if isinstance(e, dict)}
-actions = []
-
-def score_n(entry):
-    head = str(entry.get("score") or "").split("/")[0].strip()
-    return int(head) if head.isdigit() else 0
-
-for slug in top:
-    e = backlog.get(slug)
-    if not e:
-        actions.append(f"SKIP top {slug} (not in backlog)"); continue
-    new_n = max(score_n(e), 18)
-    e["score"] = f"{new_n}/20"
-    e["status"] = "pending"
-    actions.append(f"top {slug} -> score {e['score']}")
-
-for slug in skip:
-    e = backlog.get(slug)
-    if not e:
-        actions.append(f"SKIP skip {slug} (not in backlog)"); continue
-    e["status"] = "skipped"
-    e["skip_reason"] = manual_reason
-    actions.append(f"skip {slug} -> skipped ({manual_reason})")
-
-# forge entries are only echoed here; forging happens in Step 2 outside this script.
-for slug in forge:
-    actions.append(f"forge {slug} (run /gw-content-forge - see Step 2)"
-                   if slug in backlog else f"SKIP forge {slug} (not in backlog)")
-
-STATE.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-print("\n".join(actions) if actions else "no decisions to apply")
-PY
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.apply_ideas "PASTED_STRING" "OPTIONAL_SKIP_REASON"
 ```
+
+Slugs never carry quotes or escapes, so double quotes are safe here. With no
+arguments the module reads the result string from stdin (the default skip
+reason applies). It prints one action line per decision (`top` / `skip`;
+`forge` entries are only echoed, forging happens in Step 2) and exits with a
+`MALFORMED:` line if any bucket is missing - report that and STOP. Parser and
+apply logic live in `scripts/gwqueue/apply_ideas.py` with tests in
+`scripts/gwqueue/tests/test_apply_ideas.py`. Do not re-inline this logic as a
+bash heredoc: on Windows Git Bash heredocs mangle backslash-heavy regexes
+into invalid patterns, which is exactly the crash the gw-review module
+replaced.
 
 ## Step 2: Forge the forge bucket
 
