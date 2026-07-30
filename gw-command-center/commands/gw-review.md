@@ -87,7 +87,7 @@ a bash heredoc: on Windows Git Bash the heredoc mangled the backslash-heavy
 polish regex into an invalid pattern, which is exactly the crash the module
 replaced.
 
-## Step 4: Render, sync shipped topics to Drive, re-scan
+## Step 4: Render, sync shipped topics to Drive, re-scan, rebuild the page
 
 Ships and kills moved folders on disk. Render/split (idempotent), then sync
 EACH shipped slug so ready/ topics land on Drive immediately, then refresh:
@@ -99,7 +99,15 @@ python -m scripts.gwqueue.split_captions
 # one per shipped slug:
 python -m scripts.gwqueue.sync_to_drive --slug "EXACT_SLUG"
 python -m scripts.gwqueue.scan_folders
+python -m scripts.gwqueue.build_review_page
 ```
+
+The final rebuild keeps review.html matched to the fresh state. Without it
+the page keeps showing topics that were just applied; a shipped carousel
+stayed on the sheet this way on 2026-07-29. The rebuild must run AFTER
+scan_folders, never inside the applier: killed topics keep their stale stage
+in queue-state.json until the scan drops them. Tell Scott to refresh the
+page in his browser if he still has it open.
 
 Print a summary:
 
