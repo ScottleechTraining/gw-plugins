@@ -21,13 +21,14 @@ This is Scott's guarantee that the canonical plugin skill ran, not a loose shado
 
 ## Known traps (non-negotiable)
 
-Five ways carousel builds fail silently. Every one has cost real time. Check them.
+Six ways carousel builds fail silently. Every one has cost real time. Check them.
 
 1. **Hero photo must be a compact JPEG, never PNG.** A multi-MB PNG base64 overflows Chromium's CSS custom-property length limit; the `--hero-photo` variable silently drops to empty and the slide renders as a charcoal/near-black background with no error. Ship a brightened JPEG around 230KB (quality ~80, resized to slide dimensions). If a hero slide renders dark or blank, this is the first suspect.
 2. **The Case pack selector trap.** Putting the `pack--case` class on the slide element itself breaks descendant selectors like `.pack--case .slide::before` (there is no descendant), and the hero photo silently fails to near-black. Either keep `pack--case` on a wrapper element around the slide, or write the selector as `.slide.pack--case::before`.
 3. **Headless render quirks on this machine.** Use Edge/Chromium with `--headless=new` or embedded fonts will not load. Kill stray msedge and http.server processes before starting, and use a unique `--user-data-dir` per run plus `127.0.0.1` (not `localhost`). Use a fresh port for every throwaway static server. A desktop-width scrollbar can fake mobile clipping in screenshots, so size the window to the exact slide width.
 4. **Kill your servers.** Orphaned http.server processes and hung headless Edge leave files in delete-pending state ("Access is denied" on delete that looks like an ACL problem but is an open handle). Every render script must terminate the processes it started, even on failure.
 5. **Visual verification is mandatory.** Render every slide to PNG and actually look at the images (Read the PNG files) before reporting the carousel done. A file that passes a portability or lint check can still render wrong. Cover slide especially: verify the hero photo is visible, text is not clipped, and contrast holds.
+6. **html2canvas does not implement CSS `filter`.** The pinned CDN build (1.4.1) silently drops every `filter:` declaration (invert, grayscale, contrast, all of it) at capture time. The live tab, the scaled editor preview, and the /gw-queue Playwright renders all apply filters correctly, so the file looks right everywhere you check — but EXPORT ALL PNGs / DOWNLOAD SLIDE / EXPORT PDF ship wrong: a `filter:invert(1)` white logo exports white-on-paper (invisible), a `filter:grayscale(1)` photo exports full color and breaks the pack palette law. Bake every photo treatment and logo ink into the source pixels with Pillow at prep time; no element inside `.slide` may carry `filter:`. Confirmed 2026-08-01 by exporting a real PNG and reading the pixels back — that is also the only way to catch it.
 
 ---
 
@@ -276,7 +277,7 @@ See `references/slide-architecture.md` for the progress bar markup with the logo
 
 **Pack CSS loads once.** Copy the pack's full CSS block from `references/style-packs.md` into the inline style block — do not split into a separate file and link it.
 
-**For image slides:** base64-encode each assigned image, embed as a `background-image` data URL, apply the pack's photo treatment (grayscale filter, overlay gradient, etc.). See `references/slide-architecture.md`.
+**For image slides:** prep each assigned image with Pillow first — resize AND bake the pack's photo treatment (grayscale, contrast, desaturation) into the pixels in the same pass — then base64-encode and embed as a `background-image` data URL. Gradient overlays stay CSS; anything filter-like must live in the pixels, never in a CSS `filter` (trap 6). See `references/slide-architecture.md`.
 
 **For seamless spreads:** see `references/seamless-image-spread.md`. Use pixel-based `background-size: calc(1080px * N) 1350px` and `background-position: calc(-1080px * k) 0` so side-by-side slides reconstruct the full image. Do not use percentages for spread positioning — they silently render slide 2+ as empty.
 

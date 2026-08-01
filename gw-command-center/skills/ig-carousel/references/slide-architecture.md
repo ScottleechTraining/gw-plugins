@@ -218,6 +218,10 @@ Every slide in a Case carousel uses the SAME photo as full-bleed background. Pho
 
 ```css
 :root {
+  /* Hero JPEG is pre-treated with Pillow at prep time: saturate 0.65,
+     contrast 1.05, brightness 0.92 baked into the pixels (ImageEnhance
+     Color/Contrast/Brightness). No CSS filter on this layer — html2canvas
+     drops filter at export (SKILL.md trap 6). */
   --hero-photo: url('data:image/jpeg;base64,{HERO_PHOTO_BASE64}');
 }
 
@@ -228,7 +232,6 @@ Every slide in a Case carousel uses the SAME photo as full-bleed background. Pho
   background-image: var(--hero-photo);
   background-size: cover;
   background-position: center;
-  filter: saturate(0.65) contrast(1.05) brightness(0.92);
   z-index: 0;
 }
 ```
@@ -425,11 +428,20 @@ Vertical list where each item leads with a 64px circular gold-outlined badge. Us
 .progress-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
 .progress-count { font-family: var(--font-body); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
 
-/* logo blend — dark slides */
+/* logo ink — TWO baked PNG variants, chosen per slide at build time.
+   White-ink master goes on dark slides; a dark-ink variant (Pillow: invert the
+   RGB channels, keep alpha) goes on light slides. NEVER filter:invert(1) the
+   white logo on light slides — html2canvas drops CSS filter at export and the
+   logo ships white-on-paper, invisible (SKILL.md trap 6). */
 .slide.dark .tgw-logo { mix-blend-mode: screen; opacity: 0.8; }
-/* logo blend — light slides */
-.slide.light .tgw-logo { mix-blend-mode: multiply; filter: invert(1); opacity: 0.65; }
+.slide.light .tgw-logo { mix-blend-mode: multiply; opacity: 0.65; }
 ```
+
+Dark-ink variant recipe (one Pillow pass at build time): load the white-ink
+master PNG, split RGBA, invert R/G/B with `ImageChops.invert`, re-merge with the
+original alpha, save, base64-embed. Each slide's `<img class="tgw-logo">` gets
+the src that matches its background — the choice happens at generation time, not
+in CSS.
 
 ---
 

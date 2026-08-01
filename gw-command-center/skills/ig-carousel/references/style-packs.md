@@ -29,7 +29,7 @@ Moody B&W photos, heavy dark overlays, gold accent. The default GW look, tighten
 ```
 
 - **Cover:** Mega-Cover on asphalt or full-bleed photo with bottom gradient. Vitesse 700 at auto-fit size, 0.88 line-height, uppercase, `letter-spacing: -0.02em`.
-- **Photo treatment:** B&W or desaturated (filter: grayscale(1) contrast(1.05)). Strong bottom gradient. Gold hairline bar above headline on image slides.
+- **Photo treatment:** B&W or desaturated — bake grayscale(1) contrast(1.05) into the JPEG with Pillow at prep time (`ImageOps.grayscale` + `ImageEnhance.Contrast`); never CSS `filter`, which html2canvas drops at export (SKILL.md trap 6). Strong bottom gradient. Gold hairline bar above headline on image slides.
 - **Slide number:** Small gold "01 / 07" in top-right. Barlow 700 small caps.
 - **Body copy:** Paper on asphalt, Barlow 400 18px equivalent.
 - **Recommend for:** mindset content, grit/discipline topics, long training narratives.
@@ -48,11 +48,13 @@ Hero photo carried across every slide. Scanline overlay. Gold accent. Argument-b
 --accent:      #C8A84E;        /* gold — brand */
 --accent-ink:  #FFFFFF;        /* white reads on gold for the section tag */
 --overlay-dark: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.88) 100%);
---photo-filter: saturate(0.65) contrast(1.05) brightness(0.92);
+/* photo treatment saturate(0.65) contrast(1.05) brightness(0.92) is BAKED into
+   the hero JPEG with Pillow at prep time — never a CSS filter token; html2canvas
+   drops filter at export (SKILL.md trap 6) */
 ```
 
 - **Hero photo system:** ONE photo loaded once, base64-embedded, used as the full-bleed background of every slide in the carousel. The photo does not change slide to slide. The skill prompts the user for a hero photo path at Step 1 when this pack is selected.
-- **Photo treatment:** Slightly desaturated and contrast-pushed (saturate 0.65, contrast 1.05, brightness 0.92). Heavy two-stop dark gradient overlay (55% at top, 88% at bottom) for legibility. Color elements in the photo remain readable but muted.
+- **Photo treatment:** Slightly desaturated and contrast-pushed (saturate 0.65, contrast 1.05, brightness 0.92) — baked into the hero JPEG with Pillow at prep time (`ImageEnhance.Color(...)` 0.65 → `Contrast` 1.05 → `Brightness` 0.92), never CSS `filter` (SKILL.md trap 6). Heavy two-stop dark gradient overlay (55% at top, 88% at bottom) for legibility. Color elements in the photo remain readable but muted.
 - **Scanline overlay:** A 2px-spaced horizontal scanline pattern at ~4% opacity sits over the photo and under the dark overlay. Implementation: `repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(255,255,255,0.04) 2px, rgba(255,255,255,0.04) 3px)` with `mix-blend-mode: overlay`.
 - **Cover:** No section tag. No eyebrow label of any kind — the cover leads directly with the headline (the reference's "→ STRENGTH & CONDITIONING" line is school-brand chrome that does not belong on a Case carousel). Massive uppercase Vitesse Bold headline at ~120–148pt with one or two key words wrapped in `.hl` spans (gold color + 6px gold underline 8px below the baseline). Subhead line in light gray Barlow 400 ~30pt below the headline. Bottom of slide: "→ SWIPE TO LEARN MORE" in Barlow 600 small caps, white at 0.7 opacity. TGW logo + progress bar remain at the foot.
 - **Content slide:** Gold filled rectangle section tag at top-left (Barlow 700, white text, 22pt, 12×24px padding, uppercase, ~3px letter-spacing). Label text is freeform — match the slide's role for the carousel topic. Massive Vitesse Bold headline below the tag with one or two words in `.hl` gold + underline. Body copy below the headline in Barlow 400 at ~30–34pt, white at 0.85 opacity, line-height 1.45. Body may run 2–3 short paragraphs.
@@ -196,7 +198,7 @@ Vox-explainer editorial fused with classic Bauhaus. Every slide is a magazine sp
 - **Black block callouts:** solid pure-black rectangles with white Barlow 600 text inside (~28px), 24–32px padding, rotated -1 to 1deg for a paste-up feel. One per slide max. This is the pack's version of a pull-quote.
 - **Bauhaus primitives as anchors (never decorative):** each primitive has a JOB. Red circle = the point being made (numbered dot on pillar slides, ~72px, white Anton numeral inside). Blue rectangle/line = structure (section divider bar, margin rule, or the frame around the arc diagram). Black square = warning (anchors The Trap slide). One primitive family per slide region; if a shape has no job, delete it.
 - **Hand-drawn marks:** black marker arrows, circles, underlines and scribbles as inline SVG paths — connecting a headline to a stat, circling a number, striking through a myth. Same wobble rule as the highlighter: irregular, organic, never geometric-perfect.
-- **Photo treatment (default — torn clipping):** B&W editorial (`grayscale(1) contrast(1.1)`), pasted as a collage clipping: contained box (55–75% slide width), torn-edge `clip-path` polygon on 1–2 sides, slight rotation (-2 to 2deg), and a hand-drawn yellow SVG outline stroke tracing the photo's border. Photos never full-bleed, never behind text. No photorealistic 3D, no stock-look, no icon sets.
+- **Photo treatment (default — torn clipping):** B&W editorial, baked into the JPEG with Pillow at prep time (`ImageOps.grayscale` + `ImageEnhance.Contrast(...).enhance(1.1)`, in the same pass that resizes it) — never `filter:grayscale` on the `<img>`, which html2canvas drops at export so the posted PNG ships full color (SKILL.md trap 6). Pasted as a collage clipping: contained box (55–75% slide width), torn-edge `clip-path` polygon on 1–2 sides, slight rotation (-2 to 2deg), and a hand-drawn yellow SVG outline stroke tracing the photo's border. Photos never full-bleed, never behind text. No photorealistic 3D, no stock-look, no icon sets.
 - **Photo treatment (hero — subject cutout with yellow outline):** the pack's signature image. The subject is cut out of its background and traced with an irregular yellow marker halo. ONE per carousel max, on the slide that earns it (cover or thesis). Verified Pillow recipe (rembg is installed on this machine, model cached at `~/.u2net`):
   1. `img.thumbnail((900, 900))`, then `rembg.remove(img)` → RGBA cutout.
   2. Subject: grayscale + `ImageEnhance.Contrast(...).enhance(1.15)`, re-merge with the cutout's alpha.

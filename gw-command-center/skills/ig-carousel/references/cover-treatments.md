@@ -31,7 +31,7 @@ The pack's own mega-cover: headline-dominant on the pack's background, photo opt
 
 Giant word layered BEHIND the photo subject, secondary line in FRONT. The depth illusion is the hook.
 
-**Assets (Pillow, one pass):** from ONE photo export two files at IDENTICAL pixel dimensions: `bg.jpg` (full frame, treated per pack's photo filter) and `cut.png` (rembg subject cutout, same B&W treatment, alpha kept). Identical dimensions are what make alignment trivial.
+**Assets (Pillow, one pass):** from ONE photo export two files at IDENTICAL pixel dimensions: `bg.jpg` (full frame, pack photo treatment baked in with Pillow — not CSS filter, trap 6) and `cut.png` (rembg subject cutout, same B&W treatment, alpha kept). Identical dimensions are what make alignment trivial.
 
 **Layering (CSS):** `img.bg` and `img.cut` get IDENTICAL `left/top/width` (absolute). Sandwich: bg (z1) → big word (z2) → cut (z3) → front line + kicker (z4) → bottom legibility gradient (z5, max 0.5 opacity, bottom 30% only).
 
@@ -45,7 +45,7 @@ Giant word layered BEHIND the photo subject, secondary line in FRONT. The depth 
 
 Full-bleed photo desaturated to B&W; one circle zone reveals the original color, tinted with the pack accent, and carries a short quote/claim.
 
-**Recipe:** one prepped color JPEG used twice. Base `<img>` full-bleed with `filter: grayscale(1) contrast(1.1)`. A circle `div` (44–52% of slide width, `border-radius: 50%`, `overflow: hidden`) containing the SAME image, unfiltered, offset negatively so it aligns with the base (circle at `left:L, top:T` → inner img at `left:-L, top:-T`, same width as base). Inside the circle: `::after` tint layer, pack accent at 0.35–0.5 opacity, `mix-blend-mode: multiply`.
+**Recipe:** TWO Pillow-prepped files from one color JPEG at identical pixel dimensions: `bw.jpg` (grayscale + contrast 1.1 baked in) for the full-bleed base `<img>`, and the color JPEG for the circle. Never one copy with `filter: grayscale(1)` — html2canvas drops CSS filter at export and the base ships in color (SKILL.md trap 6). A circle `div` (44–52% of slide width, `border-radius: 50%`, `overflow: hidden`) containing the color image, offset negatively so it aligns with the base (circle at `left:L, top:T` → inner img at `left:-L, top:-T`, same width as base). Inside the circle: `::after` tint layer, pack accent at 0.35–0.5 opacity, `mix-blend-mode: multiply`.
 - Circle placement: over the focal human, rule-of-thirds, never dead center.
 - Text inside the circle: quote mark + 2–3 short lines, last line in accent + display face. Text must clear the circle's edge by ≥60px.
 - Bottom gradient for the footer only.
@@ -54,7 +54,7 @@ Full-bleed photo desaturated to B&W; one circle zone reveals the original color,
 
 Full-bleed photo, slightly dimmed; headline carried on 2–3 torn-paper blocks; film border.
 
-**Recipe:** photo `<img>` full-bleed (`saturate(0.85) contrast(1.05)`, or pack filter). Paper blocks: paper-color background (`#F4F0E4` or pack paper), 12-point jagged `clip-path` polygon (vertices ±6% off the rectangle, no two edges alike), rotation alternating -2° to +2°, headline in the pack display face at 150–190px, near-black. Film border: `box-shadow: inset 0 0 0 14px rgba(20,15,10,0.85), inset 0 0 90px rgba(0,0,0,0.55)`.
+**Recipe:** photo `<img>` full-bleed, treatment baked with Pillow at prep time (`ImageEnhance.Color` 0.85 + `Contrast` 1.05, or the pack's treatment — CSS `filter` is banned on slide content, SKILL.md trap 6). Paper blocks: paper-color background (`#F4F0E4` or pack paper), 12-point jagged `clip-path` polygon (vertices ±6% off the rectangle, no two edges alike), rotation alternating -2° to +2°, headline in the pack display face at 150–190px, near-black. Film border: `box-shadow: inset 0 0 0 14px rgba(20,15,10,0.85), inset 0 0 90px rgba(0,0,0,0.55)`.
 - One thought split across the blocks ("AUGUST IS / COMING."), not two thoughts.
 - Blocks overlap the photo's dead zones; keep faces/action visible between them.
 - Kicker in white with text-shadow on a quiet band.
