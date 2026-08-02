@@ -61,8 +61,10 @@ contain commas and `\"` escapes). Any bucket may be empty.
 Apply it with the applier module. It mirrors `/gw-ship` for ship (moves
 `_inbox` topics into `ready/`, flips `ready_to_ship`, clears polish flags),
 records the polish note on the topic entry, and kills by moving the folder to
-the terminal `killed/` folder. Pass the whole pasted line, `gw-review-result:`
-prefix included, as ONE argument:
+the terminal `killed/` folder, trimming its renderable assets on arrival
+(slides/, carousel and social-pack html, loose images; every .md plus
+captions/ and lead-magnet/ are kept, per the 2026-08-01 archive diet). Pass
+the whole pasted line, `gw-review-result:` prefix included, as ONE argument:
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
