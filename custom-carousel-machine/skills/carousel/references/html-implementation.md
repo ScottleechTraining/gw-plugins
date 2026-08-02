@@ -105,6 +105,8 @@ Used at Step 5. Build the single HTML file in this order:
 
 Used at Step 5 (Toolbar). Add these two script tags: the jsPDF CDN tag plus the export function. html2canvas and jsPDF come from CDN URLs, never relative paths.
 
+**html2canvas 1.4.1 does not implement CSS `filter`.** Every export path on the page (EXPORT ALL PNGs, DOWNLOAD SLIDE, EXPORT PDF) silently drops `filter:` declarations even though the live tab and any browser-screenshot QA render apply them. Photo treatments and logo ink must already be baked into the embedded image pixels at prep time (SKILL.md, Known export trap). If a slide needs `filter:` to look right, the export is already wrong.
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>

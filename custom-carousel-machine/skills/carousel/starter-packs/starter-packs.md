@@ -34,7 +34,7 @@ Roles used: `dark` (default dark slide), `paper` (alternates), `accent_secondary
 - **No slide-number stamp.** The ghost number is the counter.
 - **Body alignment:** left/center/right rotates slide to slide. Centered body allowed up to 3 lines on declarative slides only.
 - **Lists:** allowed. Marker is an 8×8 filled square in fg-dominant at 0.5 opacity. No dots, no dashes.
-- **Photos:** rare; when used, small contained rectangles, B&W, ~50% width max.
+- **Photos:** rare; when used, small contained rectangles, ~50% width max, B&W baked into the image pixels at prep time (one Pillow grayscale pass, never CSS `filter: grayscale`, which html2canvas drops at export; see SKILL.md, Known export trap).
 - **Recommend for:** numbered teaching listicles ("5 ways to ___", "Top 7 ___", "3 lessons from ___"), breakdown series.
 
 ### Headline budgets (1080×1350, 64px margins → 952px content width; display caps ~0.57 × font-size)

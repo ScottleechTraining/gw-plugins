@@ -3,11 +3,11 @@ name: carousel
 description: Create editable, export-ready Instagram carousels as a single self-contained HTML file, in the buyer's own brand. Use whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or says "make me a carousel about X", "create slides for Instagram", or references carousel templates. Produces a self-contained HTML file with click-to-edit text, one-click PNG export at 1080x1350 (4:5), a stitched multi-page PDF for Canva, a save-to-disk button, and inline font-resize. Reads the buyer's Brand Profile for palette, fonts, logo, handle, and voice. Supports buyer-authored style packs plus two shipped starters, and seamless image spreads.
 ---
 
-# Carousel Engine v0.1.0
+# Carousel Engine v0.2.2
 
 Create editable, export-ready Instagram carousels as self-contained HTML files, wearing the buyer's brand.
 
-**Changelog:** 0.1.0, first white-label release. De-branded from the original GW carousel skill: identity now comes from the Brand Profile, default fonts are Roboto Slab + Barlow (free), starter packs reduced to Mono Series + Editorial Long-Form, pack authoring and Brand Setup added.
+**Changelog:** 0.2.2, export-safety release: html2canvas (the export library) does not implement CSS `filter`, so photo treatments and logo ink now bake into the image pixels at prep time; see "Known export trap" below. 0.1.0, first white-label release. De-branded from the original GW carousel skill: identity now comes from the Brand Profile, default fonts are Roboto Slab + Barlow (free), starter packs reduced to Mono Series + Editorial Long-Form, pack authoring and Brand Setup added.
 
 All raw markup (HTML, CSS, JS) lives in `references/html-implementation.md`. This file stays prose-only; when a step needs code, it points to a numbered section there.
 
@@ -82,10 +82,10 @@ Read `references/slide-architecture.md` for templates (Mega-Cover, Image-Dominan
 Present the plan as a table. Run a **pack-compliance pass**: confirm every row respects the chosen pack's architecture rules (from its section), not just its colors. Check headlines against the pack's character budget. Fix violations before showing the plan. Do not write HTML until the user approves.
 
 ### Step 4: Logo + frame
-The footer logo is the Brand Profile's `logo.base64`. If empty, show the handle text instead. See `references/slide-architecture.md` for the progress-bar markup.
+The footer logo is the Brand Profile's `logo.base64`. If empty, show the handle text instead. If the pack mixes dark and light slides and the logo is a single-ink mark, derive the opposite-ink variant at build time (invert the RGB channels, keep alpha; one Pillow pass) and give each slide the variant that contrasts with its background. Never flip it in CSS with `filter: invert(1)`; html2canvas drops `filter` at export (see Known export trap). See `references/slide-architecture.md` for the progress-bar markup and the two-variant logo pattern.
 
 ### Step 5: Generate the HTML
-Build in the order in section 3 of `references/html-implementation.md`. Copy the chosen pack's CSS into the single inline style block. Base64-embed any assigned images. For seamless spreads use pixel-based sizing (see `references/seamless-image-spread.md`). Copy the `autoFitMegaCover()` block from section 8 verbatim. Add the Save Changes button (section 9). The button and its save script are standalone here; there is no external patcher to match.
+Build in the order in section 3 of `references/html-implementation.md`. Copy the chosen pack's CSS into the single inline style block. Prep each assigned image first: resize AND bake the pack's photo treatment (B&W, contrast, desaturation) into the pixels in the same pass, then base64-embed. Gradient overlays stay CSS; anything filter-like lives in the pixels, never in a CSS `filter:` declaration (see Known export trap). For seamless spreads use pixel-based sizing (see `references/seamless-image-spread.md`). Copy the `autoFitMegaCover()` block from section 8 verbatim. Add the Save Changes button (section 9). The button and its save script are standalone here; there is no external patcher to match.
 
 Frame on every slide (except where noted): slide number, handle (from Brand Profile), swipe arrow (not on last), footer logo, progress bar. No page dots.
 
@@ -102,6 +102,13 @@ Save to the buyer's output folder as `{topic-slug}-carousel.html`. Confirm: pack
 - [ ] Double-click opening (no dev server) renders correctly
 - [ ] Save Changes button (`id="saveChangesBtn"`) is in the toolbar and the save script is before `</body>`
 - [ ] Seamless spreads use pixel values for `background-size` / `background-position`, not percentages
+- [ ] No `filter:` declaration anywhere inside `.slide` CSS or markup; photo treatments and logo ink are baked into the image pixels
+
+---
+
+## Known export trap: CSS filter
+
+html2canvas 1.4.1 (the pinned export library) does not implement CSS `filter`. It silently drops every `filter:` declaration (invert, grayscale, contrast, all of it) at capture time. The live tab, the scaled preview, and any browser-screenshot QA render all apply filters correctly, so a filtered slide looks right everywhere you check, then EXPORT ALL PNGs, DOWNLOAD SLIDE, and EXPORT PDF ship wrong: a `filter: invert(1)` logo exports invisible, a `filter: grayscale(1)` photo exports full color. Bake every photo treatment and every logo ink variant into the source pixels at prep time (one Pillow pass, or any image tool; the pixels are the point, not the tool). No element inside `.slide` may carry `filter:`. The only way to catch a violation is to export a real PNG and look at it.
 
 ---
 

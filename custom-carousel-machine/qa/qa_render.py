@@ -89,8 +89,17 @@ def discover_work() -> list[WorkItem]:
 
     work: list[WorkItem] = []
     for fixture_path in fixture_paths:
+        text = fixture_path.read_text(encoding="utf-8")
+        # Edge screenshots apply CSS filters but html2canvas exports drop them,
+        # so a filtered fixture would pass QA while real exports ship broken.
+        if "filter:" in text:
+            raise ValueError(
+                f"{fixture_path.name}: contains a CSS 'filter:' declaration; "
+                "bake the treatment into the image pixels instead "
+                "(carousel SKILL.md, Known export trap)"
+            )
         parser = FixtureParser()
-        parser.feed(fixture_path.read_text(encoding="utf-8"))
+        parser.feed(text)
         parser.close()
 
         if parser.pack is None:

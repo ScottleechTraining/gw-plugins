@@ -222,11 +222,16 @@ Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow {handle
 .progress-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); }
 .progress-count { font-family: var(--font-body); font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
 
-/* logo blend, dark slides */
+/* logo ink: TWO baked variants of the Brand Profile logo, chosen per slide
+   at build time. The as-shipped logo goes on the slides it contrasts with;
+   the opposite-ink variant goes on the rest. NEVER filter: invert(1) here:
+   html2canvas drops CSS filter at export and the logo ships invisible
+   (SKILL.md, Known export trap). */
 .slide.dark .brand-logo { mix-blend-mode: screen; opacity: 0.8; }
-/* logo blend, light slides */
-.slide.light .brand-logo { mix-blend-mode: multiply; filter: invert(1); opacity: 0.65; }
+.slide.light .brand-logo { mix-blend-mode: multiply; opacity: 0.65; }
 ```
+
+Opposite-ink variant recipe (one Pillow pass at build time): load the logo PNG, split RGBA, invert R/G/B with `ImageChops.invert`, re-merge with the original alpha, save, base64-embed. Each slide's `<img class="brand-logo">` gets the src that matches its background; the choice happens at generation time, not in CSS. This assumes a single-ink logo mark, the usual case for footer logos. A full-color logo skips the variant and the blend rules: embed it unmodified on every slide.
 
 ---
 

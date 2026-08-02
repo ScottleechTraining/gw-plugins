@@ -24,6 +24,7 @@ A pack is layout, not color. Read `skills/carousel/starter-packs/starter-packs.m
 - Cover behavior, content-slide architecture, photo treatment, slide-number treatment, ornaments, body-copy alignment, list markers, frame-system overrides.
 - A **palette-role mapping**: which role (`accent`, `bg-dominant`, `fg-dominant`, `paper`, `ink`) paints what. NEVER literal hex. The Brand Profile supplies the colors.
 - Per-pack headline character budgets (see the budget formula in `starter-packs.md`).
+- **Photo treatments are pixel recipes, not CSS.** Write a treatment (B&W, contrast, desaturation) as a bake-at-prep instruction applied to the image pixels before embedding, never as a CSS `filter:` rule. html2canvas drops `filter` at export, so a filter-styled pack looks right in every preview and exports wrong (see the carousel skill's Known export trap).
 
 **Escape hatch:** a pack may hardcode ONE palette role only when that color is the pack's defining identity (a single pop-color, or "no accent at all"). Everything else flows from the Brand Profile.
 
