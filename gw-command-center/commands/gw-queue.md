@@ -17,7 +17,22 @@ report.
 - **State file:** `C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json`
 - **Dashboard state copy:** `C:/Claude Projects/websites/scottleechtraining.com/tools/queue/queue-state.json`
 
-## Step 0: Apply any pending stage mutations from dashboard exports
+## Step 0: Apply pending decisions (review string, then dashboard exports)
+
+If Scott pasted a `gw-review-result:` string with this command (or just before
+it), apply it FIRST with the applier module. This is the HOW-TO-POST flow:
+review page -> Copy -> paste -> `/gw-queue`. Pass the whole line as ONE
+argument, or feed it on stdin if quoting gets awkward (see `/gw-review` Step 3
+for the quoting rules; never re-inline the parser as a bash heredoc).
+
+```bash
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.apply_review "PASTED_STRING"
+```
+
+No string pasted: skip that, nothing to apply.
+
+Then apply any stage mutations queued by dashboard exports:
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
@@ -62,7 +77,7 @@ python -m scripts.gwqueue.split_captions
 
 ## Step 4: Drive sync
 
-`sync_to_drive` only uploads topics whose `ready_to_ship` flag is set (flipped by `/gw-ship`); everything else prints a skip line. Prefer per-topic syncs with `--slug <slug>` when you know which topic changed — a full pass walks every ready topic and takes 5+ minutes.
+`sync_to_drive` only uploads topics whose `ready_to_ship` flag is set (flipped by `/gw-ship`); everything else prints a skip line. Prefer per-topic syncs with `--slug <slug>` when you know which topic changed. A full pass walks every ready topic and takes 5 to 15+ minutes when many slide sets changed (measured 2026-08-01: ~15 min for 40 refreshed topics). Run it in the foreground and let it finish; if the harness moves it to the background at a timeout, wait for completion before the re-scan, then verify with the state file (every `ready_to_ship` topic keeps its `drive_folder_id`) rather than the output tail.
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
