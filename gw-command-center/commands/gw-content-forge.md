@@ -265,7 +265,7 @@ Note any new angles, updated positions, new quotes, or new evidence. These go in
 
 Same as TRANSCRIPT MODE (see Step 2A.3).
 
-### 2B.4: Generate the Content Pack (7 assets)
+### 2B.4: Generate the Content Pack (8 assets)
 
 **Asset 1: Twitter Thread #1 (Teaching Thread)**
 - Tweet 1 (Hook): Bold coaching truth or provocative statement. Under 280 chars.
@@ -319,6 +319,16 @@ Concepts and structure only. Scott fills in the coaching specifics.
 - Structure: Problem → agitation → insight → CTA
 - CTA points to the product the cross-reference found (or defaults to Insiders $1 trial)
 - Ends with: Keep the Fire Burning, / Leech
+
+**Asset 8: Comparison Table (the citation asset)**
+
+Why it exists: comparison content wins 32.5 percent of all AI answer-engine citations, the top format of any type (2026-08-03 AI brief). This asset is the pack's search-visibility play and the seed for a future site page.
+
+- Find the ONE genuine comparison inside the source material: old way versus GW way, myth versus reality, tool versus tool, cheap versus expensive. Title it the way a coach would type it: "[X] vs [Y] for high school football".
+- Format: one markdown table, two columns plus a row-label column, 4 to 7 rows. Row labels name decision points a coach weighs (cost, time per week, injury risk, what it builds, where it fails).
+- A number in every cell where the source material has one. NO invented stats. If the source has no number for a cell, write the plain fact instead. Same fact-density rule as the ingest workflow in `Gridiron Warrior/CLAUDE.md`.
+- Close with a one-line verdict in Scott's voice. Pick a side. No hedging.
+- **This asset is optional.** If the source material holds no genuine comparison, write `Comparison: skipped, no genuine comparison in the source` in its section and move on. A forced comparison is filler, and filler is what answer engines skip.
 
 ### 2B.5: Save CONTENT PACK MODE Output
 
@@ -386,6 +396,17 @@ pipeline: gw-content-forge
 ## Email Draft
 **Subject:** [subject]
 [body]
+
+---
+## Comparison Table: [X] vs [Y]
+
+| | [Option A] | [Option B] |
+|---|---|---|
+| [decision point] | [fact or number from source] | [fact or number from source] |
+
+**Verdict:** [one line in Scott's voice, pick a side]
+
+(or the single line: `Comparison: skipped, no genuine comparison in the source`)
 
 ---
 ## PULLED FROM THE BRAIN
