@@ -6,7 +6,7 @@ description: "Film Study full production chain - brief + wiki ingest + content p
 
 # /gw-film-study-brief [topic] — Full Film Study Production Chain
 
-Replaces the retired Sunday Film Study production stack ([retirement note](../../../D%3A/Claude%20Projects/docs/superpowers/cowork-tasks/_archive/2026-05-24-film-study-sunday-stack/README.md)). Scott invokes manually when he wants a full Film Study asset set.
+Replaces the retired Sunday Film Study production stack ([retirement note](../../../docs/superpowers/cowork-tasks/_archive/2026-05-24-film-study-sunday-stack/README.md)). Scott invokes manually when he wants a full Film Study asset set.
 
 **Every run produces the full chain:**
 
@@ -43,7 +43,7 @@ Slug rules: kebab-case, truncate to 50 chars, strip special chars.
 
 ## Preflight gate
 
-If `C:\Claude Projects\Gridiron Warrior\scripts\preflight.py` exists, call it first:
+Call it first:
 
 ```bash
 python "C:\Claude Projects\Gridiron Warrior\scripts\preflight.py" --gate film-study-brief
@@ -53,7 +53,7 @@ python "C:\Claude Projects\Gridiron Warrior\scripts\preflight.py" --gate film-st
 - Exit code 10 → preflight wrote a `blocked` status file. Stop. Tell Scott the next action from the status file's `next_action` field.
 - Any other non-zero → preflight bug. Surface the error to Scott and stop.
 
-If `preflight.py` does not yet exist (Phase 1 not complete), skip and proceed — log a one-line note so we know which runs predate the gate.
+The `film-study-brief` gate is registered in `scripts/preflight-gates.json` and checks auth, NotebookLM MCP, network, the vault, and the four chain directories. This command is manual-only: no scheduled task, no `job-contracts.json` entry.
 
 ## Step 0 — Resolve topic (queue pop if no argument)
 
@@ -202,6 +202,8 @@ If `topic_source == "queue"`:
 If `topic_source == "argument"`, skip this step entirely — queue not touched.
 
 ## Step 5.7 — Wiki auto-ingest
+
+**Fact-density rule (2026-08-03):** pull EVERY number the source states (set counts, timelines, percentages, testing results, injury rates, loads) into the summary page, each with its context. Numbers are what makes a future page citable by AI answer engines; prose buries them. A summary with zero numbers from a numeric source is an incomplete ingest.
 
 **Write the summary page** at `wiki/summaries/film-study-<topic-slug>.md`:
 

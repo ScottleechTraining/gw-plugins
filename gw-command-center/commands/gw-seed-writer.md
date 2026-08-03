@@ -116,6 +116,15 @@ For each angle, output:
 
 After all angles are scored, pick the single angle with the highest **Total** score and mark it `**TOP MOVE**` at the top of the angles section. Ties: break in favor of higher Revenue, then higher Urgency, then highest Ease.
 
+### 3b. The AI-asked question (one per day)
+
+Separate from the angles: write ONE question a time-strapped high school football coach would type into ChatGPT or Perplexity this week. Seasonal beats generic ("how do I keep my linemen hydrated in august camp" in August, not "is hydration important"). Then say where GW should send that coach:
+
+- If an existing page answers it, name the page (a Toolbox tool, a resource page, /inseason, a course page).
+- If nothing on the site answers it, mark `GAP` and say in one line what the page would be. GAP entries are candidates for the next freebie or tool build, not an instruction to build one tonight.
+
+Dedup first: do not repeat one of the 15 tracked questions in `wiki/business/aeo-citation-tracking.md` or a question seeded in the last 14 days of `_daily-seeds/`. Why this exists: AI answer engines cite pages that answer one question cleanly, and AI-search visitors convert at 9x organic rates (2026-08-03 AI brief).
+
 ### 4. Final em-dash self-check, THEN write the seed file
 
 **Do this before the file is saved, not after.** Read back the full draft you are about to write and scan it character by character for em-dashes (U+2014) and en-dashes (U+2013). Check every one of these, because they are where the regression landed:
@@ -165,6 +174,11 @@ Run: `<the winner's next_command from Step 3>`
 ## Today's content angles
 
 <the 1-3 angles, scored per Step 3. The TOP MOVE angle gets a `**TOP MOVE**` label inline>
+
+## Coach question of the day
+
+**Q:** <the question, phrased the way a coach would type it into an AI>
+**Send them to:** <existing GW page> (or `GAP: <one line on what the page would be>`)
 
 ## Queue health
 
