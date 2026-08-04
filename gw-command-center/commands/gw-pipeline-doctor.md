@@ -39,6 +39,21 @@ Terminal statuses that mean trouble: `failed`, `blocked`, `running` (stuck — k
 
 The status JSON carries `root_cause` and `next_action` fields written by the pipeline itself. Read them — they often name the fix. Note each non-`complete` gate for Step 3.
 
+## Step 2.5 — Green is not proof: check the Dewey sheet directly
+
+The health layer verifies log markers, not outcomes. A payload that fails and still prints its marker reads as `complete` forever. Dewey is the gate where that already happened, so probe it from outside every time, even when Step 2 came back all green:
+
+```bash
+cd "C:\Claude Projects" && "C:\Python314\python.exe" "Skills\tools\dewey_ingest\dewey_ingest.py" sheet-status
+```
+
+Read-only. It returns `last_row`, `newest_row_posted`, `newest_row_status`, `unprocessed`, and `max_processed_at`. Compare the newest row against `max_processed_at`:
+
+- `max_processed_at` within the last day or two and `unprocessed` in single digits: healthy.
+- `max_processed_at` stuck days behind while `dewey-daily` reports `complete`, or `unprocessed` climbing past a single night's intake: **the payload is failing silently.** The gap is the real signal; the green status is the lie. Read the sched log for the actual error (it will be a handled exception on a "graceful skip" path, not a crash) and fix the payload. Do not just rerun.
+
+Precedent: 2026-08-02, `max_processed_at` stuck at 2026-07-18 with 55 rows unprocessed across five `complete` nights. A U+2028 in one row's content fragmented the JSON payload and the launcher swallowed the parse error as a sheet outage. See `wiki/system/failures.md`.
+
 ## Step 3 — Read the failing gate's log and classify
 
 For each failed gate, read the tail of its log:

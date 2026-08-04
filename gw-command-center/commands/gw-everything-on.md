@@ -53,9 +53,10 @@ For each source, glob the directory then grep for any of the query terms (case-i
 | 4 | Dewey saves | `External Library\Twitter-Instagram Saves\_by-domain\` | S&C, Business, AI subfolders |
 | 5 | Screenshots OCR | `External Library\Screenshots\processed\` | OCR'd content |
 | 6 | Voice notes | `Voice Corpus\Voice Notes\` and `Voice Corpus\_pocket-inbox\.processed\` | Transcripts |
-| 7 | Daily seeds | `Deliverables\_daily-seeds\*.md` | Past content angles |
-| 8 | Wiki | `wiki\` | Scott's IP — concepts, summaries, quotes, frameworks |
-| 9 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. Optional — skip if no obvious match. |
+| 7 | Podcast transcripts | `Voice Corpus\Podcast Transcripts\*.md` | Verbatim .md siblings of the .docx originals (converted 2026-08-03). The .docx stay canonical; scan the .md. |
+| 8 | Daily seeds | `Deliverables\_daily-seeds\*.md` | Past content angles |
+| 9 | Wiki | `wiki\` | Scott's IP — concepts, summaries, quotes, frameworks |
+| 10 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. Optional — skip if no obvious match. |
 
 ### 3. Read budget guidance
 

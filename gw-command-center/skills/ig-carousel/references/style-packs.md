@@ -243,23 +243,31 @@ A carousel breaks when the planner writes a headline that doesn't fit the pack's
 
 ### How the budgets are derived
 
-Slide content width at 1080×1350 with 64px left/right margins = **952px**. Vitesse Bold uppercase characters average **~0.57 × font-size** wide. So:
+Slide content width at 1080×1350 with 64px left/right margins = **952px**. Character width is a property of the display face, so the factor is per font, not global:
 
-> **chars-per-line ≈ 952 / (0.57 × font-size-in-px)**
+> **chars-per-line ≈ safe-width / (factor × font-size-in-px)**
 
-This is the only formula you need. Budgets below apply it per pack. Numbers are conservative — assume punctuation/highlight underlines eat 1–2 chars per line.
+| Display face | Used by | Factor | Evidence status |
+|---|---|---|---|
+| Vitesse Bold | packs 1-6, every pack except Newsprint | **0.75** | Measured 2026-08-02, real glyphs at 72 / 88 / 92 / 96 / 108px. Worst real-word rate is a constant 0.735 × font-size at every size; 0.75 is that rounded up to absorb punctuation and `.hl` underlines. |
+| Anton | pack 7 Newsprint Bauhaus only | **0.45** | Declared at the 2026-07-12 pack demo render. Condensed face. Not re-measured on 2026-08-02, so treat it as inherited, not fresh. |
+| anything else | future packs | unmeasured | Measure it before trusting any budget. Never reuse another face's factor. |
 
-**When a row disagrees with the formula, the formula wins.** Several "starting estimate" rows predate the formula and run 15–20% hot (two were caught by real-glyph measurement on 2026-07-28: Ed LF subhead 28→19, Asphalt content-headline 22→18). Compute before you plan; update the row when a real render proves the number.
+**Why 0.57 was retired.** Every budget in this file before 2026-08-02 used a single 0.57 factor. It is not a font constant. It is Vitesse measured on narrow copy: I/L/T/E-heavy lines genuinely run 0.53 × font-size. Real Scott-voice copy runs 0.60 to 0.735, because W and M are close to double the width of an I. That is why the 2026-07-28 Asphalt check appeared to confirm 0.57 and still produced a budget that clips.
+
+**A measured row beats the formula. The formula governs unmeasured rows.** If a row's Verified cell carries a dated worst-case real-glyph note, that row is the authority for its element, so do not override it with a formula result. A row marked "starting estimate" is not evidence: recompute it from the table above before you plan. Every estimate row still in this file predates the corrected factor and runs hot by roughly 30 to 60%.
+
+Headlines use `white-space: nowrap`, so an over-budget line clips silently instead of wrapping. When copy exceeds budget, shorten it (preferred, tighter Scott voice usually reads better) or split it across more `<span class="line">` elements.
 
 ### Per-pack budgets
 
 | Pack | Element | Font size | Chars per line | Max lines | Verified? |
 |---|---|---|---|---|---|
-| **The Case** | `.mega-cover` (cover) | 108px | 18 | 4 | ✅ (Marshall carousel, 2026-05-11) |
-| **The Case** | `.content-headline` | 88px | 22 | 3 | ✅ (Marshall carousel, 2026-05-11) |
-| **The Case** | `.cta-headline` | 96px | 20 | 2 | ✅ (Marshall carousel, 2026-05-11) |
+| **The Case** | `.mega-cover` (cover) | 108px | 11 | 4 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): at 108px, 17 chars ran 1131-1350px against the 952px zone and the worst real-word rate of 79.4px/char gives 11. Partly guarded: `autoFitMegaCover()` shrinks the cover to fit, so over-budget copy degrades to a smaller headline rather than clipping. Treat 11 as the size-holding budget, not a clip threshold. |
+| **The Case** | `.content-headline` | 88px | 14 | 3 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): at 88px, 22 chars ran 1158-1254px, 19 ran 940-1046px and 17 ran 921-1100px against the 952px zone, while 14 tops out at 880px. Worst real-word rate 64.7px/char. Supersedes the 2026-05-11 value of 22. |
+| **The Case** | `.cta-headline` | 96px | 13 | 2 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): at 96px, 17 chars ran 1005-1200px and even 18 chars of deliberately narrow copy ran 963px, all past the 952px zone; the worst real-word rate of 70.6px/char gives 13. NO auto-fit guard on this element, so an over-budget CTA clips silently. The old 20 came from the retired 0.57 factor. |
 | Asphalt Editorial | `.mega-cover` (cover) | ~120px (auto-fit) | 16 | 4 | starting estimate |
-| Asphalt Editorial | `.content-headline` | ~92px | 18 | 3 | ✅ (push-up-bench-max build, 2026-07-28) — real-glyph measurement showed 22 chars ran 1016-1106px against the 952px safe zone; 18 matches the formula |
+| Asphalt Editorial | `.content-headline` | ~92px | 14 | 3 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): at 92px, 17 chars ran 963-1150px past the 952px zone and the worst real-word rate of 67.6px/char gives 14. Supersedes the 2026-07-28 value of 18. That pass sampled narrow copy only, which is exactly the 1016-1106px band reproduced here by I/L/T/E-heavy lines, so it confirmed the retired 0.57 instead of catching it. Same Vitesse face as The Case, so the same 0.75 factor applies. |
 | Acid Block | `.mega-cover` (cover) | ~120px | 16 | 4 | starting estimate |
 | Acid Block | `.content-headline` | ~92px | 22 | 3 | starting estimate |
 | Paper Minimal | `.mega-cover` (cover) | ~140px | 14 | 4 | starting estimate (bigger headline allowed — no photo competing) |
@@ -267,8 +275,8 @@ This is the only formula you need. Budgets below apply it per pack. Numbers are 
 | Mono Series | `.mega-cover` (cover) | ~150px | 13 | 3 | starting estimate (oversized headline paired with ghost number) |
 | Mono Series | `.content-headline` | ~96px | 21 | 3 | starting estimate |
 | Editorial Long-Form | `.mega-cover` (cover) | ~104px | 19 | 4 | starting estimate |
-| Editorial Long-Form | Numbered subhead | 72px | 19 | 2 | ✅ (stop-maxing-out-60-kids, 2026-07-28) — stamp-safe width is 800px, so 800 / (0.57 × 72) ≈ 19; the old "28" overflowed both the 952px column (own-formula max 23) and the handle-stamp. Reading-column body has its own 58ch max — different system |
-| Newsprint Bauhaus | `.mega-cover` (cover, Anton) | ~180px | 11 | 4 | ✅ (pack demo render, 2026-07-12) — Anton is condensed: chars-per-line ≈ 952 / (0.45 × font-size) for this pack, NOT the 0.57 Vitesse factor |
+| Editorial Long-Form | Numbered subhead | 72px | 15 | 2 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): stamp-safe width is 800px, not the full column, and at 72px Vitesse 17 chars ran 754-900px with a worst real-word rate of 52.9px/char, so 800 / 52.9 gives 15. Supersedes the 2026-07-28 value of 19, which was 800 / (0.57 × 72) on the retired factor. Reading-column body has its own 58ch max, a different system. |
+| Newsprint Bauhaus | `.mega-cover` (cover, Anton) | ~180px | 11 | 4 | ✅ (pack demo render, 2026-07-12) Anton is condensed: chars-per-line ≈ 952 / (0.45 × font-size) for this pack, never the Vitesse factor. Anton was not re-measured on 2026-08-02, so this is inherited evidence. |
 | Newsprint Bauhaus | `.content-headline` (Anton) | ~112px | 18 | 3 | ✅ (pack demo render, 2026-07-12) |
 | Newsprint Bauhaus | Black block callout (Barlow 600) | 28px | 40 | 3 | ✅ (pack demo render, 2026-07-12) |
 

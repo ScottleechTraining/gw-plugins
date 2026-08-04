@@ -92,7 +92,7 @@ For each new research brief (business, AI, S&C), check if a concept page already
 - Route by brief domain:
   - `business` → append under `## Active Queue` in `External Library\BusinessDocuments\_topic-queue.md`
   - `ai` → append under `## Active Queue` in `External Library\AI\_topic-queue.md`
-  - `s&c` → no queue exists; skip the append (log only)
+  - `s&c` → append under `## Active Queue` in `External Library\S-and-C\_topic-queue.md` (folder is spelled `S-and-C`, same path `/gw-sc-research` pops from daily)
 - **Idempotency:** before appending, grep both the `## Active Queue` and `## Completed` sections of the target queue file for `[<topic-slug>]`. If the slug is already present in either, skip the append — synthesis re-runs shouldn't duplicate. Log as `Brief already queued → no-op`.
 - Otherwise log as `Brief had no matching concept → queued [<topic-slug>] in <domain>/_topic-queue.md`.
 
@@ -167,6 +167,25 @@ The wiki's stub rate is the "wide but shallow" risk. This step burns it down 3-5
 4. Update the page's one-line description in `wiki/index.md` if it changed, and log each expansion in `wiki/log.md`.
 5. Carry the list of expanded pages forward to the Step 5 report.
 
+### 4.6. Check candidate recommendations against the decisions log
+
+Before drafting "Your moves" or "Recommended focus for next week" in Step 5, read
+`Gridiron Warrior/wiki/system/decisions.md`. This is a mandatory check. It runs every time,
+not just when something looks familiar.
+
+For each recommendation this synthesis is about to make, check it against the log:
+
+- **Matches a standing REJECTED or KILLED decision.** Do not recommend it again. If the
+  week's data is relevant to that decision, cite it in one line instead, naming the decision.
+  Example: "Forge backlog grew to 82, consistent with the standing 365-day content bank
+  decision, see decisions.md."
+- **Decision's stated reopen condition is actually met by this week's data.** The
+  recommendation may resurface. Name the condition in the report and show what met it.
+- **No matching decision on the log.** Proceed as normal, no citation needed.
+
+Carry the results forward into Step 5: any suppressed recommendation becomes a one-line
+citation instead of a silent drop. Scott should be able to see that the check ran.
+
 ### 5. Write weekly synthesis report
 
 Save to `C:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
@@ -230,7 +249,14 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 
 - Business queue: <N remaining, recommend adding: ...>
 - AI queue: <N remaining, recommend adding: ...>
+- S&C queue: <N remaining, recommend adding: ...>
 ```
+
+All three queue files exist. Open each one and count the lines under its `## Active Queue`
+heading before writing this section. Never report a queue as missing, absent, or "by design
+not present" from memory. If you cannot read a queue file, say the read failed and give the
+path you tried. Asserting absence instead of checking is what produced the wrong S&C line in
+the 2026-08-02 report.
 
 ### 6. Append to wiki log
 
@@ -242,7 +268,7 @@ Do not commit automatically. Leave the changes unstaged and report the exact fil
 If Scott explicitly asks for the commit later, use:
 
 ```bash
-python "C:\Claude Projects\Gridiron Warrior\scripts\git_safe_commit.py" --paths "Gridiron Warrior/wiki" "Gridiron Warrior/External Library/BusinessDocuments/_topic-queue.md" "Gridiron Warrior/External Library/AI/_topic-queue.md" --message "synthesis: weekly synthesis week of YYYY-MM-DD"
+python "C:\Claude Projects\Gridiron Warrior\scripts\git_safe_commit.py" --paths "Gridiron Warrior/wiki" "Gridiron Warrior/External Library/BusinessDocuments/_topic-queue.md" "Gridiron Warrior/External Library/AI/_topic-queue.md" "Gridiron Warrior/External Library/S-and-C/_topic-queue.md" --message "synthesis: weekly synthesis week of YYYY-MM-DD"
 ```
 
 ### 7. Print the completion marker (ALWAYS last)
