@@ -65,6 +65,19 @@ No em-dashes anywhere in your own output.
 
 If PASS, say so and stop. Do not rewrite a clean draft.
 
+## Log every FAIL (feeds the weekly skill tune loop)
+
+On FAIL, append one line per violation to
+`C:\Claude Projects\Gridiron Warrior\Deliverables\_system\voice-gate-log.md`
+(create the file if missing):
+
+```
+YYYY-MM-DD | <producing skill, e.g. gw-substack-forge> | check <n> | <offending word/pattern>
+```
+
+Append-only, no other edits to the log. `/gw-skill-tune` reads it on Sundays to
+spot which skill keeps breaking which rule. A PASS logs nothing.
+
 ## Scope discipline
 
 The gate edits mechanically. It fixes only the listed violations. It does not rewrite voice, restructure the piece, retitle it, change the argument, or add ideas. If a draft reads weak but breaks no rule, it PASSES. Voice work belongs to the skill that wrote the draft, not to the gate.

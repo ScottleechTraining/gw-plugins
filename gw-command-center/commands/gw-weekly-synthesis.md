@@ -186,6 +186,16 @@ For each recommendation this synthesis is about to make, check it against the lo
 Carry the results forward into Step 5: any suppressed recommendation becomes a one-line
 citation instead of a silent drop. Scott should be able to see that the check ran.
 
+### 4.7. Skill tune pass (read-only)
+
+Run the ANALYZE mode of `/gw-skill-tune` (see `commands/gw-skill-tune.md` for the
+full procedure: harvest kills / polish notes / voice-gate log / seed usage, apply
+the 2+ occurrence weight rule, check prior tune sections for rejections and
+applied-edit scoreboards). This pass writes nothing — it produces the
+"Skill tune proposals" section for the Step 5 report and, when proposals exist,
+one paste-ready `/gw-skill-tune apply ...` block for "Your moves". Application
+never happens here; it happens in the session where Scott answers.
+
 ### 5. Write weekly synthesis report
 
 Save to `C:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
@@ -210,8 +220,9 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 - Cover: promotion drafts awaiting decision (one combined prompt listing each slug
   with its Call, e.g. "Apply my promotion decisions: promote total-athlete-development,
   toss foo-bar because ___."), stub expansions that were skipped for lack of sources,
-  queue additions recommended below, and any "Recommended focus" item that needs
-  his input to start.
+  queue additions recommended below, skill tune proposals from Step 4.7 (one
+  `/gw-skill-tune apply ...` block when any exist), and any "Recommended focus"
+  item that needs his input to start.
 - Order by leverage: revenue-touching first, housekeeping last.
 - If nothing needs him: "Nothing needs you this week. The machine ran clean.">
 
@@ -244,6 +255,10 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 ## Recommended focus for next week
 
 <1-3 specific suggestions: topics to research, content angles to pursue, Dewey gaps to fill>
+
+## Skill tune proposals
+
+<the section produced by Step 4.7, or "No skill tune proposals this week.">
 
 ## Queue health
 
