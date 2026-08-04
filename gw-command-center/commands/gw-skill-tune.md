@@ -38,8 +38,8 @@ All paths under `C:/Claude Projects/Gridiron Warrior/Deliverables/` unless noted
 
 | Signal | Where | What it grades |
 |---|---|---|
-| Kills | `killed/` folders modified in the last 7 days (each keeps its .md content pack) | Topic/angle selection by the producing skill |
-| Polish notes | `queue-state.json` topics with `polish_note` set (incl. `restyle:` / `cover:` prefixes) | The specific weakness Scott named, with his own words |
+| Kills | Git history, NOT folder mtimes (the 2026-08-01 archive diet touched every `killed/` folder): `git -C "C:/Claude Projects" log --since="8 days ago" --diff-filter=A --name-only -- "Gridiron Warrior/Deliverables/killed"`. Also check `git status` for uncommitted moves out of `_inbox/` and resolve each slug to `ready/` (ship) or `killed/` (kill) before counting. | Topic/angle selection by the producing skill |
+| Polish notes | `queue-state.json` — `topics` is a LIST of dicts; iterate it for `polish_note` set (incl. `restyle:` / `cover:` prefixes) | The specific weakness Scott named, with his own words |
 | Voice-gate FAILs | `_system/voice-gate-log.md` lines from the last 7 days | Which producing skill keeps breaking which voice rule |
 | Seed usage | The "Content seed inventory" from the current synthesis run (or last week's report when standalone) | gw-seed-writer angle quality |
 | Restyle patterns | Polish notes starting `restyle:` — count per style pack | ig-carousel pack selection guidance |
