@@ -100,9 +100,15 @@ python -m scripts.gwqueue.scan_folders
 
 ## Step 5: Read fresh state and build the report
 
+The Drive posting-window buckets (`drive_month`, refreshed from Drive in Step
+4.5) are the source of truth for how Scott is organizing and pacing topics.
+The report groups by bucket so staleness can be judged per window, not
+globally.
+
 ```bash
 python -c "
-import json, pathlib
+import json, pathlib, datetime
+from collections import Counter
 p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
 data = json.loads(p.read_text(encoding='utf-8'))
 topics = data['topics']
@@ -138,6 +144,20 @@ for t in ready[:5]:
     polish = ' [needs polish]' if t.get('carousel_needs_polish') else ''
     print(f\"    - {t['slug']} ({settled}/{total}{polish})\")
 
+# Ready by Drive posting-window bucket, with per-bucket stale counts
+today = datetime.date.today()
+def is_stale(t):
+    try:
+        return (today - datetime.date.fromisoformat(t.get('last_activity', '')[:10])).days >= 14
+    except (ValueError, TypeError):
+        return False
+buckets = Counter(t.get('drive_month') or 'no-drive-folder' for t in ready)
+stale = Counter(t.get('drive_month') or 'no-drive-folder' for t in ready if is_stale(t))
+print()
+print('Ready by Drive bucket (bucket = Scott intent, from Drive):')
+for b in sorted(buckets):
+    print(f'  {b:24s} {buckets[b]:3d} ready | {stale.get(b, 0):3d} idle 14d+')
+
 # Cold and archived counts
 print()
 print(f\"Cold storage: {len(by_stage.get('cold-storage', []))} topics\")
@@ -161,8 +181,22 @@ Run /gw-triage to sort.
 
 ## Step 7: Recommend next action
 
+**The Drive buckets are Scott's plan. Judge staleness against the plan, not
+the calendar alone.** A topic parked in a future posting window is on track no
+matter how long it sits. Rules for reading the per-bucket table from Step 5:
+
+- A bucket whose posting window is **now or already past** (compare the bucket
+  name to today's date): idle topics there count against Scott. A past window
+  with topics still in it means the window was missed. Say so and recommend
+  rebucketing or cold storage.
+- A bucket whose window is **in the future** (later season blocks, next-year
+  buckets): idle topics there are parked on purpose. Never call them stale.
+- `UNSORTED` (topic folder sitting in the Drive root) and `no-drive-folder`
+  (not synced yet): these have no plan, so idle ones count. Recommend sorting
+  them into a bucket.
+- Lead the callout with the actionable stale number (current + past windows +
+  unsorted), not the raw total.
 - If inbox is non-empty: "Run `/gw-triage` to sort inbox topics."
-- If any ready topic has no channels posted in 14+ days (compare `last_activity` to today): print a "stale ready topics" callout.
 - If everything is clean: "Queue is healthy. Open the dashboard to post: https://scottleechtraining.com/tools/queue/"
 
 ## Step 8: Auto-deploy the dashboard via Netlify CLI
