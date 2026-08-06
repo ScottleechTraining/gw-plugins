@@ -92,7 +92,7 @@ The highest-frequency task. Post-session, phone in hand, transcript ready.
 ### 2A.1: Identify Content Type
 
 Ask (or infer from context):
-- **Podcast** — 6 assets
+- **Podcast** — UPLOAD-KIT.md + 6-asset pack (two files, see PODCAST section)
 - **Film Study** — 5 assets
 - **Wildcat Webinar** — 6 assets (includes guest share message)
 
@@ -120,39 +120,59 @@ Write all assets in Scott's voice before outputting anything. Then output all at
 
 ---
 
-### PODCAST (6 assets)
+### PODCAST (two files: UPLOAD-KIT.md + 6-asset content pack)
 
-**Asset 1: YouTube Description**
-- 2-3 sentence episode summary. Why a football coach needs to hear this.
-- Timestamps: infer from transcript structure if not explicitly provided. Format: `0:00 Intro`, `2:30 [Topic]`, etc.
-- 3-5 hashtags: `#footballcoach #strengthandconditioning #gridironwarrior` plus 1-2 topic-specific
+Podcast output is TWO files in `_inbox/podcast-[guest-slug]/`. Shipped exemplars:
+`Deliverables/killed/podcast-bryan-kegans/` and `Deliverables/ready/podcast-drew-fopeano/`.
+Scott's standing requirement (2026-08-05): every podcast episode gets the YouTube and
+HelloAudio titles and descriptions, every time, so he can finish the uploads fast.
 
-**Asset 2: HelloAudio Description**
-- 2-3 sentences. Episode number (if known), guest name, topic, why it matters.
-- Plain. No hype.
+**File 1: UPLOAD-KIT.md — the upload surfaces (Scott's two drag-and-drops)**
 
-**Asset 3: Email Announcement**
-- Subject line: lowercase, 4-6 words, curiosity or tension (not the guest's name alone)
-- Opens with "Coach," or jumps straight in
-- 5-6 short paragraphs. Lead with the single best insight from the episode.
-- Why a football coach needs to hear this specific conversation.
-- CTA: listen to the episode. Soft Insiders CTA at the end if relevant.
-- Sign off: Keep the Fire Burning, / Leech
+If an UPLOAD-KIT.md already exists in the topic folder (it is often written right after
+transcript extraction), READ it and keep every pack asset consistent with it. Do not
+regenerate it and do not contradict it. If it does not exist, create it:
 
-**Asset 4: Twitter Thread**
-- Tweet 1: Hook. Bold coaching truth or the episode's sharpest insight. Under 280 chars.
-- Tweets 2-4: Teaching points from the episode. One per tweet. Specific. Under 280 chars each.
-- Tweet 5: Link to episode. Soft CTA. Under 280 chars.
+- Header: "[Guest] Episode Upload Kit" + date, transcript path, runtime, and the note
+  that timestamps come from the transcript's minute markers (about ±15s; if the final
+  export got trimmed, nudge every chapter by the same offset).
+- **YOUTUBE section** (visibility note: UNLISTED first for Insiders early access):
+  - Title under 100 chars, keyword-front, "Hook | Guest Name" shape.
+  - Description: 2 short paragraphs, search terms front-loaded in the first two lines.
+  - CHAPTERS block: `0:00 Intro` first, minute-marker inferred, roughly 15-25 chapters.
+  - SHOW NOTES: 3-4 bullets, what the listener walks away able to do.
+  - Guest links, `Follow me: https://instagram.com/sleech72`, the three sponsor lines
+    (TrainHeroic 90-day trial link, Plyomat, Enduraphin team pricing), Insiders $1 CTA.
+- **HELLOAUDIO section**: keyword-front episode title; 2-paragraph description; trimmed
+  timestamp list (drop intro, sponsor breaks, where-to-find, outro); compact links block.
+- **After the YouTube upload** note: paste the unlisted link into the Insiders post's
+  `[YOUTUBE-LINK]` placeholder.
+- SEO rules + full step definition live in
+  `Deliverables/_plans/podcast-episode-spec.md` (section "Standing pipeline step"):
+  title format `Keyword/hook phrase | Guest Name`, never suffix
+  "| Gridiron Warrior Podcast"; first description sentence carries the main search
+  keyword; hashtags YouTube-only, never in podcast descriptions.
 
-**Asset 5: Instagram Caption**
-- First line is the hook. No setup.
-- 3-4 short punchy sentences.
-- CTA: "Comment PODCAST and I'll send you the link."
-- Max 3 hashtags: `#footballcoach #strengthandconditioning #gridironwarrior`
+**File 2: the content pack (6 promo assets)** — the shipped Kegans/Fopeano/Baetz shape:
 
-**Asset 6: Show Notes**
-- 3-4 bullet points. Key takeaways. Plain language. Coach-friendly.
-- What the listener walks away knowing how to do.
+1. Twitter Thread #1 (teaching)
+2. Twitter Thread #2 (myth-buster or story)
+3. Instagram Carousel #1 slide text + caption (teaching; caption CTA "Comment PODCAST
+   and I'll send you the link."; max 3 hashtags `#footballcoach #strengthandconditioning
+   #gridironwarrior`)
+4. Instagram Carousel #2 slide text + caption (quote carousel or myths-vs-reality)
+5. Email announcement (subject lowercase 4-6 words, curiosity or tension; leads with the
+   episode's best insight; CTA listen to the episode; soft Insiders close; sign off
+   Keep the Fire Burning, / Leech)
+6. Insiders community post, early-access framing, with the `[YOUTUBE-LINK]` placeholder
+
+**No-duplication rule:** the YouTube description, HelloAudio description, and show notes
+live in UPLOAD-KIT.md ONLY. The pack must agree with the kit (same titles, same framing)
+and never restate those three.
+
+**Accuracy rule:** every specific number, time, or claim in the kit or the pack must be
+checkable against the transcript. A compressed claim must be strictly weaker than the
+original, never stronger. Never quote transcript profanity in any asset.
 
 ---
 
