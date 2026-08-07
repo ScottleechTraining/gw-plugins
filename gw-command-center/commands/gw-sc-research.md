@@ -102,6 +102,13 @@ pipeline: gw-sc-research
 
 Move the researched topic from `## Active Queue` to `## Completed` with `- YYYY-MM-DD - [topic name] [topic-slug]` (and `*(auto-picked)*` if applicable). Preserve all other queue entries unchanged.
 
+In `_index.md` (same folder):
+
+- Insert a line at the TOP of the list under `## Daily Research Briefs` (newest first): `- YYYY-MM-DD - [Topic Name](YYYY-MM-DD-topic-slug-brief.md)`. Topic Name is the brief title WITHOUT the `: S&C Research Brief` suffix. Markdown link, not a wikilink (this index deliberately differs from the business index format).
+- Update the frontmatter `updated:` date to today.
+- **Encoding:** unlike the AI/Business indexes and the topic queue (UTF-16LE), this index is plain UTF-8 with LF line endings. Read and write it as UTF-8.
+- Blocked stubs (`status: blocked`) do NOT get an index line; the successful retry's real brief does.
+
 ### 5. Append to wiki log
 
 ```
