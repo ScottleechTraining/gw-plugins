@@ -8,9 +8,11 @@ description: "Sunday synthesis - promote best vault material to wiki concepts, w
 
 Fires every Sunday. Reviews the week's vault deltas. Promotes the best material into wiki concept pages. Writes a themes-of-the-week summary.
 
+Scope: run steps 1 through 7 against the last 7 days of vault deltas. Write only the report and the file edits these steps name, add no report sections beyond the Step 5 template, and start no work the steps do not ask for. Complete every step, including the wiki log line, before you report.
+
 ## Hard guard
 
-This skill's only write surface is `Gridiron Warrior/wiki/`. Check that path for dirt — not the whole tree. Scott routinely has unrelated WIP edits in the repo (scripts, config, drafts), and those should not block the weekly synthesis from updating the wiki.
+This skill's primary write surface is `Gridiron Warrior/wiki/`. The ONLY sanctioned writes outside it are the three `_topic-queue.md` appends in Step 3; nothing else outside wiki/ gets written. Check the wiki path for dirt, not the whole tree. Scott routinely has unrelated WIP edits in the repo (scripts, config, drafts), and those should not block the weekly synthesis from updating the wiki.
 
 Before reading or writing anything, run:
 
@@ -60,7 +62,7 @@ A vault item earns a wiki concept page ONLY when all of these hold:
 
 For each new Dewey note in the week:
 - Score 1-10 on: clarity of teaching, originality, applicability to GW ICP, voice fit, completeness
-- Top 5 of the week get promoted to proper wiki concept pages (in the right domain folder)
+- Up to 5 of the week may be promoted to proper wiki concept pages (in the right domain folder), and only those that clear the promotion criteria above; most weeks fewer clear the bar
 - Others stay in External Library as references
 
 ### 2.5. Surface pending promotion drafts for decision
@@ -196,19 +198,39 @@ applied-edit scoreboards). This pass writes nothing — it produces the
 one paste-ready `/gw-skill-tune apply ...` block for "Your moves". Application
 never happens here; it happens in the session where Scott answers.
 
+### 4.8. Retire or merge pass (propose only)
+
+The wiki gains pages every week and loses none. This step is the Update half of the memory loop: it proposes retirements and merges for Scott's yes, and it NEVER deletes, moves, or merges anything itself.
+
+1. Read `wiki/system/wiki-health-report.md` sections `## True orphans (no inbound links)` and `## Duplicate index.md rows`, AND `wiki/lint-report.md` sections on contradictions, superseded claims, and duplicates (the lint report carries most of the real signal). Note each input's date: if a report is more than 7 days old, say so in the proposals section and treat its candidates as needing re-verification against current disk state before proposing.
+2. For each candidate, classify: **merge into** (name the surviving page), **retire** (move the page to `wiki/pending/_retired/`, never delete), or **keep**. Cap: 5 proposals per week.
+3. Every retire or merge proposal must carry a full evidence block: why it was flagged, when it was last meaningfully updated, what overlaps with the survivor, what unique information would be lost by the move, and the exact destination. An orphan is not the same as obsolete, and a duplicate index row is not the same as duplicate knowledge. **If any evidence field cannot be filled, classify it KEEP / insufficient evidence and do not propose it.**
+4. Suppress any candidate `wiki/system/decisions.md` has already ruled on (same mechanism as Step 4.6); cite the decision in one line instead.
+5. Results go to the Step 5 report's "Retire or merge proposals" section, and each actionable proposal also becomes one paste-ready move in "Your moves".
+
 ### 5. Write weekly synthesis report
 
 Save to `C:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
 
 ```markdown
 ---
-title: "Weekly Synthesis — Week ending YYYY-MM-DD"
+title: "Weekly Synthesis - Week ending YYYY-MM-DD"
 tags: [weekly-synthesis, summary]
 date: YYYY-MM-DD
 pipeline: gw-weekly-synthesis
 ---
 
-# Weekly Synthesis — Week ending YYYY-MM-DD
+# Weekly Synthesis - Week ending YYYY-MM-DD
+
+## The week in five sentences
+
+<The executive read. Five sentences max, prose not bullets: the patterns that recurred,
+any contradiction discovered (two sources disagreeing, a brief built on a fact the
+decisions log already overruled, a report claim that disk state disproves), and every
+promise currently outstanding (to members, to the public, to Scott himself - staged
+drafts awaiting a yes, announced-but-unshipped items). This is the only section Scott
+is guaranteed to read end to end. If a contradiction or broken promise exists, it
+belongs HERE, not buried in an inventory section.>
 
 ## Your moves (paste into Claude)
 
@@ -233,6 +255,13 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 ## Promotion drafts awaiting your call
 
 <the decision table from Step 2.5, or "No promotion drafts pending.">
+
+## Retire or merge proposals
+
+<from Step 4.8: each proposal with its full evidence block, or "No proposals this week"
+plus the input freshness note (health report dated X, lint report dated Y). Candidates
+that defaulted to KEEP / insufficient evidence get one line each, so the pass is visibly
+conservative rather than silently empty.>
 
 ## What got promoted to wiki this week
 
@@ -260,12 +289,23 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 
 <the section produced by Step 4.7, or "No skill tune proposals this week.">
 
+## Wiki health trend
+
+<one or two lines from wiki-health-report.md scorecard vs the prior week: page count,
+orphans, stubs. Numbers only, no prose padding.>
+
 ## Queue health
 
 - Business queue: <N remaining, recommend adding: ...>
 - AI queue: <N remaining, recommend adding: ...>
 - S&C queue: <N remaining, recommend adding: ...>
 ```
+
+Report density: everything below "Your moves" is inventory. Keep those sections table
+and list dense, one line per item, no prose padding. The bracketed counts in the template
+are limits, not starting points; an item expands only when distinct evidence changes the
+recommendation. The two sections above the fold ("The week in five sentences", "Your moves")
+are the read; everything else exists to be skimmed or searched.
 
 All three queue files exist. Open each one and count the lines under its `## Active Queue`
 heading before writing this section. Never report a queue as missing, absent, or "by design
