@@ -4,7 +4,7 @@ model: claude-opus-5
 description: "On-demand corpus search - pull every relevant snippet from across the GW archive on one topic into a single reference doc"
 ---
 
-# /gw-everything-on [topic] — Corpus Mining
+# /gw-everything-on [topic] - Corpus Mining
 
 Scans Scott's entire GW corpus (briefs, voice notes, X bookmarks, Pocket inbox, screenshots OCR, wiki, NotebookLM master notebooks) for everything relevant to one topic and writes it to a single reference doc. Use it when prepping a Film Study, Substack article, Leech Letter, or any output where the differentiator is weaving in material Scott has already saved.
 
@@ -27,7 +27,7 @@ Write ONE file: `C:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-querie
 
 Slug rules: kebab-case the topic, truncate to 40 chars, no special chars. "GPS for film study insiders" → `gps-for-film-study-insiders`.
 
-If the file already exists for today on the same topic, append a `-2` suffix (or `-3`, etc) — never overwrite a prior run on the same day.
+If the file already exists for today on the same topic, append a `-2` suffix (or `-3`, etc) - never overwrite a prior run on the same day.
 
 ## Steps
 
@@ -39,11 +39,11 @@ Take Scott's topic argument and generate 3-7 search terms covering synonyms, rel
 - Topic `deceleration` → `["deceleration", "force absorption", "braking", "eccentric", "landing mechanics", "stopping"]`
 - Topic `Insiders onboarding` → `["onboarding", "first 90 days", "retention", "quick win", "new member", "Insiders welcome"]`
 
-Use Scott's voice vocabulary when expanding (his wiki has terms like "violence is a skill", "stimulate not annihilate", "August is coming" — these matter).
+Use Scott's voice vocabulary when expanding (his wiki has terms like "violence is a skill", "stimulate not annihilate", "August is coming" - these matter).
 
 ### 2. Scan sources in this order
 
-For each source, glob the directory then grep for any of the query terms (case-insensitive, multiline mode where useful). Read matching files. Skip files larger than 50KB unless they contain a direct keyword match — in those, grep for the matches and pull surrounding context (3-5 lines on each side) rather than reading the whole file.
+For each source, glob the directory then grep for any of the query terms (case-insensitive, multiline mode where useful). Read matching files. Skip files larger than 50KB unless they contain a direct keyword match - in those, grep for the matches and pull surrounding context (3-5 lines on each side) rather than reading the whole file.
 
 | # | Source | Path | Notes |
 |---|---|---|---|
@@ -55,8 +55,8 @@ For each source, glob the directory then grep for any of the query terms (case-i
 | 6 | Voice notes | `Voice Corpus\Voice Notes\` and `Voice Corpus\_pocket-inbox\.processed\` | Transcripts |
 | 7 | Podcast transcripts | `Voice Corpus\Podcast Transcripts\*.md` | Verbatim .md siblings of the .docx originals (converted 2026-08-03). The .docx stay canonical; scan the .md. |
 | 8 | Daily seeds | `Deliverables\_daily-seeds\*.md` | Past content angles |
-| 9 | Wiki | `wiki\` | Scott's IP — concepts, summaries, quotes, frameworks |
-| 10 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. Optional — skip if no obvious match. |
+| 9 | Wiki | `wiki\` | Scott's IP - concepts, summaries, quotes, frameworks |
+| 10 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. Optional - skip if no obvious match. |
 | 11 | Course transcripts | `Voice Corpus\Course Transcripts\` | Scott's own course material (GW2, GWI, Contact Prep, Scores and Stops, Film Studies). Highest-authority voice source; when a topic maps to a course, its transcripts anchor the Themes section. |
 
 ### 3. Read budget guidance
@@ -64,18 +64,18 @@ For each source, glob the directory then grep for any of the query terms (case-i
 **No hard cap, but be efficient:**
 - Aim to finish in under 10 minutes wall-clock.
 - Default depth: read top 30-50 highest-signal matches.
-- For each source, if you've already pulled 8-10 relevant excerpts, move on — diminishing returns.
+- For each source, if you've already pulled 8-10 relevant excerpts, move on - diminishing returns.
 - Quote excerpts liberally but tag every quote with its source file path so Scott can trace.
 
 ### 4. Synthesize themes BEFORE listing extracts
 
-Before dumping source-by-source quotes, write a short synthesis section that identifies 3-5 themes Claude saw across the corpus. This is the highest-leverage part of the doc — it's what makes corpus mining different from a grep dump. Themes should be coach-direct phrases ("the AD math nobody wants to do") not generic ("financial considerations").
+Before dumping source-by-source quotes, write a short synthesis section that identifies 3-5 themes Claude saw across the corpus. This is the highest-leverage part of the doc - it's what makes corpus mining different from a grep dump. Themes should be coach-direct phrases ("the AD math nobody wants to do") not generic ("financial considerations").
 
 ### 5. Write the brief in this structure
 
 ```markdown
 ---
-title: "Everything on [topic] — Corpus Query"
+title: "Everything on [topic] - Corpus Query"
 type: corpus-query
 topic: "[original topic argument]"
 topic_slug: [topic-slug]
@@ -96,10 +96,10 @@ pipeline: gw-everything-on
 
 3-5 short headed paragraphs. Each theme = one observation Claude formed across multiple sources. Lead with the insight, then list 2-4 source citations as inline references.
 
-### Theme 1 — [short, coach-direct phrase]
+### Theme 1 - [short, coach-direct phrase]
 [1-3 sentences of synthesis.] (Sources: `path/file.md`, `path/other.md`)
 
-### Theme 2 — ...
+### Theme 2 - ...
 
 ## By Source
 
@@ -171,8 +171,8 @@ cd "C:\Claude Projects\Gridiron Warrior" && git add "Deliverables/_corpus-querie
 
 - Coach-direct. Short sentences. Plain language.
 - No em-dashes. No banned words (see CLAUDE.md).
-- This is a research brief Scott will mine — clarity over polish.
-- Quote excerpts verbatim. Do NOT paraphrase or "clean up" voice note transcripts — preserve the raw register.
+- This is a research brief Scott will mine - clarity over polish.
+- Quote excerpts verbatim. Do NOT paraphrase or "clean up" voice note transcripts - preserve the raw register.
 
 ## Integration with other skills (3-tier policy)
 
@@ -180,11 +180,11 @@ Other skills decide whether to pull from this skill's output before generating t
 
 | Tier | Default | Skills | Behavior |
 |---|---|---|---|
-| 1 — Always pull corpus | ON | `gw-film-study-pipeline` | Film Studies invoke `/gw-everything-on [topic]` before any content production. Output becomes the research feedstock. |
-| 2 — Opt-in flag | OFF (Scott or skill toggles) | `gw-substack-forge`, `gw-content-forge` (content pack mode) | Long-form content can pull corpus when topic depth matters. |
-| 3 — Never pull | OFF (no flag) | `leech-letter-editor`, `ig-carousel`, `gw-content-forge` (transcript mode) | Voice purity / speed beats corpus depth. |
+| 1 - Always pull corpus | ON | `gw-film-study-pipeline` | Film Studies invoke `/gw-everything-on [topic]` before any content production. Output becomes the research feedstock. |
+| 2 - Opt-in flag | OFF (Scott or skill toggles) | `gw-substack-forge`, `gw-content-forge` (content pack mode) | Long-form content can pull corpus when topic depth matters. |
+| 3 - Never pull | OFF (no flag) | `leech-letter-editor`, `ig-carousel`, `gw-content-forge` (transcript mode) | Voice purity / speed beats corpus depth. |
 
-**Principle:** Corpus pull adds depth and cross-reference. It costs voice purity and speed. Use where depth is the product. Skip where voice (Letters) or speed (daily tweets, carousels) is the product. This is ALSO a wiki-contamination guard — without tiering, external research bleeds into every output published under Scott's name.
+**Principle:** Corpus pull adds depth and cross-reference. It costs voice purity and speed. Use where depth is the product. Skip where voice (Letters) or speed (daily tweets, carousels) is the product. This is ALSO a wiki-contamination guard - without tiering, external research bleeds into every output published under Scott's name.
 
 ## Notes
 
