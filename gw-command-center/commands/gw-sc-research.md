@@ -109,13 +109,43 @@ In `_index.md` (same folder):
 - **Encoding:** unlike the AI/Business indexes and the topic queue (UTF-16LE), this index is plain UTF-8 with LF line endings. Read and write it as UTF-8.
 - Blocked stubs (`status: blocked`) do NOT get an index line; the successful retry's real brief does.
 
-### 5. Append to wiki log
+### 5. Add Briefing Room search tags
+
+Append an entry for the new brief slug to
+`C:\Claude Projects\websites\scottleechtraining.com\briefing-room\_build\tags.json`:
+
+```json
+"[topic-slug]": ["keyword one", "keyword two", "keyword three"],
+```
+
+**These are member-facing.** They render as chips on every briefing in The Briefing Room
+(`/briefing-room/`) and they are what the archive search matches against, so a coach finds this
+brief by typing one of them.
+
+Rules:
+
+- 3 to 6 keywords. Lowercase. Plain words or short phrases, the way a high school football coach
+  would type them into a search box.
+- Ground every keyword in the BODY of the brief. Do not repeat words the title already says: the
+  title is searched too, so title words are wasted chips.
+- Prefer the concrete named concept over the vague category: `posterior chain`, `tempo runs`,
+  `acclimatization`, `session rpe`, `peak height velocity`, `stretch shortening cycle`. Not
+  `football`, not `training`, not `strength`.
+- Hyphens only where the term itself is hyphenated (`co-contraction`, `force-time curve`).
+- NEVER include: Dewey, NotebookLM, notebook, Scott, any date, or an em-dash. The Briefing Room
+  build hard-fails on those and the release will not ship.
+- File is plain UTF-8 JSON. Keep it valid; a trailing comma breaks the build.
+
+If a brief ships without an entry, the build prints `WARN no tags.json entry: <slug>` and falls
+back to the raw topic slug. That is a visible defect, not an acceptable default.
+
+### 6. Append to wiki log
 
 ```
 YYYY-MM-DD /gw-sc-research: [topic-slug] (auto_picked: false|true)
 ```
 
-### 6. Do NOT commit
+### 7. Do NOT commit
 
 The `gw-daily-closeout` job commits all approved daily-output paths once, after the morning digest, via `scripts/git_safe_commit.py`. This skill's job ends at writing the brief and the wiki/log.md line.
 
