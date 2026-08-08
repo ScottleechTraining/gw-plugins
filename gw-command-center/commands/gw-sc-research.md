@@ -8,6 +8,8 @@ description: "Daily S&C research - pull top topic from queue, NotebookLM -> brie
 
 Mirror of `/gw-ai-research` and `/gw-business-research` but for strength & conditioning topics drawn from Scott's actual coaching territory. Sources lean on Scott's NotebookLM **S&C Master Resource** notebook plus the Dewey S&C bucket from the daily ingest.
 
+Scope: one topic, one brief, plus the queue, index, tags, and log updates the steps below name. Do not research a second topic, do not add sections the brief template does not have, and do not write files outside the paths this command names. Finish every step through the wiki log line before you report.
+
 ## WIKI CONTAMINATION GUARD (HARD RULE)
 
 This pipeline writes ONLY to `External Library\S-and-C\`. It NEVER writes to `wiki/`. It NEVER adds or modifies wiki concept pages. Promotion of an S&C insight into the wiki happens exclusively through Scott's Sunday `/gw-weekly-synthesis` review. Do not break this wall.
@@ -26,7 +28,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
 
 **Required calls in order:**
 
-1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-05-18 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 102 sources — verify it's still present via the list call before using.
+1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-05-18 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 102 sources.
 
 2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Capture `notebook_id` in the brief frontmatter.
 
@@ -55,6 +57,8 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 The `: S&C Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
+Density: cover only findings that materially affect how Scott would act on this topic. Keep each numbered item to one or two sentences, stay inside the counts the template gives, and expand an item only when a distinct source changes the recommendation. Every template section still gets real content.
 
 ```markdown
 ---

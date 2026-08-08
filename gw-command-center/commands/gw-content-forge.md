@@ -8,6 +8,10 @@ description: "Scott Leech's content production engine. Two modes. TRANSCRIPT MOD
 
 Gridiron Warrior's content production engine. One input. All the assets. Scott's voice every time. Wiki-first, cross-domain integrated, plugged into the queue dashboard.
 
+## Scope
+
+Deliver the full asset set for the mode you pick, and nothing past it. The counts are a floor, not a target: podcast = UPLOAD-KIT.md plus the 6-asset pack, Film Study = 5 assets, Wildcat Webinar = 6 assets, content pack = 8 assets (Asset 8 skips only by its own stated rule). Do not ship fewer assets, do not invent asset types nobody asked for, and finish every asset in the set before you report.
+
 ## Accepted input: $ARGUMENTS
 
 The user will provide one of:
@@ -63,7 +67,7 @@ The vault has three knowledge domains — S&C, Business, AI. Before drafting, sw
 1. **Dewey saves** (`External Library/Twitter-Instagram Saves/`) — Grep for the topic across notes. A relevant Dewey save can supply a powerful quote, counter-example, or proof point.
 2. **Business research briefs** (`External Library/BusinessDocuments/YYYY-MM-DD-*-brief.md`) — If the content is about coaching as a business, a recent business brief may have the exact framework.
 3. **AI research briefs** (`External Library/AI/YYYY-MM-DD-*-brief.md`) — If the content is about AI tooling or workflow automation, pull from here.
-4. **Voice corpus** (`Voice Corpus/Voice Notes/YYYY-MM-DD-*.md`) — HIGH PRIORITY. Scott's first-person voice notes are gold. If a recent voice note mentions this topic, the rough phrasing IS the seed of the content. Use verbatim quotes when possible.
+4. **Voice corpus** (`Voice Corpus/Voice Notes/YYYY-MM-DD-*.md`) — Highest-signal source in the vault. Scott's first-person voice notes are gold. If a recent voice note mentions this topic, the rough phrasing IS the seed of the content. Use verbatim quotes when possible.
 5. **Daily seeds** (`Deliverables/_daily-seeds/`) — Check if a recent seed file already proposed an angle for this topic. If so, build on it rather than starting fresh.
 
 When you find cross-domain material, name it explicitly in the final report:
@@ -439,7 +443,7 @@ NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - full
 
 The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
 
-**The receipt lives in the pack file, not just the wiki.** When Step 4 writes the wiki summary page, the SAME PULLED FROM THE BRAIN block MUST also be appended to the end of the content pack file in `Deliverables/_inbox/[TOPIC-SLUG]/` (this applies to every mode and every caller, including overnight `/gw-nightly-forge` runs). Scott triages from the inbox, not the wiki - a receipt that only exists on the summary page is invisible at triage. Before reporting done, verify the pack file's last section is the receipt.
+**The receipt lives in the pack file, not just the wiki.** When Step 4 writes the wiki summary page, the SAME PULLED FROM THE BRAIN block MUST also be appended to the end of the content pack file in `Deliverables/_inbox/[TOPIC-SLUG]/` (this applies to every mode and every caller, including overnight `/gw-nightly-forge` runs). Scott triages from the inbox, not the wiki - a receipt that only exists on the summary page is invisible at triage.
 
 ---
 

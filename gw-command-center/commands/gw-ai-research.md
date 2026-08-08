@@ -8,6 +8,8 @@ description: "Daily AI research - pull top topic from queue, NotebookLM -> brief
 
 Mirror of `/gw-business-research` but for AI topics.
 
+Scope: one topic, one brief, plus the queue, index, and log updates the steps below name. Do not research a second topic, do not add sections the brief template does not have, and do not write files outside the paths this command names. Finish every step through the wiki log line before you report.
+
 ## Steps
 
 ### 1. Read the queue
@@ -48,6 +50,8 @@ Structured query:
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\AI\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 The `: AI Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
+Density: cover only findings that materially affect how Scott would act on this topic. Keep each numbered item to one or two sentences, stay inside the counts the template gives, and expand an item only when a distinct source changes the recommendation. Every template section still gets real content.
 
 ```markdown
 ---

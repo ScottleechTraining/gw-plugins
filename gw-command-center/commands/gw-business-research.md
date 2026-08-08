@@ -8,6 +8,8 @@ description: "Daily business research - pull top topic from queue, NotebookLM ->
 
 Fires daily. Pulls the top topic from `External Library\BusinessDocuments\_topic-queue.md`. If queue is empty, auto-picks a trending business topic.
 
+Scope: one topic, one brief, plus the queue, index, and log updates the steps below name. Do not research a second topic, do not add sections the brief template does not have, and do not write files outside the paths this command names. Finish every step through the wiki log line before you report.
+
 ## Steps
 
 ### 1. Read the queue
@@ -36,8 +38,8 @@ Use the `mcp__notebooklm__*` MCP server:
 
 **HARD RULE — NotebookLM errors (identical across gw-sc/ai/business-research):** Never write the brief from the web-search sources alone and never present a fallback as a normal brief — the web sources gathered in step 2 are NOT a substitute for the notebook synthesis. But before blocking, classify the error correctly — a transient blip is NOT an auth failure, and the two get different fixes:
 
-1. **Transient error — RETRY first.** A gRPC `INTERNAL` (code 13), `UNAVAILABLE` (14), `DEADLINE_EXCEEDED` (4), a timeout, or any 5xx is a Google-side blip, not a dead token. Retry the failing call (`notebook_create` / `source_add` / `notebook_query`) up to **3 times** with a short backoff (~15s between attempts). A single transient error must never cost the day's brief.
-2. **True auth failure — block with the nlm login fix.** Only when a call returns an auth/permission error (gRPC `UNAUTHENTICATED` code 16, `PERMISSION_DENIED` code 7, or an explicit expired-session message) is the Google session actually dead.
+1. **Transient error — RETRY first.** A gRPC `INTERNAL` (code 13), `UNAVAILABLE` (14), `DEADLINE_EXCEEDED` (4), a timeout, or any 5xx is a Google-side blip, not a dead token. Retry the failing call (`notebook_create` / `source_add` / `notebook_query`) up to **3 times** with a short backoff (~15s between attempts). A single transient error must never cost the day's brief. If `notebook_list` already succeeded this run, the session IS valid — a later failure is transient by definition; retry it, do not call it auth.
+2. **True auth failure — block with the nlm login fix.** Only when `notebook_list` ITSELF returns an auth/permission error (gRPC `UNAUTHENTICATED` code 16, `PERMISSION_DENIED` code 7, or an explicit expired-session message) is the Google session actually dead. (A genuinely missing Chrome/CDP in a headless run also blocks here, with that cause named.)
 3. **Block only after the right trigger:** auth failure, OR transient retries exhausted. Write a STUB brief with `status: blocked`, `notebook_id: null`, `source_count: 0`, and a `block_reason:` of either `auth` or `transient`. The one-line body names the cause and the matching fix — `auth` → "run `nlm login`, then re-invoke"; `transient` → "NotebookLM/Google had a server-side blip after N retries; the token is fine — do NOT run nlm login. Re-invoke or let tonight's run retry." Leave the topic in `## Active Queue` (append ` *(blocked YYYY-MM-DD — <reason>)*`), append the wiki/log line, and exit. Do NOT raw-commit (gw-daily-closeout commits).
 
 A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"` validator in job-contracts.json), so the status grid shows the lane RED and `/gw-morning-readiness` flags YELLOW — two honest signals instead of a fake-fresh green. Scott would rather see one honest "blocked" than a fabricated brief, and he should never be told to `nlm login` when the token works.
@@ -47,6 +49,8 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 Save to `C:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\YYYY-MM-DD-[topic-slug]-brief.md`:
 
 The `: Business Research Brief` title suffix is a parsed contract: `/gw-weekly-synthesis` Step 3 strips it to recover the topic name. Keep the colon delimiter exactly. The em-dash form was retired 2026-07-27 (voice rule); it survives only in legacy briefs, which synthesis still accepts.
+
+Density: cover only findings that materially affect how Scott would act on this topic. Keep each numbered item to one or two sentences, stay inside the counts the template gives, and expand an item only when a distinct source changes the recommendation. Every template section still gets real content.
 
 ```markdown
 ---
