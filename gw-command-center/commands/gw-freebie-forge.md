@@ -109,7 +109,18 @@ Decide one. Name it in Step 6 report so Scott knows the funnel direction.
 
 ### Step 4 — Write the freebie
 
-Interactive HTML is the default per Rule 1. Use the markdown template below only when Rule 1's list-shaped exception applies or Scott named the format. Interactive builds follow Rule 4 and land at `Deliverables\projects\insiders-vault\incoming\<topic-slug>\index.html`.
+Interactive HTML is the default per Rule 1. Use the markdown template below only when Rule 1's list-shaped exception applies or Scott named the format.
+
+#### Interactive path (the default)
+
+1. **Slug and folder.** Kebab-case the topic. Create `Deliverables\projects\insiders-vault\incoming\<topic-slug>\` and build everything as ONE file: `index.html`. This exact location matters twice: the freebies.html scanner discovers `insiders-vault\incoming\**` but only sees `*freebie*.md` under `Deliverables\_inbox`, so an HTML build filed there is invisible to review. And the ledger key is derived from the file path, so never move or rename the folder after this step without re-keying the ledger.
+2. **Start point.** Copy `Deliverables\_templates\_interactive_template.html` if its shell fits; otherwise write fresh. Either way the result obeys Rule 4: single self-contained file, vanilla JS, no framework, no build step, design tokens and fonts exactly as Rule 4 lists them, navy `.hero` header, back-breadcrumb to `/tools/`, printable `@media print` view, sign-off `Keep the Fire Burning. - Leech` plus the Step 3 CTA.
+3. **The interaction is the freebie.** The coach must put something in and get a decision out (calculate, sort, time, score). If you cannot name the input and the decision in one sentence, the teaching is list-shaped: use the markdown path instead. Put the non-trivial logic in pure functions with a `module.exports` guard for headless tests, and wire a `?demo=1` URL hook that pre-fills a realistic scenario.
+4. **Lead capture per Rule 4.** fetch() POST to the shared free-rack Kit form `9647774`; gate state in `tb_email` / `tb_unlocked` localStorage; tool state under `gw-{tool}-{purpose}` keys only.
+5. **Render and exercise it before calling it done.** Open the built file in the browser, load `?demo=1`, click through the interaction, and look at the result. A tool that has not been rendered and clicked is not built. Fix what you see, then re-check.
+6. **Enter the ledger.** Regenerate the review page so the build lands in front of Scott: `cd "C:/Claude Projects/Gridiron Warrior"` then `python -m scripts.gwqueue.build_freebie_review_page`. Rule 5 applies: pending until Scott reviews it on freebies.html.
+
+#### Markdown path (Rule 1 exception only)
 
 Markdown-path structure (one page, printable to PDF):
 
@@ -176,11 +187,13 @@ Write to `C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.
 
 ### Step 5 — Voice check
 
-If `scripts\voice_check.py` exists, run it against the produced freebie:
+If `scripts\voice_check.py` exists, run it against the produced freebie (the guard is a plain text scan, so it works on the interactive `index.html` too):
 
 ```bash
-python "C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md"
+python "C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "C:\Claude Projects\Gridiron Warrior\Deliverables\projects\insiders-vault\incoming\<topic-slug>\index.html"
 ```
+
+Markdown-path builds check `Deliverables\<topic-slug>-freebie.md` instead.
 
 If voice_check returns non-zero (banned words, em-dashes, or other violations), rewrite the offending sections and re-run. Loop max twice. If still failing, surface the voice_check output to Scott and stop.
 
