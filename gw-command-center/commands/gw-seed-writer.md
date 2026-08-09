@@ -131,6 +131,16 @@ Separate from the angles: write ONE question a time-strapped high school footbal
 
 Dedup first: do not repeat one of the 15 tracked questions in `wiki/business/aeo-citation-tracking.md` or a question seeded in the last 14 days of `_daily-seeds/`. Why this exists: AI answer engines cite pages that answer one question cleanly, and AI-search visitors convert at 9x organic rates (2026-08-03 AI brief).
 
+### 3c. Voice gut-check before writing
+
+Every angle's hook and body MUST pass this check:
+- No em-dashes
+- No banned words (fluff, delve, leverage as verb, unlock, etc.)
+- Sounds like a coach in the trenches, not a marketer
+- Could plausibly be the first line of a Leech Letter
+
+If an angle doesn't pass, kill it and try another. Better to produce 1 strong angle than 3 weak ones.
+
 ### 4. Final em-dash self-check, THEN write the seed file
 
 **Do this before the file is saved, not after.** Read back the full draft you are about to write and scan it character by character for em-dashes (U+2014) and en-dashes (U+2013). Check every one of these, because they are where the regression landed:
@@ -205,16 +215,6 @@ The TOP MOVE above is today's recommendation. Other angles are backup if the top
 
 Do NOT run `git commit`. The `gw-daily-closeout` job commits all approved daily-output paths once, after the morning digest, via `scripts/git_safe_commit.py`. This skill's job ends at writing the seed file and the wiki/log.md line.
 
-## Voice gut-check before writing
-
-Every angle's hook and body MUST pass this check:
-- No em-dashes
-- No banned words (fluff, delve, leverage as verb, unlock, etc.)
-- Sounds like a coach in the trenches, not a marketer
-- Could plausibly be the first line of a Leech Letter
-
-If an angle doesn't pass, kill it and try another. Better to produce 1 strong angle than 3 weak ones.
-
 ## Voice check (runtime enforcement)
 
 After writing the seed file, run the voice-check guard against the output. **`--strict` is mandatory here**: without it the guard scores em-dashes as a warning you are allowed to accept, which is exactly how 13 of them shipped on 2026-07-26. With it, an em-dash is a hard blocker.
@@ -234,44 +234,11 @@ The guard parses the canonical banned-words list from CLAUDE.md, so it stays in 
 
 ## After writing the daily seed: append forge ideas to backlog
 
-For each angle in today's seed that has a `/gw-content-forge "..."` recommendation, append a new entry to `queue-state.json`'s `forge_backlog` array. Skip duplicates (same slug already present).
+The appender harvests the `/gw-content-forge "..."` lines straight from the seed file you just wrote, so there is nothing to fill in. Run:
 
 ```bash
-python -c "
-import json, pathlib, re
-new_entries = [
-    # FILL THIS IN per today's angles. Example:
-    # {'title': '...', 'format': 'Twitter thread', 'score': '19/20'},
-]
-p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
-data = json.loads(p.read_text(encoding='utf-8'))
-backlog = data.setdefault('forge_backlog', [])
-existing_slugs = {e['slug'] for e in backlog}
-
-def slugify(title):
-    head = title.split(',')[0].strip().lower()
-    s = re.sub(r'[^a-z0-9]+', '-', head)
-    return re.sub(r'-+', '-', s).strip('-')[:80]
-
-from datetime import date
-today = date.today().isoformat()
-seed_file = f'_daily-seeds/{today}.md'
-added = 0
-for entry in new_entries:
-    slug = slugify(entry['title'])
-    if slug in existing_slugs:
-        continue
-    backlog.append({
-        'slug': slug,
-        'title': entry['title'],
-        'format': entry.get('format'),
-        'score': entry.get('score'),
-        'source': seed_file,
-        'added': today,
-        'status': 'pending',
-    })
-    added += 1
-p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
-print(f'Added {added} new backlog entries')
-"
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.append_forge_ideas --from-seed today
 ```
+
+It uses the same canonical slug as the nightly backfill and only appends slugs not already in `forge_backlog`. Report the module's `appended N new` line. Do NOT re-implement the append inline: two inline slugify copies hard-cut long slugs at 80 chars, diverged from the canonical word-boundary trim, and produced duplicate backlog rows (fixed 2026-08-09).

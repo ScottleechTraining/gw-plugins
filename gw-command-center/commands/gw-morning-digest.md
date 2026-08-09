@@ -6,21 +6,13 @@ description: "Daily morning digest - synthesize the overnight pipeline output in
 
 # /gw-morning-digest - Daily Action-Oriented Briefing
 
-
-
 Fires daily at 7:15am after the rest of the morning pipeline has finished. Reads everything the pipeline produced overnight, maps it to GW products, and writes an action-oriented digest that Scott reads with morning coffee to decide what to dig into first.
 
 Scope: the three files named under Output targets, the forge_backlog append in Step 6, and the one wiki/log.md line in Step 7. That set is the floor and the ceiling. Do not add sections the digest structure does not name, do not build extra pages or send extra mail, and do not stop before the log line.
 
-
-
 ## Output targets
 
-
-
 Write THREE files (all overwritten each morning):
-
-
 
 1. `C:\Claude Projects\Gridiron Warrior\_morning-briefing.md` - markdown source-of-truth, archived to git
 
@@ -28,19 +20,11 @@ Write THREE files (all overwritten each morning):
 
 3. `C:\Claude Projects\Gridiron Warrior\_dashboard-index.html` - self-contained dashboard page (4-panel dropdown) that the `build-gw-dashboard.ps1` script deploys to Netlify each morning
 
-
-
 The PowerShell email script reads the `.html` file and sends it as an HTML email to scott@scottleechtraining.com. The dashboard build script reads `_dashboard-index.html` and deploys it to Netlify.
-
-
 
 ## What to read (in this order)
 
-
-
 Use the local operational date in `America/New_York`. Do not use the UTC date for file matching.
-
-
 
 1. `scripts\health\*-YYYY-MM-DD.status.json` - scoreboard source of truth. Read these before judging whether a pipeline ran, blocked, or missed.
 
@@ -56,15 +40,9 @@ Use the local operational date in `America/New_York`. Do not use the UTC date fo
 
 7. `External Library\BusinessDocuments\_topic-queue.md`, `External Library\AI\_topic-queue.md`, `External Library\S-and-C\_topic-queue.md` - queue depths
 
-
-
 Dewey, screenshots, voice notes are intentionally NOT read here. Their daily counts and standouts already land in `wiki/log.md` via the `/gw-dewey-daily`, `/gw-screenshot-ingest`, and `/gw-voice-ingest` skills, and the Dewey daily confirmation arrives in a separate email. Pull their numbers from `wiki/log.md` only.
 
-
-
 ## Operational truth rules
-
-
 
 - If a status file exists for a gate, trust it over inference from missing output files.
 
@@ -80,11 +58,7 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 - Old weekly batch files under `wiki\pending\` are historical artifacts unless Scott explicitly asks about them.
 
-
-
 ## Digest structure (markdown source)
-
-
 
 Write the markdown file using this exact structure. Keep it tight - every section earns its spot.
 
@@ -92,51 +66,29 @@ Density: one line per item, and an item earns its line only if it changes what S
 
 Opportunity Radar rule: before writing, check `Gridiron Warrior/wiki/business/opportunity-radar.md`. If it gained a RUN-WITH-IT entry since the last digest (unchecked, score 80+), name it in its own line at the top of Today's Move: what the idea is, its score, and the save it came from. Scott decides same-week: build, park, or kill. If nothing new, say nothing.
 
-
-
 ```markdown
 
 Subject: GW Daily - YYYY-MM-DD - <3-word essence of today's move>
 
-
-
 # GW Daily - YYYY-MM-DD
-
-
 
 ## Today's Move
 
-
-
 ONE action. The single highest-leverage thing to do today. One sentence. Bold the verb. Reference the file or command it lives in.
-
-
 
 Example: **Run** `/gw-content-forge "1,808 saved posts - saving vs doing"` to expand Angle 1 from today's seed.
 
-
-
 ## If You Have Time
-
-
 
 Up to 2 more actions. One line each. Skip the section entirely if there's only the one move.
 
-
-
 - (one-line action with file ref)
 
 - (one-line action with file ref)
-
-
 
 ## What's New
 
-
-
 One line per source. Skip lines for sources with zero new items. Lead with the count, then the standout. Dewey / voice / screenshot counts come from `wiki/log.md` only - do NOT open those folders.
-
-
 
 - **Business brief**: <topic-slug>. <one-line takeaway>.
 
@@ -150,15 +102,9 @@ One line per source. Skip lines for sources with zero new items. Lead with the c
 
 - **Screenshots** (from log): N processed.
 
-
-
 ## Heads Up
 
-
-
 ONLY include this section if there's something to flag. Otherwise omit entirely.
-
-
 
 - Queue: <Business N / AI N / S&C N> (flag if any < 5)
 
@@ -166,23 +112,13 @@ ONLY include this section if there's something to flag. Otherwise omit entirely.
 
 - Flagged from yesterday: <if any>
 
-
-
 ## Today's Seed Angles
-
-
 
 Paste the daily seed angles verbatim. These ARE the day's content raw material.
 
-
-
 ## Deep Dive
 
-
-
 File paths for anything mentioned above, listed for the laptop session later in the day.
-
-
 
 - Seed: `Deliverables\_daily-seeds\YYYY-MM-DD.md`
 
@@ -196,15 +132,9 @@ File paths for anything mentioned above, listed for the laptop session later in 
 
 ```
 
-
-
 ## HTML structure (email body)
 
-
-
 Write `_morning-briefing.html` with the SAME content rendered for mobile email clients (iOS Mail, Gmail iOS, Gmail Android). Rules:
-
-
 
 - Doctype HTML4 transitional, table-based layout (NOT divs/flex - clients strip them)
 
@@ -235,8 +165,6 @@ Write `_morning-briefing.html` with the SAME content rendered for mobile email c
 - NO emoji in headings (render inconsistently on phone)
 
 - Skeleton template:
-
-
 
 ```html
 
@@ -304,27 +232,15 @@ Write `_morning-briefing.html` with the SAME content rendered for mobile email c
 
 ```
 
-
-
 DO NOT include the `Subject:` line in the HTML body (the sender extracts it from the .md and sets it separately).
-
-
 
 ## Dashboard structure (`_dashboard-index.html`)
 
-
-
 This is the self-contained file deployed to Netlify each morning by `build-gw-dashboard.ps1`. ONE HTML document. Phone-first **editorial sports tabloid** aesthetic - think SI 1987 + locker room + Coach Leech voice. Confident, tactile, magazine-issue energy.
-
-
 
 **DO NOT regress this to generic SaaS dashboard styling** (light gray bg + white card + system fonts + plain dropdown). The bold design is intentional and on-brand. If you find yourself reaching for `-apple-system` or `border-radius: 8px` on the card, stop - the spec below is the design.
 
-
-
 Rules:
-
-
 
 - Doctype HTML5. `<meta name="robots" content="noindex,nofollow">` REQUIRED in head.
 
@@ -360,7 +276,7 @@ Rules:
 
   - `<main class="paper">` - max-width 760px centered container. Inside: four `<section class="panel">` blocks, only `.active` visible.
 
-  - `<footer class="colophon">` - tiny letterspaced Oswald caps, "Keep the Fire Burning" in URI red, then "Leech Â· Gridiron Warrior" in muted gray.
+  - `<footer class="colophon">` - tiny letterspaced Oswald caps, "Keep the Fire Burning" in URI red, then "Leech · Gridiron Warrior" in muted gray.
 
 - **Typography rules inside panels:**
 
@@ -392,7 +308,7 @@ Rules:
 
   - **Today panel** = the full digest content (same content as the email body). "Today's Move" wrapped in `<div class="today-move">`, then h2 bars for If You Have Time / What's New / Today's Seed Angles / Deep Dive. Each seed angle gets an h3 with red leading border. Seed pull-quotes use `class="quote"`.
 
-  - **AI / Business / S&C panels** = the full content of today's brief, rendered as clean HTML. Strip YAML frontmatter. Convert markdown to HTML: `## Heading` â†’ `<h2>`, `### Subhead` â†’ `<h3>`, lists, blockquote, code for inline code/paths. Topic name from frontmatter is the `<h1>`.
+  - **AI / Business / S&C panels** = the full content of today's brief, rendered as clean HTML. Strip YAML frontmatter. Convert markdown to HTML: `## Heading` -> `<h2>`, `### Subhead` -> `<h3>`, lists, blockquote, code for inline code/paths. Topic name from frontmatter is the `<h1>`.
 
   - Sign-off at bottom of every panel: `<p class="signoff"><strong>Keep the Fire Burning,</strong> / Leech</p>`.
 
@@ -400,11 +316,7 @@ Rules:
 
 - **Issue date format:** dots not dashes in the masthead (`2026.05.18`), per editorial convention. Keep dashes in file paths.
 
-
-
 Skeleton template (use this exactly - replace YYYY.MM.DD with the dotted date for masthead, YYYY-MM-DD with the standard date in file paths, and the content inside each `<section class="panel">`):
-
-
 
 ```html
 
@@ -698,11 +610,7 @@ Skeleton template (use this exactly - replace YYYY.MM.DD with the dotted date fo
 
 ```
 
-
-
 ## Voice and tone
-
-
 
 - Action-oriented. Every bullet should imply a concrete next step.
 
@@ -712,15 +620,9 @@ Skeleton template (use this exactly - replace YYYY.MM.DD with the dotted date fo
 
 - If something has no clear GW application, do NOT force one. Better to have a short section than padded fluff.
 
-
-
 ## Read budget (HARD CAPS - do not exceed)
 
-
-
 This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline:
-
-
 
 - **Max 8 individual Read tool calls for the narrative sources** (seed, three briefs, wiki/log tail). Status files and queue files sit outside that count: read them in one batched pass, not one Read each. This is a synthesis pass, not an archival pass.
 
@@ -734,11 +636,7 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 - If you hit the read cap mid-pass, STOP and synthesize with what you have. A short crisp digest beats a long thorough one for the morning-email use case.
 
-
-
 ## Steps
-
-
 
 ### 1. Read only the inputs above, within the read budget
 
@@ -746,41 +644,20 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 ### 3. Write `_morning-briefing.md` at vault root (overwrite, don't append)
 
-### 4. Render the same content into `_morning-briefing.html` using the email HTML rules above (overwrite, don't append). Both files must reflect the same digest content; HTML omits the `Subject:` line. **Include the "Open Dashboard â†’" button at the top of the email body** linking to `https://gw-command-center.netlify.app`.
+### 4. Render the same content into `_morning-briefing.html` using the email HTML rules above (overwrite, don't append). Both files must reflect the same digest content; HTML omits the `Subject:` line. **Include the "Open Dashboard ->" button at the top of the email body** linking to `https://gw-command-center.netlify.app`.
 
 ### 5. Write `_dashboard-index.html` at vault root (overwrite, don't append). One self-contained HTML file with the 4-panel dropdown described in the Dashboard structure section. Today's Briefing panel mirrors the email body content. The AI / Business / S&C panels render the FULL today's brief (frontmatter stripped, markdown converted to clean HTML). If a brief file is missing for today, that panel shows "No brief produced today. Check pipeline logs."
 
 ### 6. Append every forge suggestion in this digest to the backlog
 
-Every `/gw-content-forge "..."` you printed in Today's Move / If You Have Time (the digest often rewrites the seed's hook, so these phrasings would otherwise never reach the queue). Append each to `queue-state.json`'s `forge_backlog`, additive with slug dedup. Do NOT rebuild the array. Fill `titles` with the exact quoted text of each forge suggestion in today's digest.
+Every `/gw-content-forge "..."` you printed in Today's Move / If You Have Time (the digest often rewrites the seed's hook, so these phrasings would otherwise never reach the queue). The appender harvests them straight from the `_morning-briefing.md` you wrote in Step 3, so there is nothing to fill in. Run:
 
 ```bash
-python -c "
-import json, pathlib, re
-from datetime import date
-titles = [
-    # FILL IN: exact text inside each /gw-content-forge \"...\" you printed today.
-]
-p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.json')
-data = json.loads(p.read_text(encoding='utf-8'))
-backlog = data.setdefault('forge_backlog', [])
-existing = {e['slug'] for e in backlog}
-def slugify(t):
-    head = t.split(',')[0].strip().lower()
-    s = re.sub(r'[^a-z0-9]+', '-', head)
-    return re.sub(r'-+', '-', s).strip('-')[:80]
-today = date.today().isoformat()
-added = 0
-for t in titles:
-    slug = slugify(t)
-    if slug in existing: continue
-    backlog.append({'slug': slug, 'title': t, 'format': None, 'score': '14/20',
-                    'source': f'daily-report {today}', 'added': today, 'status': 'pending'})
-    existing.add(slug); added += 1
-p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
-print(f'forge_backlog: appended {added} suggestion(s) from today\'s digest')
-"
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.append_forge_ideas --from-report today
 ```
+
+It uses the same canonical slug as the nightly backfill and only appends slugs not already in `forge_backlog`. Do NOT re-implement the append inline: two inline slugify copies hard-cut long slugs at 80 chars, diverged from the canonical word-boundary trim, and produced duplicate backlog rows (fixed 2026-08-09).
 
 The nightly forge picker applies its own novelty gate on top of this, so a paraphrase that duplicates an already-forged topic is dropped at pick time. This step only makes sure the idea reaches the queue instead of leaking.
 
@@ -796,11 +673,7 @@ YYYY-MM-DD /gw-morning-digest: digest written (1 top move, N new vault items)
 
 The `gw-daily-closeout` job runs after this digest and commits all approved daily-output paths once, via `scripts/git_safe_commit.py`. This skill's job ends at writing `_morning-briefing.md`, `_morning-briefing.html`, `_dashboard-index.html`, and the wiki/log.md line.
 
-
-
 ## Notes
-
-
 
 - Email send is handled by a separate PowerShell script in the wrapper, NOT by this skill. This skill ONLY writes the files.
 
