@@ -14,7 +14,7 @@ Two ways in:
 
 **A. Explicit list.** A list of content-pack folders (from `Deliverables/ready/` or `Deliverables/_inbox/`) or slugs, plus the style pack chosen for each carousel.
 
-**B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Two kinds of waiting work:
+**B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Three kinds of waiting work:
 
 1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and wait for confirmation or swaps before building.
 2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
@@ -27,6 +27,8 @@ Pack rules for both modes:
 - Attended and a pack is missing or unclear: recommend one from the quick-reference table and ask to confirm. Never build on a guess.
 - If invoked unattended (no human to answer), skip any carousel without a confirmed pack and record it in the skipped list. Do not guess a pack.
 
+Build the confirmed slugs in the assignment table and stop there. Do not restyle carousels nobody flagged, do not edit the source content packs, and do not leave a confirmed slug unbuilt.
+
 ## 2. Photo assignment (centrally, FIRST)
 
 Before spawning any agents:
@@ -36,7 +38,9 @@ Before spawning any agents:
 3. Never assign the same photo to two carousels in the batch.
 4. Record the full assignment table (slug, style pack, content-pack path, assigned photo path) before anything is spawned. This table is the source of truth for the whole run.
 
-## 3. Spawn subagents in waves of ~5
+## 3. Build (spawn subagents at 3+ carousels)
+
+One or two carousels: build them yourself, no agents. Three or more: spawn one agent per carousel, at most 5 running at once, next wave after the current one verifies.
 
 Each subagent builds ONE carousel using the `ig-carousel` skill. Spawn with `model: sonnet` set explicitly on every agent (never inherit).
 

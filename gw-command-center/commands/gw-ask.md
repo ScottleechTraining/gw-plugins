@@ -8,8 +8,10 @@ description: "Ask the GW second brain any question. Searches wiki + Voice Corpus
 
 1. Parse the question into 2-4 search terms plus close synonyms.
 2. Grep `Gridiron Warrior/wiki/` (all folders) and `Gridiron Warrior/Voice Corpus/` for matches. Never read External Library unless Scott explicitly says so.
-3. Read the top matching pages fully. Follow wikilinks one hop when they answer the question.
+3. Read the top 5 matching pages fully. Follow wikilinks one hop when they answer the question.
 4. Answer in under 200 words, in plain language. Every claim cites its page like: (concepts/minimal-effective-dose).
 5. End with two lines:
    - SOURCES: the pages used.
    - GAP: if the brain had no good answer, name the missing concept page and offer to create the stub.
+
+Deliver the answer plus the two closing lines. Nothing else: no new wiki pages, no content drafts, no follow-on commands. If the answer needs three sentences, write three.

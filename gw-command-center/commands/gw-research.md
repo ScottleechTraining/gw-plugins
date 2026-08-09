@@ -58,10 +58,10 @@ Build the command dynamically from the URL list. Up to 50 sources allowed.
 
 ## Step 5: Query for Coaching Brief
 
-Wait 10-15 seconds for NotebookLM to process sources, then:
+Poll the notebook's source status until processing finishes (foreground sleep is blocked in this runtime), then:
 
 ```bash
-source ~/.bashrc && PYTHONUTF8=1 nlm notebook query [NOTEBOOK_ID] "You are helping a high school football strength and conditioning coach. Generate a structured coaching brief on $ARGUMENTS. Include: (1) 3-5 core training principles from the sources, (2) 3-5 actionable programming recommendations a coach can implement this week, (3) the 2-3 most common mistakes coaches make with this topic, (4) one quote or specific insight from the sources that would resonate with a football coach. Be direct and specific. No fluff."
+source ~/.bashrc && PYTHONUTF8=1 nlm notebook query [NOTEBOOK_ID] "You are helping a high school football strength and conditioning coach. Generate a structured coaching brief on $ARGUMENTS. Include: (1) 3-5 core training principles from the sources, (2) 3-5 actionable programming recommendations a coach can implement this week, (3) the 2-3 most common mistakes coaches make with this topic, (4) one quote or specific insight from the sources that would resonate with a football coach. Be direct and specific. Skip the filler."
 ```
 
 Parse the answer from the JSON response (`value.answer` field).
@@ -151,6 +151,8 @@ source_brief: research-[topic-slug]
 
 > Stub auto-created during research on **[TOPIC]** on [YYYY-MM-DD]. Expand during weekly lint or when this concept gets used in a Film Study or content pack.
 
+Stubs stay stubs: two sentences per section, only what the brief actually states. Do not pad a stub with general knowledge.
+
 ## What it is
 
 [1-2 sentences from the Core Principle paragraph in the brief: the operational definition. Strip "you should..." / "coaches must..." phrasing, lead with what the thing IS.]
@@ -189,9 +191,13 @@ Tell Scott:
 
 ## Error Handling
 
-- If `nlm notebook query` returns empty, wait 20 seconds and retry once.
+- If `nlm notebook query` returns empty, re-poll source status once, then retry the query once.
 - If fewer than 3 YouTube URLs found, ask Scott before proceeding.
 - If vault path doesn't exist, create it.
+
+## Scope
+
+Deliver steps 1-8 and stop: brief, wiki summary, index and log lines, concept stubs, report. Do not run a Content Forge pass, do not draft content, do not create the notebook's artifacts (audio, slides).
 
 ---
 

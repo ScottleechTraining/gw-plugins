@@ -23,7 +23,7 @@ Scott makes the final R/C/K/S call, but every preview must carry a suggested ver
 1. **Hook strength for the ICP**: does the first line stop a time-strapped HS football or S&C coach mid-scroll? Names a specific mistake, decision, or fear (letting athletes down, kids getting dominated), not a vague theme. Weak/generic hook is the most common reason a pack is not Ready.
 2. **Teaching novelty**: does it teach something not already sitting in `ready/` or `archived/`? A near-duplicate of a shipped or queued topic is Cold at best, never Ready. Same angle already published = Cold. Genuinely new teaching = Ready-eligible.
 3. **Seasonal timing**: is it on-calendar right now (August is coming, camp prep, in-season CNS, offseason build)? On-window and strong pushes toward Ready. On-window is a tie-breaker up, not a rescue for a weak hook. Off-season-but-evergreen is fine; off-season-and-dated leans Cold.
-4. **Offer alignment**: does it feed a live offer: Insiders ($29/mo, primary MRR), the Schools funnel (Summer/Inseason in a Day → GW Schools), Summit (July 18), or a course (GW2.0 / Contact Prep / Scores and Stops / Second Brain)? A pack with a clear CTA into an offer beats one that teaches into a dead end.
+4. **Offer alignment**: does it feed a live offer: Insiders ($29/mo, primary MRR), the Schools funnel (Summer/Inseason in a Day → GW Schools) or a course (GW2.0 / Contact Prep / Scores and Stops / Second Brain)? A pack with a clear CTA into an offer beats one that teaches into a dead end.
 
 **Verdict rule (suggested, Scott confirms):**
 - **Ready**: strong hook AND novel teaching AND (on-window OR clean offer alignment). The pack earns a spot in the publish queue as-is.
@@ -34,6 +34,8 @@ Scott makes the final R/C/K/S call, but every preview must carry a suggested ver
 **Tie-breaks:** Ready vs Cold, and the hook is anything short of strong → Cold. Cold vs Kill → Cold. On-window but duplicative → Cold (timing does not beat novelty). Two Ready-eligible packs competing for attention → the one with the tighter offer CTA wins.
 
 **Default when uncertain: Cold-storage. Never Kill on doubt.** Cold is reversible with one move back to `_inbox/`. Kill is a `git rm`. When you cannot decide, the answer is Cold.
+
+Preview every topic in the inbox, one suggested verdict each, then execute only the confirmed moves. Do not rewrite packs, build missing assets, or triage folders outside `_inbox/`.
 
 ## Step 1: Check the inbox
 
@@ -58,7 +60,7 @@ Format the preview compactly:
 ```
 [1/5] sample-topic-slug
   Created: 2026-06-01
-  Assets: ✅ content-pack ✅ carousel ⬜ substack ⬜ research-brief
+  Assets: [x] content-pack [x] carousel [ ] substack [ ] research-brief
   Preview:
     > # Content Pack: Sample Topic
     > Voice: Scott Leech. Short sentences.
@@ -120,7 +122,7 @@ git mv "_inbox/<slug>" "cold-storage/<slug>"
 git rm -r "_inbox/<slug>"
 ```
 
-For R+ decisions, also update `queue-state.json` to set `carousel_needs_polish: true` on those topics. Easiest way: do this AFTER running `/gw-queue` (Step 7) by directly patching the JSON:
+For R+ decisions, also update `queue-state.json` to set `carousel_needs_polish: true` on those topics. Easiest way: do this AFTER running `/gw-queue` (Step 6) by directly patching the JSON:
 
 ```python
 import json, pathlib

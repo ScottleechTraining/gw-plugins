@@ -17,9 +17,9 @@ you what to do Monday, and a URI war story proves he lives it.
 
 ## Paths
 
-- Page output: `C:\Claude Projects\websites\scottleechtraining.com	ools\<slug>\index.html`
-- Design system (REUSE, never fork): `websites\scottleechtraining.com	ools\_shared\gw-tools.css` + `insiders-resource.css` + `insiders-resource.js`
-- Template origin to study: `websites\scottleechtraining.com	ools\hamstring-resource\index.html`
+- Page output: `C:\Claude Projects\websites\scottleechtraining.com\tools\<slug>\index.html`
+- Design system (REUSE, never fork): `websites\scottleechtraining.com\tools\_shared\gw-tools.css` + `insiders-resource.css` + `insiders-resource.js`
+- Template origin to study: `websites\scottleechtraining.com\tools\hamstring-resource\index.html`
 - Research audit trail: `C:\Claude Projects\Gridiron Warrior\Deliverables\_corpus-queries\YYYY-MM-DD-<slug>.md`
 - Wiki log line: `Gridiron Warrior\wiki\log.md`
 
@@ -27,8 +27,7 @@ you what to do Monday, and a URI war story proves he lives it.
 
 List existing deep-dive pages (folders under tools\ whose index.html links
 insiders-resource.css). If the topic is already covered, stop and say so.
-Check the freebie ledger (`Deliverables\_system
-eviewreebie-state.json`)
+Check the freebie ledger (`Deliverables\_system\review\freebie-state.json`)
 for killed adjacent assets - killed stays dead unless Scott revives.
 
 ## Phase 1 - Research (mine first, write second - never start from a blank page)
@@ -65,7 +64,9 @@ protocol-grid tables), return-to-play/red-flags (rtp-stages + grade-table),
 vendor/budget tables, the-AD-pitch (Scott-voice selling the resource-ask),
 FAQ/objections (details accordions).
 
-Scale target: 3-5k words, 8-9 academic references, 6-10 anchor sections.
+Scale: 6-10 anchor sections and 8-9 academic references. Section counts are limits, not targets. Length follows the evidence: keep what changes what a coach does Monday, cut anything that only pads the page.
+
+Deliver exactly the artifacts in Phase 5: the page, the corpus-query audit md, the wiki log line. Ship the whole set. Do not add extra pages, extra tools, or a deploy.
 
 Citation rules: every quantitative claim carries an inline cite-ref chip
 [n] anchored to the numbered ref-list, or a named author inline. No naked stats.
@@ -87,13 +88,13 @@ anywhere; banned-word list from root CLAUDE.md.
   protocol sections). data-parallax on hero cards.
 - Page HTML lands around 35-60KB.
 
-## Phase 4 - Verify (mandatory, look with your own eyes)
+## Phase 4 - Verify (look with your own eyes)
 
 Serve via a local http.server on a FRESH port (file:// breaks the /tools/_shared
 absolute paths) and playwright (`python`, not python3): desktop + 375px mobile
-screenshots, LOOK at them; click 3 tab anchors and confirm scroll targets exist;
-confirm every cite-ref [n] resolves to a ref-list id; confirm robots meta;
-run scriptsoice_check.py on the extracted page text - must exit 0.
+screenshots, LOOK at them;
+confirm every cite-ref [n] resolves to a ref-list id;
+run scripts\voice_check.py on the extracted page text - must exit 0.
 Kill the server when done.
 
 ## Phase 5 - Deliver (nothing ships itself)

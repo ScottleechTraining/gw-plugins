@@ -26,10 +26,10 @@ For each image:
 - OCR via Read tool (multi-modal)
 - Classify as: `coaching` / `business` / `ai` / `personal-skip`
 - If not personal-skip:
-  - Write a markdown note in `External Library\Screenshots\processed\[domain]\YYYY-MM-DD-HHMMSS-[slug].md`
+  - Write a markdown note in `External Library\Screenshots\processed\YYYY-MM-DD-[slug].md` (flat folder, domain lives in frontmatter; this matches /gw-screenshot-ingest, which owns this inbox)
   - Note includes: source frontmatter (`type: screenshot`, `captured: <date>`, `domain: <coaching|business|ai>`, `wiki_links: [...]`), OCR'd text, GW relevance ("Could feed:" suggestions), wikilinks where matches exist
-  - Move original image to `External Library\Screenshots\archive\YYYY-MM\` (mkdir if missing)
-- If personal-skip: move to archive without writing a note
+  - Rename the original to match the note slug and leave it beside the note in `processed/`
+- If personal-skip: delete the original or move it to `processed/`, write no note
 
 Report counts: `N processed, M skipped, K skipped-personal`.
 
@@ -69,7 +69,7 @@ Check:
 Use this exact format:
 
 ```
-GW DAILY — YYYY-MM-DD
+GW DAILY: YYYY-MM-DD
 ─────────────────────
 GIT SYNC      : <ok / conflicts>
 SCREENSHOTS   : N processed (coaching: X, business: Y, ai: Z), M personal-skipped
@@ -84,6 +84,7 @@ TODAY'S SEED ANGLES:
 
 ## Notes
 
-- This command should complete in under 5 minutes
+- Keep each screenshot and voice note to one pass. Do not re-read or re-summarize items already filed.
+- Deliver steps 1-6 and the report block. Do not draft content, run a forge, or fix anything you surface: name it under ATTENTION and stop.
 - Do NOT auto-publish anything
 - If anything is ambiguous, default to surfacing it for Scott rather than guessing

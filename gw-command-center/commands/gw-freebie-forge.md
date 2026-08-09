@@ -8,6 +8,8 @@ description: "Generate a lead magnet from a brief or content source. Interactive
 
 Takes any brief, transcript, or content source. Produces one-page, printable lead magnet that funnels readers into the right paid offer. Coach-direct. Scott's voice. No commit. No autonomous distribution.
 
+Deliver one freebie plus the Step 6 report. Every teaching point in it must change what a coach does; template sections are limits, not slots to fill. Do not build a second variant, a companion asset, or a promo post.
+
 ## Accepted input: $ARGUMENTS
 
 The user provides a file path. Typical inputs:
@@ -33,12 +35,11 @@ written for whichever model runs this command - no session memory required.
 
 **Rule 0 - THE DEDUP GATE. Run it before creating anything.**
 Check, in order:
-1. `C:\Claude Projects\websites\scottleechtraining.com	ools\index.html` - the Toolbox
+1. `C:\Claude Projects\websites\scottleechtraining.com\tools\index.html` - the Toolbox
    inventory (interactive tools: program audit, high/low CNS planner, training age sort,
    missed lifts tree, session conductor, floor clock, sled load calculator, tri-set timer,
    8-week team talks, hamstring resource, GPS for football).
-2. `C:\Claude Projects\Gridiron Warrior\Deliverables\_system
-eviewreebie-state.json` -
+2. `C:\Claude Projects\Gridiron Warrior\Deliverables\_system\review\freebie-state.json` -
    the freebie ledger. `killed` means dead: never rebuild without Scott explicitly reviving it.
 3. `Deliverables\projects\insiders-vault\VAULT-MANIFEST.md` - what members already have.
 If the job is already done by a site tool, DO NOT build a shadow PDF of it. Output a short
@@ -56,7 +57,7 @@ Posters are dead - Scott has killed every poster variant. Do not produce them.
 Any threshold, percentage, rep rule, or protocol in the freebie must trace to a wiki concept
 page, a Voice Corpus source, or a dated NotebookLM brief. If the number is not written down
 somewhere in the vault, query NotebookLM and write the brief first (pattern:
-`websites\scottleechtraining.com	ools\_plansrief-*.md`).
+`websites\scottleechtraining.com\tools\_plans\brief-*.md`).
 
 **Rule 3 - THE FRESHNESS TEST.**
 Before building, answer in one line: what does this teach that no existing freebie or tool
@@ -71,12 +72,12 @@ phase, new interaction) or it does not get built.
 - Lead capture: fetch() POST to `https://app.kit.com/forms/9647774/subscriptions` (shared free-rack gate; `tb_email`/`tb_unlocked` localStorage).
 - Printable `@media print` view; sign-off "Keep the Fire Burning. - Leech" + Insiders CTA.
 - Design tokens: --ink:#1a2742, --gold:#c0902f, --steel:#5b6472, --line:#d1d5db, stoplight --high:#dc2626 / --low:#10b981 / --amber:#f59e0b; fonts Oswald + Anton; navy .hero header; back-breadcrumb to /tools/.
-- NEVER use the legacy `_shared/gw-tools.css` black/stoplight system - deprecated.
+- For Toolbox builds, never use the legacy `_shared/gw-tools.css` black/stoplight system - deprecated here. (Insiders deep-dive pages under /tools/ still reuse it via /gw-advanced-scouting; that is a different surface.)
 
 **Rule 5 - EVERY FREEBIE ENTERS THE LEDGER.**
 New freebies are pending until Scott reviews them on freebies.html
 (`python -m scripts.gwqueue.build_freebie_review_page` regenerates it). Nothing ships,
-uploads, or enters the Vault without his approve.
+uploads, or enters the Vault without his approval.
 
 ## Steps
 
@@ -101,15 +102,16 @@ Read the wiki entity pages to decide where this freebie funnels. Priority order:
 
 1. **Insiders ($1 first month trial)** — default. Always works. Use unless a course is a clearly better fit.
 2. **Contact Prep ($87)** — if the topic is physicality, tackling, partner drills, violence-as-skill, OL/DL.
-3. **Scores and Stops ($104)** — if the topic is agility, space creation, closing space, decision-making.
+3. **Scores and Stops ($97)** — if the topic is agility, space creation, closing space, decision-making.
 4. **Gridiron Warrior 2.0 ($197)** — if the topic is summer programming, full-team S&C, season-long programs.
-5. **Summit ($199, July 18)** — if the topic ties to an upcoming Summit speaker or angle, AND today's date is before July 18.
 
 Decide one. Name it in Step 6 report so Scott knows the funnel direction.
 
 ### Step 4 — Write the freebie
 
-One page. Printable to PDF. Structure:
+Interactive HTML is the default per Rule 1. Use the markdown template below only when Rule 1's list-shaped exception applies or Scott named the format. Interactive builds follow Rule 4 and land at `Deliverables\projects\insiders-vault\incoming\<topic-slug>\index.html`.
+
+Markdown-path structure (one page, printable to PDF):
 
 ```markdown
 ---
@@ -122,7 +124,7 @@ funnel_cta: [Insiders | Contact Prep | Scores and Stops | GW 2.0 | Summit]
 pipeline: gw-freebie-forge
 ---
 
-# [Hook headline — bold coaching truth, under 60 chars]
+# [Hook headline: bold coaching truth, under 60 chars]
 
 [Coach,]
 
@@ -153,15 +155,14 @@ No bullet salad. Read like a coach talking to a coach after practice.]
 
 [Single short paragraph. 3-4 sentences. The "so what" for a high school or college coach reading this Monday morning.]
 
-## [Next step — direct, urgency-flavored CTA line]
+## [Next step: direct, urgency-flavored CTA line]
 
 [2-3 sentences pitching the funnel target picked in Step 3. Include the price or trial offer. Include a link placeholder Scott can swap in. Specific to the offer:
 
 - Insiders: "$1 for the first month. Cancel anytime. [LINK]"
 - Contact Prep: "$87. 60+ videos. Three-phase progression. [LINK]"
-- Scores and Stops: "$104. Agility drills for creating and closing space. [LINK]"
-- GW 2.0: "$197. Win the summer. Win the season. [LINK]"
-- Summit: "July 18 at URI. Five Super Bowl rings on the keynote card. [LINK]"]
+- Scores and Stops: "$97. Agility drills for creating and closing space. [LINK]"
+- GW 2.0: "$197. Win the summer. Win the season. [LINK]"]
 
 Keep the Fire Burning,
 
@@ -207,4 +208,4 @@ Tell him:
 - **Standalone-invokable:** runs fine outside the Film Study chain. Scott can point it at any brief, transcript, voice note, or content source.
 - **One-page constraint is real.** If the source has 8 teaching points, pick the 3-5 strongest. A freebie that runs to two pages defeats the purpose.
 - **CTA is mandatory.** A freebie without a funnel is a fact sheet. The whole point is conversion. If no CTA target fits, default to Insiders.
-- **Plain markdown output** — Scott (or a downstream tool) handles PDF rendering. Don't embed images, don't use tables, don't use anything that breaks plain pandoc/markdown-to-PDF rendering.
+- **Markdown-path output only** — for the Rule 1 exception path, Scott (or a downstream tool) handles PDF rendering. Don't embed images, don't use tables, don't use anything that breaks plain pandoc/markdown-to-PDF rendering.
