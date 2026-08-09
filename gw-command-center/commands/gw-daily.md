@@ -20,34 +20,15 @@ Report any conflicts. Do not auto-resolve — surface to Scott.
 
 ### 2. Sweep Screenshot Inbox
 
-Check `C:\Claude Projects\Gridiron Warrior\External Library\Screenshots\inbox\` for new images.
+Run `/gw-screenshot-ingest`. It owns `External Library\Screenshots\inbox\` and carries the full OCR / classify / file spec; do not re-implement any of it here. If the inbox is empty it reports zero and exits fast.
 
-For each image:
-- OCR via Read tool (multi-modal)
-- Classify as: `coaching` / `business` / `ai` / `personal-skip`
-- If not personal-skip:
-  - Write a markdown note in `External Library\Screenshots\processed\YYYY-MM-DD-[slug].md` (flat folder, domain lives in frontmatter; this matches /gw-screenshot-ingest, which owns this inbox)
-  - Note includes: source frontmatter (`type: screenshot`, `captured: <date>`, `domain: <coaching|business|ai>`, `wiki_links: [...]`), OCR'd text, GW relevance ("Could feed:" suggestions), wikilinks where matches exist
-  - Rename the original to match the note slug and leave it beside the note in `processed/`
-- If personal-skip: delete the original or move it to `processed/`, write no note
-
-Report counts: `N processed, M skipped, K skipped-personal`.
+From its output, take the counts for the report block: `N processed, M skipped, K skipped-personal`.
 
 ### 3. Sweep Voice Note Inbox
 
-Check `C:\Claude Projects\Gridiron Warrior\Voice Corpus\_pocket-inbox\` for new files.
+Run `/gw-voice-ingest`. It owns `Voice Corpus\_pocket-inbox\` and carries the full transcribe / verbatim-file / wikilink spec; do not re-implement any of it here. If the inbox is empty it reports zero and exits fast.
 
-For each file:
-- If audio (.mp3, .m4a, .wav, .ogg): transcribe via best available method (Whisper API if configured; otherwise flag for Scott)
-- If transcript (.txt, .md): read as-is
-- Extract topic from first 1-2 sentences, slug it kebab-case
-- Write to `Voice Corpus\Voice Notes\YYYY-MM-DD-[topic-slug].md`
-  - Frontmatter: `type: voice-note`, `source: pocket`, `voice: scott-original`, `recorded: <date>`, `topic: <slug>`, `tags: [voice-note, scott-original, <domain>]`
-  - Body: VERBATIM transcript. Do not polish, smooth, or rewrite.
-  - Below transcript add `## Concepts mentioned` with detected wikilinks (optional, light touch)
-- Move original to `Voice Corpus\_pocket-inbox\.processed\YYYY-MM\` (mkdir if missing)
-
-Report count: `N voice notes processed`.
+From its output, take the count for the report block: `N voice notes processed`.
 
 ### 4. Read Today's Daily Seed
 
