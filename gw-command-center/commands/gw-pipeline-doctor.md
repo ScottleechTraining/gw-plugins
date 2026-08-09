@@ -15,15 +15,15 @@ Paths (all real, confirmed against the code):
 - Sched logs: `C:\Users\scott\.claude\sched-logs\gw-<gate>.log`
 - Token marker: `C:\Users\scott\.claude\sched-state\setup-token-created.json`
 
-## Step 1 — Drive check FIRST
+## Step 1 — Vault check FIRST
 
-The D: drive (GW_Har) intermittently dismounts and takes the whole vault and repo with it. Every gate reads from D:. If the drive dropped, nothing else is diagnosable and every downstream symptom is a lie.
+The vault and repo live on C: (migrated off the D: drive 2026-07-13; D: is cold-storage media only now and a D: dismount no longer breaks the pipeline). If the vault folder itself is missing, nothing else is diagnosable and every downstream symptom is a lie.
 
 ```bash
 test -d "C:\Claude Projects\Gridiron Warrior" && echo "VAULT PRESENT" || echo "VAULT MISSING"
 ```
 
-If MISSING: report **"D: drive (GW_Har) dropped — reconnect it, then re-run the pipeline."** and STOP. Do not diagnose code, do not read logs, do not rerun. Nothing else matters until the drive is back.
+If MISSING: report **"Vault missing at C:\Claude Projects\Gridiron Warrior. This is not a D: drive drop. Check the folder and repo before anything else."** and STOP. Do not diagnose code, do not read logs, do not rerun.
 
 If PRESENT: continue.
 
@@ -65,7 +65,7 @@ tail -60 "C:\Users\scott\.claude\sched-logs\gw-<gate>.log"
 Classify the failure into one of these buckets:
 
 - **auth** — `API Error: 401`, `Failed to authenticate`, `Invalid authentication credentials`. Go to Step 4.
-- **drive / path** — file-not-found on a D: path, `vault missing`. Almost always a drive drop that recovered between the run and now — but Step 1 already ruled out a current drop, so this is a transient. Rerun (Step 5).
+- **drive / path** — file-not-found on a `D:\` path means a stale D: reference survived the 2026-07-13 C: migration in whatever ran (wrapper, script, or prompt). Fix the path to C:, do not just rerun. A file-not-found on a C: vault path with Step 1 green is a transient; rerun (Step 5).
 - **upstream-dependency skip** — `RUNJOB BLOCKED ... required upstream not complete`. This gate is fine; a gate it `needs` failed. Fix the upstream gate first, then this one. The rerunner handles the ordering for you (Step 5).
 - **claude runtime error** — non-zero exit from a `claude -p` step that is not a 401 (crash, timeout, tool error). Rerun once (Step 5); if it repeats, read the full step output.
 - **validator failure** — `payload exited 0 but produced no valid artifact`, or a `[INVALID]` line. The command ran but the expected artifact (a dated brief, a marker line, a Netlify deploy) never landed. Rerun; if it repeats, the payload logic itself is broken, not the infra.
