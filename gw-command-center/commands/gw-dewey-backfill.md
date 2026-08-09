@@ -6,7 +6,11 @@ description: "One-time Dewey 2nd pass - re-classify backlog for Business + AI co
 
 # /gw-dewey-backfill — Dewey Second Pass (One-Time)
 
-The first Dewey pass had an S&C lens and skipped a lot of Business + AI content. This one-time backfill re-runs the full Dewey sheet (2,677 rows) hunting specifically for Business + AI content that was filtered out.
+The first Dewey pass had an S&C lens and skipped a lot of Business + AI content. This one-time backfill re-ran the full Dewey sheet (2,677 rows at the time) hunting specifically for Business + AI content that was filtered out.
+
+## Run state (authoritative)
+
+**This backfill completed 2026-05-14** (report: `External Library\Twitter-Instagram Saves\_backfill-report-2026-05-14.md`; results: `_backfill_results.json`). Do not re-run it because this file was invoked. A re-run happens only when Scott explicitly asks for one, and it always follows the sample-first rule: a 50-row sample and a validation report first, the full run only after Scott reviews the sample. Batches are 50 rows, always, no matter what the totals above imply.
 
 ## Steps
 
@@ -68,6 +72,6 @@ cd "C:\Claude Projects\Gridiron Warrior" && git add -A && git commit -m "dewey: 
 - If hitting unexpected costs (NotebookLM credits, API calls), pause and report
 - This is a ONE-TIME job. Do not re-run unless backlog grows significantly.
 
-## Tonight's plan
+## First-run plan (executed 2026-05-14, kept for the re-run procedure)
 
-Run a 50-row sample. Write a validation report to `External Library\Twitter-Instagram Saves\_backfill-sample-report.md`. Leave the full 2,677-row run for Scott to kick off in the morning after reviewing the sample.
+Run a 50-row sample. Write a validation report to `External Library\Twitter-Instagram Saves\_backfill-sample-report.md`. Leave the full run for Scott to kick off after reviewing the sample.

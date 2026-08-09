@@ -78,3 +78,18 @@ Gridiron Warrior/X-Bookmarks/
 **Token expired:** Run `npm run auth` again to refresh
 **Article stage slow:** Normal — 1.2s delay per URL to be polite to servers
 **node:sqlite warning:** "Experimental feature" — safe to ignore, works fine in Node 24
+
+---
+
+## Completion report (always last)
+
+Like the sibling ingest commands, end every run with a report and a log line:
+
+1. Report to the user: bookmarks fetched, notes written, notes skipped as duplicates, index pages touched, and any fetch errors.
+2. Append one line to `Gridiron Warrior/wiki/log.md`:
+
+```
+YYYY-MM-DD /gw-x-bookmarks: N bookmarks -> M notes (K duplicates skipped)
+```
+
+3. Do NOT commit (gw-daily-closeout commits). If the run produced nothing new, report that and still append the log line with zeros.

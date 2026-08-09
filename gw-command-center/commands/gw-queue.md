@@ -212,9 +212,12 @@ Detect whether anything in the dashboard folder changed since the last deploy. I
 ```bash
 cd "C:/Claude Projects/websites/scottleechtraining.com/tools/queue"
 
-# Check if anything in the dashboard folder changed in the last 5 minutes
-# (proxy for "did /gw-queue update the mirror?")
-recent_changes=$(find . -type f -mmin -5 -not -path "./.*" 2>/dev/null | head -3)
+# Check if anything in the dashboard folder changed in the last 90 minutes
+# (proxy for "did /gw-queue update the mirror?"). The window is wide on purpose:
+# Step 4's full Drive sync alone runs 5-15+ minutes, and a 5-minute window was
+# skipping real deploys after long runs. A false-positive deploy is a harmless
+# no-op behind the queue-auth gate; a false-negative skip is a stale dashboard.
+recent_changes=$(find . -type f -mmin -90 -not -path "./.*" 2>/dev/null | head -3)
 
 if [ -z "$recent_changes" ]; then
   echo "No dashboard changes to deploy."

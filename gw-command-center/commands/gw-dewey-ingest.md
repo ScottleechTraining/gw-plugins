@@ -72,8 +72,8 @@ The helper's `list-unprocessed` returns each row with `media_url` and `media_kin
 1. **Never write in Scott's voice.** External-source content gets neutral, descriptive prose. CLAUDE.md voice rules do NOT apply.
 2. **Never edit any file inside `wiki/concepts/` or `wiki/entities/`.** Only `wiki/log.md` is touched, and it's append-only.
 3. **Never auto-promote a save to a wiki concept page.** Genuinely-rich saves get one line in `External Library/_promotion-candidates.md` for Scott's weekly review.
-4. **Only fetch from the Dewey CDN.** Never fetch directly from Instagram or unknown hosts. The helper enforces this.
-5. **Videos never download.** Tier 2 is enforced by URL pattern in the helper.
+4. **Images fetch only from the Dewey CDN.** The helper enforces this. Exactly two sanctioned exceptions exist: Tier 2.5 video transcription (yt-dlp through the helper, guardrailed) and the legacy `download-image` fallback, which runs only when Scott explicitly asks for a specific missing image. Nothing else ever fetches from Instagram or unknown hosts.
+5. **No video is ever kept.** Videos download only through the helper's `transcribe-video` subcommand (Tier 2.5), which deletes the video after extracting the transcript and keyframes, under the helper's own guardrails (`DEWEY_VIDEO_CAP`, randomized sleeps, halt on 429). No video downloads outside that path; `video-url` rows that cannot use it fall back to `video-skip`.
 
 ---
 
