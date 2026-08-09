@@ -10,6 +10,8 @@ Scans Scott's entire GW corpus (briefs, voice notes, X bookmarks, Pocket inbox, 
 
 **This is NOT a daily pipeline.** It runs on demand. Scott invokes when he needs depth on a topic. Output is feedstock for human synthesis, not publish-ready content.
 
+Scope: one reference doc at the `_corpus-queries` path, one wiki/log.md line, one commit. The doc carries every section the template lists: Themes (3-5), By Source, Suggested Next Moves, and the Footer naming which of the 11 sources hit and which were empty. Scan all 11 sources in the Step 2 table before writing. Do not produce content packs, carousels, or drafts off the back of this run, and do not stop before the log line and the commit.
+
 ## Examples
 
 - `/gw-everything-on GPS for film study insiders`
@@ -67,9 +69,11 @@ For each source, glob the directory then grep for any of the query terms (case-i
 - For each source, if you've already pulled 8-10 relevant excerpts, move on - diminishing returns.
 - Quote excerpts liberally but tag every quote with its source file path so Scott can trace.
 
-### 4. Synthesize themes BEFORE listing extracts
+### 4. Synthesize themes before listing extracts
 
 Before dumping source-by-source quotes, write a short synthesis section that identifies 3-5 themes Claude saw across the corpus. This is the highest-leverage part of the doc - it's what makes corpus mining different from a grep dump. Themes should be coach-direct phrases ("the AD math nobody wants to do") not generic ("financial considerations").
+
+Density: keep an excerpt only if it would change what Scott says on this topic. The 30-50 matches and the 8-10 excerpts per source are ceilings, not targets; two quotes making the same point count as one. No word-count target for Themes. Every section still gets real content or an explicit "no hits" line.
 
 ### 5. Write the brief in this structure
 

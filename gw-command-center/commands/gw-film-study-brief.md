@@ -21,6 +21,8 @@ Replaces the retired Sunday Film Study production stack ([retirement note](../..
 
 **Why the chain came back:** the 5/24 retirement killed the Sunday *autonomous scheduler*, not the production logic. The fragility risk that killed the Sunday run is mitigated here by manual invocation — Scott is at the terminal when the chain runs, so failures are visible and recoverable in-context, not silent 7am breakages.
 
+Scope: deliver all six chain outputs and nothing past them. The floor is brief + wiki ingest (summary page, concept stubs, index line) + content pack + Substack draft + IG carousel + freebie, plus the status file and the one wiki/log.md line. A logged step failure is not permission to ship five. Do not invent artifacts the chain does not name, and do not re-run a step that already succeeded.
+
 ## Topic: $ARGUMENTS
 
 The user provides a coaching topic as `$ARGUMENTS` (e.g., `"tri-set structure for high school football summer training"`).
@@ -77,7 +79,7 @@ If `$ARGUMENTS` is empty:
 
 ## Step 1 — Corpus query
 
-Invoke `/gw-everything-on <topic>`. This writes `Deliverables/_corpus-queries/YYYY-MM-DD-<topic-slug>.md` (or appends `-2` if a same-day run exists). Capture the resulting file path — you'll cite it in Step 4.
+Invoke `/gw-everything-on <topic>`. This writes `Deliverables/_corpus-queries/YYYY-MM-DD-<topic-slug>.md` (or appends `-2` if a same-day run exists). Capture the resulting file path. You cite it in Step 3.
 
 If the corpus query returns zero matches, continue anyway — the NotebookLM step may still produce material. Note the empty corpus result in the final brief.
 
@@ -103,11 +105,15 @@ Read the corpus-query output file from Step 1 (skim — do NOT inline the full f
 - The 3-5 themes from its **Themes** section.
 - 6-12 best-signal excerpts from its **By Source** sections.
 
-Combine with the NotebookLM response into a single brief at `Research/Film Study/YYYY-MM-DD-<topic-slug>-film-study-brief.md`. Use this structure:
+Combine with the NotebookLM response into a single brief at `Research/Film Study/YYYY-MM-DD-<topic-slug>-film-study-brief.md`.
+
+Density: the counts in the template are ceilings, not targets. Keep a takeaway, theme, or excerpt only when it changes what Scott would teach on camera. Excerpts stay verbatim and short. No word-count target for any section, and no section gets padded to look full.
+
+Use this structure:
 
 ```markdown
 ---
-title: "Film Study Brief — [topic]"
+title: "Film Study Brief, [topic]"
 type: film-study-brief
 topic: "[topic]"
 topic_slug: [topic-slug]
@@ -119,7 +125,7 @@ notebooklm_notebook: "S&C Master Resource"
 notebooklm_query: [literal query string sent]
 ---
 
-# Film Study Brief — [Topic]
+# Film Study Brief, [Topic]
 
 **Topic:** [topic]
 **Date:** YYYY-MM-DD
@@ -133,7 +139,7 @@ notebooklm_query: [literal query string sent]
 
 3-5 short paragraphs lifted from the `/gw-everything-on` Themes section. One paragraph per theme. Each paragraph cites the corpus-query file path so Scott can drill in.
 
-## NotebookLM — S&C Master Resource
+## NotebookLM: S&C Master Resource
 
 Direct quote of the NotebookLM response. Preserve attribution / source citations if NotebookLM returned them. If NotebookLM failed or returned nothing useful, say so plainly.
 
@@ -152,7 +158,7 @@ A loose outline Scott can use as a starting point for the Film Study recording i
 
 ## Chain artifacts produced
 
-(Filled in at Step 11.)
+(Filled in at Step 10.)
 ```
 
 ## Step 4 — Append to wiki log
@@ -209,7 +215,7 @@ If `topic_source == "argument"`, skip this step entirely — queue not touched.
 
 ```markdown
 ---
-title: "Film Study — [topic]"
+title: "Film Study, [topic]"
 type: film-study-summary
 topic: "[topic]"
 topic_slug: [topic-slug]
@@ -219,7 +225,7 @@ external_origin: true
 pipeline: gw-film-study-brief
 ---
 
-# Film Study — [Topic]
+# Film Study, [Topic]
 
 **Source:** [link to brief file]
 **Date:** YYYY-MM-DD
@@ -267,7 +273,7 @@ status: stub
 
 ## How Scott uses this in GW
 
-*[TODO — Scott fills during weekly synthesis. Until filled, this concept is reference-only and NOT voice-input safe.]*
+*[TODO: Scott fills during weekly synthesis. Until filled, this concept is reference-only and NOT voice-input safe.]*
 
 ## Related
 
@@ -279,7 +285,7 @@ status: stub
 **Update `wiki/index.md`.** Find or create a `## Film Study Briefs` section. Append a line:
 
 ```
-- [Film Study — [topic]](summaries/film-study-<topic-slug>.md) — YYYY-MM-DD
+- [Film Study, [topic]](summaries/film-study-<topic-slug>.md) (YYYY-MM-DD)
 ```
 
 **Update the chain_steps in the status file:** set `wiki_ingest` to `"ok"` (or `"failed"` with `error` field if any step above broke).
@@ -293,14 +299,14 @@ Invoke `/gw-content-forge "<absolute path to brief>"`.
 
 ## Step 7 — Substack draft
 
-Invoke `/gw-substack-forge "<absolute path to brief>"` (uses `anthropic-skills:gw-substack-forge`).
+Invoke `/gw-substack-forge "<absolute path to brief>"` (uses `gw-command-center:gw-substack-forge`).
 
 - On success: capture output path. Set `chain_steps.substack = "ok"`, record path.
 - On failure: log to status file with `next_action: "Re-run: /gw-substack-forge \"<brief path>\""`. **Continue.**
 
 ## Step 8 — IG carousel
 
-Invoke the `ig-carousel` skill (`anthropic-skills:ig-carousel`) against the brief. Save the HTML to `Deliverables/<topic-slug>-carousel.html`.
+Invoke the `ig-carousel` skill (`gw-command-center:ig-carousel`) against the brief. Save the HTML to `Deliverables/<topic-slug>-carousel.html`.
 
 - On success: capture path. Set `chain_steps.carousel = "ok"`.
 - On failure: log with `next_action`. **Continue.**

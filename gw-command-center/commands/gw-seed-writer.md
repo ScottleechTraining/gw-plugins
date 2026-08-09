@@ -8,6 +8,8 @@ description: "Daily content seed - yesterday's vault deltas -> 1-3 content angle
 
 Fires daily. Reads everything new in the vault from the last 24h. Writes 1-3 specific content angles in Scott Leech's voice. Output is the daily idea fuel for Scott's content production.
 
+Scope: one seed file at the `_daily-seeds` path, one wiki/log.md line, one voice_check run, and the forge_backlog append the last section names. The seed file carries every section its template lists: TOP MOVE, the 24h vault delta, the day's angles, the coach question, queue health, next move. Do not write files outside those paths, do not add sections the template does not have, and do not stop before the backlog append.
+
 ## HARD RULE: zero em-dashes in the seed file
 
 The seed file must contain **zero** em-dash characters (U+2014). Not in the frontmatter, not in the title, not in the delta bullets, not in the score justifications. This is the root CLAUDE.md voice rule and it is absolute.
@@ -35,12 +37,12 @@ Plus any files modified but not committed (git status). Filter to relevant addit
 - `External Library\Screenshots\processed\` (new screenshots)
 - `External Library\BusinessDocuments\YYYY-MM-DD-*-brief.md` (new business research)
 - `External Library\AI\YYYY-MM-DD-*-brief.md` (new AI research)
-- `Voice Corpus\Voice Notes\YYYY-MM-DD-*.md` (Scott's voice notes, HIGH PRIORITY)
+- `Voice Corpus\Voice Notes\YYYY-MM-DD-*.md` (Scott's voice notes, highest-signal source in the vault)
 - `Research\NotebookLM\*-research-brief.md` (S&C research briefs)
 
-### 2. Read CLAUDE.md voice rules first
+### 2. Internalize the CLAUDE.md voice rules
 
-Read `C:\Claude Projects\CLAUDE.md` and internalize:
+CLAUDE.md is already in session context. Do not re-Read it. Internalize:
 - Voice rules: short sentences, active verbs, plain language
 - No em-dashes ever
 - Banned words list
@@ -60,11 +62,13 @@ An angle that fails any gate gets cut, not scored. Only survivors go through the
 
 **When the day's deltas are thin:** fewer good angles beats padded weak ones. One angle that clears the gate is a better output than three that limp through. **Zero angles is an acceptable output**: when nothing in the 24h delta clears the gate, write the seed file with zero angles and a one-line reason (e.g. "only new material was 2 competitor Dewey saves, no Scott-original hook"). Do not manufacture an angle to hit a count.
 
+On a zero-angle day the file still opens with the `## TOP MOVE` heading, with the one-line reason under it in place of a winner. The job gate greps the file for that token.
+
 **Read budget (HARD CAPS, do not exceed):**
 
 - **Max 10 individual Read tool calls total for this entire step.** This is a synthesis task, not an archival pass.
 - **Do NOT Glob or Grep the whole vault.** Use the git log output from Step 1 as the sole source of "what's new."
-- **Voice notes: read all** (HIGH PRIORITY. Scott's own words, usually 1-3 files max).
+- **Voice notes: read all** (highest-signal source. Scott's own words, usually 1-3 files max).
 - **Research briefs (business + AI): read both fully** if they exist (1-2 files max).
 - **Dewey notes: do NOT read individually.** The new-Dewey-row summary is already in `wiki/log.md` from `/gw-dewey-daily`'s log entry. Read THAT line to get domain counts, top authors, and one-line takeaways. Only open an individual Dewey note if a specific row is mentioned by name and you genuinely need the body.
 - **Screenshots: do NOT read processed notes individually.** Count from the git log file list. If a specific screenshot looks critical for an angle (rare), open one.
@@ -111,6 +115,8 @@ For each angle, output:
 
 **Confidence**: high | medium | low
 ```
+
+Density: every line in an angle must change what Scott would publish. One line per delta bullet, one clause per score justification, no restating the source. The 1-3 angle range and the 3-5 body-sketch bullets are limits, not targets. Do not pad a thin day to fill the template.
 
 ### 3a. Pick today's TOP MOVE
 
@@ -218,11 +224,11 @@ python "C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py" "C:\Claude P
 ```
 
 Exit codes:
-- `0` clean, proceed to commit.
+- `0` clean, done.
 - `1` warnings (possible offer-stack drift), review and decide whether to fix or accept.
-- `2` blockers (banned words OR em-dashes, because `--strict` is on), fix the seed file before committing. Then re-run the check.
+- `2` blockers (banned words OR em-dashes, because `--strict` is on), fix the seed file, then re-run the check.
 
-The guard parses the canonical banned-words list from CLAUDE.md, so it stays in sync if Scott updates the list. The check is mandatory before the commit step.
+The guard parses the canonical banned-words list from CLAUDE.md, so it stays in sync if Scott updates the list. The check is mandatory before this command reports done.
 
 ---
 

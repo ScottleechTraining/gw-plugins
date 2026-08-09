@@ -10,6 +10,8 @@ description: "Daily morning digest - synthesize the overnight pipeline output in
 
 Fires daily at 7:15am after the rest of the morning pipeline has finished. Reads everything the pipeline produced overnight, maps it to GW products, and writes an action-oriented digest that Scott reads with morning coffee to decide what to dig into first.
 
+Scope: the three files named under Output targets, the forge_backlog append in Step 6, and the one wiki/log.md line in Step 7. That set is the floor and the ceiling. Do not add sections the digest structure does not name, do not build extra pages or send extra mail, and do not stop before the log line.
+
 
 
 ## Output targets
@@ -85,6 +87,8 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 
 Write the markdown file using this exact structure. Keep it tight - every section earns its spot.
+
+Density: one line per item, and an item earns its line only if it changes what Scott does today. The section limits (one move, up to 2 in If You Have Time, one line per source) are ceilings, not targets. Omit an empty section rather than padding it. No word-count target: a short digest on a quiet morning is the correct output. Today's Seed Angles is exempt, it stays a verbatim paste.
 
 Opportunity Radar rule: before writing, check `Gridiron Warrior/wiki/business/opportunity-radar.md`. If it gained a RUN-WITH-IT entry since the last digest (unchecked, score 80+), name it in its own line at the top of Today's Move: what the idea is, its score, and the save it came from. Scott decides same-week: build, park, or kill. If nothing new, say nothing.
 
@@ -718,11 +722,11 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 
 
-- **Max 8 individual Read tool calls total.** This is a synthesis pass, not an archival pass.
+- **Max 8 individual Read tool calls for the narrative sources** (seed, three briefs, wiki/log tail). Status files and queue files sit outside that count: read them in one batched pass, not one Read each. This is a synthesis pass, not an archival pass.
 
 - **Do NOT Glob or Grep the whole vault.** Use date-pattern globs only against known directories.
 
-- **Always read:** today's seed file, today's business brief, today's AI brief, today's S&C brief, wiki/log.md tail (last 50 lines).
+- **Always read:** today's `scripts\health\*-YYYY-MM-DD.status.json` set (batched, they are the scoreboard source of truth), the three `_topic-queue.md` files by exact path, today's seed file, today's business / AI / S&C briefs, wiki/log.md tail (last 50 lines).
 
 - **Do NOT read voice notes, Dewey notes, or screenshot notes.** Pull their counts and top hits from `wiki/log.md` - `/gw-voice-ingest`, `/gw-dewey-daily`, and `/gw-screenshot-ingest` already wrote one-line summaries there. That's the digest's source of truth for those sources.
 
