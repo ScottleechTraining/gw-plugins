@@ -51,6 +51,13 @@ Default format: a single-file interactive HTML tool at the Toolbox standard (bel
 Vault interactive template (`Deliverables\_templates\_interactive_template.html`).
 A one-page PDF/md cheat sheet is allowed ONLY when the teaching is genuinely list-shaped
 (reference card, phase comparison, checklist) or Scott asked for that format by name.
+**The exception is about the TEACHING's shape, never the build window.** If you can name the
+input and the decision in one sentence, the teaching is not list-shaped, no matter when it is
+being built. An overnight/nightly run that cannot do the Step 4 render-and-click check does NOT
+downgrade the format: write the flat md as the SPEC, enter the ledger with a note
+"pending-interactive: daytime build required", and stop. Four overnight downgrades dressed as
+the list-shaped exception in the week of 2026-08-04 to 08-09 forced this line (Scott's ruling
+2026-08-10: tighten).
 Posters are dead - Scott has killed every poster variant. Do not produce them.
 
 **Rule 2 - KNOWLEDGE-BACKED, NEVER FROM MEMORY.**
