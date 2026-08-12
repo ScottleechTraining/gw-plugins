@@ -200,7 +200,8 @@ Run: `<the winner's next_command from Step 3>`
 
 - Business queue: <N topics remaining>
 - AI queue: <N topics remaining>
-- (warn here if either is below 5)
+- S&C queue: <N topics remaining>
+- (warn here if any is below 5; fill every N from one `python "C:\Claude Projects\Gridiron Warrior\scripts\queue_status.py"` run. Never Read the `_topic-queue.md` files to count: they are UTF-16LE and a raw read shows them as empty)
 
 ## Next move
 

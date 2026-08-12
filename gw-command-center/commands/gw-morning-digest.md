@@ -38,7 +38,7 @@ Use the local operational date in `America/New_York`. Do not use the UTC date fo
 
 6. `wiki\log.md` - last 24h of pipeline log entries (errors, counts, anything flagged)
 
-7. `External Library\BusinessDocuments\_topic-queue.md`, `External Library\AI\_topic-queue.md`, `External Library\S-and-C\_topic-queue.md` - queue depths
+7. Queue depths - run `python "C:\Claude Projects\Gridiron Warrior\scripts\queue_status.py"` and use its counts verbatim. Do NOT Read the `_topic-queue.md` files to count topics: they are UTF-16LE, a raw read shows them as empty, and that produced a false "all queues at 0, refill" digest on 2026-08-12.
 
 Dewey, screenshots, voice notes are intentionally NOT read here. Their daily counts and standouts already land in `wiki/log.md` via the `/gw-dewey-daily`, `/gw-screenshot-ingest`, and `/gw-voice-ingest` skills, and the Dewey daily confirmation arrives in a separate email. Pull their numbers from `wiki/log.md` only.
 
@@ -52,7 +52,7 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 - If no status file exists for a normally scheduled gate after its scheduled time, report `<lane> missing status file` and list the gate name.
 
-- Queue files must be checked by exact path. Never report "S&C no queue file" unless `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.md` cannot be read. If a queue read fails, include the exact path and error.
+- Queue depths come from `scripts\queue_status.py` only; it decodes the UTF-16 queue files correctly. A count of -1 means that queue file is missing; report its exact path in that case. Never report a queue as empty or missing based on a direct file read.
 
 - The retired Sunday Film Study weekly-batch flow is dead. Do not recommend opening `wiki\pending\weekly-batch-*.md`. Do not reference Sunday/Tuesday/Thursday batch production. The active Film Study lane is `/gw-film-study-brief "<topic>"`, then manual `/gw-content-forge "<brief path>"` if Scott wants assets.
 
@@ -628,7 +628,7 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 - **Do NOT Glob or Grep the whole vault.** Use date-pattern globs only against known directories.
 
-- **Always read:** today's `scripts\health\*-YYYY-MM-DD.status.json` set (batched, they are the scoreboard source of truth), the three `_topic-queue.md` files by exact path, today's seed file, today's business / AI / S&C briefs, wiki/log.md tail (last 50 lines).
+- **Always read:** today's `scripts\health\*-YYYY-MM-DD.status.json` set (batched, they are the scoreboard source of truth), today's seed file, today's business / AI / S&C briefs, wiki/log.md tail (last 50 lines). Queue depths come from one `queue_status.py` run, never from reading the queue files.
 
 - **Do NOT read voice notes, Dewey notes, or screenshot notes.** Pull their counts and top hits from `wiki/log.md` - `/gw-voice-ingest`, `/gw-dewey-daily`, and `/gw-screenshot-ingest` already wrote one-line summaries there. That's the digest's source of truth for those sources.
 

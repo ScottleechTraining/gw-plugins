@@ -39,9 +39,7 @@ If file missing: report "No seed file today — `/gw-seed-writer` did not fire (
 ### 5. Surface Queue Status + Anomalies
 
 Check:
-- `External Library\BusinessDocuments\_topic-queue.md` — count active topics. If < 5: warn.
-- `External Library\AI\_topic-queue.md` — count active topics. If < 5: warn.
-- `External Library\S-and-C\_topic-queue.md` — count active topics. If < 5: warn.
+- Queue depths: run `python "C:\Claude Projects\Gridiron Warrior\scripts\queue_status.py"` and use its counts. If any < 5: warn. Do NOT Read the `_topic-queue.md` files to count topics: they are UTF-16LE and a raw read shows them as empty.
 - Any new error logs in `wiki\log.md`
 - Pending `External Library\_promotion-candidates.md` items
 
