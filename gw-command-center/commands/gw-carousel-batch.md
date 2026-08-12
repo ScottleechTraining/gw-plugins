@@ -16,7 +16,7 @@ Two ways in:
 
 **B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Three kinds of waiting work:
 
-1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and wait for confirmation or swaps before building.
+1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and build on the recommendations immediately. Do not wait for confirmation (Scott 2026-08-12: the review page's restyle dropdown is the correction path, so a wrong pack costs one rebuild, not a blocked batch).
 2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
 3. **Cover rebuilds:** topics where `carousel_needs_polish` is true and `polish_note` starts with `cover:`. Rebuild ONLY slide 1 per the note (new treatment and/or photo from the ig-carousel skill's `references/cover-treatments.md`); body slides stay untouched.
 
@@ -24,10 +24,10 @@ If nothing is waiting in any bucket, say so and stop.
 
 Pack rules for both modes:
 
-- Attended and a pack is missing or unclear: recommend one from the quick-reference table and ask to confirm. Never build on a guess.
-- If invoked unattended (no human to answer), skip any carousel without a confirmed pack and record it in the skipped list. Do not guess a pack.
+- Explicit list mode: the pack Scott named wins.
+- Otherwise the quick-reference recommendation IS the pack, attended or not. If no row clearly matches, pick the closest fit and flag that slug in the summary table so Scott knows to look at it at review.
 
-Build the confirmed slugs in the assignment table and stop there. Do not restyle carousels nobody flagged, do not edit the source content packs, and do not leave a confirmed slug unbuilt.
+Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged, do not edit the source content packs, and do not leave a listed slug unbuilt.
 
 ## 2. Photo assignment (centrally, FIRST)
 
