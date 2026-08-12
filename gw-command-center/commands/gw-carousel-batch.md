@@ -1,6 +1,6 @@
 ---
 name: gw-carousel-batch
-description: "Batch-build IG carousel HTML for multiple content packs in parallel. Run bare (no arguments) to discover every content pack still waiting on a carousel and get a recommended style pack per topic. Central photo assignment, ~5 subagents per wave, mandatory render-and-eyeball verification of every cover before done."
+description: "Batch-build IG carousel HTML for multiple content packs in parallel. Run bare (no arguments) to discover every content pack still waiting on a carousel; the style-pack recommendation is used without confirmation. Central photo assignment, ~5 subagents per wave, mandatory render-and-eyeball verification of every cover before done. Runs nightly at 3:00am as the gw-carousel-batch scheduled job, and on demand."
 model: claude-opus-5
 ---
 
@@ -20,7 +20,7 @@ Two ways in:
 2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
 3. **Cover rebuilds:** topics where `carousel_needs_polish` is true and `polish_note` starts with `cover:`. Rebuild ONLY slide 1 per the note (new treatment and/or photo from the ig-carousel skill's `references/cover-treatments.md`); body slides stay untouched.
 
-If nothing is waiting in any bucket, say so and stop.
+If nothing is waiting in any bucket, say so, print the completion marker (section 6), and stop.
 
 Pack rules for both modes:
 
@@ -70,3 +70,9 @@ A summary table:
 |------|-----------|------------|----------|------|
 
 Plus the list of anything skipped and why.
+
+## 6. Completion marker
+
+At the end of EVERY run, including a nothing-waiting no-op, print exactly this on its own line so the scheduled-job validator can see it:
+
+GW-DONE: carousel-batch

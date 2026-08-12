@@ -31,7 +31,7 @@ GW-DONE: nightly-forge
 
 Do not generate any `-carousel.html` file. The forge produces the content pack only: copy, the two Twitter threads, the two IG carousel slide plans (text), and the email. It does NOT design or render carousels.
 
-Scott picks the style pack for each carousel individually at triage, and the carousel HTML is built then, with his approval. Auto-building carousels overnight in an arbitrary pack wastes time because Scott ends up redesigning them all. Slide-plan copy in the content pack: yes. Carousel HTML file: no.
+Carousel HTML is built by the separate `gw-carousel-batch` scheduled job (3:00am, right after this one) using the style-pack quick-reference recommendation, no confirmation step (Scott 2026-08-12; he restyles at review via the dropdown if a look misses). Keeping the build out of the forge keeps each overnight job small and independently retryable. Slide-plan copy in the content pack: yes. Carousel HTML file: no.
 
 ## Hard rules
 
