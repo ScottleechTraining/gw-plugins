@@ -375,6 +375,7 @@ Before outputting HTML, verify:
 - No light/thin font weights on headings
 - Text never overlays the subject of a background image directly
 - Minimum 40px safe zone margins on all edges
+- On `.dark`/inverse slides, any highlighter stroke must START its line (`<br>` before the span) — a mid-line highlight's linecap overhang erases adjacent light text (see style-packs.md, Newsprint Bauhaus placement law)
 - **No page dots**
 
 ---
