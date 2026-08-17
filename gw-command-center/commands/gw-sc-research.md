@@ -24,17 +24,24 @@ If empty: auto-pick a relevant S&C topic informed by the wiki's coaching themes 
 
 ### 2. Run NotebookLM research
 
-Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** notebook (unlike business research which creates a new one per topic), so the flow is query-against-existing, not create-new.
+Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** notebook (unlike business research which creates a new one per topic), and it GROWS that notebook: every run adds new original sources to the master (Scott's standing rule, 2026-08-16). Never rely on notebook recall alone.
 
 **Required calls in order:**
 
 1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-05-18 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 102 sources.
 
-2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Capture `notebook_id` in the brief frontmatter.
+2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Capture `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the master has a gap on this topic — step 3 targets that gap first.
 
-3. **(Optional, only if master returns thin results)** Create a fresh topic-scoped notebook to supplement: `mcp__notebooklm__notebook_create` with title `S&C Research: [topic name]`, add 3-5 sources via `mcp__notebooklm__source_add` (yt-dlp + web search for high-signal sources), then query. Cross-reference its results with the master via `mcp__notebooklm__cross_notebook_query` if helpful.
+3. **Add 2-3 new original sources to the master (MANDATORY, every run).** The brief must never be NotebookLM-recall-only.
+   - Find candidates via web search and YouTube: peer-reviewed papers and reviews, coach clinic talks, reputable practitioner writing on today's topic. High-signal only — no SEO content farms, no AI listicles.
+   - If step 2 exposed a gap, pick sources that fill that exact gap first.
+   - Dedup before adding: check the master's existing source list (`notebook_describe` on `master_id`). A source already present does not count toward the 2-3.
+   - Add each via `mcp__notebooklm__source_add` with `notebook_id=master_id` (`source_type=url` covers articles and YouTube).
+   - **Re-query the master** with the same structured prompt once the new sources finish processing, so today's brief uses the new material.
+   - Enrichment failure is NOT a blocker: if search or `source_add` errors out, ship the brief from the step-2 answer, set `sources_added: 0`, and name the reason under `## Sources`. Only the query HARD RULE below blocks a brief.
+   - Source cap: if `source_add` fails with a per-notebook source-limit error, create `S&C Master Resource II` via `notebook_create`, add there, and flag the overflow in the wiki log line so Scott sees it in the morning report.
 
-4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\s-and-c\` for anchor authors / recent reels relevant to the topic.
+4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\s-and-c\` for anchor authors / recent reels relevant to the topic. A Dewey save with a strong URL is a valid step-3 source candidate.
 
 **HARD RULE — NotebookLM errors (identical across gw-sc/ai/business-research):** Never fall back to web-search-only or memory-only synthesis and never present a fallback as a normal brief. But before blocking, classify the error correctly — a transient blip is NOT an auth failure, and the two get different fixes:
 
@@ -68,6 +75,7 @@ date: YYYY-MM-DD
 notebook_id: <notebook-id>
 topic: [topic-slug]
 source_count: <N>
+sources_added: <N new sources added to the master this run, 0 if enrichment failed>
 auto_picked: false|true
 pipeline: gw-sc-research
 ---
@@ -101,6 +109,8 @@ pipeline: gw-sc-research
 ## Sources
 - ...
 ```
+
+In `## Sources`, tag each source added to the master this run with `(added to master)` so the enrichment trail is visible in the brief. If enrichment failed, state the reason here in one line.
 
 ### 4. Update queue + index
 
@@ -146,7 +156,7 @@ back to the raw topic slug. That is a visible defect, not an acceptable default.
 ### 6. Append to wiki log
 
 ```
-YYYY-MM-DD /gw-sc-research: [topic-slug] (auto_picked: false|true)
+YYYY-MM-DD /gw-sc-research: [topic-slug] (auto_picked: false|true, sources_added: N)
 ```
 
 ### 7. Do NOT commit
