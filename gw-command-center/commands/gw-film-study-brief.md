@@ -221,7 +221,7 @@ topic: "[topic]"
 topic_slug: [topic-slug]
 date: YYYY-MM-DD
 source_brief: [absolute path to the brief]
-external_origin: true
+external_origin: false
 pipeline: gw-film-study-brief
 ---
 
@@ -256,8 +256,8 @@ pipeline: gw-film-study-brief
 ---
 title: "[Concept Name]"
 type: concept
-external_origin: true
-origin: "Film Study brief on [topic] (YYYY-MM-DD)"
+external_origin: false
+origin: "Scott's own recorded Film Study on [topic] (YYYY-MM-DD); brief-sourced external components attributed inline"
 source_brief: [absolute path to the brief]
 date_created: YYYY-MM-DD
 status: stub
@@ -401,5 +401,5 @@ Keep it tight. Scott has 15 minutes.
 - **Idempotent within a day** via the `-2`, `-3` convention. If a same-day brief exists, the new brief and all downstream artifacts get `-2` appended before the extension.
 - **`Research/Film Study/` is for briefs only.** Not for content packs (that's `Deliverables/`), not for published material (that's `wiki/`), not for transcripts (that's `raw-sources/` or `Voice Corpus/`).
 - **NotebookLM failure is NOT fatal.** Brief proceeds corpus-only. Wiki ingest proceeds. Chain proceeds. Status file records the NotebookLM gap.
-- **Concept stubs are flagged `external_origin: true` by default.** Film Study briefs blend NotebookLM external material with Scott's corpus. Default-external is the safe contamination posture. Scott flips during weekly synthesis if a concept is actually his own framework. The "How Scott uses this in GW" block stays as TODO until he fills it.
+- **The SOURCE decides `external_origin`, not a blanket default (fixed 2026-08-17 per Scott).** A Film Study is Scott's own recorded teaching, so pages built on his transcript are `external_origin: false`: his voice, voice-input safe. External material the brief blended in (NotebookLM sources, other coaches' numbers) gets INLINE attribution at point of use, never a page-level external flag. Only a pre-recording research-only run (no transcript exists, `TRANSCRIPT NOT YET RECORDED` status) is flagged `external_origin: true`, because that page is NotebookLM material with no Scott voice in it. Why this changed: the old default-external posture quarantined 13 summaries and 4 concept stubs of Scott's OWN camp system out of voice-safe input, and the "Scott flips at synthesis" step never happened; three surfaces grew hand-written workarounds instead. The "How Scott uses this in GW" block on concept stubs stays as TODO until filled.
 - **Partial success is fine.** A run that produces brief + wiki + content pack + carousel + freebie but fails Substack is still a valuable run. Scott just re-invokes `/gw-substack-forge` against the brief path.
