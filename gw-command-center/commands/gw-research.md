@@ -30,7 +30,11 @@ All `nlm` and `yt-dlp` commands require `source ~/.bashrc` first (loads PATH and
 
 ## Step 1: Check the Wiki First
 
-Read `C:/Claude Projects/Gridiron Warrior/wiki/index.md`. If a summary page already exists for this topic, tell Scott and ask if he wants to run a fresh research pass anyway or just use what's there.
+Grep `C:/Claude Projects/Gridiron Warrior/wiki/index.md` for the topic's keywords, then read the pages it points at. Do not read index.md whole; it is 337KB. If a summary page already exists for this topic, tell Scott and ask if he wants to run a fresh research pass anyway or just use what's there.
+
+**DECISIONS GATE (HARD RULE).** Also read `C:/Claude Projects/Gridiron Warrior/wiki/system/decisions.md` in full before you write any Programming Recommendation. Every `KILLED`, `DECLINED`, `DE-SCOPED`, `RETIRED`, `REJECTED`, and `RULE` heading is off the board. And where a wiki page marks a number or a prescription as the GW standard (a dated "Scott's ruling", "per Scott", or "Scott's call" note), that ruling outranks anything a source told you — the source's number keeps its attribution to its author and never becomes the recommendation.
+
+This command feeds Film Study prep and course modules, so a resurrected dead idea here ends up in material coaches pay for. On a collision, do not write the recommendation: tell Scott which entry it collides with, its date, and its reopen condition. Judgment, not keyword match — a shared noun is not a collision, so confirm the recommendation IS the dead thing before cutting it. Same gate the three daily brief commands run at their write step.
 
 ## Step 2: Gather YouTube Sources
 
