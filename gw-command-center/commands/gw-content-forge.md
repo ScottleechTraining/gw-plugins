@@ -433,6 +433,19 @@ pipeline: gw-content-forge
 (or the single line: `Comparison: skipped, no genuine comparison in the source`)
 
 ---
+## THE MESSAGE
+
+**Carousel #1:**
+- Lesson (one sentence a coach could repeat): [sentence]
+- First step given before the CTA: [the free action, named]
+- CTA: [product] because [one clause; checked against decisions.md]
+
+**Carousel #2:**
+- Lesson: [sentence]
+- First step given before the CTA: [the free action, named]
+- CTA: [product] because [one clause]
+
+---
 ## PULLED FROM THE BRAIN
 - [wiki page path] ([one clause: what it contributed to this pack])
 - [wiki page path] ([one clause])
@@ -441,7 +454,7 @@ pipeline: gw-content-forge
 NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - fully covered by existing pages"]
 ```
 
-The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
+THE MESSAGE block (the Step 3.6 gate receipt) is required in every pack, directly above PULLED FROM THE BRAIN. Both are pack-file-only meta: never rendered, never slide copy, never captions. The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
 
 **The receipt lives in the pack file, not just the wiki.** When Step 4 writes the wiki summary page, the SAME PULLED FROM THE BRAIN block MUST also be appended to the end of the content pack file in `Deliverables/_inbox/[TOPIC-SLUG]/` (this applies to every mode and every caller, including overnight `/gw-nightly-forge` runs). Scott triages from the inbox, not the wiki - a receipt that only exists on the summary page is invisible at triage.
 
@@ -456,6 +469,40 @@ Both modes save into `Deliverables/_inbox/[TOPIC-SLUG]/`. The `_inbox/` lands ne
 ## Step 3.5: Voice Gate (mandatory, before save)
 
 Before saving any asset, run the `gw-voice-gate` checklist against every Scott-voice piece in the pack and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off on emails, sentence length, AI-slop tells, and ICP fit. No asset ships with a FAIL.
+
+## Step 3.6: Message Gate (mandatory, every carousel, before save)
+
+The voice gate checks how it sounds. This gate checks what it says. Run these five
+tests against EACH carousel's slide text (both carousels, every mode). A carousel
+that fails any test gets rewritten before the pack saves; it does not ship with a
+note. Added 2026-08-26 after four consecutive review-round rewrites: broken title
+promise, no single lesson, assess-with-no-first-step, and a leaked source label.
+
+1. **Promise test.** Whatever the cover claims or names (a story, a number, a body
+   part, a kid) is paid off BY NAME in the body slides. A cover that promises "he
+   tore an ankle on Friday" and a body that never mentions the ankle is a fail.
+2. **One-lesson test.** State the deck's lesson as one sentence a coach could
+   repeat to his staff tomorrow. If that sentence does not exist, the deck is not
+   done. If two lessons compete, cut one; the pack's other assets can carry it.
+3. **First-step test.** The reader gets one usable action before any CTA. Assess,
+   diagnose, or argue, then hand him step one free. The paywall gates the
+   progression, never the entire solution.
+4. **Orphan test.** Every name, label, credit, or term on a slide is explained on
+   that slide or cut. A source credit that made sense in a thread is noise on a
+   slide. When in doubt, cut it; attribution lives in the thread asset.
+5. **CTA test.** The CTA product matches current wiki state. Check the offer's
+   entity page and `wiki/system/decisions.md` before naming it. A de-scoped or
+   wrong-door product is a fail even if the copy reads well.
+
+Record the gate's output in THE MESSAGE block (see the file structure below).
+That block is the triage receipt for message quality, the same way PULLED FROM
+THE BRAIN is the receipt for retrieval.
+
+**Hard rule: pack meta never renders.** THE MESSAGE, PULLED FROM THE BRAIN, the
+Cross-Reference Summary, frontmatter, and every other pipeline/meta section exist
+for Scott's triage in the pack file ONLY. They never appear in slide text, in a
+caption, or in any rendered or published asset, ever. If meta text is found in
+slide copy at any later stage, the fix is to correct the pack, not to render it.
 
 ---
 

@@ -333,11 +333,12 @@ What it does, and why each part exists:
 - **Height fit:** also shrinks until the whole cover satisfies `scrollHeight <= availH`, where `availH` is the space left inside `.slide-content` after the eyebrow/sub siblings and row gaps. This is the part a hand-written version forgets, and it is what stops multi-line headlines from overflowing vertically.
 - **Font-load re-fit:** runs again on `document.fonts.ready`. The first pass runs against fallback-font metrics (narrower); the real Vitesse glyphs are wider, so without the re-fit the cover stays oversized after the webfont swaps in.
 - **Manual-size guard:** the `if (el.dataset.manualSize === 'true') return;` line skips covers the user resized by hand with the section 7 controls.
-- **`MEGACOVER_FIT_V1` marker:** leave the marker comment in place. The standalone patcher (`scripts/gwqueue/patch_carousels_megacover_autofit.py`) treats any file containing it as already-current and skips it, so freshly-generated files are never re-patched.
+- **`MEGACOVER_FIT_V2` marker:** leave the marker comment in place. The standalone patcher (`scripts/gwqueue/patch_carousels_megacover_autofit.py`) treats any file containing the current marker as already-current and skips it, so freshly-generated files are never re-patched; files carrying an older `MEGACOVER_FIT_V1` marker get upgraded.
+- **V2 fix (2026-08-12):** V1 summed EVERY `.slide-content` child's scrollHeight as reserved height. Packs with a full-slide absolutely-positioned overlay inside the content box (Newsprint Bauhaus `.grain`) reserved the whole slide, so the fit loop pinned the headline at the 80px floor and the cover rendered as a small corner block over dead paper. V2 skips `position:absolute/fixed` children in both the height sum and the gap count.
 
 ```javascript
 function autoFitMegaCover() {
-  // MEGACOVER_FIT_V1: fits each span to width AND the cover to available height; re-runs on font load
+  // MEGACOVER_FIT_V2: fits each span to width AND the cover to available height; re-runs on font load
   document.querySelectorAll('.mega-cover').forEach((el) => {
     if (el.dataset.manualSize === 'true') return;
     const container = el.closest('.slide');
@@ -353,9 +354,18 @@ function autoFitMegaCover() {
       const cs = getComputedStyle(content);
       const gap = parseFloat(cs.rowGap || cs.gap || '0') || 0;
       const kids = Array.from(content.children);
+      // V2: out-of-flow siblings (position absolute/fixed, e.g. Newsprint's
+      // full-slide .grain overlay) take no flow height. Counting them starved
+      // availH and pinned the headline at the size floor.
       let reserved = 0;
-      kids.forEach(ch => { if (ch !== el) reserved += ch.scrollHeight; });
-      reserved += gap * Math.max(0, kids.length - 1);
+      let inFlow = 0;
+      kids.forEach(ch => {
+        const pos = getComputedStyle(ch).position;
+        if (pos === 'absolute' || pos === 'fixed') return;
+        inFlow += 1;
+        if (ch !== el) reserved += ch.scrollHeight;
+      });
+      reserved += gap * Math.max(0, inFlow - 1);
       availH = 1166 - reserved - 40;
     }
     let size = 220;

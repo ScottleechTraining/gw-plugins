@@ -51,6 +51,7 @@ Give each subagent:
 - the assigned hero photo path
 - the instruction to prepare the hero as a brightened ~230KB JPEG (quality ~80, resized to slide dimensions), never a PNG
 - the instruction to kill any server or browser process it starts, even on failure
+- the copy-source rule: slide text comes from the pack's carousel "Slide Text" section ONLY. Pack meta sections (THE MESSAGE, PULLED FROM THE BRAIN, Cross-Reference Summary, frontmatter, cta_rationale) are triage receipts and NEVER appear on a slide or in a caption, ever (Scott 2026-08-26). If the pack's slide text itself fails an obvious message-gate check (cover promise never paid off in the body, an unexplained label or credit on a slide), the builder reports it back instead of building it broken.
 
 ## 4. Verify after each wave
 
@@ -59,6 +60,7 @@ When a wave finishes:
 1. Render every produced carousel's slides to PNG, respecting the headless quirks documented in the `ig-carousel` skill's "Known traps" section (`--headless=new`, kill stray processes, unique `--user-data-dir`, `127.0.0.1`, fresh port, window sized to exact slide width).
 2. LOOK at every cover image (Read the PNG files). Judge the cover FIRST and on one question: would it stop a coach's thumb in a feed full of workout clips? Layout-correct but flat goes back with a stronger treatment or better photo, same as a broken one.
 3. Any dark or blank hero, clipped text, broken layout, or flat cover goes back for a fix in the next wave.
+4. Read the LAST slide and one body slide as text. If any pack meta leaked onto a slide (THE MESSAGE, PULLED FROM THE BRAIN, a cross-reference line, a bare source credit), the carousel goes back in the next wave and the pack gets flagged in the output; meta on a slide is a hard fail, not a style note.
 
 Do not report done on trust. A file passing a portability or lint check can still render wrong.
 

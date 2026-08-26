@@ -214,6 +214,16 @@ Same as v1/v2. For each file, note filename, energy level (High/Low), mood, best
 
 Read `references/slide-architecture.md` for the full template structure and component library.
 
+**Copy-source rule (non-negotiable, Scott 2026-08-26).** When building from a content
+pack, slide copy comes from the pack's carousel "Slide Text" section (plus its caption)
+ONLY. The pack's meta sections — THE MESSAGE, PULLED FROM THE BRAIN, the
+Cross-Reference Summary, frontmatter, `cta_rationale` — are triage receipts for Scott
+and must NEVER appear on a slide, in a caption, or anywhere in the rendered file. A
+bare source credit or label with no on-slide explanation is the same fail: explain it
+on the slide or cut it (attribution lives in the pack's thread assets). If the pack's
+slide text itself breaks its cover's promise or carries an unexplained label, report
+back instead of building it broken.
+
 **Template vocabulary:**
 
 | Template | Purpose |
