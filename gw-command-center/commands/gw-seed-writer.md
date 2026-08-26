@@ -110,7 +110,7 @@ For each angle, output:
 - `/gw-film-study-brief "<topic>"`: when the angle is really a Film Study research question, not a publish-ready angle
 - **Manual: leech-letter-editor skill**: when the angle is Saturday Leech Letter material (Scott writes these himself; do not auto-route)
 - **Manual: gw-substack-forge skill**: when the angle deserves a long-form Substack article
-- **Manual: ig-carousel skill**: when the angle is single-purpose carousel content
+- **Manual: ig-carousel skill**: only for a one-off visual with no teaching body behind it (a statcard, a promo tile, a Summit graphic). An angle with a **Format** of IG carousel and a body sketch routes to /gw-content-forge instead: the pack lands in _inbox and /gw-carousel-batch builds the carousel from it overnight.
 - **Manual: Kit broadcast draft**: when the angle is a one-off promo email (kit-guardrails: draft only, never auto-send)
 
 **Confidence**: high | medium | low
