@@ -207,6 +207,22 @@ If `topic_source == "queue"`:
 
 If `topic_source == "argument"`, skip this step entirely — queue not touched.
 
+## Step 5.6 — Tick off any driving topic this film study covered
+
+Read `Voice Corpus\_driving-topics.md`. Compare this film study's topic and brief against the
+lines under `## Active`. These are Scott's drive-in talk prompts; the dashboard shows a rotating
+five of them daily as the "Driving Conversations" board.
+
+Move a topic to `## Covered` ONLY when the film study substantively covers it. Judge by meaning,
+not by shared words. Cut the line out of Active and append it under `## Covered` in this shape:
+
+```
+- YYYY-MM-DD | <the topic line, verbatim> | [[film-study-<topic-slug>]]
+```
+
+Never reword a topic line, never delete one, and never move a topic the film study did not
+cover. If nothing matched, leave the file untouched.
+
 ## Step 5.7 — Wiki auto-ingest
 
 **Fact-density rule (2026-08-03):** pull EVERY number the source states (set counts, timelines, percentages, testing results, injury rates, loads) into the summary page, each with its context. Numbers are what makes a future page citable by AI answer engines; prose buries them. A summary with zero numbers from a numeric source is an incomplete ingest.
