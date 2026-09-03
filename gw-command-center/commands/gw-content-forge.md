@@ -326,14 +326,14 @@ Choose whichever fits the source material better:
 
 Caption: same rules as Asset 4.
 
-**Asset 6: Reel Ideas (3 concepts)**
+**Asset 6: Reel Ideas (trial reel scripts: 1 body, 3 hooks)**
 
-Three standalone reel concepts Scott can shoot in under 60 seconds. Format each as:
-- **Hook (first 3 seconds):** Exact words to say to camera. Provocative. Stops the scroll.
-- **Body (20-40 seconds):** What to demonstrate or say. One tight teaching point.
-- **CTA (last 5 seconds):** What to say and where to point.
+These ship to Scott's phone as `captions/reel-ideas.txt` and get posted as Instagram Trial Reels: shown to non-followers only, 7 to 15 seconds, one take on a phone, no editing. Strangers do not know the offers, so the script sells the truth and earns the follow. Rules live in `wiki/business/trial-reels-system.md`. Keep the `## Reel Ideas` heading exactly (the caption splitter keys on it).
 
-Concepts and structure only. Scott fills in the coaching specifics.
+- **Body (spoken, 7 to 15 seconds):** 2 to 4 short sentences Scott says to the phone in one breath. One truth from the source material. Exact words. Include the source number if the pack has one. No setup, no "hey coach," no offer names.
+- **Hook A (indictment), Hook B (number), Hook C (question or contrarian):** each is one on-screen text line (7 words max) plus the first spoken sentence that replaces the body's opening. The rest of the body is identical across all three. Three hooks on one body is three trials on three days.
+- **B-roll option:** one line naming footage that carries this as text-over-video with no talking (weight room, sprint, film, whiteboard). Rhody practice footage is the default.
+- **CTA (last 2 seconds, one line, 5 words max):** a follow ask or a free-tool keyword. Never a paid offer. The graduated reel gets the offer keyword pinned in the comments later.
 
 **Asset 7: Email Draft (Leech Letter style)**
 
@@ -407,11 +407,26 @@ pipeline: gw-content-forge
 
 ---
 ## Reel Ideas
-### Reel 1: [Title]
-[concept]
+### Body
+[spoken body, 7 to 15 seconds]
 
-### Reel 2: [Title]
-[concept]
+### Hook A (indictment)
+On screen: [7 words max]
+Say: [first sentence]
+
+### Hook B (number)
+On screen: [7 words max]
+Say: [first sentence]
+
+### Hook C (question)
+On screen: [7 words max]
+Say: [first sentence]
+
+### B-roll option
+[footage that carries this with no talking]
+
+### CTA
+[5 words max, follow or free-tool keyword]
 
 ### Reel 3: [Title]
 [concept]
