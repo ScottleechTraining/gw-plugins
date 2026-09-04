@@ -3,7 +3,7 @@ name: ig-carousel
 description: Create editable, export-ready Instagram carousel slides as a single HTML file. Use this skill whenever the user mentions Instagram carousel, IG carousel, social media slides, carousel post, swipeable slides, or wants to create visual slide content for Instagram. Also trigger when the user says "make me a carousel about X", "create slides for Instagram", "social media graphics", or references carousel templates. This skill produces a self-contained HTML file with click-to-edit text fields, one-click PNG export at 1080x1350 (Instagram 4:5 ratio), and a stitched multi-page PDF export for Canva import. Supports content archetypes selected at Step 0.25 (what the post is, picked by the outcome it should win), visual style packs selected at Step 0.5 (what it looks like), and seamless image spreads across multiple slides.
 ---
 
-# Instagram Carousel Skill — v3.6
+# Instagram Carousel Skill — v3.7
 
 Create editable, export-ready Instagram carousels as self-contained HTML files.
 
@@ -13,7 +13,7 @@ Create editable, export-ready Instagram carousels as self-contained HTML files.
 
 The very first thing you output when this skill runs, before Step 0 or anything else, must be this line, verbatim:
 
-`▶ ig-carousel v3.6 · gw-command-center plugin · canonical single source`
+`▶ ig-carousel v3.7 · gw-command-center plugin · canonical single source`
 
 This is Scott's guarantee that the canonical plugin skill ran, not a loose shadow. If you are following carousel instructions and this IDENTITY block is not in the skill file you loaded, you are running a stale copy: stop and tell Scott the exact file path you loaded from.
 
@@ -33,6 +33,11 @@ Six ways carousel builds fail silently. Every one has cost real time. Check them
 ---
 
 **All raw markup (HTML, CSS, JS) lives in `references/html-implementation.md`.** SKILL.md stays prose-only. When a step needs the actual code, it points you to a numbered section in that reference. Do not inline raw markup into this file.
+
+**What's new in v3.7 (photo floor):**
+- Two photos per carousel minimum (cover + one body slide), per pack treatment; Mono Series exempt. Law at the top of `references/style-packs.md`.
+- Photo-forward pack tiebreak with a rotation guard so Editorial Long-Form and Mono Series keep getting built (quick-reference section of `references/style-packs.md`).
+- Batch mode defaults one two-slide spread on a landscape body photo (Step 1, item 8).
 
 **What's new in v3.6 (content archetypes):**
 - New Step 0.25: content archetype selection, outcome-first (saves / shares / comments+DMs / follows), before the visual pack is chosen. The archetypes live in `references/content-archetypes.md` and nowhere else, same anti-drift rule as style packs.
@@ -190,7 +195,9 @@ Check conversation history first. Confirm any missing:
 5. **Tone** — coach-tough, professional, playful, minimal
 6. **CTA** — follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`). The Step 0.25 archetype sets the default.
 7. **Image folder** *(Image Mode only)* — default: `Gridiron Warrior/Images/carousels/`
-8. **Seamless spreads?** — ask: "Want any photos to span multiple slides for a swipe-reveal effect? e.g., 'slide 3–4' or 'slide 2–3–4'." Default: none.
+8. **Seamless spreads?** — attended: ask "Want any photos to span multiple slides for a swipe-reveal effect? e.g., 'slide 3–4' or 'slide 2–3–4'." Default: none. Batch (unattended): if the assigned body photo is landscape, default to ONE two-slide spread on it; portrait body photos get a single photo slide.
+
+**Photo floor (Scott 2026-09-03):** every carousel carries a cover photo and one body photo slide, each per the pack's own treatment and sizing; Mono Series is exempt. The law and its per-pack notes live at the top of `references/style-packs.md`. Plan the body photo slide into Step 3B; do not treat it as optional.
 
 Do not ask about fonts.
 

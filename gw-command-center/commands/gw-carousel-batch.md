@@ -26,6 +26,7 @@ Pack rules for both modes:
 
 - Explicit list mode: the pack Scott named wins.
 - Otherwise the quick-reference recommendation IS the pack, attended or not. If no row clearly matches, pick the closest fit and flag that slug in the summary table so Scott knows to look at it at review.
+- Two-row ties resolve by the photo-forward tiebreak in `references/style-packs.md` (photo pack wins), subject to its rotation guard: read `style_pack` off the last 6 built topics in `queue-state.json` first, and if neither Editorial Long-Form nor Mono Series is among them, suspend the tiebreak for this batch. Say which way the guard went in the assignment table.
 
 Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged, do not edit the source content packs, and do not leave a listed slug unbuilt.
 
@@ -34,9 +35,9 @@ Build the slugs in the assignment table and stop there. Do not restyle carousels
 Before spawning any agents:
 
 1. List available photos in `C:\IMAGES\Football` and `C:\IMAGES\Gym`.
-2. Pick one hero photo per carousel, matched to the topic.
-3. Never assign the same photo to two carousels in the batch.
-4. Record the full assignment table (slug, style pack, content-pack path, assigned photo path) before anything is spawned. This table is the source of truth for the whole run.
+2. Pick TWO photos per carousel, matched to the topic: a hero for the cover and a body photo for one body slide (photo floor, `references/style-packs.md`). Prefer a landscape body photo so it can carry a two-slide seamless spread. Mono Series carousels get a hero only.
+3. Never assign the same photo to two carousels in the batch, hero or body.
+4. Record the full assignment table (slug, style pack, content-pack path, hero photo path, body photo path) before anything is spawned. This table is the source of truth for the whole run.
 
 ## 3. Build (spawn subagents at 3+ carousels)
 
@@ -48,8 +49,9 @@ Give each subagent:
 - the content-pack path
 - the chosen style pack
 - the chosen cover treatment (from the ig-carousel skill's `references/cover-treatments.md` quick-reference, matched to the topic and the photo's character; Type Plate is the fallback when the photo can't carry a treatment)
-- the assigned hero photo path
-- the instruction to prepare the hero as a brightened ~230KB JPEG (quality ~80, resized to slide dimensions), never a PNG
+- the assigned hero photo path AND the assigned body photo path
+- the photo floor: the cover carries the hero and one body slide carries the body photo, each per the pack's own photo treatment and sizing in `references/style-packs.md` (Mono Series exempt: hero only). If the body photo is landscape, run it as a two-slide seamless spread per `references/seamless-image-spread.md`; otherwise a single photo slide. A build that drops the body photo is a bounce, not a fallback.
+- the instruction to prepare every photo as a brightened ~230KB JPEG (quality ~80, resized to slide dimensions, pack treatment baked with Pillow), never a PNG
 - the instruction to kill any server or browser process it starts, even on failure
 - the copy-source rule: slide text comes from the pack's carousel "Slide Text" section ONLY. Pack meta sections (THE MESSAGE, PULLED FROM THE BRAIN, Cross-Reference Summary, frontmatter, cta_rationale) are triage receipts and NEVER appear on a slide or in a caption, ever (Scott 2026-08-26). If the pack's slide text itself fails an obvious message-gate check (cover promise never paid off in the body, an unexplained label or credit on a slide), the builder reports it back instead of building it broken.
 
@@ -60,6 +62,7 @@ When a wave finishes:
 1. Render every produced carousel's slides to PNG, respecting the headless quirks documented in the `ig-carousel` skill's "Known traps" section (`--headless=new`, kill stray processes, unique `--user-data-dir`, `127.0.0.1`, fresh port, window sized to exact slide width).
 2. LOOK at every cover image (Read the PNG files). Judge the cover FIRST and on one question: would it stop a coach's thumb in a feed full of workout clips? Layout-correct but flat goes back with a stronger treatment or better photo, same as a broken one.
 3. Any dark or blank hero, clipped text, broken layout, or flat cover goes back for a fix in the next wave.
+3b. Read the body photo slide as a PNG too. A missing body photo (any pack but Mono Series), text sitting on the photo's subject, or an empty spread slide goes back in the next wave.
 4. Read the LAST slide and one body slide as text. If any pack meta leaked onto a slide (THE MESSAGE, PULLED FROM THE BRAIN, a cross-reference line, a bare source credit), the carousel goes back in the next wave and the pack gets flagged in the output; meta on a slide is a hard fail, not a style note.
 
 Do not report done on trust. A file passing a portability or lint check can still render wrong.
@@ -68,8 +71,8 @@ Do not report done on trust. A file passing a portability or lint check can stil
 
 A summary table:
 
-| Slug | Style pack | Photo used | Verified | Path |
-|------|-----------|------------|----------|------|
+| Slug | Style pack | Hero photo | Body photo | Verified | Path |
+|------|-----------|------------|------------|----------|------|
 
 Plus the list of anything skipped and why.
 

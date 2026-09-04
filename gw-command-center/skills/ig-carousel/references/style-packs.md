@@ -4,6 +4,8 @@ Seven visual packs. User picks one at Step 0.5. Packs 1–6 use Vitesse Bold (di
 
 **The cover is planned separately.** Every carousel also picks a COVER TREATMENT — the scroll-stopper layer for slide 1 — from `cover-treatments.md`. The pack governs slides 2+; the treatment governs the cover and inherits the pack's palette and faces. Type Plate (the pack's own mega-cover) is the default treatment.
 
+**Photo floor (standing law, Scott 2026-09-03: "pictures seem to do well").** Every carousel carries TWO photos minimum: one on the cover, one on a body slide. Each photo obeys its pack's own photo treatment and sizing rules below (Editorial Long-Form keeps its contained 100% x 40% break; Paper Minimal keeps its small rectangle; Newsprint Bauhaus keeps its cover ban and puts its cutout hero on the thesis slide instead, with the second photo as a torn clipping). **Mono Series is the one exemption**: its rules stand as written, photos stay rare. A carousel that ships under the floor in any other pack is a rework, not a style choice. The batch hands every builder a hero photo and a body photo for exactly this reason; the scanner records `photo_count` per topic so the Sunday log can check the floor held.
+
 Each pack defines:
 - Accent color + contrast ink
 - Dominant background / inverse background
@@ -231,6 +233,10 @@ Vox-explainer editorial fused with classic Bauhaus. Every slide is a magazine sp
 | "explainer", "breakdown", "magazine", "newsprint", "bauhaus", "vox", "myth vs fact" | Newsprint Bauhaus |
 
 If unclear, ask. Don't guess — the pack shapes everything downstream.
+
+**Photo-forward tiebreak (Scott 2026-09-03).** When a topic fits two rows, the photo-first pack wins: a teaching topic that could be Editorial Long-Form or The Case goes to The Case; a listicle that could be Mono Series or Asphalt Editorial goes to Asphalt Editorial. A clean single-row match is not a tie; build it in that row's pack.
+
+**Rotation guard.** The tiebreak never starves the text packs. If none of the last 6 carousels built (queue-state topics with a `style_pack`, newest by `added`) is Editorial Long-Form or Mono Series, suspend the tiebreak for the current batch and let the quick-reference row win as written. Unattended runs apply this without asking.
 
 ---
 
