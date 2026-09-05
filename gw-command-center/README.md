@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.15.0
+**Version:** 0.20.2
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -68,6 +68,8 @@ Restart Code. The 48 components are now active at user scope.
 2. URL: `ScottleechTraining/gw-plugins`
 3. Click **Sync** → click **Install** on `gw-command-center`
 
+**Sync is manual.** The Cowork copy is a snapshot taken at the last Sync. It never updates on its own. The desktop app also injects that snapshot into Claude Code sessions, where a stale copy can shadow the current CLI install. After every plugin push, come back here and click **Sync** again.
+
 ### claude.ai chat
 
 1. https://claude.ai/customize → **Skills**
@@ -102,7 +104,10 @@ These skills rely on tooling outside the plugin:
 4. Commit + push:   git -C "C:\Claude Projects\plugins" add -A
                     git -C "C:\Claude Projects\plugins" commit -m "..."
                     git -C "C:\Claude Projects\plugins" push
-5. Cowork + chat refresh themselves from github on next session.
+5. Cowork + chat do NOT auto-refresh. Open Settings → Plugins → gw-plugins
+   marketplace → click Sync, then Update on gw-command-center. Do this on
+   both surfaces after every push. (Found 2026-09-05: the Cowork copy had sat
+   at v0.1.0 since June 6 because Sync was never clicked.)
 ```
 
 Bump `version` in `gw-command-center/.claude-plugin/plugin.json` on any non-trivial change.
@@ -183,8 +188,12 @@ After this, the router has exactly one source for every GW skill, the plugin. Th
 | **0.13.0** (2026-08-08) | **Opus 5 retune, Batch 2.** Scope + density lines added to gw-seed-writer, gw-everything-on, gw-film-study-brief, gw-morning-digest (all with output floors named; seed-writer's quotes the TOP MOVE gate token twice by design). Contradiction fixes: seed-writer Step 2 no longer re-Reads CLAUDE.md (read-budget already forbade it) and its voice_check exit-code text no longer says "proceed to commit" (Step 5 forbids committing); film-study-brief stale cross-refs (Step 4 -> 3, Step 11 -> 10), em-dashes stripped from its OUTPUT templates (brief title/H1, summary title/H1, concept-stub TODO, index line - the 2026-07-26 regression class), and two `anthropic-skills:` namespaces corrected to `gw-command-center:`; morning-digest read cap rescoped to narrative sources (the old max-8 was arithmetically impossible against the 21 inputs its truth rules require - likely why repair_morning_digest_truth.py exists) and its always-read list now names the status/queue files. Sonnet-lane defect fixes from the 08-08 classification: dewey-ingest Hard Constraints 4+5 reconciled with the shipped v3.2 Tier 2.5 video flow and the Scott-gated legacy fallback; dewey-backfill gains an authoritative run-state note (completed 2026-05-14, sample-first on any re-run); gw-queue deploy-check window 5 -> 90 min (long Drive syncs were silently skipping deploys); content-forge description now counts all 8 pack assets; x-bookmarks gains the completion report + log line its siblings have. |
 | **0.14.0** (2026-08-08) | **Opus 5 retune, Batch 3: the eight remaining opus lanes.** Highest-severity find: escape-mangled path bytes in gw-advanced-scouting and gw-freebie-forge (a past write interpreted backslash-t/r/f/v/b as control characters, so `	ools` was TAB+`ools` etc.; nine bytes repaired, including both targets of freebie-forge's dedup gate, which had been pointing at nonexistent paths). Freebie-forge also: Rule 1 vs Steps contradiction fixed (interactive HTML is now stated as the Step 4 default with its insiders-vault/incoming output path), Scores and Stops price corrected $104 -> $97 in two places, dead Summit funnel tier removed, legacy-CSS ban scoped so it stops contradicting gw-advanced-scouting. Cross-file floor fix: nightly-forge's pack list now matches content-forge's 8-asset definition (it said 2 threads and dropped the reel ideas). gw-daily's screenshot steps now match gw-screenshot-ingest (flat processed/, no archive/ tree) instead of commanding what that spec forbids. gw-research's un-followable sleep instructions replaced with polling (foreground sleep is blocked in the runtime). gw-triage: stale step reference, dead Summit scoring row, emoji out of the preview template. gw-carousel-batch: two-vs-three kinds contradiction fixed and spawn guidance rewritten as when-to-spawn criteria with a cap of 5. Scope lines with named floors and density guidance added across all eight; gw-ask gets a bounded read budget (top 5 pages). Structural deferrals: gw-daily Steps 2-3 should delegate to /gw-screenshot-ingest and /gw-voice-ingest outright; gw-freebie-forge still needs a full interactive-HTML build procedure. | 
 | **0.15.0** (2026-08-09) | **Opus 5 retune, Batch 4: structural fixes.** Root cause of the duplicate forge_backlog rows (4 in 7 days): gw-seed-writer and gw-morning-digest each carried an inline slugify that hard-cut long slugs at 80 chars while the canonical `backfill_forge_ideas.slugify` trims at a word boundary, so any 80+ char title got queued twice when the nightly harvest re-slugged it. Both inline blocks replaced with `python -m scripts.gwqueue.append_forge_ideas --from-seed/--from-report` (new main-repo module; harvests the file the command just wrote, canonical slug, merge-preserve semantics), `extract_entries` now backfills format/score from later occurrences (kills the format-null rows), and the one live mis-slugged pending row was repaired in queue-state.json before the 08-09 nightly gate. gw-daily Steps 2-3 now delegate to /gw-screenshot-ingest and /gw-voice-ingest (one spec per inbox, counts read from their reports). gw-freebie-forge gains the missing interactive-HTML build procedure (6 steps: slug+folder with the incoming-path/ledger-key constraints spelled out, Rule 4 shell, interaction-is-the-freebie test with module.exports guard + ?demo=1 hook, Kit free-rack capture, render-and-click verification, review-page regen); Step 5 voice check now names the index.html path. gw-pipeline-doctor Step 1 rewritten off the dead D:-drive framing (vault on C: since 2026-07-13; D: file-not-found now classified as a stale-path defect, not a transient). gw-morning-digest doubled blank lines collapsed and mojibake repaired; gw-seed-writer voice gut-check moved to Step 3c (before the write, where it applies). Main repo alongside: gw-health-check.py gains a 45-min running-grace window (a ~20-min weekly-synthesis mid-run no longer reads STUCK/crashed), and weekly-synthesis's job contract now runs `wiki_health.py --write` as step 1 so the Sunday prune pass never reads a stale report. |
+| **0.16.0-0.20.0** (2026-08-10 to 09-04) | Incremental rows not recorded here; see `git log` in the plugins repo. |
+| **0.20.1** (2026-09-05) | `gw-image-forge` migrated to `gpt-image-2` (gpt-image-1 shuts down 2026-12-01). Model swap only; `quality`/`size` params unchanged per the openai-python and openai-node SDK types. |
+| **0.20.2** (2026-09-05) | **Cowork snapshot drift fix.** Found the Cowork copy of this plugin sitting at v0.1.0 since June 6: Cowork/claude.ai install a snapshot when Scott clicks Sync and never auto-refresh, and the desktop app injects that snapshot into Code sessions where it shadowed the fresh CLI install (the Skill tool loaded the gpt-image-1 image forge). README, root CLAUDE.md, and `gw-plugin-ship` corrected (Step 6 now ends every ship with the Sync instruction). New `scripts/check_plugin_drift.py` wired as a SessionStart hook in `C:\Claude Projects\.claude\settings.json`: prints PLUGIN DRIFT when the CLI install or the Cowork snapshot lags `plugin.json`, or when the superseded `gw-kit` upload is still installed. |
 
 Still pending (Scott action required):
+- **Click Sync on both surfaces** (Cowork → Settings → Plugins → gw-plugins → Sync → Update; https://claude.ai/customize → Skills → gw-plugins → Sync → Update). Then uninstall the superseded `gw-kit` upload in Cowork. The SessionStart drift hook nags until both are done.
 - Disable the parallel Cowork `anthropic-skills` GW bundle (must be done in the Cowork UI; see README "Disabling the old Cowork bundle" section). With v0.4.0, the plugin owns every GW skill and command. Once disabled, the router never sees the parallel copies. Target: do it next time you open Cowork.
 
 ---

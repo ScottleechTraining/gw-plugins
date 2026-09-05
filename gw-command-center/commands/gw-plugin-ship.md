@@ -53,7 +53,7 @@ Note: the refreshed plugin takes effect NEXT session, not the current one. Do no
 
 ## Step 5 — Commit and push the plugins repo
 
-Cowork and claude.ai chat pull from GitHub on their next refresh, so the change is not live on those surfaces until it is pushed:
+Cowork and claude.ai chat install from the GitHub copy, so the change cannot reach them until it is pushed:
 
 ```bash
 git -C "C:\Claude Projects\plugins" add -A
@@ -63,9 +63,20 @@ git -C "C:\Claude Projects\plugins" push
 
 This repo pushes clean. It is a SEPARATE repo from the main GW vault repo — the main-repo local/origin divergence and fast-forward-only rules do NOT apply here. A plain `push` is correct.
 
-## Step 6 — Report
+## Step 6 — Tell Scott to click Sync (Cowork + claude.ai do NOT auto-refresh)
+
+The Cowork and claude.ai copies are snapshots taken the last time Scott clicked **Sync** on the gw-plugins marketplace. They never update on their own. Worse, the Cowork desktop app injects its snapshot into Claude Code sessions, where a stale copy can shadow the fresh CLI install (found 2026-09-05: Cowork had sat at v0.1.0 since June 6).
+
+Put this in the report, verbatim, as the single next action:
+
+> Sync now: Cowork → Settings → Plugins → gw-plugins → **Sync** → **Update** gw-command-center. Then https://claude.ai/customize → Skills → gw-plugins → **Sync** → **Update**.
+
+The SessionStart hook in `C:\Claude Projects\.claude\settings.json` runs `scripts/check_plugin_drift.py` and prints a PLUGIN DRIFT warning until the Cowork snapshot matches `plugin.json`.
+
+## Step 7 — Report
 
 - Version shipped (old to new).
 - Files changed.
 - Validation result (clean / what was fixed).
-- Confirm: local refreshed (live next session), repo pushed (Cowork + chat live on their next refresh).
+- Confirm: local refreshed (live next session), repo pushed.
+- The Sync instruction from Step 6 as the last line.
