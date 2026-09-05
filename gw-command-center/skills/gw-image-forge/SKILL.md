@@ -1,11 +1,11 @@
 ---
 name: gw-image-forge
-description: "Generate a photographic-realism PNG image for Gridiron Warrior via the OpenAI Images API (gpt-image-1). The north star is a documentary photograph, not an AI image. Use this skill whenever Scott provides a subject or concept and wants an image. Trigger on phrases like 'generate an image', 'make me an image for', 'image forge', 'create an image', 'build me an image for', or any request to produce image gen output for Gridiron Warrior or Scott Leech Training. Defaults to 1987 Sports Illustrated B&W aesthetic. Switches to color (1990s NCAA media guide or modern D1 athletic comms) when Scott says 'color', 'in color', or 'full color'."
+description: "Generate a photographic-realism PNG image for Gridiron Warrior via the OpenAI Images API (gpt-image-2). The north star is a documentary photograph, not an AI image. Use this skill whenever Scott provides a subject or concept and wants an image. Trigger on phrases like 'generate an image', 'make me an image for', 'image forge', 'create an image', 'build me an image for', or any request to produce image gen output for Gridiron Warrior or Scott Leech Training. Defaults to 1987 Sports Illustrated B&W aesthetic. Switches to color (1990s NCAA media guide or modern D1 athletic comms) when Scott says 'color', 'in color', or 'full color'."
 ---
 
 # GW Image Forge
 
-Build photo-editor prompts for `gpt-image-1`. The north star is **a documentary photograph**, not an AI image of someone's idea of an image. The test is one question:
+Build photo-editor prompts for `gpt-image-2`. The north star is **a documentary photograph**, not an AI image of someone's idea of an image. The test is one question:
 
 > Could this image have appeared in a 1987 Sports Illustrated feature, a 1996 NCAA media guide, or a 2026 university athletic communications release?
 

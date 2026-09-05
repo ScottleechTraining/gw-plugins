@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""GW Image Forge — OpenAI Images backend (gpt-image-1).
+"""GW Image Forge — OpenAI Images backend (gpt-image-2).
 
 Mirrors the fal.ai pattern from C:\\Claude Projects\\_archive\\2026-05-12\\misc\\
 GW-Design-Studio\\scripts\\generate_images.py. Lifts the .env loader pattern
@@ -43,7 +43,7 @@ from pathlib import Path
 ENV_FILE = Path(r"C:\Claude Projects\Gridiron Warrior\scripts\.env")
 OUT_DIR = Path(r"C:\Claude Projects\Gridiron Warrior\Images")
 API_URL = "https://api.openai.com/v1/images/generations"
-MODEL = "gpt-image-1"
+MODEL = "gpt-image-2"  # gpt-image-1 shuts down 2026-12-01; gpt-image-2 keeps the same quality/size params
 
 VALID_SIZES = {"1024x1024", "1024x1536", "1536x1024", "auto"}
 VALID_QUALITY = {"low", "medium", "high", "auto"}
@@ -174,7 +174,7 @@ def write_pngs(cfg: dict, images: list[bytes]) -> list[Path]:
 
 
 def main() -> int:
-    p = argparse.ArgumentParser(description="GW Image Forge — OpenAI gpt-image-1 backend")
+    p = argparse.ArgumentParser(description="GW Image Forge — OpenAI gpt-image-2 backend")
     p.add_argument(
         "--config",
         required=True,

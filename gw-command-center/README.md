@@ -21,7 +21,7 @@ Counts verified against disk 2026-08-08 (`ls skills/*/` and `ls commands/*.md`).
 | `leech-letter-editor` | Edit/ghostwrite the weekly Saturday Leech Letter in Scott's voice |
 | `gw-substack-forge` | Long-form Substack article engine in Scott's voice |
 | `gw-youtube-takeaways` | YouTube/notebook → 8 takeaways + GW 10x insight + branded PDF + Drive upload. Native `notebooklm` MCP (v0.3.0+); Chrome MCP archived as fallback. |
-| `gw-image-forge` | OpenAI Images (`gpt-image-1`) image generation, SI 1987 / Tri-X 400 aesthetic, B&W default + cinematic color mode |
+| `gw-image-forge` | OpenAI Images (`gpt-image-2`) image generation, SI 1987 / Tri-X 400 aesthetic, B&W default + cinematic color mode |
 | `ig-carousel` | Editable HTML Instagram carousels with PNG/PDF export, 6 style packs, Vitesse Bold embedded |
 | `jedi-council` | 5-advisor multi-agent council for strategic decisions (Karpathy LLM Council pattern) |
 | `pdf` | Read, edit, form-fill, convert PDFs |
