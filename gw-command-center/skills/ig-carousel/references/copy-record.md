@@ -1,20 +1,20 @@
 # Carousel Copy Record
 
-STAGED 0.21.0, NOT RELEASED. This is the single schema and copy-lifecycle contract for opted-in carousels. Archetype structures remain in [content-archetypes.md](content-archetypes.md); visual rules remain in [style-packs.md](style-packs.md).
+Released in 0.21.0 on 2026-09-08; creation enabled the same night with Scott's approval. This is the single schema and copy-lifecycle contract for opted-in carousels. Archetype structures remain in [content-archetypes.md](content-archetypes.md); visual rules remain in [style-packs.md](style-packs.md).
 
 ## Opt-In and Capability Gate
 
-Deploy and verify the runtime first, then release/sync plugin instructions separately. From the Gridiron Warrior vault directory, check before opting in:
+From the Gridiron Warrior vault directory, check before opting in:
 
 ```bash
 python -m scripts.gwqueue.carousel_copy --capabilities
 ```
 
-Require support for schema 1, copy validation/export, copy-aware save/build/restyle/rewrite, and the managed package workflow before using them. Check installed helpers' help/capability output; a plugin version alone is not proof. These are planned runtime APIs, not a claim that the staged checkout is deployed.
+Require support for schema 1, copy validation/export, copy-aware save/build/restyle/rewrite, and the managed package workflow before using them. Check installed helpers' help/capability output; a plugin version alone is not proof.
 
-Capabilities report `enabled: false` by default. Creation is controlled by runtime `Deliverables/_system/carousel-copy-settings.json` with `{"enabled":true}`; an absent file means false. Only after a later approved runtime-first deployment and plugin sync, enable creation once. Do not create settings or enable it in this staged pass. Once enabled, existing unattended Forge automatically creates copy records for NEW decks and passes them through `--copy`; no per-post opt-in question or nightly `--managed` argument.
+Capabilities report `enabled: false` by default. Creation is controlled by runtime `Deliverables/_system/carousel-copy-settings.json` with `{"enabled":true}`; an absent file means false. Scott enabled creation once on 2026-09-08. Never create, delete, or edit that settings file from a command; enabling or disabling is Scott's rollout decision. Once enabled, existing unattended Forge automatically creates copy records for NEW decks and passes them through `--copy`; no per-post opt-in question or nightly `--managed` argument.
 
-The assembler's explicit `--copy` input or an existing embedded schema marker identifies new-format work; a brief or plugin update alone does not. Old unbuilt source packs without explicit new schema remain legacy, even after creation is enabled; discovery must not backfill copy records for that backlog. Disabling creation later does not disable validation, editing, restyles, or action rerolls for already-managed decks. No global activation while staged, no bulk migration, and no changes to legacy decks. If helpers are missing, leave a managed topic pending with a clear capability error; never strip its marker or ship it unmanaged. Continue unrelated legacy overnight work through the existing path without failing the whole job or adding an unattended question.
+The assembler's explicit `--copy` input or an existing embedded schema marker identifies new-format work; a brief or plugin update alone does not. Old unbuilt source packs without explicit new schema remain legacy, even after creation is enabled; discovery must not backfill copy records for that backlog. Disabling creation later does not disable validation, editing, restyles, or action rerolls for already-managed decks. No bulk migration and no changes to legacy decks. If helpers are missing, leave a managed topic pending with a clear capability error; never strip its marker or ship it unmanaged. Continue unrelated legacy overnight work through the existing path without failing the whole job or adding an unattended question.
 
 ## Schema 1
 

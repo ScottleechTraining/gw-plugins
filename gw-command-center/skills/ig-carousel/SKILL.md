@@ -79,7 +79,7 @@ This SKILL.md must NEVER hardcode pack names ("Asphalt Editorial", "Mono Series"
 
 **Same rule for content archetypes:** `references/content-archetypes.md` is the only place the archetypes are defined. This SKILL.md never hardcodes archetype names, outcomes, or structures.
 
-**Opt-in copy contract (staged 0.21.0):** read `references/copy-record.md` for the single schema, creation setting, automatic action selection, stable bindings, saved-copy rebuilds, and package approval rules. Capability-check first. Creation defaults disabled until a later approved one-time enable; afterward unattended Forge supplies copy input automatically for NEW decks. Existing managed decks remain editable/rerollable when creation is disabled. Legacy decks keep their existing behavior; this staged version does not activate settings.
+**Opt-in copy contract (0.21.0, creation enabled 2026-09-08):** read `references/copy-record.md` for the single schema, creation setting, automatic action selection, stable bindings, saved-copy rebuilds, and package approval rules. Capability-check first. When capabilities report `enabled: true`, unattended Forge supplies copy input automatically for NEW decks. Existing managed decks remain editable/rerollable even if creation is later disabled. Legacy decks keep their existing behavior; never create, delete, or edit the settings file from a skill.
 
 ---
 

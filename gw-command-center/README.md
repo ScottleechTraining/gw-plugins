@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.21.0 (released 2026-09-08; carousel-copy creation still OFF until the separate one-time enable)
+**Version:** 0.21.1 (carousel foundations live; creation enabled 2026-09-08)
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -55,9 +55,14 @@ Every command carries `model:` frontmatter (opus for judgment/voice/synthesis, s
 
 ### Carousel foundations deployment order
 
-Steps 1-3 were completed 2026-09-08 (runtime in main repo commit 94ba04a, 180 queue
-tests, capabilities `enabled: false`, 160 queue topics verified legacy). Step 4 is
-still pending and needs Scott's separate yes. Cowork and chat Sync is Scott's click.
+All four steps completed 2026-09-08. Runtime in main repo commit 94ba04a (180 queue
+tests, 160 queue topics verified legacy). Scott enabled creation the same night and
+the controlled smoke run passed end to end on topic
+`_inbox/walk-it-or-run-it-there-is-no-third-tempo` (Forge brief + handoff, `--copy`
+build, browser save round-trip, restyle to The Case with a byte-identical record,
+action reroll save to share with identity preserved, review token binding, four
+blocked SHIP attempts, nothing published). Step 5, the first unattended-run check,
+is the next morning's readiness read.
 
 1. Deploy and verify the runtime helpers first: copy save/validate/export,
    assembler copy/restyle/rewrite modes, verified replacement with content-hash
@@ -74,7 +79,8 @@ still pending and needs Scott's separate yes. Cowork and chat Sync is Scott's cl
    Sync/Update and verification; a Code check does not verify either snapshot.
 4. After runtime/plugin sync and separate approval, enable creation ONCE through
    the setting in the copy contract. Capabilities default to `enabled: false`;
-   an absent settings file is disabled. Do not create that file while staged.
+   an absent settings file is disabled. Scott created it 2026-09-08; no command
+   may create, delete, or edit it.
    Once enabled, unattended Forge automatically supplies copy records for NEW
    decks, with no per-post question or nightly `--managed` flag. Disabling
    creation later leaves existing managed decks editable/rerollable. Review can
@@ -221,6 +227,7 @@ After this, the router has exactly one source for every GW skill, the plugin. Th
 | **0.20.1** (2026-09-05) | `gw-image-forge` migrated to `gpt-image-2` (gpt-image-1 shuts down 2026-12-01). Model swap only; `quality`/`size` params unchanged per the openai-python and openai-node SDK types. |
 | **0.20.2** (2026-09-05) | **Cowork snapshot drift fix.** Found the Cowork copy of this plugin sitting at v0.1.0 since June 6: Cowork/claude.ai install a snapshot when Scott clicks Sync and never auto-refresh, and the desktop app injects that snapshot into Code sessions where it shadowed the fresh CLI install (the Skill tool loaded the gpt-image-1 image forge). README, root CLAUDE.md, and `gw-plugin-ship` corrected (Step 6 now ends every ship with the Sync instruction). New `scripts/check_plugin_drift.py` wired as a SessionStart hook in `C:\Claude Projects\.claude\settings.json`: prints PLUGIN DRIFT when the CLI install or the Cowork snapshot lags `plugin.json`, or when the superseded `gw-kit` upload is still installed. |
 | **0.21.0** (2026-09-08) | **Carousel foundations, creation OFF.** Opt-in embedded-copy contract (`ig-carousel/references/copy-record.md`), automatic pre-draft action selection in `gw-content-forge`, saved-wording restyles and same-identity action rerolls in `gw-carousel-batch`, paired caption + review token in `gw-review`, managed approval receipts gating `gw-ship` and Drive sync. Built by Codex in isolated worktrees 2026-09-08, runtime reconciled and released to the active checkout the same night (main repo 94ba04a). New-deck creation stays disabled until `Deliverables/_system/carousel-copy-settings.json` is created with `{"enabled": true}` on Scott's separate say-so; legacy decks are untouched and no bulk migration exists. |
+| **0.21.1** (2026-09-08) | **Creation enabled, docs de-staged.** Scott created `carousel-copy-settings.json` with `enabled: true` after the 0.21.0 sync. Five spots in `copy-record.md`, `ig-carousel/SKILL.md`, `gw-content-forge`, and `gw-carousel-batch` still said "STAGED, NOT RELEASED / do not enable while staged", which an unattended Opus lane could read as a refusal; rewritten to the live state and to forbid any command from touching the settings file. Smoke run passed on the walk-it-or-run-it topic (see deployment order above). Known gap carried forward from legacy: a `restyle:`/`action:` polish note re-triggers the 3:00am batch every night until Scott SHIPs or KILLs the topic on the review page; the batch has no "already rebuilt since the note" check. |
 
 Still pending (Scott action required):
 - **Click Sync on both surfaces** (Cowork → Settings → Plugins → gw-plugins → Sync → Update; https://claude.ai/customize → Skills → gw-plugins → Sync → Update). Then uninstall the superseded `gw-kit` upload in Cowork. The SessionStart drift hook nags until both are done.
