@@ -23,6 +23,8 @@ Two ways in:
 
 Follow the capability gate and lifecycle in [copy-record.md](../skills/ig-carousel/references/copy-record.md), the single schema contract. Scott enabled creation on 2026-09-08; when capabilities report `enabled: true`, Forge supplies copy records automatically for NEW decks. Use that explicit copy input or the existing HTML schema marker, not discovery/plugin version alone. Existing managed decks remain editable/rerollable even if creation is later disabled. If helpers are missing, report managed work as pending without stripping its marker or falling back to unmanaged output; continue unrelated legacy work. No per-post opt-in question, no settings edits from this command, and no existing-deck migration.
 
+Before filling buckets 2, 3, and 4, run `python -m scripts.gwqueue.polish_pending` from the vault dir. Only rows marked PENDING enter those buckets. A row marked REBUILT means the carousel HTML is already newer than Scott's note: that topic was rebuilt for this note on an earlier run and is waiting on his review, so do not rebuild it again; list it in the report under "awaiting review". (Added 2026-09-09: before this check, every noted topic was rebuilt every night until reviewed, which re-rolled managed decks and could overwrite a same-day browser edit.)
+
 If nothing is waiting in any bucket, say so, print the completion marker (section 6), and stop.
 
 For initial new-format builds, consume the topic's `carousel-build.json` from
