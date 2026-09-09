@@ -38,6 +38,8 @@ Save-led decks: for an initial build whose `carousel-build.json` brief is `save`
 
 Share-led decks: for an initial build whose `carousel-build.json` brief is `share`, and for an explicit `action: share` reroll, apply the ig-carousel skill's `references/share-led-decks.md`. A save-to-share reroll rewrites the argument, body, caption, and CTA together while keeping deck, variant, and source identity; a prior reference card stays only if it still serves the shared decision. On an `action: share` reroll where the saved master's source names no plausible recipient or joint decision, do not build: leave the master and the polish note untouched, report the slug as REPAIR NEEDED naming what is missing, and continue other topics. Style-only rebuilds never insert share framing. Existing share decks are not retrofitted.
 
+Teaching progression: an explicit action reroll may change the approach recorded in `brief.reason` when the new action needs it (see the ig-carousel skill's `references/rhetorical-approaches.md`); record the new one the same way and require fresh review. Style-only and cover rebuilds never change it or the words. No existing deck is retrofitted to a new approach.
+
 Pack rules for both modes:
 
 - Explicit list mode: the pack Scott named wins.
