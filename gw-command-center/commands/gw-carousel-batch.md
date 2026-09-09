@@ -32,6 +32,9 @@ variants. Produce one selected HTML master. Old unbuilt packs without explicit
 new schema stay legacy, even with creation enabled; do not manufacture JSON for
 them during discovery. Once HTML exists, use its saved master, not the initial
 JSON, for subsequent work.
+JSON, for subsequent work.
+
+Save-led decks: for an initial build whose `carousel-build.json` brief is `save`, and for an explicit `action: save` reroll, apply the ig-carousel skill's `references/save-reference-slides.md`. Verify one reference body slide exists in the copy, that its rendered PNG reads standalone at phone size, and that CTA and caption name the same later use. On an `action: save` reroll where the saved master's source cannot support a usable card, do not build: leave the master and the polish note untouched, report the slug as REPAIR NEEDED naming what the source lacks, and continue other topics. Style-only rebuilds and cover rebuilds never retrofit a card. Legacy decks and existing managed decks are untouched unless Scott asks for an editorial rewrite.
 
 Pack rules for both modes:
 

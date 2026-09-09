@@ -55,7 +55,7 @@ Each physical `.slide` must carry `data-gw-slide` matching its record ID, in the
 
 For an opted-in Forge run, choose the action automatically before drafting any slides, including overnight. Explicit Scott instructions win. Otherwise choose by the feasible reader payoff:
 
-- A usable artifact the coach will return to favors save.
+- A usable artifact the coach will return to favors save. When save is chosen for a new deck or an explicit rewrite, [save-reference-slides.md](save-reference-slides.md) governs the reference body slide; it adds no schema field.
 - Recipient-specific staff coordination favors share; name who needs it and why.
 - A relevant response Scott can actually fulfill favors conversation. Do not promise an unavailable resource or impossible follow-up.
 - A valid current offer plus buying intent favors conversion. Check the offer and current decisions; never force a sale because a default CTA names a product.

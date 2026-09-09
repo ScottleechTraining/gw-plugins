@@ -153,7 +153,7 @@ Check whether the user has provided images or references an image folder.
 
 Before picking a look, pick the job. Read `references/content-archetypes.md` — the only place archetypes are defined — and choose what the carousel IS:
 
-**Opted-in mode:** use the pre-draft Forge brief and action policy in `references/copy-record.md`. Honor an existing brief, including an explicit action reroll; do not override it with the legacy outcome menu below. If no brief exists, select automatically before writing. Batch/overnight runs never pause for an action or archetype question. The following interactive menu applies to legacy attended work.
+**Opted-in mode:** use the pre-draft Forge brief and action policy in `references/copy-record.md`. Honor an existing brief, including an explicit action reroll; do not override it with the legacy outcome menu below. If no brief exists, select automatically before writing. Batch/overnight runs never pause for an action or archetype question. The following interactive menu applies to legacy attended work. Save-led opted-in decks (new builds and explicit `action: save` rewrites) also follow `references/save-reference-slides.md`: one standalone reference body slide, a later-use CTA that names the same moment as the caption, and the phone-readability check on the rendered card. Style-only rebuilds keep the saved words even where that reference would have written something else.
 
 1. From the topic or brief, infer what the post should WIN: saves, shares, comments and DMs, or follows.
 2. Recommend ONE archetype using the outcome table in that file. If the brief makes it obvious, state the pick and the reason in one line. If two genuinely fit, ask one short either/or question.
@@ -385,6 +385,7 @@ The HTML file must open correctly with no internet. Before declaring done, verif
 - [ ] Opening the file by double-click (not through a dev server) renders Vitesse correctly
 - [ ] Save Changes and its runtime version marker are present per section 9 of `references/html-implementation.md`
 - [ ] Opted-in decks pass the copy validator before and after edit/save/reopen; caption stays outside slides, CTA is bound, and a restyle preserves the saved record exactly
+- [ ] Save-led opted-in decks (new or explicit rewrite to save): the reference card is a body slide with a literal task title and 3-5 usable items, reads standalone at phone size in the rendered PNG (no clipped labels, no tiny table text), every item is source-backed with illustrations labeled illustrative, and the final CTA and caption name the same later use. Share/conversation/conversion decks carry no forced card.
 - [ ] If the carousel has any seamless spreads, the `background-size` and `background-position` on spread slides use **pixel values**, not percentages. Slide 1+ of every spread should visibly show the correct slice of the image, not be empty.
 
 If any of the above is violated, the file isn't portable or correct — fix before delivering.
