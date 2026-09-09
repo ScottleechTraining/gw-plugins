@@ -79,6 +79,8 @@ This SKILL.md must NEVER hardcode pack names ("Asphalt Editorial", "Mono Series"
 
 **Same rule for content archetypes:** `references/content-archetypes.md` is the only place the archetypes are defined. This SKILL.md never hardcodes archetype names, outcomes, or structures.
 
+**Opt-in copy contract (staged 0.21.0):** read `references/copy-record.md` for the single schema, creation setting, automatic action selection, stable bindings, saved-copy rebuilds, and package approval rules. Capability-check first. Creation defaults disabled until a later approved one-time enable; afterward unattended Forge supplies copy input automatically for NEW decks. Existing managed decks remain editable/rerollable when creation is disabled. Legacy decks keep their existing behavior; this staged version does not activate settings.
+
 ---
 
 ## Visual Brain Reference
@@ -151,6 +153,8 @@ Check whether the user has provided images or references an image folder.
 
 Before picking a look, pick the job. Read `references/content-archetypes.md` — the only place archetypes are defined — and choose what the carousel IS:
 
+**Opted-in mode:** use the pre-draft Forge brief and action policy in `references/copy-record.md`. Honor an existing brief, including an explicit action reroll; do not override it with the legacy outcome menu below. If no brief exists, select automatically before writing. Batch/overnight runs never pause for an action or archetype question. The following interactive menu applies to legacy attended work.
+
 1. From the topic or brief, infer what the post should WIN: saves, shares, comments and DMs, or follows.
 2. Recommend ONE archetype using the outcome table in that file. If the brief makes it obvious, state the pick and the reason in one line. If two genuinely fit, ask one short either/or question.
 3. Carry the choice forward: the archetype's structure shapes the Step 3B slide plan, its CTA guidance shapes the final slide, and its pack-fit suggestions seed the Step 0.5 recommendation.
@@ -162,6 +166,8 @@ This is a one-breath step, not a second gate. Present the archetype pick togethe
 ### Step 0.5: Style Pack Selection — HARD GATE
 
 **Do not proceed past this step without a pack choice.** No color derivation, no slide planning, no HTML. The pack shapes every downstream decision.
+
+For batch/overnight work, the caller's assigned or automatically recommended pack satisfies this gate; do not ask again.
 
 **Build the menu from `references/style-packs.md` — do not hardcode it here.**
 
@@ -193,7 +199,7 @@ Check conversation history first. Confirm any missing:
 3. **Instagram handle** — default: @Sleech72
 4. **Accent color override** *(optional)* — each pack has a locked default; only override if the user explicitly asks
 5. **Tone** — coach-tough, professional, playful, minimal
-6. **CTA** — follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`). The Step 0.25 archetype sets the default.
+6. **CTA** — opted-in: honor the brief's feasible action and matching CTA per `references/copy-record.md`. Legacy: follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`); the Step 0.25 archetype sets the default.
 7. **Image folder** *(Image Mode only)* — default: `Gridiron Warrior/Images/carousels/`
 8. **Seamless spreads?** — attended: ask "Want any photos to span multiple slides for a swipe-reveal effect? e.g., 'slide 3–4' or 'slide 2–3–4'." Default: none. Batch (unattended): if the assigned body photo is landscape, default to ONE two-slide spread on it; portrait body photos get a single photo slide.
 
@@ -223,7 +229,9 @@ Read `references/slide-architecture.md` for the full template structure and comp
 
 **Copy-source rule (non-negotiable, Scott 2026-08-26).** When building from a content
 pack, slide copy comes from the pack's carousel "Slide Text" section (plus its caption)
-ONLY. The pack's meta sections — THE MESSAGE, PULLED FROM THE BRAIN, the
+ONLY. For opted-in restyles, the saved HTML master replaces the pack as the copy
+source; explicit action rewrites follow `references/copy-record.md`. The pack's
+meta sections — Carousel Brief, THE MESSAGE, PULLED FROM THE BRAIN, the
 Cross-Reference Summary, frontmatter, `cta_rationale` — are triage receipts for Scott
 and must NEVER appear on a slide, in a caption, or anywhere in the rendered file. A
 bare source credit or label with no on-slide explanation is the same fail: explain it
@@ -249,6 +257,8 @@ back instead of building it broken.
 **Cover headline rule:** the cover is a phone-legible power statement. Write whatever length you want — the skill auto-fits the type to the safe zone. If auto-fit drops the size below 80pt (at 1080x1350), stop and recommend trimming. Powerful > short.
 
 **Narrative arc (7 slides ideal, flex 5–10):** Cover, Hook, Build, Turn, Payoff, Reinforce, CTA. Light/dark rhythm still applies within the pack's dominant palette.
+
+For opted-in decks this is a fallback, never an override of the brief's chosen archetype.
 
 ---
 
@@ -278,7 +288,11 @@ If any row in the plan violates a pack rule, fix it before the checkpoint. Do no
 
 **Archetype check (same pass):** confirm the plan delivers the Step 0.25 archetype's structure and the CTA slide matches the archetype's outcome, per `references/content-archetypes.md`. A Vault plan with four items, or a Template plan whose CTA is just "follow me", fails this check.
 
-**Do not write any HTML until the user says "Approved" or equivalent.**
+For opted-in decks, keep the archetype's teaching structure but evaluate the CTA
+against the brief's action. The copy contract takes precedence over the legacy
+reference's outcome ranking, conversation tie-break, and default CTA.
+
+**Attended: do not write any HTML until the user says "Approved" or equivalent.** Batch/overnight: the caller's build assignment satisfies this checkpoint; run the compliance pass and continue without a new question.
 
 ---
 
@@ -291,6 +305,13 @@ See `references/slide-architecture.md` for the progress bar markup with the logo
 ### Step 5: Generate the HTML
 
 **Build the file in the order documented in section 3 of `references/html-implementation.md`** (doctype and head, single inline style block in its 10-part order, body with toolbar and slide sections, then the final script block).
+
+For opted-in decks, follow the assembler lifecycle in `references/copy-record.md`: initial copy input, saved-master restyle, or explicit same-identity rewrite. Preserve stable copy bindings; the assembler supplies the caption editor outside slides. Style changes cannot rewrite wording.
+
+Initial builds consume the selected `carousel-build.json` and create one HTML
+master; never reselect the variant or treat that JSON as authoritative afterward.
+For in-place replacements, use the assembler's verified render-before-swap and
+content-hash backup behavior. Old unbuilt packs without new schema remain legacy.
 
 **Pack CSS loads once.** Copy the pack's full CSS block from `references/style-packs.md` into the inline style block — do not split into a separate file and link it.
 
@@ -312,7 +333,7 @@ See `references/slide-architecture.md` for the progress bar markup with the logo
 
 **Auto-fit Mega-Cover JS:** read section 8 of `references/html-implementation.md` and copy the `autoFitMegaCover()` function plus its three call sites (`DOMContentLoaded`, `document.fonts.ready`, immediate) into the final script block VERBATIM. Do not write your own from the prose. A hand-rolled version drops the height guard and the font-load re-fit, and the cover headline overflows on any multi-line headline. The matching `.mega-cover span { white-space: nowrap; }` rule must be in the stylesheet (it ships in the Mega-Cover CSS in `references/slide-architecture.md`).
 
-**Save Changes button:** read section 9 of `references/html-implementation.md`. Add its button HTML to the toolbar immediately after the `EXPORT PDF (Canva)` button, and add its save script verbatim immediately before the closing `</body>` tag. Copy both blocks exactly so they match the standalone patcher (`scripts/gwqueue/patch_carousels_savebtn.py`) byte-for-byte, including the `__SAVE_SCRIPT_VERSION__` marker, so freshly-generated files are treated as already-current and never re-patched.
+**Save Changes button:** follow section 9 of `references/html-implementation.md`. Use the runtime helper/assembler integration, including its version marker, rather than duplicating the save JavaScript. Opted-in saves update the embedded master before serialization; legacy saves retain their existing behavior.
 
 **Persistent frame system on every slide (except where noted):**
 - Slide number (`01` / `07`) — position and treatment **per pack** (see pack spec; don't use a generic default)
@@ -362,7 +383,8 @@ The HTML file must open correctly with no internet. Before declaring done, verif
 - [ ] All images are embedded as base64 data URLs (no `src="./images/..."` or similar)
 - [ ] The TGW logo is inline SVG or base64, not a file reference
 - [ ] Opening the file by double-click (not through a dev server) renders Vitesse correctly
-- [ ] The Save Changes button (`id="saveChangesBtn"`) is in the toolbar and the save script (`window.__SAVE_SCRIPT_VERSION__`) sits before `</body>`, both copied verbatim from section 9 of `references/html-implementation.md`
+- [ ] Save Changes and its runtime version marker are present per section 9 of `references/html-implementation.md`
+- [ ] Opted-in decks pass the copy validator before and after edit/save/reopen; caption stays outside slides, CTA is bound, and a restyle preserves the saved record exactly
 - [ ] If the carousel has any seamless spreads, the `background-size` and `background-position` on spread slides use **pixel values**, not percentages. Slide 1+ of every spread should visibly show the correct slice of the image, not be empty.
 
 If any of the above is violated, the file isn't portable or correct — fix before delivering.

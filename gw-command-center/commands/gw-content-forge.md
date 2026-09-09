@@ -87,6 +87,14 @@ Read the input and pick the mode:
 
 When in doubt, ask: "Is this a transcript from a recorded session, or a topic you want me to build content around?"
 
+### Carousel brief before drafting (opt-in only)
+
+Read [copy-record.md](../skills/ig-carousel/references/copy-record.md) and check runtime capabilities before new-format carousel work. Creation defaults disabled. After the later approved one-time enable, unattended Forge automatically creates copy records for NEW decks and supplies the assembler's copy input; no per-post question or nightly `--managed` flag. Do not enable settings while staged. When disabled or helpers are absent, new legacy jobs continue as before; existing managed decks remain editable/rerollable and never silently downgrade.
+
+After source/voice preparation but BEFORE writing either carousel's slides, choose its action automatically using that reference's feasibility rules, then record the complete brief above its Slide Text section. Explicit Scott instructions win; recent new-format records are a variety tie-break only, not performance evidence. Do not ask an overnight confirmation question. The selected archetype determines the slide structure, and body, caption, and CTA must deliver the same practical payoff. The builder inherits this brief without overriding it. Preserve every existing asset count, heading signature, voice/model rule, and non-carousel asset.
+
+After both variants pass the gates, follow the contract's initial handoff: automatically select the strongest (explicit Scott selection wins; equal strength ties go to Carousel #1), then write one topic-local `carousel-build.json` matching that variant. Keep both variants in the pack, but hand off only the selected deck for one HTML master. Do not convert old unbuilt packs without explicit new schema merely because creation is enabled.
+
 ---
 
 ## STEP 2A: TRANSCRIPT MODE
@@ -161,8 +169,8 @@ regenerate it and do not contradict it. If it does not exist, create it:
 
 1. Twitter Thread #1 (teaching)
 2. Twitter Thread #2 (myth-buster or story)
-3. Instagram Carousel #1 slide text + caption (teaching; caption CTA "Comment PODCAST
-   and I'll send you the link."; max 3 hashtags `#footballcoach #strengthandconditioning
+3. Instagram Carousel #1 slide text + caption (teaching; legacy caption CTA "Comment PODCAST
+   and I'll send you the link."; opted-in CTA follows its brief; max 3 hashtags `#footballcoach #strengthandconditioning
    #gridironwarrior`)
 4. Instagram Carousel #2 slide text + caption (quote carousel or myths-vs-reality)
 5. Email announcement (subject lowercase 4-6 words, curiosity or tension; leads with the
@@ -278,7 +286,7 @@ Extract: the topic, the core principles/insights, the strongest quote, and any p
 
 Grep `Second Brain/` for the topic keyword and close synonyms. Note which files matched and what Scott has said about this topic before.
 
-This shapes the CTAs:
+This shapes product CTAs (for opted-in carousels, only when the selected action and a valid offer justify one):
 - If a course covers this topic (Contact Prep, GW 2.0, Scores and Stops) → point there
 - If a Film Study exists → reference it and push Insiders
 - No prior work found → default CTA is Insiders $1 trial
@@ -310,7 +318,9 @@ Same as TRANSCRIPT MODE (see Step 2A.3).
 
 **Asset 4: Instagram Carousel #1 (Teaching Carousel)**
 
-Slide text:
+For opted-in carousels, follow the pre-draft brief and chosen archetype. The seven-slide outline and product/comment CTA below are legacy defaults and fallback structure, never an override of that brief. Keep the caption's hook-first voice and hashtag limit.
+
+Legacy/fallback slide text:
 - Slide 1 (Cover): Bold headline. Topic name. Hook question or statement.
 - Slides 2-5 (Teaching): One point per slide. Header line (bold, short). 2-3 supporting sentences max.
 - Slide 6 (Common Mistake): "The #1 mistake I see:" followed by the most impactful mistake.
@@ -320,11 +330,11 @@ Caption: Hook first line. 3-4 sentences. CTA: "Comment INSIDERS and I'll send yo
 
 **Asset 5: Instagram Carousel #2 (Quote or Myths vs. Reality)**
 
-Choose whichever fits the source material better:
+Opted-in: honor Carousel #2's own brief and archetype. Otherwise choose whichever fits the source material better:
 - *Option A (Quote Carousel):* Key quote on slide 1, why it matters on slides 2-4, CTA on slide 5.
 - *Option B (Myths vs. Reality):* "What You Think vs. What Actually Works" format. 3 myths busted. CTA.
 
-Caption: same rules as Asset 4.
+Caption: same rules as Asset 4, with the opted-in action taking precedence over the legacy product CTA.
 
 **Asset 6: Reel Ideas (trial reel scripts: 1 body, 3 hooks)**
 
@@ -505,13 +515,25 @@ promise, no single lesson, assess-with-no-first-step, and a leaked source label.
 4. **Orphan test.** Every name, label, credit, or term on a slide is explained on
    that slide or cut. A source credit that made sense in a thread is noise on a
    slide. When in doubt, cut it; attribution lives in the thread asset.
-5. **CTA test.** The CTA product matches current wiki state. Check the offer's
-   entity page and `wiki/system/decisions.md` before naming it. A de-scoped or
-   wrong-door product is a fail even if the copy reads well.
+5. **CTA test.** For opted-in carousels, body, caption, and CTA match the brief's
+   action and deliver its feasible payoff; a non-conversion action does not need
+   a product pitch. Whenever a CTA names a product, check its entity page and
+   `wiki/system/decisions.md`. A de-scoped or wrong-door product is a fail even
+   if the copy reads well. Legacy product CTA rules remain unchanged.
 
 Record the gate's output in THE MESSAGE block (see the file structure below).
 That block is the triage receipt for message quality, the same way PULLED FROM
 THE BRAIN is the receipt for retrieval.
+
+Opted-in output: add a `### Carousel Brief` immediately before each existing
+`### Slide Text` heading, carrying the brief from `copy-record.md`. Keep
+`## Instagram Carousel #1`, `## Instagram Carousel #2`, `### Slide Text`,
+`### Caption`, and all other heading signatures intact. In THE MESSAGE's CTA
+line, record the chosen action and reason instead of forcing a product name.
+The brief is pack-only metadata until encoded into the HTML master; it never
+renders as slide text or caption. The selected variant's `carousel-build.json`
+is initial build input only, not authoritative after the HTML exists. Never
+regenerate it from the pack to overwrite saved HTML edits.
 
 **Hard rule: pack meta never renders.** THE MESSAGE, PULLED FROM THE BRAIN, the
 Cross-Reference Summary, frontmatter, and every other pipeline/meta section exist

@@ -2,7 +2,7 @@
 
 Single source of truth for Gridiron Warrior skills and commands across Claude Code, Cowork, and claude.ai chat.
 
-**Version:** 0.20.2
+**Version:** staged 0.21.0 (STAGED, NOT RELEASED)
 **Owner:** Scott Leech / Scott Leech Training LLC
 **Marketplace:** [`ScottleechTraining/gw-plugins`](https://github.com/ScottleechTraining/gw-plugins) (public)
 
@@ -53,6 +53,35 @@ Every command carries `model:` frontmatter (opus for judgment/voice/synthesis, s
 
 ## Install
 
+**0.21.0 rollout is pending.** The steps below describe normal installation, not
+authorization to release this staged work. No install, cache refresh, push, live
+queue run, or existing-deck migration is part of this change.
+
+### Carousel foundations deployment order
+
+1. Deploy and verify the runtime helpers first: copy save/validate/export,
+   assembler copy/restyle/rewrite modes, verified replacement with content-hash
+   backups, selected-variant JSON handoff and render/caption pairing,
+   source/PNG render provenance and blank checks, review snapshots, stale-review
+   SHIP blocking, approval sealing, POLISH invalidation, preflight before remote
+   calls, and managed-only surplus PNG reconciliation.
+2. Verify the capability gate in
+   [copy-record.md](skills/ig-carousel/references/copy-record.md) against the
+   installed runtime. Missing helpers block only explicitly opted-in topics,
+   never force an unmanaged downgrade or fail unrelated legacy overnight jobs.
+3. After separate release approval, publish/install plugin instructions and
+   verify Claude Code. Cowork and claude.ai chat require separate manual
+   Sync/Update and verification; a Code check does not verify either snapshot.
+4. After runtime/plugin sync and separate approval, enable creation ONCE through
+   the setting in the copy contract. Capabilities default to `enabled: false`;
+   an absent settings file is disabled. Do not create that file while staged.
+   Once enabled, unattended Forge automatically supplies copy records for NEW
+   decks, with no per-post question or nightly `--managed` flag. Disabling
+   creation later leaves existing managed decks editable/rerollable. Review can
+   reroll the action; legacy decks and old unbuilt packs without explicit new
+   schema remain unchanged with no bulk migration. Initial `carousel-build.json`
+   selects one HTML master and is not authoritative once that HTML exists.
+
 ### Claude Code (CLI)
 
 ```bash
@@ -94,6 +123,9 @@ These skills rely on tooling outside the plugin:
 ---
 
 ## Edit flow (code is truth)
+
+The normal release flow below is deferred for staged 0.21.0. Finish runtime-first
+verification and obtain separate release approval before running it.
 
 ```
 1. Edit the file in C:\Claude Projects\plugins\gw-command-center\
@@ -191,8 +223,9 @@ After this, the router has exactly one source for every GW skill, the plugin. Th
 | **0.16.0-0.20.0** (2026-08-10 to 09-04) | Incremental rows not recorded here; see `git log` in the plugins repo. |
 | **0.20.1** (2026-09-05) | `gw-image-forge` migrated to `gpt-image-2` (gpt-image-1 shuts down 2026-12-01). Model swap only; `quality`/`size` params unchanged per the openai-python and openai-node SDK types. |
 | **0.20.2** (2026-09-05) | **Cowork snapshot drift fix.** Found the Cowork copy of this plugin sitting at v0.1.0 since June 6: Cowork/claude.ai install a snapshot when Scott clicks Sync and never auto-refresh, and the desktop app injects that snapshot into Code sessions where it shadowed the fresh CLI install (the Skill tool loaded the gpt-image-1 image forge). README, root CLAUDE.md, and `gw-plugin-ship` corrected (Step 6 now ends every ship with the Sync instruction). New `scripts/check_plugin_drift.py` wired as a SessionStart hook in `C:\Claude Projects\.claude\settings.json`: prints PLUGIN DRIFT when the CLI install or the Cowork snapshot lags `plugin.json`, or when the superseded `gw-kit` upload is still installed. |
+| **0.21.0** (2026-09-08, STAGED, NOT RELEASED) | Opt-in carousel foundations docs: one embedded-copy contract, automatic pre-draft action selection, saved-wording restyles, same-identity action rerolls, and managed approval receipts. Runtime-first deployment and separate Code/Cowork/chat verification required. No release/install/push or bulk migration performed by this stage. |
 
-Still pending (Scott action required):
+Still pending (Scott action required; 0.21.0 release/sync remains deferred):
 - **Click Sync on both surfaces** (Cowork → Settings → Plugins → gw-plugins → Sync → Update; https://claude.ai/customize → Skills → gw-plugins → Sync → Update). Then uninstall the superseded `gw-kit` upload in Cowork. The SessionStart drift hook nags until both are done.
 - Disable the parallel Cowork `anthropic-skills` GW bundle (must be done in the Cowork UI; see README "Disabling the old Cowork bundle" section). With v0.4.0, the plugin owns every GW skill and command. Once disabled, the router never sees the parallel copies. Target: do it next time you open Cowork.
 

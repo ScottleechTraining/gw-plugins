@@ -14,13 +14,24 @@ Two ways in:
 
 **A. Explicit list.** A list of content-pack folders (from `Deliverables/ready/` or `Deliverables/_inbox/`) or slugs, plus the style pack chosen for each carousel.
 
-**B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Three kinds of waiting work:
+**B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Four kinds of waiting work:
 
 1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and build on the recommendations immediately. Do not wait for confirmation (Scott 2026-08-12: the review page's restyle dropdown is the correction path, so a wrong pack costs one rebuild, not a blocked batch).
-2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>`. The pack was chosen from the review page's dropdown, so it is already confirmed - include these in the batch without asking, rebuild the carousel HTML in the named pack from the topic's content pack, and clear nothing yourself (the next /gw-review pass re-judges the rebuilt carousel; SHIP there clears the polish flag).
+2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>` (optionally followed by `. user note`). The dropdown choice is confirmed. For new-format decks, use `--restyle-from EXISTING_HTML` to preserve the saved master exactly; only legacy rebuilds read copy from the content pack. Clear nothing yourself; /gw-review re-judges the result and SHIP clears the polish flag.
 3. **Cover rebuilds:** topics where `carousel_needs_polish` is true and `polish_note` starts with `cover:`. Rebuild ONLY slide 1 per the note (new treatment and/or photo from the ig-carousel skill's `references/cover-treatments.md`); body slides stay untouched.
+4. **Action rerolls:** new-format topics with `carousel_needs_polish` and an `action: save|share|conversation|conversion` note, optionally followed by `. user note`. Discover alongside style notes, without asking again. Read the saved master, redraft brief/body/caption/CTA together for that action, and build with `--rewrite-from EXISTING_HTML --copy NEW_JSON`. Preserve deck/variant/source identity and require new review; changing just the final ask is not a reroll.
+
+Follow the capability gate and lifecycle in [copy-record.md](../skills/ig-carousel/references/copy-record.md), the single schema contract. Creation defaults disabled; after the later approved one-time enable, Forge supplies copy records automatically for NEW decks. Use that explicit copy input or the existing HTML schema marker, not discovery/plugin version alone. Existing managed decks remain editable/rerollable even if creation is later disabled. If helpers are missing, report managed work as pending without stripping its marker or falling back to unmanaged output; continue unrelated legacy work. No per-post opt-in question, staged enable, or existing-deck migration.
 
 If nothing is waiting in any bucket, say so, print the completion marker (section 6), and stop.
+
+For initial new-format builds, consume the topic's `carousel-build.json` from
+Forge as the selected schema-1 handoff. Verify its variant matches the same
+source-pack brief, slides, caption, and CTA; do not reselect or build both
+variants. Produce one selected HTML master. Old unbuilt packs without explicit
+new schema stay legacy, even with creation enabled; do not manufacture JSON for
+them during discovery. Once HTML exists, use its saved master, not the initial
+JSON, for subsequent work.
 
 Pack rules for both modes:
 
@@ -28,7 +39,7 @@ Pack rules for both modes:
 - Otherwise the quick-reference recommendation IS the pack, attended or not. If no row clearly matches, pick the closest fit and flag that slug in the summary table so Scott knows to look at it at review.
 - Two-row ties resolve by the photo-forward tiebreak in `references/style-packs.md` (photo pack wins), subject to its rotation guard: read `style_pack` off the last 6 built topics in `queue-state.json` first, and if neither Editorial Long-Form nor Mono Series is among them, suspend the tiebreak for this batch. Say which way the guard went in the assignment table.
 
-Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged, do not edit the source content packs, and do not leave a listed slug unbuilt.
+Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged or edit source content packs. Report capability-blocked or failed slugs explicitly, never as completed. Style-only and cover-treatment changes preserve all saved wording, caption, and CTA; an explicit action note is the copy-rewrite route.
 
 ## 2. Photo assignment (centrally, FIRST)
 
@@ -47,17 +58,25 @@ Each subagent builds ONE carousel using the `ig-carousel` skill. Spawn with `mod
 
 Give each subagent:
 - the content-pack path
+- the mode (legacy, initial opted-in build, saved-master restyle, or action rewrite), explicit selected variant, and saved HTML/copy input paths as applicable; use the assembler API in `copy-record.md`
+- the Forge's pre-draft brief for initial opted-in work; honor its action and archetype rather than overriding it with a generic seven-slide outline. If absent on explicitly opted-in input, select automatically by the contract before drafting; no overnight question
 - the chosen style pack
 - the chosen cover treatment (from the ig-carousel skill's `references/cover-treatments.md` quick-reference, matched to the topic and the photo's character; Type Plate is the fallback when the photo can't carry a treatment)
 - the assigned hero photo path AND the assigned body photo path
 - the photo floor: the cover carries the hero and one body slide carries the body photo, each per the pack's own photo treatment and sizing in `references/style-packs.md` (Mono Series exempt: hero only). If the body photo is landscape, run it as a two-slide seamless spread per `references/seamless-image-spread.md`; otherwise a single photo slide. A build that drops the body photo is a bounce, not a fallback.
 - the instruction to prepare every photo as a brightened ~230KB JPEG (quality ~80, resized to slide dimensions, pack treatment baked with Pillow), never a PNG
 - the instruction to kill any server or browser process it starts, even on failure
-- the copy-source rule: slide text comes from the pack's carousel "Slide Text" section ONLY. Pack meta sections (THE MESSAGE, PULLED FROM THE BRAIN, Cross-Reference Summary, frontmatter, cta_rationale) are triage receipts and NEVER appear on a slide or in a caption, ever (Scott 2026-08-26). If the pack's slide text itself fails an obvious message-gate check (cover promise never paid off in the body, an unexplained label or credit on a slide), the builder reports it back instead of building it broken.
+- the copy-source rule: initial/legacy slide text comes from the selected pack carousel's "Slide Text" section, with its paired Caption. For new-format restyles the saved HTML master wins, not the pack; action rewrites start from that master and the explicit note. Pack meta (Carousel Brief, THE MESSAGE, PULLED FROM THE BRAIN, Cross-Reference Summary, frontmatter, cta_rationale) NEVER appears on slides or in captions. Report failed message-gate checks instead of building broken copy; action rewrites must pass Forge voice/message gates.
 
 ## 4. Verify after each wave
 
 When a wave finishes:
+
+For opted-in decks, first run the copy validator, including binding coverage and saved-master agreement. Check a restyle against the prior record for exact wording, and a rewrite for retained identity and the requested action. State POLISH invalidates managed approvals and sets `ready_to_ship=false`; leave approval to /gw-review with a fresh output snapshot per `copy-record.md`. No action or style reroll auto-ships or reuses approval of earlier outputs.
+
+In-place rebuilds must use the assembler's render-and-verify-before-swap path
+with a content-hash backup of the prior HTML. Do not bypass it with a direct
+overwrite; this safety check does not replace the visual review below.
 
 1. Render every produced carousel's slides to PNG, respecting the headless quirks documented in the `ig-carousel` skill's "Known traps" section (`--headless=new`, kill stray processes, unique `--user-data-dir`, `127.0.0.1`, fresh port, window sized to exact slide width).
 2. LOOK at every cover image (Read the PNG files). Judge the cover FIRST and on one question: would it stop a coach's thumb in a feed full of workout clips? Layout-correct but flat goes back with a stronger treatment or better photo, same as a broken one.

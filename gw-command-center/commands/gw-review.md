@@ -21,6 +21,27 @@ decision. No server, no upload, all local.
 
 ## Step 1: Build the page
 
+For new-format topics, follow [copy-record.md](../skills/ig-carousel/references/copy-record.md)
+and its runtime capability gate. Explicit schema markers opt in; never migrate
+legacy decks or bypass a missing helper for a marked topic. Prepare the selected
+HTML's renders and caption split BEFORE review/approval:
+
+```bash
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.render_carousel
+python -m scripts.gwqueue.split_captions
+python -m scripts.gwqueue.carousel_package validate TOPIC
+```
+
+Replace TOPIC with each resolved new-format topic folder. Validate its current
+outputs; this does NOT approve it.
+Preflight also requires the renderer's source/PNG hash proof in
+`slides/.carousel-render.json`, correct slide dimensions, and nonblank PNGs.
+Missing/stale proof means render again, not repair the proof by hand.
+The review page must show the explicitly selected variant and its actual paired
+caption. Ambiguous selection or stale/mismatched outputs need correction before
+approval. Legacy-only review keeps its existing preparation path.
+
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
 python -m scripts.gwqueue.build_review_page
@@ -30,6 +51,13 @@ Reads `queue-state.json`, selects every topic where a carousel exists AND
 (`carousel_needs_polish` is true OR the topic is untriaged in `_inbox`/`ready`
 and not yet `ready_to_ship`), and writes `review.html`. It never mutates
 `queue-state.json`. Expected output: `Wrote .../review.html (N topic(s) pending review)`.
+
+For each managed deck and paired caption, the builder also runs `stage_review`
+to snapshot exact current outputs in `carousel-review.json`. Its standalone CLI
+is `python -m scripts.gwqueue.carousel_package review TOPIC`. This snapshot is
+NOT approval; `validate TOPIC` remains read-only and does not create it.
+The CLI prints a Review token; the page retains its snapshot's SHA256 token
+alongside the paired outputs so a stale tab cannot approve a rebuilt snapshot.
 
 ## Step 2: Open it
 
@@ -49,16 +77,43 @@ Then STOP and wait for Scott to paste the string. Do not proceed without it.
 
 ## Step 3: Apply a pasted gw-review-result string
 
-The pasted string looks like:
+The legacy pasted string remains:
 
 ```
 gw-review-result: ship=[slug1,slug2] polish=[slug3:"note",slug4] kill=[slug5]
 ```
 
+For managed SHIP, the page also emits a review bucket:
+
+```
+gw-review-result: ship=[managed-slug] polish=[] kill=[] review=[managed-slug:SHA256TOKEN]
+```
+
+SHA256TOKEN stands for the actual emitted token, not literal text. Preserve the
+entire emitted `review=[slug:SHA256TOKEN]` bucket exactly when passing the result
+to the applier, including each managed SHIP token in mixed batches. Do not drop,
+reconstruct, or replace it with a token from a newer page/snapshot. The existing
+ship/polish/kill syntax is unchanged; legacy-only decisions require no token.
+
 `polish` entries may carry an optional `:"note"` suffix (double-quoted, may
 contain commas and `\"` escapes). Any bucket may be empty.
 
-Apply it with the applier module. It mirrors `/gw-ship` for ship (moves
+Apply it with the applier module. For new-format SHIP decisions, this is the
+ONLY approval path: it requires the emitted review token to match the managed
+snapshot, then compares source HTML, ordered PNGs, and caption against
+`carousel-review.json`. Missing/mismatched tokens or changed outputs refuse SHIP.
+Only a matching review can be sealed as approved `carousel-package.json`.
+Validation or staging a snapshot alone never approves. `/gw-ship` reuses this
+same applier for new-format topics. Never hand-write a receipt or flip state
+around a failed approval.
+
+On a stale-review block, prepare the current outputs, rebuild and SHOW the paired
+review and its new token to Scott, and obtain a new decision. Do not silently
+refresh the snapshot, regenerate a token, and replay the old approval. State
+POLISH invalidates managed approvals and
+sets `ready_to_ship=false`, including action and style notes.
+
+For all topics, it handles ship (moves
 `_inbox` topics into `ready/`, flips `ready_to_ship`, clears polish flags),
 records the polish note on the topic entry, and kills by moving the folder to
 the terminal `killed/` folder, trimming its renderable assets on arrival
@@ -91,14 +146,25 @@ replaced.
 
 ## Step 4: Render, sync shipped topics to Drive, re-scan, rebuild the page
 
-Ships and kills moved folders on disk. Render/split (idempotent), then sync
-EACH shipped slug so ready/ topics land on Drive immediately, then refresh:
+Ships and kills moved folders on disk. Legacy topics retain the post-approval
+render/split step below. New-format topics were prepared BEFORE approval: do not
+regenerate their sealed outputs here. If copy, caption, or renders changed,
+prepare again and require renewed approval. Sync refuses stale or missing
+approval; do not bypass it.
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
+# Legacy-only post-approval preparation:
 python -m scripts.gwqueue.render_carousel
 python -m scripts.gwqueue.split_captions
-# one per shipped slug:
+```
+
+For a mixed batch, do not run a broad render/split pass that changes sealed
+new-format outputs; prepare legacy topics before applying the decisions too.
+Then sync EACH successfully approved slug and refresh:
+
+```bash
+# one per successfully approved slug:
 python -m scripts.gwqueue.sync_to_drive --slug "EXACT_SLUG"
 python -m scripts.gwqueue.scan_folders
 python -m scripts.gwqueue.build_review_page
@@ -120,7 +186,9 @@ Applied review:
   kill:   <n>  (moved to killed/ - terminal, never rescanned, no restore)
 ```
 
-If a Drive sync fails, say so plainly; the topic stays in ready/ with
+Count only successful approvals and uploads; report per-topic SKIP/failures
+without claiming those topics shipped. If a Drive sync fails, say so plainly;
+the topic stays in ready/ with
 `ready_to_ship: true` and the next /gw-queue run retries it. Polish topics go
 back to the carousel builder with their `polish_note`.
 
@@ -132,6 +200,17 @@ named pack. The pack came from a dropdown of valid names, so it counts as
 confirmed - do not re-ask. After applying the string, if any polish note
 starts with `restyle:`, tell the user those topics are queued for a rebuild
 and that running `/gw-carousel-batch` will do it now.
+
+New-format restyles read the saved HTML master and retain exact slide wording,
+caption, and CTA. They do not reconstruct copy from the source pack.
+
+**Action notes (new-format only).** The action dropdown uses the existing POLISH
+protocol: `action: save`, `action: share`, `action: conversation`, or
+`action: conversion`, optionally followed by `. user note`. Applying the note
+queues /gw-carousel-batch to rewrite the brief, body, caption, and CTA together,
+retaining deck/variant/source identity. This is not a CTA-only edit or approval.
+Require re-review after the reroll; no automatic publication or extra overnight
+question. Style-only notes retain copy. Legacy rows keep their existing controls.
 
 **Cover notes.** A polish note starting with `cover:` means the COVER only:
 the body slides are fine but slide 1 does not stop the thumb. `/gw-carousel-batch`
