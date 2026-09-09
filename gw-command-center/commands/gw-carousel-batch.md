@@ -40,6 +40,8 @@ Share-led decks: for an initial build whose `carousel-build.json` brief is `shar
 
 Teaching progression: an explicit action reroll may change the approach recorded in `brief.reason` when the new action needs it (see the ig-carousel skill's `references/rhetorical-approaches.md`); record the new one the same way and require fresh review. Style-only and cover rebuilds never change it or the words. No existing deck is retrofitted to a new approach.
 
+Visual body slides: when a managed deck's `brief.reason` carries `visual:`, build that slide per the ig-carousel skill's `references/visual-teaching.md`, translating the comparison, sequence, or annotated layout into the selected pack with every visible string bound once. A style-only rebuild must preserve the saved text exactly and the diagram's meaning (same actors, links, order, units, callout targets); if the new pack cannot hold the relationship clearly, keep the existing arrangement inside the new style rather than simplifying it away, and say so. Explicit action rewrites may change the visual's job together with body, caption, and CTA. No existing deck is retrofitted with a diagram.
+
 Pack rules for both modes:
 
 - Explicit list mode: the pack Scott named wins.
