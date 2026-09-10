@@ -485,9 +485,12 @@ Say: [first sentence]
 - [Voice Corpus file if used] ([one clause])
 
 NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - fully covered by existing pages"]
+Idea origin: [idea id] rev [revision] from [origin path], [locator]   <- only when the pick list carried an `idea:` line; hand-run packs without one omit this line, never invent an id
 ```
 
 THE MESSAGE block (the Step 3.6 gate receipt) is required in every pack, directly above PULLED FROM THE BRAIN. Both are pack-file-only meta: never rendered, never slide copy, never captions. The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
+
+**Idea context from the picks file is a proposal, not a source.** When `/gw-nightly-forge` hands you a pick with a `> ` context block (declared format, CTA proposal, body sketch, source references), start from it, then run every check in this command as usual: Step 0 wiki read, the offer and action checks, the voice and message gates. The seed's CTA does not override the current decisions page. A source reference under `External Library/` is provenance for the receipt, not permission to open it. Contract: `scripts/gwqueue/IDEA-CONTEXT.md`.
 
 **The receipt lives in the pack file, not just the wiki.** When Step 4 writes the wiki summary page, the SAME PULLED FROM THE BRAIN block MUST also be appended to the end of the content pack file in `Deliverables/_inbox/[TOPIC-SLUG]/` (this applies to every mode and every caller, including overnight `/gw-nightly-forge` runs). Scott triages from the inbox, not the wiki - a receipt that only exists on the summary page is invisible at triage.
 

@@ -116,6 +116,8 @@ For each angle, output:
 **Confidence**: high | medium | low
 ```
 
+**Labels are the harvest contract.** The backlog appender reads each angle as the block between its `### Angle N:` heading and the next heading, and takes the format, sources, body, CTA, score and confidence from the bold labels exactly as printed above (`**Format**:`, `**Source material**:`, `**Body sketch**`, `**CTA**:`, `**Total: N/20**`, `**Confidence**:`). Keep those spellings and keep every field inside its own angle block. The TOP MOVE `Run:` line may repeat the winner's command; that is one idea, not two. Contract: `scripts/gwqueue/IDEA-CONTEXT.md` in the vault. Nothing here adds a field or changes the scoring.
+
 Density: every line in an angle must change what Scott would publish. One line per delta bullet, one clause per score justification, no restating the source. The 1-3 angle range and the 3-5 body-sketch bullets are limits, not targets. Do not pad a thin day to fill the template.
 
 ### 3a. Pick today's TOP MOVE
