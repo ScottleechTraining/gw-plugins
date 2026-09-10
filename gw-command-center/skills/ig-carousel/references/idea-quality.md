@@ -84,7 +84,9 @@ Switch: `Deliverables/_system/idea-quality-settings.json`, `{"ranking": "legacy"
 - **Shadow (default now):** the picker ranks by legacy score. When any eligible row carries an assessment, the picks file and the job log print a `shadow v1` line with coverage and the v1 order of the assessed rows. Nothing selected changes.
 - **Cutover:** the picker ranks by v1 only when every eligible pending row carries a valid, current assessment. One gap, one stale record, or one unknown rubric version and the entire run uses legacy order with a `v1 fallback` note. Never a mixed comparison. Known evidence or safety failures stay blocked either way.
 
-Freebie rule: the nightly forge triggers a freebie at 18/20 under the legacy meaning. A v1 18 does not mean that. Until Scott approves a v1 freebie rule, every pick carrying a v1 assessment prints `freebie: hold` and gets no freebie; legacy picks keep the 18/20 rule. Proposed rule for approval: v1 total 17 or higher with reader payoff 4 and source support 3 or higher.
+Freebie rule (approved by Scott 2026-09-10): the nightly forge triggers a freebie at 18/20 under the legacy meaning; a v1 18 does not mean that. For a pick with a v1 assessment the picks line says `freebie: yes` or `freebie: no` by this rule: total 17 or higher, reader payoff 4, source support 3 or higher. Legacy picks keep the 18/20 rule.
+
+Calibration accepted by Scott 2026-09-10 on the twelve-idea set. Shadow runs one week; cutover date 2026-09-17, when Scott sets the switch to `{"ranking": "gw-idea-quality-v1"}`.
 
 ## Not in F3
 
