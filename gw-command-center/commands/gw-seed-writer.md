@@ -138,6 +138,7 @@ For each angle, output:
 **Action proposal**: save | share | conversation | conversion | unresolved
 **Business connection**: <verified offer> | general trust | none
 **Effort**: low | medium | high
+**Family**: in-season load | conditioning | session design | monitoring and standards | practice planning | staff coordination | speed and acceleration | strength technique | nutrition and recovery | culture and leadership | contact prep | business and fundraising
 
 **Next command** (pick exactly one):
 - `/gw-content-forge "<this angle's hook>"`: when the angle is ready to expand into a full content pack (3 threads, 2 carousels, 3 reel ideas, 1 email)
@@ -157,6 +158,8 @@ Density: every line in an angle must change what Scott would publish. One line p
 ### 3a. Pick today's TOP MOVE
 
 **The grading sheet is `gw-idea-quality-v1`** (F3, 2026-09-10): the plugin's `ig-carousel/references/idea-quality.md` is the rubric, and the block above is its exact seed form. Run the five gates first; a gate failure is written as `fail` and the angle gets no Forge command, whatever it would have scored. Score the five dimensions 0 to 4 with one reason each tied to this idea; the total is the sum. Revenue, urgency, voice, and ease are no longer scored: the action proposal, business connection, and effort lines carry that information without ranking on it. A useful idea with `Business connection: none` can win the day.
+
+The `**Family**` line (F7) names the coaching decision the angle helps with, from that list and only that list; pick the decision the reader makes, not the topic word. It is a label for batch variety, never a score. Rules: the plugin's `ig-carousel/references/portfolio-selection.md`.
 
 Qualification: 15 to 20 with every dimension at least 2 and every gate passed gets its `/gw-content-forge` command. 11 to 14, or any dimension below 2, is a repair candidate: keep it in the seed with `**Next command**: repair: <what is missing>` and no Forge command, so it never becomes filler. 0 to 10 is cut before it reaches the file. Zero qualifying angles is still a valid day.
 

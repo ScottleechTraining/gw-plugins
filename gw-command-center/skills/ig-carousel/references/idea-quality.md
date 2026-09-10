@@ -66,7 +66,10 @@ Inside the angle block, replacing the old Scores lines. The harvester reads `**R
 **Action proposal**: save
 **Business connection**: none
 **Effort**: low
+**Family**: in-season load
 ```
+
+`**Family**` (F7) is the coaching-decision family from the vocabulary in [portfolio-selection.md](portfolio-selection.md); it rides on the assessment as a label for batch variety and never changes a score.
 
 The total must equal the sum. A block whose total, ranges, or reasons fail validation keeps its plain score on the row and records no assessment; the warning is visible in the idea context.
 

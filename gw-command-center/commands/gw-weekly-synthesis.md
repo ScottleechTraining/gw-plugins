@@ -208,6 +208,16 @@ The wiki gains pages every week and loses none. This step is the Update half of 
 4. Suppress any candidate `wiki/system/decisions.md` has already ruled on (same mechanism as Step 4.6); cite the decision in one line instead.
 5. Results go to the Step 5 report's "Retire or merge proposals" section, and each actionable proposal also becomes one paste-ready move in "Your moves".
 
+### 4.9. Feeder review (read-only, F8)
+
+Run from the vault dir:
+
+```bash
+python -m scripts.gwqueue.feeder_eval
+```
+
+It writes `Deliverables/_system/feeder-evaluation-<today>.md` (the appendix: every measure with numerator, denominator, and what was missing; audience rows from the pilot ledger) and prints the four-line "Feeder review" section. Paste that section into the Step 5 report and write line 4, the coach's call, from the evidence: keep, watch, repair, or one bounded test with target, evidence, expected benefit, risk, review date, and reversal criterion. Rules and limits: the plugin's `ig-carousel/references/feeder-evaluation.md`. A week with no proposal is valid; audience results younger than two comparable posts per action read "not enough comparable observations yet." Proposals that touch score weights, source permissions, selector rules, or the pilot are named here but follow their own gates, never the skill-tune APPLY block. Do not run the collector or the edit digest from this step; read what they already wrote.
+
 ### 5. Write weekly synthesis report
 
 Save to `C:\Claude Projects\Gridiron Warrior\wiki\summaries\weekly-synthesis-YYYY-MM-DD.md`:
@@ -288,6 +298,10 @@ conservative rather than silently empty.>
 ## Skill tune proposals
 
 <the section produced by Step 4.7, or "No skill tune proposals this week.">
+
+## Feeder review
+
+<the four lines from Step 4.9: what ran, what needed fixing, what readers did, coach's call; appendix path>
 
 ## Wiki health trend
 

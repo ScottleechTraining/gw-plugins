@@ -27,6 +27,11 @@ Two modes. `/gw-skill-tune` or `/gw-skill-tune analyze` = ANALYZE.
 form of Scott's voice rules — those change only when Scott changes CLAUDE.md),
 and this command itself.
 
+**Outside APPLY:** the idea-quality rubric and its thresholds, the portfolio
+policy, the F5 source register, the F6 map, the pilot protocol, and any
+`scripts/gwqueue` code. The F8 feeder review may name a change to those; it
+ships only as a separately reviewed patch, never through an APPLY line.
+
 ## ANALYZE mode (read-only — writes NOTHING; output is returned to the caller)
 
 Called by `/gw-weekly-synthesis` Step 4.7, or standalone. When standalone, print
@@ -44,6 +49,7 @@ All paths under `C:/Claude Projects/Gridiron Warrior/Deliverables/` unless noted
 | Scott's carousel edits | Run `python -m scripts.gwqueue.edit_digest --since 7` from the vault dir, then read the `Deliverables/_system/edit-digest-<today>.md` it writes. Only the `edit` steps count (a `reroll` is the system rewriting for a new action, not Scott). | Which lines he cuts, which words he swaps, which CTAs and captions he rewrites, on which slide roles; the before/after pairs are his own words and are the best evidence for `ig-carousel` and `gw-content-forge` tuning |
 | Seed usage | The "Content seed inventory" from the current synthesis run (or last week's report when standalone) | gw-seed-writer angle quality |
 | Restyle patterns | Polish notes starting `restyle:` — count per style pack | ig-carousel pack selection guidance |
+| Feeder evaluation (F8) | `Deliverables/_system/feeder-evaluation-<date>.md` written by Step 4.9 of the synthesis; read the claim-repair, readiness, and block rows | Which producing skill keeps shipping unsupported claims or thin teaching; audience rows are context, never a rule by themselves |
 
 Attribute each signal to its producing skill via the topic's content pack
 frontmatter or folder provenance. Unattributable signals are dropped, not guessed.
