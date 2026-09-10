@@ -51,7 +51,7 @@ A save-to-share reroll rewrites the argument and CTA under the existing action-r
 1. Future-use test: name the moment and the job, not "later" or "get better."
 2. Screenshot test: the card makes sense without the hook or caption.
 3. Decision test: each item tells the coach what to check, record, choose, or change.
-4. Source test: each coaching claim has a source; invented illustrations are explicitly labeled illustrative in production notes and on-slide when they could be mistaken for a real case.
+4. Source test: each coaching claim has a source; invented illustrations are explicitly labeled illustrative in production notes and on-slide when they could be mistaken for a real case. Categories and the repair ladder: [claim-boundaries.md](claim-boundaries.md).
 5. Completeness test: the promised tool is visible and usable in the post. A blank with no field labels fails.
 6. Pairing test: brief action, reference payoff, final CTA, and caption agree.
 7. Layout test: inspect the rendered card at phone size; no clipped labels or tiny table text.

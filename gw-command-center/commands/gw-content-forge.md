@@ -138,6 +138,8 @@ Read voice rules from `C:/Claude Projects/CLAUDE.md` before writing.
 
 Write all assets in Scott's voice before outputting anything. Then output all at once.
 
+Claim boundaries apply in every mode. A transcript is a source like any other: a guest's story stays the guest's (reported experience), a number keeps its context, and nothing the transcript does not say becomes a scene. Read [claim-boundaries.md](../skills/ig-carousel/references/claim-boundaries.md) once per run and apply Step 3.7 before saving.
+
 ---
 
 ### PODCAST (two files: UPLOAD-KIT.md + 6-asset content pack)
@@ -289,6 +291,14 @@ If the user gave a file path, read it. If they gave a topic name, search:
 4. If multiple files match, read all and synthesize
 
 Extract: the topic, the core principles/insights, the strongest quote, and any product connections.
+
+### 2B.1a: Claim register before the hook (F2, mandatory)
+
+Before committing any hook, list the material claims the pack will rest on: every number, cause, comparison, safety statement, prescription (dose, day, order, threshold), and any event the copy would present as real. For each one, give it a category from [claim-boundaries.md](../skills/ig-carousel/references/claim-boundaries.md) (research finding, Scott practice, coaching application, hypothetical example, reported experience, business or offer) and the exact source location you inspected (file plus heading, line, page, or timestamp). A seed's body sketch or a research brief is a lead, not a source: follow a central number back to the brief's cited source when it is local and permitted, and record the chain as it actually is (`secondary_reporting` or `ai_summary`, not `primary_research`, unless you read the primary).
+
+Verify the decisive context of each central claim: population, time window, what was measured, what was compared. A hook whose central claim does not survive that check is rewritten or dropped now, before any asset is drafted. Do not sharpen a hook with an incident nobody documented. If the idea context from the picks file carries a seed bullet that reads as an application ("receivers pay for it in drops"), it enters the register as `coaching_application`, never as a finding.
+
+Budget: at most three additional source documents beyond normal preparation, and no questions to Scott overnight. When a central claim cannot be resolved inside that budget, it is `needs-review` and the copy that depends on it is narrowed or removed; the pack is not blocked on a nonessential claim.
 
 ### 2B.2: Cross-Reference the Second Brain
 
@@ -486,9 +496,10 @@ Say: [first sentence]
 
 NEW TO THE BRAIN: [concept/summary page this run created, or "nothing new - fully covered by existing pages"]
 Idea origin: [idea id] rev [revision] from [origin path], [locator]   <- only when the pick list carried an `idea:` line; hand-run packs without one omit this line, never invent an id
+Claim check: [N] claims, [M] narrowed, [K] needs-review; stamped   <- Step 3.7; `Claim check: blocked, see CLAIM-BLOCKED.md` when the topic stopped
 ```
 
-THE MESSAGE block (the Step 3.6 gate receipt) is required in every pack, directly above PULLED FROM THE BRAIN. Both are pack-file-only meta: never rendered, never slide copy, never captions. The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
+THE MESSAGE block (the Step 3.6 gate receipt) is required in every pack, directly above PULLED FROM THE BRAIN. The `Claim check:` line (the Step 3.7 gate receipt) is the last line of PULLED FROM THE BRAIN, which stays the last section. Both are pack-file-only meta: never rendered, never slide copy, never captions. The PULLED FROM THE BRAIN block is required in every pack, always the last section. It is the retrieval receipt: Scott approves packs in 60 seconds because he can see exactly what each one is built on. If the cross-reference genuinely found nothing, say so in the block ("no wiki matches - built from [source] only") - that is a signal the topic needs a research pass, not a section to omit.
 
 **Idea context from the picks file is a proposal, not a source.** When `/gw-nightly-forge` hands you a pick with a `> ` context block (declared format, CTA proposal, body sketch, source references), start from it, then run every check in this command as usual: Step 0 wiki read, the offer and action checks, the voice and message gates. The seed's CTA does not override the current decisions page. A source reference under `External Library/` is provenance for the receipt, not permission to open it. Contract: `scripts/gwqueue/IDEA-CONTEXT.md`.
 
@@ -551,6 +562,58 @@ Cross-Reference Summary, frontmatter, and every other pipeline/meta section exis
 for Scott's triage in the pack file ONLY. They never appear in slide text, in a
 caption, or in any rendered or published asset, ever. If meta text is found in
 slide copy at any later stage, the fix is to correct the pack, not to render it.
+
+## Step 3.7: Claim Gate (mandatory, every asset, before save)
+
+The voice gate checks how it sounds. The message gate checks what it promises.
+This gate checks whether every material claim still says only what its source
+supports, on every surface that carries it. Rules and categories:
+[claim-boundaries.md](../skills/ig-carousel/references/claim-boundaries.md).
+Added 2026-09-09 after the receiver deck turned a 15-second grip-strength
+decrement into dropped passes, a position coach blaming focus, and "their focus
+was fine", none of which any source documented.
+
+1. Take the Step 2B.1a register (transcript mode: build it now from the
+   transcript) and, for each claim, compare the final wording in every asset
+   that carries it: thread tweets, both carousels' slides and captions, reel
+   hooks and body, email subject and body, comparison table cells. Cover,
+   caption, subject line, and reel hook are the surfaces most likely to drop
+   a qualifier. Check them first.
+2. Set each claim's disposition: `supported` (wording within the boundary),
+   `narrowed` (you tightened it to the supported outcome or context),
+   `illustrative` (a labeled hypothetical the reader can see is hypothetical),
+   `removed`, or `needs-review` (unresolved inside the budget; the dependent
+   copy was narrowed or removed). Record `allowed_wording` for every claim that
+   stays in the pack.
+3. Repair in the ladder's order: narrow, attribute, label illustrative, remove,
+   stop. One rewrite-and-recheck cycle. If the central lesson does not survive,
+   the topic is blocked: follow the blocked-topic procedure in the reference
+   (no `_inbox` folder, draft plus `CLAIM-BLOCKED.md` under
+   `Deliverables/_pending-drafts/claim-blocked/<slug>/`, backlog row to
+   `skipped` with a `claim-blocked (F2): ...` reason, report it). Never forge a
+   different lesson under the same slug.
+4. Write `claim-check.json` in the topic folder with the schema in the
+   reference (topic, idea id and revision from the picks file when present,
+   source pack basename, the claims). Derived numbers carry inputs and formula.
+   Then, from the vault directory, run:
+
+   ```bash
+   python -m scripts.gwqueue.claim_check stamp "Deliverables/_inbox/[TOPIC-SLUG]"
+   ```
+
+   It validates the shape, recomputes arithmetic, and stamps the hashes of the
+   pack text and the carousel copy. `INVALID` means fix the file; it does not
+   mean the claims are wrong. Run it after `carousel-build.json` exists so the
+   copy hash covers the selected deck.
+5. Put one line at the end of PULLED FROM THE BRAIN:
+   `Claim check: N claims, M narrowed, K needs-review; stamped`. No bibliography
+   slide, no disclaimer wall, no new section. Public copy carries attribution
+   only where meaning requires it ("in one trial", "Stronger by Science
+   reports").
+
+The check covers the text on disk at stamp time. A later manual edit or action
+reroll makes it stale, and the review page says so; recheck the changed
+material when asked, never rewrite Scott's edit. Legacy packs get no file.
 
 ---
 

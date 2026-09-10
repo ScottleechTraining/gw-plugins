@@ -60,6 +60,13 @@ CLAUDE.md is already in session context. Do not re-Read it. Internalize:
 
 An angle that fails any gate gets cut, not scored. Only survivors go through the scoring block below.
 
+**Claim boundary before the hook (F2, 2026-09-09).** Before scoring, name the one claim the hook rests on and give it a category from the plugin's `ig-carousel/references/claim-boundaries.md`: research finding, Scott practice, coaching application, hypothetical example, reported experience. Then:
+- A research hook keeps the finding's population and time window in the body sketch ("grip tests 12 percent weaker 15 seconds after a max effort"), and states only the outcome that was measured. "Receivers pay for it in drops" is an application; write it as one.
+- A hook that reads as a real event (a coach who said something, a kid who did something, a practice that went wrong) needs a source that documents that event. Without one, write the pattern, not the incident. Second person implies a real event as strongly as first person.
+- A body bullet that proposes a use of the evidence starts with `Application:`. A bullet that describes an invented scene starts with `Illustrative:`. A bullet that quotes what Scott runs cites the voice note or transcript. Plain research bullets carry no prefix. These prefixes are ordinary bullet text; the harvester reads them into the body sketch unchanged, and Forge reads them as categories.
+- A missing dose, day, or threshold stays missing. Do not fill it to make the angle sound complete.
+This adds no label to the template and changes no score. It stops the escalation at the first step, where it is cheapest.
+
 **When the day's deltas are thin:** fewer good angles beats padded weak ones. One angle that clears the gate is a better output than three that limp through. **Zero angles is an acceptable output**: when nothing in the 24h delta clears the gate, write the seed file with zero angles and a one-line reason (e.g. "only new material was 2 competitor Dewey saves, no Scott-original hook"). Do not manufacture an angle to hit a count.
 
 On a zero-angle day the file still opens with the `## TOP MOVE` heading, with the one-line reason under it in place of a winner. The job gate greps the file for that token.

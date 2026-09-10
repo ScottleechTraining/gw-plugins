@@ -44,6 +44,8 @@ Teaching progression: an explicit action reroll may change the approach recorded
 
 Visual body slides: when a managed deck's `brief.reason` carries `visual:`, build that slide per the ig-carousel skill's `references/visual-teaching.md`, translating the comparison, sequence, or annotated layout into the selected pack with every visible string bound once. A style-only rebuild must preserve the saved text exactly and the diagram's meaning (same actors, links, order, units, callout targets); if the new pack cannot hold the relationship clearly, keep the existing arrangement inside the new style rather than simplifying it away, and say so. Explicit action rewrites may change the visual's job together with body, caption, and CTA. No existing deck is retrofitted with a diagram.
 
+Claim coverage: a topic with `claim-check.json` (F2, new packs only) keeps its coverage through a style-only or cover rebuild because the copy text does not change. An action reroll changes the copy, so its check goes stale; say `claims STALE, recheck needed` in the report for that slug and do not run a new evidence pass inside the batch. The review page shows the same status. Legacy topics without the file are unaffected. Rules: the ig-carousel skill's `references/claim-boundaries.md`.
+
 Pack rules for both modes:
 
 - Explicit list mode: the pack Scott named wins.

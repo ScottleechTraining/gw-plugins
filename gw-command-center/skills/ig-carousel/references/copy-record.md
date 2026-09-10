@@ -90,6 +90,12 @@ Style-only changes use `--restyle-from`, preserving the complete saved record an
 
 For in-place replacements, the assembler renders and verifies the candidate before swapping it into the destination and backs up the old HTML by content hash. Use that replacement path rather than overwriting the live file yourself. A failed render or verification leaves the prior HTML in place; a successful replacement still requires a fresh review snapshot and approval before managed shipping. The backup is recovery history, not another selected master.
 
+## Claim Coverage
+
+For a NEW pack, Forge writes `claim-check.json` beside `carousel-build.json` per [claim-boundaries.md](claim-boundaries.md) and stamps it with `python -m scripts.gwqueue.claim_check stamp TOPIC_DIR`. The stamp records the pack file hash and the copy TEXT hash (slide fields, caption, CTA), read from the saved HTML master when it exists, else from `carousel-build.json`. No schema 1 field is added; the sidecar is separate from the record.
+
+A style-only `--restyle-from` rebuild preserves the exact text, so coverage holds. An action reroll (`--rewrite-from ... --copy ...`) or a saved manual edit changes the copy text, and the review page shows `claims STALE` until the changed material is rechecked. Stale is information for Scott, not a block and not a reason to rewrite his edit. New labels, axes, or numbers on a visual slide are copy, not style. Legacy decks have no sidecar and show nothing.
+
 ## Managed Posting Package
 
 For new-format topics, prepare render + caption split before approval. Resolve the explicitly selected variant consistently across render, review, and split; show its actual paired caption, not both pack captions. Other channels stay unchanged.

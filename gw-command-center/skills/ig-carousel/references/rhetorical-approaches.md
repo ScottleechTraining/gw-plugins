@@ -29,7 +29,7 @@ Changing 'Stop doing X' to 'Here are three ways to do X' while keeping the same 
 
 ## Personal-Voice Boundary
 
-A concept summary mentioning Scott does not license new first-person dialogue, emotions, or a confession. Use third-person attribution when only a summary supports the event. First-person lessons require checking Scott's original words and preserving their meaning. If unavailable, choose another approach without asking an overnight question. Never invent vulnerability to satisfy variety.
+A concept summary mentioning Scott does not license new first-person dialogue, emotions, or a confession. Use third-person attribution when only a summary supports the event. First-person lessons require checking Scott's original words and preserving their meaning. If unavailable, choose another approach without asking an overnight question. Never invent vulnerability to satisfy variety. Every evidence boundary below is an instance of the shared rule in [claim-boundaries.md](claim-boundaries.md); when they differ, the shared rule wins.
 
 ---
 

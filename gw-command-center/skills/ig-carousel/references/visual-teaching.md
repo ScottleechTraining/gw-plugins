@@ -26,7 +26,7 @@ Keep the same actors, units, scale, and context on both sides. Change one dimens
 
 Use a proportional axis only when there are meaningful sourced durations. Otherwise label it as an event sequence and avoid hour marks, unequal bars, or spacing that implies measured time. Name the action at each step. Connectors show order, not proof of causality. The example is an editorial ordering of the source's practices, not a timestamped account of Scott's day.
 
-For a training-session or weekly-program timeline, retrieve the actual session/week source first. Do not invent dose, recovery windows, safe workload thresholds, or calendar placements just to fill the graphic. When source detail is missing, use a conceptual sequence or choose another format.
+For a training-session or weekly-program timeline, retrieve the actual session/week source first. Do not invent dose, recovery windows, safe workload thresholds, or calendar placements just to fill the graphic. When source detail is missing, use a conceptual sequence or choose another format. Numbers, outcomes, and labeled rows on a visual slide are material claims under [claim-boundaries.md](claim-boundaries.md) and enter the pack's claim check like any other copy.
 
 ### Annotated Examples
 
