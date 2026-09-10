@@ -18,7 +18,7 @@ The templates further down this file are written em-dash free on purpose. **Copy
 
 - Title and heading: `Daily Content Seed, YYYY-MM-DD` (comma, never a dash)
 - Delta bullet: `` `path/to/file.md`: one-line summary `` (colon)
-- Score line: `- Revenue tie-in: 4, the justification` (comma)
+- Score line: `- Coach relevance: 4, the justification` (comma)
 
 Use periods, commas, or colons. Never an em-dash. An en-dash (U+2013) is not a workaround either.
 
@@ -39,6 +39,26 @@ Plus any files modified but not committed (git status). Filter to relevant addit
 - `External Library\AI\YYYY-MM-DD-*-brief.md` (new AI research)
 - `Voice Corpus\Voice Notes\YYYY-MM-DD-*.md` (Scott's voice notes, highest-signal source in the vault)
 - `Research\NotebookLM\*-research-brief.md` (S&C research briefs)
+
+### 1a. Two more source lanes (F5 and F6, 2026-09-10)
+
+The 24-hour delta above is lane 1. Two bounded lanes sit beside it. Neither is a quota, neither adds to the read cap in Step 3, and both feed the same gates and rubric.
+
+**Lane 2, coach demand (F5).** Run from the vault directory:
+
+```bash
+python -m scripts.gwqueue.demand_signals list --limit 3
+```
+
+It prints at most three approved, generalized coach questions from `wiki/business/coach-demand-signals.md` (withdrawn records never print; an empty library prints nothing and the run continues as before). A signal is evidence of the problem, never of the answer and never a voice source. Cite it in Source material as `[[business/coach-demand-signals#<signal_id>]]` plus the permitted GW answer source. Never write it as "a coach told me"; never name a person, school, or situation from it. A question with no supported answer is a teaching gap: say so in the seed, do not invent the answer.
+
+**Lane 3, older teaching (F6).** At most one named archive question per run, only for a reason you can state (a lane-2 question an older lesson answers, a current or recurring decision point, fresh research that changes an older explanation, or a thin delta with one specific unresolved decision). Run:
+
+```bash
+python -m scripts.gwqueue.evergreen_map lookup "<the coaching decision in a few words>"
+```
+
+It prints at most three map entries from `wiki/business/evergreen-teaching-map.md` with their exact source, ingredients, and the already-covered topics that overlap. Open at most two of the named sources, read the passage, and apply the four outcomes in the plugin's `ig-carousel/references/archive-retrieval.md`: new supported application (write the angle, with the difference stated), existing resource already answers it (say so, no angle), explicit reuse request (Scott's path, not this one), insufficient distinction (no angle, reason recorded). An old lesson is never "new research" and an old event never happened this week. At most one archive-derived angle per run, and it competes under the same gates and rubric.
 
 ### 2. Internalize the CLAUDE.md voice rules
 
@@ -65,6 +85,7 @@ An angle that fails any gate gets cut, not scored. Only survivors go through the
 - A hook that reads as a real event (a coach who said something, a kid who did something, a practice that went wrong) needs a source that documents that event. Without one, write the pattern, not the incident. Second person implies a real event as strongly as first person.
 - A body bullet that proposes a use of the evidence starts with `Application:`. A bullet that describes an invented scene starts with `Illustrative:`. A bullet that quotes what Scott runs cites the voice note or transcript. Plain research bullets carry no prefix. These prefixes are ordinary bullet text; the harvester reads them into the body sketch unchanged, and Forge reads them as categories.
 - A missing dose, day, or threshold stays missing. Do not fill it to make the angle sound complete.
+- A required teaching ingredient the sources do not hold (the second alternative for a comparison, the criteria for a decision guide, the steps of a worked example, the checks for a card) gets its own bullet starting with `Needs:`. The seed says "we have the decision criteria" or "someone must supply the criteria"; it never implies the second when the first is true. Rules: the plugin's `ig-carousel/references/teaching-readiness.md` (F4).
 This adds no label to the template and changes no score. It stops the escalation at the first step, where it is cheapest.
 
 **When the day's deltas are thin:** fewer good angles beats padded weak ones. One angle that clears the gate is a better output than three that limp through. **Zero angles is an acceptable output**: when nothing in the 24h delta clears the gate, write the seed file with zero angles and a one-line reason (e.g. "only new material was 2 competitor Dewey saves, no Scott-original hook"). Do not manufacture an angle to hit a count.
@@ -105,12 +126,18 @@ For each angle, output:
 
 **CTA**: <which product to point to: Insiders / GW 2.0 / Contact Prep / Scores and Stops / Summit / GW Schools / Summer in a Day>
 
-**Scores** (1=low, 5=high):
-- Revenue tie-in: N, <1-line justification linking to a specific offer>
-- Voice fit: N, <how naturally this lands in Scott's voice>
-- Urgency: N, <why today/this week vs evergreen>
-- Ease of production: N, <draft-to-publish friction>
+**Rubric**: gw-idea-quality-v1
+**Gates**: audience+lesson: pass | claims: pass | sources: pass | duplicate: pass | route: forge
+**Scores** (0-4 each):
+- Coach relevance: N, <the named coach's situation and its consequence>
+- Decision specificity: N, <the one choice or mistake this resolves>
+- Reader payoff: N, <the next step, question, comparison, or reference he leaves with>
+- Source support: N, <what permitted material supports the actual lesson; narrower if it only supports part>
+- Moment of use: N, <the current or recurring decision point>
 - **Total: N/20**
+**Action proposal**: save | share | conversation | conversion | unresolved
+**Business connection**: <verified offer> | general trust | none
+**Effort**: low | medium | high
 
 **Next command** (pick exactly one):
 - `/gw-content-forge "<this angle's hook>"`: when the angle is ready to expand into a full content pack (3 threads, 2 carousels, 3 reel ideas, 1 email)
@@ -129,7 +156,11 @@ Density: every line in an angle must change what Scott would publish. One line p
 
 ### 3a. Pick today's TOP MOVE
 
-After all angles are scored, pick the single angle with the highest **Total** score and mark it `**TOP MOVE**` at the top of the angles section. Ties: break in favor of higher Revenue, then higher Urgency, then highest Ease.
+**The grading sheet is `gw-idea-quality-v1`** (F3, 2026-09-10): the plugin's `ig-carousel/references/idea-quality.md` is the rubric, and the block above is its exact seed form. Run the five gates first; a gate failure is written as `fail` and the angle gets no Forge command, whatever it would have scored. Score the five dimensions 0 to 4 with one reason each tied to this idea; the total is the sum. Revenue, urgency, voice, and ease are no longer scored: the action proposal, business connection, and effort lines carry that information without ranking on it. A useful idea with `Business connection: none` can win the day.
+
+Qualification: 15 to 20 with every dimension at least 2 and every gate passed gets its `/gw-content-forge` command. 11 to 14, or any dimension below 2, is a repair candidate: keep it in the seed with `**Next command**: repair: <what is missing>` and no Forge command, so it never becomes filler. 0 to 10 is cut before it reaches the file. Zero qualifying angles is still a valid day.
+
+After all angles are scored, pick the single qualifying angle with the highest **Total** score and mark it `**TOP MOVE**` at the top of the angles section. Ties: higher Reader payoff, then higher Source support, then the lower angle number.
 
 ### 3b. The AI-asked question (one per day)
 

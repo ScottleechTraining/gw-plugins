@@ -97,6 +97,8 @@ After choosing each variant's action and before drafting its slides, read [rheto
 
 After the approach, decide whether one body slide should teach visually, per [visual-teaching.md](../skills/ig-carousel/references/visual-teaching.md): only when the source supports a relationship that position, sequence, or annotation makes clearer than prose (a before/after comparison on one declared dimension, an event sequence with no invented time scale, or an annotated example whose invented rows carry a visible illustrative label). Finish the sentence "The reader will see [relationship] and use it to [decision]" and append `visual: <comparison|sequence|annotated>; <that sentence>` to `brief.reason`; let payoff name what the reader sees. Give every visible label, step, entry, and callout its own plain-text field on that body slide (repeated labels get separate fields), plus a takeaway line. No dose, scale, outcome, or personal story the source does not state; if a visual adds nothing, write prose. At most one visual slide per deck.
 
+After action, approach, and visual are chosen and before any slide is drafted, run the teaching-readiness check in [teaching-readiness.md](../skills/ig-carousel/references/teaching-readiness.md) for each variant: list the ingredients the chosen form requires, mark each present (source locator or claim id) or missing, and set the outcome (ready, ready with a supported alternative, needs material). One targeted lookup of at most two documents may fill a named missing ingredient; reuse what Step 2B.1a already opened. When an essential ingredient stays missing and no supported alternative is allowed, follow the needs-material repair path in the nightly command; never invent the alternative, the criteria, the steps, or the checks. Record the outcome in THE MESSAGE (template below). At the final draft, confirm the promised ingredients actually appear: a card that needs the caption to make sense, a comparison with one side, or a decision guide without its conditions fails Step 3.6 test 6.
+
 When a variant's brief lands on `save`, read [save-reference-slides.md](../skills/ig-carousel/references/save-reference-slides.md) after the brief and before writing that variant's slides. The deck must carry one reference body slide (checklist, decision card, fill-in card, or sequence card) that a coach can use later without rereading the post; the brief's payoff names the tool, reason names the future moment, takeaway names the decision. Each save-led variant needs its own supported payoff; do not merge the two variants or copy one card into both. If the source cannot support a usable card, follow that reference's failure path (Forge-chosen save moves to the next feasible action; a Scott-requested save stops for editorial repair). Never invent numbers, thresholds, or a tool to fill a card, and never add a download, QR, or DM-gated version. Share, conversation, and conversion variants do not get a forced reference card or save CTA.
 
 When a variant's brief lands on `share`, read [share-led-decks.md](../skills/ig-carousel/references/share-led-decks.md) after the brief and before writing that variant's slides. Name the sender, the recipient, the future moment, and the shared decision; map them into the existing fields (audience names sender and recipient, payoff names the joint decision, reason names the moment and why a second person is needed). The cover names a shared situation, not a villain; the body makes the colleague's view understandable before naming the gap and gives both people a next move; the CTA and caption name the recipient and purpose. No tag-the-coach bait, no humiliation, no promise that forwarding settles anything. Run its five pass/fail checks. If no plausible recipient and decision exist, follow that reference's failure path (Forge-chosen share moves to the next feasible action; a Scott-requested share stops for editorial repair).
@@ -300,6 +302,8 @@ Verify the decisive context of each central claim: population, time window, what
 
 Budget: at most three additional source documents beyond normal preparation, and no questions to Scott overnight. When a central claim cannot be resolved inside that budget, it is `needs-review` and the copy that depends on it is narrowed or removed; the pack is not blocked on a nonessential claim.
 
+Two source references need their own handling. A `business/coach-demand-signals#<id>` reference (F5) is evidence that coaches ask the question: it enters the register as the problem statement, never as support for the answer, never as a voice source, and never as "a coach told me". A `business/evergreen-teaching-map` reference (F6) points at older approved GW teaching: read the actual passage at the recorded locator, check current decisions and offers for anything superseded, and write the pack's receipt with `Why now`, `Teaching source` (with its real date), `Already covered`, `New contribution`, and `Currentness` per [archive-retrieval.md](../skills/ig-carousel/references/archive-retrieval.md). An old lesson is never presented as new research and an old event never as this week's.
+
 ### 2B.2: Cross-Reference the Second Brain
 
 Grep `Second Brain/` for the topic keyword and close synonyms. Note which files matched and what Scott has said about this topic before.
@@ -482,11 +486,21 @@ Say: [first sentence]
 - Lesson (one sentence a coach could repeat): [sentence]
 - First step given before the CTA: [the free action, named]
 - CTA: [product] because [one clause; checked against decisions.md]
+- Teaching readiness: [ready | ready with a supported alternative | needs material]
+- Promised payoff: [the decision, tool, or lesson the reader receives]
+- Ingredients used: [each with its source locator or claim id]
+- Missing/rejected option: [only when an option was rejected; name the missing ingredient]
+- Selected approach/action: [the brief's values]
 
 **Carousel #2:**
 - Lesson: [sentence]
 - First step given before the CTA: [the free action, named]
 - CTA: [product] because [one clause]
+- Teaching readiness: [outcome]
+- Promised payoff: [payoff]
+- Ingredients used: [with locators]
+- Missing/rejected option: [if any]
+- Selected approach/action: [the brief's values]
 
 ---
 ## PULLED FROM THE BRAIN
@@ -542,6 +556,12 @@ promise, no single lesson, assess-with-no-first-step, and a leaked source label.
    a product pitch. Whenever a CTA names a product, check its entity page and
    `wiki/system/decisions.md`. A de-scoped or wrong-door product is a fail even
    if the copy reads well. Legacy product CTA rules remain unchanged.
+6. **Payoff-delivery test (F4).** The teaching ingredients THE MESSAGE says
+   the deck uses are on the slides. A save card stands alone when
+   screenshotted, a share deck gives the recipient a joint next move, a
+   comparison shows both sides, a decision guide shows its conditions, a
+   diagram teaches its declared relationship. A source-rich pack whose draft
+   dropped the promised tool fails here even though its sources were ready.
 
 Record the gate's output in THE MESSAGE block (see the file structure below).
 That block is the triage receipt for message quality, the same way PULLED FROM
