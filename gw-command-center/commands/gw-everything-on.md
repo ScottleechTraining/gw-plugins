@@ -43,6 +43,28 @@ Take Scott's topic argument and generate 3-7 search terms covering synonyms, rel
 
 Use Scott's voice vocabulary when expanding (his wiki has terms like "violence is a skill", "stimulate not annihilate", "August is coming" - these matter).
 
+### Optional: bounded machine pass first (read-only, shadow)
+
+Before the manual sweep, you may run the SB3 retriever for a ranked shortlist.
+It is read-only, writes nothing, and calls no command:
+
+    cd "C:\Claude Projects\Gridiron Warrior"
+    python -m scripts.brain_retrieve "<the topic or question>" --budget quick --json <tmp>.json
+
+Use its output as a reading list, never as the answer. Three rules:
+
+1. Its `passages[]` are candidates. Open the file and read around the locator
+   before you quote anything.
+2. Its `coverage[]` and `unresolved[]` are the honest record of what was not
+   searched. Carry them into your report as written; never replace an
+   "unavailable" with "nothing found".
+3. Its `authority` and `provenance` fields are null by design. Currentness and
+   proof are not decided here. Do not present an SB3 passage as a current GW
+   ruling.
+
+Skip this step entirely if the script is absent. The command's own sweep,
+output format and side effects are unchanged.
+
 ### 2. Scan sources in this order
 
 For each source, glob the directory then grep for any of the query terms (case-insensitive, multiline mode where useful). Read matching files. Skip files larger than 50KB unless they contain a direct keyword match - in those, grep for the matches and pull surrounding context (3-5 lines on each side) rather than reading the whole file.
@@ -52,7 +74,7 @@ For each source, glob the directory then grep for any of the query terms (case-i
 | 1 | AI briefs | `External Library\AI\*.md` | Daily AI research briefs |
 | 2 | Business briefs | `External Library\BusinessDocuments\*.md` | Daily Business briefs |
 | 3 | S&C briefs | `External Library\S-and-C\*.md` | Daily S&C briefs + the 7 migrated NotebookLM deep-dives |
-| 4 | Dewey saves | `External Library\Twitter-Instagram Saves\_by-domain\` | S&C, Business, AI subfolders |
+| 4 | Dewey saves | `External Library\Twitter-Instagram Saves\` | Canonical saves, flat files plus author subfolders (e.g. `cyrilXBT\`). `_by-domain\` holds 668 one-line reference notes indexed by S&C, Business and AI: use them to find a save, then read the canonical file the `[[wikilink]]` names. Never quote a `_by-domain` note as the post. Skip `_media\`, `_idea-mine\`, `_video-extractions\`, `_promotion-drafts\`. |
 | 5 | Screenshots OCR | `External Library\Screenshots\processed\` | OCR'd content |
 | 6 | Voice notes | `Voice Corpus\Voice Notes\` and `Voice Corpus\_pocket-inbox\.processed\` | Transcripts |
 | 7 | Podcast transcripts | `Voice Corpus\Podcast Transcripts\*.md` | Verbatim .md siblings of the .docx originals (converted 2026-08-03). The .docx stay canonical; scan the .md. |

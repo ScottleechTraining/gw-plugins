@@ -10,6 +10,7 @@ description: "Ask the GW second brain any question. Searches wiki + Voice Corpus
 2. Grep `Gridiron Warrior/wiki/` (all folders) and `Gridiron Warrior/Voice Corpus/` for matches. Never read External Library unless Scott explicitly says so.
 3. Read the top 5 matching pages fully. Follow wikilinks one hop when they answer the question.
 4. Answer in under 200 words, in plain language. Every claim cites its page like: (concepts/minimal-effective-dose).
+   - Label every cited passage current Scott practice, historical practice, external evidence, generated synthesis or unresolved. When two current rules disagree, return both and one question, not a choice.
 5. End with two lines:
    - SOURCES: the pages used.
    - GAP: if the brain had no good answer, name the missing concept page and offer to create the stub.

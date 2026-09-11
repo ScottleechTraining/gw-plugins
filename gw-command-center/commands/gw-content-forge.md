@@ -19,7 +19,7 @@ The user will provide one of:
 - **A file path** to any vault source (brief, Film Study doc, pitch doc) → CONTENT PACK MODE
 - **A topic name** (e.g., "contact prep", "box squats") → CONTENT PACK MODE; find the source files
 - **A Second Brain reference** (e.g., "the contact prep transcript") → CONTENT PACK MODE
-- **Nothing** — check `Research/NotebookLM/` for the most recently created brief → CONTENT PACK MODE
+- **Nothing**: check `External Library/S-and-C/` for the most recently created brief (legacy fallback: `Research/NotebookLM/`) → CONTENT PACK MODE
 
 ## Vault Paths
 
@@ -29,8 +29,10 @@ The user will provide one of:
 - **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`
 - **Wiki business domain:** `C:/Claude Projects/Gridiron Warrior/wiki/business/`
 - **Wiki AI domain:** `C:/Claude Projects/Gridiron Warrior/wiki/ai/`
-- **Second Brain:** `C:/Claude Projects/Gridiron Warrior/Second Brain/`
-- **Research briefs (S&C):** `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
+- **Voice Corpus (Scott's own transcripts, notes, sales copy):** `C:/Claude Projects/Gridiron Warrior/Voice Corpus/`
+  Compatibility: "Second Brain" is the legacy alias for this path. The folder `Second Brain/` never existed; do not create it.
+- **Research briefs (S&C):** `C:/Claude Projects/Gridiron Warrior/External Library/S-and-C/`
+  Compatibility: `Research/NotebookLM/` is the legacy location and still holds 1 file. Check it second, never first.
 - **Business research briefs:** `C:/Claude Projects/Gridiron Warrior/External Library/BusinessDocuments/`
 - **AI research briefs:** `C:/Claude Projects/Gridiron Warrior/External Library/AI/`
 - **Dewey saves (Twitter + IG):** `C:/Claude Projects/Gridiron Warrior/External Library/Twitter-Instagram Saves/`
@@ -53,7 +55,7 @@ This context shapes everything that follows. It prevents repeating angles he's a
 
 ## Step 0.5: Check NotebookLM for Depth (if relevant)
 
-If the topic is a coaching/S&C concept (not just a product pitch), check whether there is a matching research brief in `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`.
+If the topic is a coaching/S&C concept (not just a product pitch), check whether there is a matching research brief in `C:/Claude Projects/Gridiron Warrior/External Library/S-and-C/`. That is the canonical S&C brief location; `Research/NotebookLM/` is the legacy alias and holds one file.
 
 - If a brief exists for this topic, read it and pull the strongest coaching insight or evidence point into the content pack
 - If no brief exists and the topic warrants it, note in the final report that running `/gw-research [topic]` first would strengthen the content
@@ -288,8 +290,8 @@ Research-driven. Topic or file in, full content pack out.
 
 If the user gave a file path, read it. If they gave a topic name, search:
 1. `wiki/summaries/` for an existing Film Study or brief on this topic
-2. `Research/NotebookLM/` for a matching brief
-3. `Second Brain/` for matching markdown and docx files (match by filename keywords)
+2. `External Library/S-and-C/` for a matching brief (legacy: `Research/NotebookLM/`)
+3. `Voice Corpus/` for matching markdown, txt and docx files (match by filename keywords). Podcast DOCX files are canonical and their .md siblings are search copies: search the .md, cite the .docx. Seven course-transcript DOCX files have no .md sibling, so check .docx names directly.
 4. If multiple files match, read all and synthesize
 
 Extract: the topic, the core principles/insights, the strongest quote, and any product connections.
@@ -304,9 +306,9 @@ Budget: at most three additional source documents beyond normal preparation, and
 
 Two source references need their own handling. A `business/coach-demand-signals#<id>` reference (F5) is evidence that coaches ask the question: it enters the register as the problem statement, never as support for the answer, never as a voice source, and never as "a coach told me". A `business/evergreen-teaching-map` reference (F6) points at older approved GW teaching: read the actual passage at the recorded locator, check current decisions and offers for anything superseded, and write the pack's receipt with `Why now`, `Teaching source` (with its real date), `Already covered`, `New contribution`, and `Currentness` per [archive-retrieval.md](../skills/ig-carousel/references/archive-retrieval.md). An old lesson is never presented as new research and an old event never as this week's.
 
-### 2B.2: Cross-Reference the Second Brain
+### 2B.2: Cross-Reference the Voice Corpus (legacy name: Second Brain)
 
-Grep `Second Brain/` for the topic keyword and close synonyms. Note which files matched and what Scott has said about this topic before.
+Grep `Voice Corpus/` for the topic keyword and close synonyms. Note which files matched and what Scott has said about this topic before. Podcast transcripts carry a guest as well as Scott: attribute per speaker, never turn a guest's words into Scott's.
 
 This shapes product CTAs (for opted-in carousels, only when the selected action and a valid offer justify one):
 - If a course covers this topic (Contact Prep, GW 2.0, Scores and Stops) → point there
@@ -400,7 +402,7 @@ topic: [TOPIC]
 mode: content-pack
 source_files: [list of files used]
 wiki_refs: [list of wiki pages consulted]
-second_brain_refs: [list of Second Brain files that matched]
+voice_corpus_refs: [list of Voice Corpus files that matched]   # was second_brain_refs
 external_refs: [list of External Library / Voice Corpus / Daily seed files used]
 cta_rationale: [why these CTAs were chosen]
 pipeline: gw-content-forge
@@ -409,7 +411,7 @@ pipeline: gw-content-forge
 # [TOPIC] — Content Pack
 
 ## Cross-Reference Summary
-[2-3 sentences: what wiki and Second Brain pages were consulted, what angles already exist, what's new]
+[2-3 sentences: what wiki and Voice Corpus pages were consulted, what angles already exist, what's new]
 
 ---
 ## Twitter Thread #1: [Title]

@@ -36,6 +36,25 @@ Next action: clean or commit the wiki/ changes, then rerun /gw-weekly-synthesis.
 This command is allowed to update the wiki only from a clean wiki/ starting point.
 Raw `git commit` is forbidden inside this command.
 
+Allowed read (new, read-only): the newest
+docs/superpowers/second-brain/eval/results-*.json. Read it, never write it,
+never run the benchmark from this command.
+
+Allowed write (new, bounded): one line in the weekly report under a
+"Second brain" heading, at most three sentences. It may state only:
+the results file date, the numerator over the denominator with the common
+denominator noted, and any action-worthy regression (a check that moved from
+pass to fail since the previous results file). Nothing else from the file goes
+in the report. If there is no regression, the line says so and stops.
+
+Three rules travel with that line:
+
+1. The line reports, it never promotes. A score cannot activate scope.
+2. A regression is named or the line says there were none. Silence is not a
+   clean week.
+3. `semantic_usefulness` and `human_judgment` never appear as a number. If
+   Scott has not rated a packet, the line says so.
+
 ## Steps
 
 ### 1. Pull week's deltas
@@ -55,6 +74,8 @@ A vault item earns a wiki concept page ONLY when all of these hold:
 1. **Provenance is clean.** It is either Scott's own teaching, OR external material with `external_origin: true` frontmatter AND the `Origin:` + `How Scott uses this in GW:` blocks per the vault schema in `Gridiron Warrior/CLAUDE.md`. External content with no attribution header does NOT promote, it stays in External Library. This is the contamination guardrail; do not launder someone else's framework into Scott's voice.
 2. **It has weight.** It appeared in 2+ independent sources or sessions this week (a real pattern, not a one-off save), OR it is load-bearing for a current live offer (Insiders, Schools funnel, Summit, a course). One brief or one Dewey save alone is not enough, that is the rule Step 3 already encodes for briefs, and it holds for every source type.
 3. **It is not a duplicate.** Search the wiki first (`wiki/index.md` plus the resolver in Step 4b). If a concept page already covers this, EXTEND that page, do not spawn a near-duplicate. A wiki with two pages on the same idea is worse than one tight page.
+
+Before promoting a passage from a page with external_origin: true, check that it sits in the How Scott uses this in GW block or carries a dated Scott ruling. The body of a Bucket B page is not voice-input safe.
 
 **Default when in doubt: leave it in the vault and note it as a candidate** in the Step 5 report ("candidate for promotion, needs a second source"). Under-promote. A missed promotion costs one line in next Sunday's report; a bad promotion costs git archaeology to undo. When the case for a page is anything short of clear, it does not get a page this week.
 
@@ -103,6 +124,11 @@ These routing decisions all feed Step 5's summary.
 ### 4. Promote voice notes into the graph
 
 Voice notes are Scott-original content — highest-signal source in the vault. Every voice note must enter the wiki concept graph. Two paths: link to existing concept pages, or stub new ones.
+
+- A voice note carrying `answers_gap:` is a gap answer. Promotion is still a decision, not an
+  automatic step. When Scott approves the promotion, carry the gap id into the new or updated
+  concept page so the gap report can find it. If the note answers only part of the question, write
+  `gap-partial: <gap-id>` on the page instead, and say which part is still open.
 
 For each new voice note from the past 7 days at `Voice Corpus\Voice Notes\YYYY-MM-DD-*.md`:
 
@@ -307,6 +333,15 @@ conservative rather than silently empty.>
 
 <one or two lines from wiki-health-report.md scorecard vs the prior week: page count,
 orphans, stubs. Numbers only, no prose padding.>
+
+## Second brain
+
+<one line, at most three sentences, per the allowed-write contract in the Hard guard. Shape:>
+
+Second brain, 2026-09-11: retrieval scored 65 of 74 machine checks on a common
+denominator, against 55 of 74 for the current path. Two regressions are
+action-worthy: sb2-16 and sb2-17 now return the wrong paragraph of the right
+file. Still shadow, nothing activated, and no packet has been rated useful yet.
 
 ## Queue health
 

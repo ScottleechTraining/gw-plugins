@@ -43,6 +43,7 @@ voice: scott-original
 recorded: YYYY-MM-DD
 topic: [topic-slug]
 duration: <if audio, in seconds>
+answers_gap: <gap-id, or omit>
 ---
 
 # [Topic]
@@ -102,6 +103,10 @@ Print it whether you processed notes or there were none to process. The only tim
 - Do NOT add commentary, interpretation, or "summary" to the body. Just the transcript.
 - Concept wikilinks are light-touch, only when Scott explicitly names something.
 - If transcription fails: stub with `transcription_status: failed` and flag in `/gw-daily` report.
+- **If the note answers a recorded gap, write its id.** Put `answers_gap: <gap-id>` in the
+  frontmatter, using the exact id from the gap report (`ds-...`). Never guess an id, and never add
+  the key when the note only touches the topic. A note with the key but a failed transcription
+  keeps `transcription_status: failed`: the gap stays uncertain, not answered.
 
 ## Open question for Scott
 

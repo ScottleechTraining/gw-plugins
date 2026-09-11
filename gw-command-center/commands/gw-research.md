@@ -20,6 +20,7 @@ The user provides a coaching topic as $ARGUMENTS (e.g., "box squat programming",
 ## Vault Paths
 
 - **Research output:** `C:/Claude Projects/Gridiron Warrior/Research/NotebookLM/`
+  Note: daily S&C briefs live in `External Library/S-and-C/`; `Research/NotebookLM/` is the legacy location. This command still writes there until Scott decides otherwise.
 - **Wiki summaries:** `C:/Claude Projects/Gridiron Warrior/wiki/summaries/`
 - **Wiki index:** `C:/Claude Projects/Gridiron Warrior/wiki/index.md`
 - **Wiki log:** `C:/Claude Projects/Gridiron Warrior/wiki/log.md`

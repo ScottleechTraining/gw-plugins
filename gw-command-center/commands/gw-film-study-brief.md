@@ -19,6 +19,8 @@ Replaces the retired Sunday Film Study production stack ([retirement note](../..
 
 **What it does NOT do:** email, commit, publish, post, or schedule anything. Those stay manual. Scott reviews everything and ships what he wants to ship.
 
+The pre-flight checklist at wiki/checklists/pre-film-study.md was superseded on 2026-09-11 and is kept as history. Do not run it as a prep step.
+
 **Why the chain came back:** the 5/24 retirement killed the Sunday *autonomous scheduler*, not the production logic. The fragility risk that killed the Sunday run is mitigated here by manual invocation — Scott is at the terminal when the chain runs, so failures are visible and recoverable in-context, not silent 7am breakages.
 
 Scope: deliver all six chain outputs and nothing past them. The floor is brief + wiki ingest (summary page, concept stubs, index line) + content pack + Substack draft + IG carousel + freebie, plus the status file and the one wiki/log.md line. A logged step failure is not permission to ship five. Do not invent artifacts the chain does not name, and do not re-run a step that already succeeded.
@@ -76,6 +78,31 @@ If `$ARGUMENTS` is empty:
    > No auto-pick — this command is demand-driven by design.
 
    Do NOT write a brief, do NOT write a status file, do NOT touch the wiki. Just stop.
+
+## Step 0.5 - Prep packet (optional, read-only)
+
+Before the corpus query, you may build a private preparation packet. It is read-only over
+sources, writes one packet plus a receipt sidecar into Deliverables/_corpus-queries/, calls
+no command and publishes nothing:
+
+    cd "C:\Claude Projects\Gridiron Warrior"
+    python scripts/brain_prepare.py --question "<topic>" --task film-study
+
+Read the packet it names before you run /gw-everything-on. Three rules:
+
+1. Its answer is Scott's own sentences, copied. Use them as a reading list and open the
+   locator before you quote anything in the brief.
+2. Its coverage, unresolved and missing-decision sections are the honest record. Carry them
+   into the brief as written; never replace an "unavailable" with "nothing found".
+3. A packet is private. It is never cited in a member asset, a Substack draft, a carousel or
+   a freebie, and it is never deployed.
+
+Skip this step entirely if the script is absent. The corpus query, the brief and every other
+step of the chain are unchanged.
+
+The packet folder holds two file shapes. `Deliverables/_corpus-queries/<date>-<topic>.md` is
+`/gw-everything-on` feedstock; `<date>-prep-<slug>.md` is a private SB6 packet and is not
+feedstock for anything.
 
 ## Step 1 — Corpus query
 
@@ -322,7 +349,7 @@ Invoke `/gw-substack-forge "<absolute path to brief>"` (uses `gw-command-center:
 
 ## Step 8 — IG carousel
 
-Invoke the `ig-carousel` skill (`gw-command-center:ig-carousel`) against the brief. Save the HTML to `Deliverables/<topic-slug>-carousel.html`.
+Invoke the `ig-carousel` skill (`gw-command-center:ig-carousel`) against the brief. Save the HTML inside the topic folder: `Deliverables\_inbox\<topic-slug>\<topic-slug>-carousel.html`. Never write it to the Deliverables root. The managed render, review and ship helpers resolve the deck inside its topic folder, so a deck at the root is invisible to them.
 
 - On success: capture path. Set `chain_steps.carousel = "ok"`.
 - On failure: log with `next_action`. **Continue.**

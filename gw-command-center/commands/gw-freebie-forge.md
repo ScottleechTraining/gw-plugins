@@ -14,7 +14,7 @@ Deliver one freebie plus the Step 6 report. Every teaching point in it must chan
 
 The user provides a file path. Typical inputs:
 - A Film Study brief at `Research/Film Study/YYYY-MM-DD-<slug>-film-study-brief.md`
-- A `/gw-research` brief at `Research/NotebookLM/<slug>-brief.md`
+- A `/gw-research` brief at `Research/NotebookLM/<slug>-brief.md`, or a daily S&C brief at `External Library/S-and-C/<date>-<slug>-brief.md`
 - A Voice Corpus transcript
 - Any markdown file with coaching content
 
