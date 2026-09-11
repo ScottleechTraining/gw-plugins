@@ -69,7 +69,7 @@ For each new Dewey note in the week:
 
 The Dewey pipeline (v3.2) auto-drafts promotion candidates into `External Library\_promotion-drafts\*.md` the moment they're flagged, each with `connection_strength` and a `## The Call` recommendation. This step is READ-ONLY on the drafts (this command writes to wiki/ only) — its job is putting them in front of Scott as quick decisions.
 
-Scan `_promotion-drafts/` for `status: draft-pending-scott`. Add a decision table to the Step 5 report:
+Read `External Library\Twitter-Instagram Saves\_idea-mine\promotion-drafts-reconcile.md` first (D7, 2026-09-10). The Saves Idea Mine writes it each run and it lists BOTH draft folders, including the nested drafts a `_promotion-drafts/` scan alone misses. A draft with no `status` field is listed as "status unknown"; treat it as pending. Then scan `_promotion-drafts/` for `status: draft-pending-scott` and merge the two lists, one row per slug. If the reconcile file is missing, fall back to the folder scan and say so in the report. Read-only on both, and the approval gate below does not change. Add a decision table to the Step 5 report:
 
 ```markdown
 ## Promotion drafts awaiting your call

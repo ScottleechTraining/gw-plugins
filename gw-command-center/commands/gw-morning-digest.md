@@ -54,7 +54,7 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 
 - Queue depths come from `scripts\queue_status.py` only; it decodes the UTF-16 queue files correctly. A count of -1 means that queue file is missing; report its exact path in that case. Never report a queue as empty or missing based on a direct file read.
 
-- The retired Sunday Film Study weekly-batch flow is dead. Do not recommend opening `wiki\pending\weekly-batch-*.md`. Do not reference Sunday/Tuesday/Thursday batch production. The active Film Study lane is `/gw-film-study-brief "<topic>"`, then manual `/gw-content-forge "<brief path>"` if Scott wants assets.
+- The retired Sunday Film Study weekly-batch flow is dead. Do not recommend opening `wiki\pending\weekly-batch-*.md`. Do not reference Sunday/Tuesday/Thursday batch production. The active Film Study lane is `/gw-film-study-brief "<topic>"`, invoked manually by Scott. That one command runs the full production chain: brief, wiki ingest, content pack, Substack draft, IG carousel, freebie. Do not describe the content pack as a separate step Scott still has to run. A separate `/gw-content-forge "<brief path>"` is only for a re-run or an extra asset set.
 
 - Old weekly batch files under `wiki\pending\` are historical artifacts unless Scott explicitly asks about them.
 
@@ -629,6 +629,8 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 - **Do NOT Glob or Grep the whole vault.** Use date-pattern globs only against known directories.
 
 - **Always read:** today's `scripts\health\*-YYYY-MM-DD.status.json` set (batched, they are the scoreboard source of truth), today's seed file, today's business / AI / S&C briefs, wiki/log.md tail (last 50 lines). Queue depths come from one `queue_status.py` run, never from reading the queue files.
+
+- **Saves Idea Mine lane outcomes come from `_saves-idea-mine-update.md` at vault root.** That one file names all three lanes (AI, Business, S&C) for the run, and marks a lane `(stale)` when it did not run today. Read it for lane outcomes instead of inferring them from the lane brief files. Its `## Top Moves` list is the ranked moves for the day.
 
 - **Do NOT read voice notes, Dewey notes, or screenshot notes.** Pull their counts and top hits from `wiki/log.md` - `/gw-voice-ingest`, `/gw-dewey-daily`, and `/gw-screenshot-ingest` already wrote one-line summaries there. That's the digest's source of truth for those sources.
 

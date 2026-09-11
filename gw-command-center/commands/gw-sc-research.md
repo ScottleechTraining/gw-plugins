@@ -230,6 +230,25 @@ pipeline: gw-sc-research
 
 In `## Sources`, tag each source added to the master this run with `(added to master)` so the enrichment trail is visible in the brief. If enrichment failed, state the reason here in one line.
 
+**Member-ready rules (D6, 2026-09-10).** A script builds the member edition from this file, so the
+brief has to survive that pass. Five rules:
+
+1. Every sentence that carries a number, a percentage, or a dose ends with a source tag in square
+   brackets, for example `[Bernatik 2026]`. The tag must match an entry in `## Sources`. A bare
+   surname plus the year is enough.
+2. Every quotation is followed on the next line by `Source: <public author, year>`. Prefer an author
+   who already appears in `## Sources`. A quotation with no author is cut from the member edition.
+3. The last item of `## Pitfalls` is a limits line, written as `Limits: <population>, <setting>, what
+   the evidence does not cover`. One line, plain words. Write it even when the sources are quiet;
+   say what they did not test.
+4. The title names the coaching topic only. Never put a tool or platform name in the title
+   (NotebookLM, Dewey, ChatGPT, Claude). A tool name in the title holds the whole member edition.
+5. `audience:` names who is asking plus the constraint: athletes, level, and season, not just a role.
+   Example: `high school head coach, 40 athletes, in-season, one 45 minute session`.
+
+Optional: if the topic pack already carries a `claim-check.json` with F2 dispositions, the member
+build reads it. Do not create one where none exists.
+
 ### 4. Update queue + index
 
 Move the researched topic from `## Active Queue` to `## Completed` with `- YYYY-MM-DD - [topic name] [topic-slug]` (and `*(auto-picked)*` if applicable). Preserve all other queue entries unchanged.

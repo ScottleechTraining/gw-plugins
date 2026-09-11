@@ -59,6 +59,13 @@ File location pattern (NEW):
   - `External Library\Twitter-Instagram Saves\_by-domain\ai\YYYY-MM-DD-[author]-[post_id].md`
 - (Skip-tier: no file written, just mark row Processed in sheet)
 
+**Intake paths the Saves Idea Mine reads (D7, 2026-09-10).** `saves_idea_mine.py` walks the root of
+`External Library\Twitter-Instagram Saves\` plus every subfolder whose name does not start with an
+underscore, so the `<author>\` note above is now read. Folders that start with an underscore are
+skipped. `_by-domain\` holds reference stubs, not saves: each file there is a wikilink pointer with
+`type: domain-ref`, and the Mine excludes it. Keep the full note in the author folder or at the root,
+and keep `_by-domain\` pointer-only. A save written only into `_by-domain\` never reaches a lane.
+
 ### 4. Update cursor + mark sheet
 
 - Write last-processed row ID to `.dewey-cursor.txt`
