@@ -18,6 +18,17 @@ Open `C:\Claude Projects\Gridiron Warrior\External Library\AI\_topic-queue.md`. 
 
 If empty: auto-pick a trending AI topic relevant to a small-business AI user (Claude, Anthropic SDK, Obsidian + AI, prompting, automation, MCP, agent design). Flag `auto_picked: true`.
 
+### 1b. Frame the question (D5, 2026-09-10)
+
+Same topic, same order: the first active bullet stays the pick. Before any NotebookLM call, write four lines for it. They go into the brief frontmatter and they lead the structured prompt.
+
+- `question`: one specific question Scott as the operator of this pipeline is deciding this week, in plain words. Not the topic restated. Shape: "With 15 minutes left after practice, what recovery work is worth keeping?" (that is an example of shape, not a training recommendation).
+- `decision`: a workflow or tool decision (build, adopt, change, or skip), in one clause.
+- `audience`: who is asking and their real constraint (season, staff, budget, tools). Unknown stays unknown: write `constraints unknown`, never invent one.
+- `question_source`: `queue`, or `ds-<slug>` when a record in `wiki/business/coach-demand-signals.md` supplied the question, or `scott` when the queue line marks it as his request.
+
+Scan `C:\Claude Projects\Gridiron Warrior\External Library\AI\_index.md` for a brief that already answers this exact question (same decision, same audience, not just the same nouns). If one exists, research today anyway (reuse is not enabled yet), name that brief in `## Already Decided` with its date, and make the new brief add to it rather than repeat it.
+
 ### 2. Run NotebookLM research
 
 Use the `mcp__notebooklm__*` MCP server. Same explicit flow as `/gw-business-research`, with AI-relevant sources (Anthropic docs, AI Twitter, dev YouTube, Claude release notes):
@@ -25,7 +36,7 @@ Use the `mcp__notebooklm__*` MCP server. Same explicit flow as `/gw-business-res
 1. `notebook_create` with title "AI Research: [topic name] — [date]" → capture the returned `notebook_id`
 2. Use yt-dlp or web search to find 4-6 high-signal sources on the topic
 3. Add sources via `source_add`
-4. Query with `notebook_query` (notebook_id from step 1) using the structured prompt below
+4. Query with `notebook_query` (notebook_id from step 1) using the structured prompt below. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general.
 
 **Never call `research_start` without a `notebook_id`.** The MCP advertises "creates new notebook if not provided," but that auto-create path is NOT implemented (verified in `notebooklm_tools/core/research.py`): a null notebook_id builds a request to `/notebook/None` and NotebookLM rejects it with `INVALID_ARGUMENT` (Google API error code 3). This presents as a fake "transient" block and silently kills the day's AI brief. If you want `research_start`'s web auto-crawl, `notebook_create` FIRST, then `research_start(notebook_id=<that id>)` → poll → import → query. The numbered `source_add` flow above avoids it entirely and is the default.
 
@@ -73,6 +84,10 @@ tags: [ai, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
 topic: [topic-slug]
+question: "<the framed question, one sentence>"
+decision: <one clause>
+audience: <who is asking and their constraint>
+question_source: queue|ds-<slug>|scott
 source_count: <N>
 auto_picked: false|true
 pipeline: gw-ai-research

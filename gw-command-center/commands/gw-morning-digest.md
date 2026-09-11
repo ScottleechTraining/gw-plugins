@@ -18,7 +18,7 @@ Write THREE files (all overwritten each morning):
 
 2. `C:\Claude Projects\Gridiron Warrior\_morning-briefing.html` - phone-optimized HTML used by the email sender
 
-3. `C:\Claude Projects\Gridiron Warrior\_dashboard-index.html` - self-contained dashboard page (4-panel dropdown) that the `build-gw-dashboard.ps1` script deploys to Netlify each morning
+3. `C:\Claude Projects\Gridiron Warrior\_dashboard-index.html` - self-contained dashboard page (4-panel dropdown) that the `scripts/deploy_command_center.ps1` (morning-digest job step 9) deploys to Netlify each morning
 
 The PowerShell email script reads the `.html` file and sends it as an HTML email to scott@scottleechtraining.com. The dashboard build script reads `_dashboard-index.html` and deploys it to Netlify.
 
@@ -236,7 +236,7 @@ DO NOT include the `Subject:` line in the HTML body (the sender extracts it from
 
 ## Dashboard structure (`_dashboard-index.html`)
 
-This is the self-contained file deployed to Netlify each morning by `build-gw-dashboard.ps1`. ONE HTML document. Phone-first **editorial sports tabloid** aesthetic - think SI 1987 + locker room + Coach Leech voice. Confident, tactile, magazine-issue energy.
+This is the self-contained file deployed to Netlify each morning by `scripts/deploy_command_center.ps1`. ONE HTML document. Phone-first **editorial sports tabloid** aesthetic - think SI 1987 + locker room + Coach Leech voice. Confident, tactile, magazine-issue energy.
 
 **DO NOT regress this to generic SaaS dashboard styling** (light gray bg + white card + system fonts + plain dropdown). The bold design is intentional and on-brand. If you find yourself reaching for `-apple-system` or `border-radius: 8px` on the card, stop - the spec below is the design.
 
@@ -677,7 +677,7 @@ The `gw-daily-closeout` job runs after this digest and commits all approved dail
 
 - Email send is handled by a separate PowerShell script in the wrapper, NOT by this skill. This skill ONLY writes the files.
 
-- Dashboard deploy is handled by `build-gw-dashboard.ps1` in the wrapper, NOT by this skill. This skill ONLY writes `_dashboard-index.html`.
+- Dashboard deploy is handled by `scripts/deploy_command_center.ps1` in the job contract, NOT by this skill. This skill ONLY writes `_dashboard-index.html`.
 
 - If nothing new came in overnight (clean no-op morning), still write the digest with "Nothing new since yesterday" in each section. Email send + dashboard deploy happen regardless.
 

@@ -22,6 +22,17 @@ If queue is empty (no topics under Active Queue):
 - Auto-pick a trending business topic relevant to Scott's ICP (high school football + S&C coaches, course launches, Insiders growth, sponsor outreach)
 - Set frontmatter flag `auto_picked: true`
 
+### 1b. Frame the question (D5, 2026-09-10)
+
+Same topic, same order: the first active bullet stays the pick. Before any NotebookLM call, write four lines for it. They go into the brief frontmatter and they lead the structured prompt.
+
+- `question`: one specific question Scott as the owner of Scott Leech Training is deciding this week, in plain words. Not the topic restated. Shape: "With 15 minutes left after practice, what recovery work is worth keeping?" (that is an example of shape, not a training recommendation).
+- `decision`: an active business decision (offer, price, outreach, funnel, timing), in one clause.
+- `audience`: who is asking and their real constraint (season, staff, budget, tools). Unknown stays unknown: write `constraints unknown`, never invent one.
+- `question_source`: `queue`, or `ds-<slug>` when a record in `wiki/business/coach-demand-signals.md` supplied the question, or `scott` when the queue line marks it as his request.
+
+Scan `C:\Claude Projects\Gridiron Warrior\External Library\BusinessDocuments\_index.md` for a brief that already answers this exact question (same decision, same audience, not just the same nouns). If one exists, research today anyway (reuse is not enabled yet), name that brief in `## Already Decided` with its date, and make the new brief add to it rather than repeat it.
+
 ### 2. Run NotebookLM research
 
 Use the `mcp__notebooklm__*` MCP server:
@@ -29,7 +40,7 @@ Use the `mcp__notebooklm__*` MCP server:
 1. `notebook_create` with title "Business Research: [topic name]"
 2. Use yt-dlp or web search to find 4-6 high-signal sources on the topic (YouTube videos, blog posts, expert tweets)
 3. Add sources via `source_add`
-4. Query with structured prompt to extract:
+4. Query with a structured prompt. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general. Extract:
    - **Core principles** (3-5 key ideas)
    - **Tactical recommendations** (3-5 specific actions)
    - **Common mistakes** (2-3 anti-patterns)
@@ -72,6 +83,10 @@ tags: [business, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
 topic: [topic-slug]
+question: "<the framed question, one sentence>"
+decision: <one clause>
+audience: <who is asking and their constraint>
+question_source: queue|ds-<slug>|scott
 source_count: <N>
 auto_picked: false|true
 pipeline: gw-business-research

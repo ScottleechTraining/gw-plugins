@@ -22,6 +22,17 @@ Open `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_topic-queue.
 
 If empty: auto-pick a relevant S&C topic informed by the wiki's coaching themes (in-season programming, contact prep, deceleration, energy systems, recovery, high-school constraints). Flag `auto_picked: true`.
 
+### 1b. Frame the question (D5, 2026-09-10)
+
+Same topic, same order: the first active bullet stays the pick. Before any NotebookLM call, write four lines for it. They go into the brief frontmatter and they lead the structured prompt.
+
+- `question`: one specific question a high school football or S&C coach is deciding this week, in plain words. Not the topic restated. Shape: "With 15 minutes left after practice, what recovery work is worth keeping?" (that is an example of shape, not a training recommendation).
+- `decision`: a coaching decision (what to program, cut, test, or change), in one clause.
+- `audience`: who is asking and their real constraint (season, staff, budget, tools). Unknown stays unknown: write `constraints unknown`, never invent one.
+- `question_source`: `queue`, or `ds-<slug>` when a record in `wiki/business/coach-demand-signals.md` supplied the question, or `scott` when the queue line marks it as his request.
+
+Scan `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_index.md` for a brief that already answers this exact question (same decision, same audience, not just the same nouns). If one exists, research today anyway (reuse is not enabled yet), name that brief in `## Already Decided` with its date, and make the new brief add to it rather than repeat it.
+
 ### 2. Run NotebookLM research
 
 Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** notebook (unlike business research which creates a new one per topic), and it GROWS that notebook: every run adds new original sources to the master (Scott's standing rule, 2026-08-16). Never rely on notebook recall alone.
@@ -30,7 +41,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
 
 1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-05-18 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 102 sources.
 
-2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Capture `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the master has a gap on this topic — step 3 targets that gap first.
+2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general. Capture `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the master has a gap on this topic — step 3 targets that gap first.
 
 3. **Add 2-3 new original sources to the master (MANDATORY, every run).** The brief must never be NotebookLM-recall-only.
    - Find candidates via web search and YouTube: peer-reviewed papers and reviews, coach clinic talks, reputable practitioner writing on today's topic. High-signal only — no SEO content farms, no AI listicles.
@@ -85,6 +96,10 @@ tags: [s-and-c, research, daily-brief, [topic-slug]]
 date: YYYY-MM-DD
 notebook_id: <notebook-id>
 topic: [topic-slug]
+question: "<the framed question, one sentence>"
+decision: <one clause>
+audience: <who is asking and their constraint>
+question_source: queue|ds-<slug>|scott
 source_count: <N>
 sources_added: <N new sources added to the master this run, 0 if enrichment failed>
 auto_picked: false|true
