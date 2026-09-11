@@ -33,6 +33,91 @@ Same topic, same order: the first active bullet stays the pick. Before any Noteb
 
 Scan `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_index.md` for a brief that already answers this exact question (same decision, same audience, not just the same nouns). If one exists, research today anyway (reuse is not enabled yet), name that brief in `## Already Decided` with its date, and make the new brief add to it rather than repeat it.
 
+### 1c. Decide the outcome (D5 Task 4, 2026-09-10)
+
+A run ends one of six ways. Pick one now, with the framed question from 1b in hand, before any NotebookLM call.
+
+Run these checks first and remember exactly which ones you ran, because the receipt records them:
+
+1. `C:\Claude Projects\Gridiron Warrior\External Library\S-and-C\_index.md`, every brief title and date.
+2. The `## Completed` section of this lane's `_topic-queue.md`.
+3. `C:\Claude Projects\Gridiron Warrior\wiki\system\decisions.md`.
+4. The topic's own wiki pages.
+
+Compare the decision, the audience and the constraint, not the nouns. A shared topic word is not coverage. Open the candidate brief and read it before you call anything a duplicate. One failed lookup does not prove nothing is worth researching.
+
+| Outcome | When | Today's output |
+|---|---|---|
+| NEW | No brief answers this question. This is the default. | A dated brief |
+| UPDATE | A brief answers it for a different population, season or constraint, or its evidence is stale. | A dated brief that names the old one in `supersedes` and adds to it |
+| REUSE | An existing brief already answers this exact decision for this exact audience. | A receipt, no brief |
+| SCOTT ANSWER NEEDED | The missing source is Scott's own judgment or experience, not anything external. | A receipt carrying ONE specific question for him, no brief |
+| NO NEW RESEARCH | After the four checks, no eligible question is worth a run. | A receipt naming the reason, no brief |
+| BLOCKED / FAILED | A NotebookLM or source failure. Unchanged, see the HARD RULE in step 2. | A `status: blocked` stub and a red gate |
+
+Hard rules on the choice:
+
+- A technical failure is NEVER one of the three quiet outcomes. Blocked stays blocked. Do not use a quiet outcome to make a broken night look green.
+- Scott's own request is always NEW or UPDATE. If the queue line names him (`per Scott`, `scott`, a pinned note) or `question_source` is `scott`, reuse and the quiet outcomes are off the board.
+- An auto-picked topic (the queue was empty) is a NEW.
+- REUSE must name the brief it reuses. SCOTT ANSWER NEEDED must carry one specific question and must never invent an answer in his voice.
+
+**NEW and UPDATE:** continue with step 2 exactly as before. Add two keys to the brief frontmatter: `disposition: new` or `disposition: update`, and on an update `supersedes: <the older brief filename>`.
+
+**REUSE, SCOTT ANSWER NEEDED, NO NEW RESEARCH:** skip step 2 and the brief entirely and run the no-brief close-out below.
+
+#### No-brief close-out
+
+Four steps, in order, then stop. Write no brief, add no `_index.md` line, do not touch `tags.json`, and never move the line to `## Completed`. Completed means researched, and nothing here was researched.
+
+**1. Write the receipt.** Never hand-write the JSON file; the CLI validates it.
+
+```
+python "C:\Claude Projects\Gridiron Warrior\scripts\research_receipt.py" write --lane sc --date YYYY-MM-DD --file <fields.json>
+```
+
+Quoting a JSON object on the PowerShell command line is fragile, so write the fields to a temp `.json` file and pass `--file`. The `--json '<fields>'` form works where the shell allows it.
+
+Fields:
+
+| Field | Required | Value |
+|---|---|---|
+| `queue_entry` | yes | The active queue line, verbatim, before your suffix |
+| `topic_slug` | yes | The slug in the brackets |
+| `question`, `decision`, `audience`, `question_source` | yes | The four lines from 1b |
+| `disposition` | yes | `reuse`, `scott-answer-needed`, or `no-new-research` |
+| `reason` | yes | One plain sentence saying why |
+| `checks_performed` | yes | List of the checks you actually ran |
+| `queue_action` | yes | `left-active` |
+| `related_briefs` | REUSE | List with the reused brief filename |
+| `scott_question` | SCOTT ANSWER NEEDED | One specific question for Scott |
+
+The CLI exits non-zero and writes nothing if a field is missing, the disposition is unknown, a reuse names no brief, or a Scott question is absent. Fix the fields and run it again. It also never overwrites an earlier receipt for the same lane and date; a second run lands at `sc-2.json` and says so.
+
+**2. Append the suffix to the queue line, in place.** Same byte pattern the blocked path already writes: one existing line gets a suffix, every other byte of the file stays as it is. Never rewrite another line.
+
+- REUSE: ` *(reuse YYYY-MM-DD -> <existing-brief-filename>)*`
+- SCOTT ANSWER NEEDED: ` *(awaiting Scott YYYY-MM-DD)*`
+- NO NEW RESEARCH: ` *(no new research YYYY-MM-DD - <short reason>)*`
+
+The line stays under `## Active Queue` with its `[topic-slug]` intact. That keeps `scripts/queue_status.py` counting it as active (honest: the work is not done), keeps it first in line tomorrow, and lets `/gw-weekly-synthesis` Step 3 find the slug so it does not requeue the topic. Encoding: the S&C queue is UTF-8 with no BOM and CRLF line endings.
+
+**3. Append the wiki log line.**
+
+```
+YYYY-MM-DD /gw-sc-research: [topic-slug] (disposition: reuse|scott-answer-needed|no-new-research)
+```
+
+**4. Print one line, then exit 0.**
+
+```
+GW-RESEARCH: sc <disposition> - no brief today, receipt written
+```
+
+The `sc-research` gate has no log-marker validator, so this line is for Scott and the sched-log, not for the gate. The gate reads the receipt: `job-contracts.json` now validates this lane with `receipt_or_brief`, which passes on a dated non-blocked brief OR a receipt whose disposition is one of the three above. No brief and no receipt still fails. A receipt carrying `blocked` or `failed` still fails.
+
+**5. Do NOT commit.** Same rule as a normal run.
+
 ### 2. Run NotebookLM research
 
 Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** notebook (unlike business research which creates a new one per topic), and it GROWS that notebook: every run adds new original sources to the master (Scott's standing rule, 2026-08-16). Never rely on notebook recall alone.
@@ -100,6 +185,8 @@ question: "<the framed question, one sentence>"
 decision: <one clause>
 audience: <who is asking and their constraint>
 question_source: queue|ds-<slug>|scott
+disposition: new|update
+supersedes: <older brief filename, UPDATE only, omit the key on NEW>
 source_count: <N>
 sources_added: <N new sources added to the master this run, 0 if enrichment failed>
 auto_picked: false|true
