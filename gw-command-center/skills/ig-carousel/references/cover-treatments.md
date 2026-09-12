@@ -25,7 +25,7 @@ If the topic has no photo that earns full-bleed, use Type Plate. A weak photo fu
 
 ## 1. TYPE PLATE (default — what every pack does today)
 
-The pack's own mega-cover: headline-dominant on the pack's background, photo optional per pack rules. This is the fallback and the correct choice for Paper Minimal and Mono Series, whose identity is typographic restraint. No new rules; see the pack.
+The pack's own mega-cover: headline-dominant on the pack's background, photo optional per pack rules. This is the fallback and the correct choice for Editorial, White Board, and Mono Series, whose identity is typographic restraint. White Board's Type Plate carries one contained real photo beside a short headline with one green rule (see the pack); blur, collage, and cutout halos are never its default. No new rules; see the pack.
 
 ## 2. DEPTH INTERLOCK
 

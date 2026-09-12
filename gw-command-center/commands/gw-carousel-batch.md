@@ -16,7 +16,7 @@ Two ways in:
 
 **B. No arguments — discovery mode.** This is the standing "what's waiting on a carousel" entry point (Louis runs it bare, see `Deliverables/LOUIS-NOTE.md`). Four kinds of waiting work:
 
-1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, recommend a style pack: read the "Pack selection quick-reference" table in the ig-carousel skill's `references/style-packs.md` and match the pack's title/hook keywords against it. Present one table (slug, title hook, recommended pack, why) and build on the recommendations immediately. Do not wait for confirmation (Scott 2026-08-12: the review page's restyle dropdown is the correction path, so a wrong pack costs one rebuild, not a blocked batch).
+1. **New builds:** scan `Deliverables/_inbox/` and `Deliverables/ready/` for every topic folder that has a `*content-pack*.md` but no `*-carousel.html`. For each, choose a style pack by the "Automatic selection" policy in the ig-carousel skill's `references/style-packs.md` (read the teaching job from the brief, body, and source, not the hook keyword alone; relationship first; The Case only when an argument develops across the deck with a strong photo; the rolling Case guard). Present one table (slug, title hook, pack, one-line selection reason) and build on it immediately. Do not wait for confirmation (Scott 2026-08-12: the review page's restyle dropdown is the correction path, so a wrong pack costs one rebuild, not a blocked batch).
 2. **Restyle rebuilds:** topics in `queue-state.json` where `carousel_needs_polish` is true and `polish_note` starts with `restyle: <Pack Name>` (optionally followed by `. user note`). The dropdown choice is confirmed. For new-format decks, use `--restyle-from EXISTING_HTML` to preserve the saved master exactly; only legacy rebuilds read copy from the content pack. Clear nothing yourself; /gw-review re-judges the result and SHIP clears the polish flag.
 3. **Cover rebuilds:** topics where `carousel_needs_polish` is true and `polish_note` starts with `cover:`. Rebuild ONLY slide 1 per the note (new treatment and/or photo from the ig-carousel skill's `references/cover-treatments.md`); body slides stay untouched.
 4. **Action rerolls:** new-format topics with `carousel_needs_polish` and an `action: save|share|conversation|conversion` note, optionally followed by `. user note`. Discover alongside style notes, without asking again. Read the saved master, redraft brief/body/caption/CTA together for that action, and build with `--rewrite-from EXISTING_HTML --copy NEW_JSON`. Preserve deck/variant/source identity and require new review; changing just the final ask is not a reroll.
@@ -49,8 +49,12 @@ Claim coverage: a topic with `claim-check.json` (F2, new packs only) keeps its c
 Pack rules for both modes:
 
 - Explicit list mode: the pack Scott named wins.
-- Otherwise the quick-reference recommendation IS the pack, attended or not. If no row clearly matches, pick the closest fit and flag that slug in the summary table so Scott knows to look at it at review.
-- Two-row ties resolve by the photo-forward tiebreak in `references/style-packs.md` (photo pack wins), subject to its rotation guard: read `style_pack` off the last 6 built topics in `queue-state.json` first, and if neither Editorial Long-Form nor Mono Series is among them, suspend the tiebreak for this batch. Say which way the guard went in the assignment table.
+- Otherwise the "Automatic selection" policy in `references/style-packs.md` IS the pack, attended or not. If no job clearly fits, pick the closest fit and flag that slug in the summary table so Scott knows to look at it at review.
+- **Rolling Case guard, applied centrally BEFORE any builder starts.** Run `python -m scripts.gwqueue.pack_history` from the vault dir to get the previous five recognized packs (queue snapshot by `added` then slug; `carousel_missing` and unknown packs skipped; legacy packs count). Walk the new-build candidates in deterministic order (slug ascending) and reserve one pack each: a candidate whose best fit is The Case takes it only if fewer than two of the previous five choices, INCLUDING earlier reservations from this same batch, are The Case; otherwise it takes the next genuine fit (usually Editorial for explanatory copy, Asphalt Editorial for declarative narrative) with the message unchanged. `--simulate <best fits in order>` prints exactly this walk. Never let parallel builders read history independently. A failed reservation stays as decided for this run; no retry loop to optimize the ratio.
+- If the history is missing or unreadable, proceed unattended with the non-Case best fit for every candidate and write `history unavailable` in the assignment table. Never invent history and never block the batch.
+- A pack Scott named explicitly bypasses the guard; report it as `explicit override`. Restyle, cover, and action buckets never reselect a pack.
+- Legacy restyle notes (`restyle: Paper Minimal`, `restyle: Editorial Long-Form`) are honored to the historical spec in `references/legacy-paper-packs.md`; do not rename or migrate them.
+- White Board is STAGED until its status bullet in `references/style-packs.md` reads ACTIVE: automatic selection skips it (record `White Board fit, staged` in the reason and continue with the next fit); explicit requests and `restyle: White Board` notes build it now.
 
 Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged or edit source content packs. Report capability-blocked or failed slugs explicitly, never as completed. Style-only and cover-treatment changes preserve all saved wording, caption, and CTA; an explicit action note is the copy-rewrite route.
 
@@ -61,7 +65,7 @@ Before spawning any agents:
 1. List available photos in `C:\IMAGES\Football` and `C:\IMAGES\Gym`.
 2. Pick TWO photos per carousel, matched to the topic: a hero for the cover and a body photo for one body slide (photo floor, `references/style-packs.md`). Prefer a landscape body photo so it can carry a two-slide seamless spread. Mono Series carousels get a hero only.
 3. Never assign the same photo to two carousels in the batch, hero or body.
-4. Record the full assignment table (slug, style pack, content-pack path, hero photo path, body photo path) before anything is spawned. This table is the source of truth for the whole run.
+4. Record the full assignment table (slug, style pack, one-line selection reason including the guard result, content-pack path, hero photo path, body photo path) before anything is spawned. This table is the source of truth for the whole run.
 
 ## 3. Build (spawn subagents at 3+ carousels)
 
@@ -103,8 +107,8 @@ Do not report done on trust. A file passing a portability or lint check can stil
 
 A summary table:
 
-| Slug | Style pack | Hero photo | Body photo | Verified | Path |
-|------|-----------|------------|------------|----------|------|
+| Slug | Style pack | Selection reason | Hero photo | Body photo | Verified | Path |
+|------|-----------|------------------|------------|------------|----------|------|
 
 Plus the list of anything skipped and why.
 

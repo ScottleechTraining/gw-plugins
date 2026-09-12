@@ -38,7 +38,7 @@ Break one skill into named parts. Naming the parts is what makes it yours instea
 
 - **Structure:** the skill, then each named part gets a slide, then how the parts chain, CTA.
 - **GW angles:** name the phases of contact prep, the parts of a speed session, the anatomy of a summer week. "High Expectations + High Support" is already a Formula.
-- **Pack fit:** Editorial Long-Form, The Case.
+- **Pack fit:** Editorial (Guide), White Board when the parts chain as a sequence the source supports, The Case.
 
 ### 3. The Teardown (the Autopsy)
 
@@ -46,7 +46,7 @@ Show the before and the after and change ONE thing. Wins shares, because people 
 
 - **Structure:** the "before" (real or composite, never a named coach without consent), what's wrong (one thing only), the fix, the after, CTA.
 - **GW angles:** Film Study as a carousel. Tear down a random YouTube program, a bad warmup, a template program vs a built program.
-- **Pack fit:** The Case, Newsprint Bauhaus (myth-vs-fact energy).
+- **Pack fit:** White Board (the before/after IS a comparison), The Case, Newsprint Bauhaus (myth-vs-fact energy).
 
 ### 4. The Vault (the Collection)
 
@@ -54,7 +54,7 @@ A collection too big to remember: 20 finishers, 15 KPIs, 12 drills. Highest save
 
 - **Structure:** cover promises the count, items grouped 3 to 5 per slide, one slide on how to actually use them, CTA.
 - **GW angles:** mine the archive. 900+ letters, transcripts, drill libraries. "20 inseason finishers." "15 numbers I track for every athlete."
-- **Pack fit:** Mono Series, Editorial Long-Form.
+- **Pack fit:** Mono Series, Editorial (Guide).
 
 ### 5. The Template (the Fill-In)
 
@@ -62,7 +62,7 @@ Not a post they read, a thing they USE. Wins comments and DMs, because using it 
 
 - **Structure:** the problem, the blank template shown on-slide, one worked example, comment-trigger CTA.
 - **GW angles:** "Fill in your inseason week, 7 slots." "Your weight room depth chart." Pair with a freebie (gw-freebie-forge) as the fulfillment asset.
-- **Pack fit:** Editorial Long-Form, Paper Minimal.
+- **Pack fit:** Editorial, White Board when the template is shown as an annotated example.
 
 ### 6. The Confession (the Scar)
 
@@ -70,7 +70,7 @@ The honest admission with the lesson attached. Wins follows and comments, not sa
 
 - **Structure:** the admission, what it cost, what changed, the lesson, soft CTA (follow, not sell).
 - **GW angles:** 2019 at Merrimack, "my programming was missing a gear." The notebook years. Scott's voice already goes vulnerable and philosophical; this archetype is that, structured.
-- **Pack fit:** Asphalt Editorial, Paper Minimal.
+- **Pack fit:** Asphalt Editorial, Editorial (Brief).
 
 ---
 

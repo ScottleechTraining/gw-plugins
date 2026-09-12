@@ -1,10 +1,10 @@
 # Style Packs — Instagram Carousel Skill v2
 
-Seven visual packs. User picks one at Step 0.5. Packs 1–6 use Vitesse Bold (display) and Barlow (body) — only weight/size/casing/color changes. Pack 7 (Newsprint Bauhaus) swaps the display face to Anton (Google Fonts, same `<link>` as Barlow: add `family=Anton`); Vitesse is not used in that pack.
+Seven ACTIVE packs (plus two legacy specifications in `legacy-paper-packs.md`, never offered as new choices). User picks one at Step 0.5; unattended builds use the "Automatic selection" policy below. Every pack except Newsprint Bauhaus uses Vitesse Bold (display) and Barlow (body); only weight/size/casing/color changes. Newsprint Bauhaus (pack 6) swaps the display face to Anton (Google Fonts, same `<link>` as Barlow: add `family=Anton`); Vitesse is not used in that pack.
 
 **The cover is planned separately.** Every carousel also picks a COVER TREATMENT — the scroll-stopper layer for slide 1 — from `cover-treatments.md`. The pack governs slides 2+; the treatment governs the cover and inherits the pack's palette and faces. Type Plate (the pack's own mega-cover) is the default treatment.
 
-**Photo floor (standing law, Scott 2026-09-03: "pictures seem to do well").** Every carousel carries TWO photos minimum: one on the cover, one on a body slide. Each photo obeys its pack's own photo treatment and sizing rules below (Editorial Long-Form keeps its contained 100% x 40% break; Paper Minimal keeps its small rectangle; Newsprint Bauhaus keeps its cover ban and puts its cutout hero on the thesis slide instead, with the second photo as a torn clipping). **Mono Series is the one exemption**: its rules stand as written, photos stay rare. A carousel that ships under the floor in any other pack is a rework, not a style choice. The batch hands every builder a hero photo and a body photo for exactly this reason; the scanner records `photo_count` per topic so the Sunday log can check the floor held.
+**Photo floor (standing law, Scott 2026-09-03: "pictures seem to do well").** Every carousel carries TWO photos minimum: one on the cover, one on a body slide. Each photo obeys its pack's own photo treatment and sizing rules below (Editorial keeps photos contained: the small rectangle on Brief slides, the 100% x 40% break on Guide slides; White Board puts its body photo on a bridge or annotated-photo slide, never behind the drawing; Newsprint Bauhaus keeps its cover ban and puts its cutout hero on the thesis slide instead, with the second photo as a torn clipping). **Mono Series is the one exemption**: its rules stand as written, photos stay rare. A carousel that ships under the floor in any other pack is a rework, not a style choice. The batch hands every builder a hero photo and a body photo for exactly this reason; the scanner records `photo_count` per topic so the Sunday log can check the floor held.
 
 Each pack defines:
 - Accent color + contrast ink
@@ -15,6 +15,7 @@ Each pack defines:
 - Corner ornament (if any)
 
 ---
+
 
 ## 1. ASPHALT EDITORIAL
 
@@ -93,25 +94,29 @@ Off-black + paper + electric cherry red accent. Color blocks behind individual w
 
 ---
 
-## 4. PAPER MINIMAL
+## 4. EDITORIAL
 
-Paper-dominant, asphalt type, small supporting photos, heavy negative space.
+Paper background, asphalt type, contained B&W photos. ONE pack with TWO density treatments chosen per slide by what that slide's content needs. Brief carries forward Paper Minimal's restraint; Guide carries forward Editorial Long-Form's instructional structure. Both old packs were merged here on 2026-09-12; their original specs live in `legacy-paper-packs.md` for existing decks and old restyle notes.
 
 ```css
 --bg-dominant: #EFEDE3;       /* paper */
 --bg-inverse:  #1A1A1A;
 --fg-dominant: #1A1A1A;
 --fg-inverse:  #EFEDE3;
---accent:      #1A1A1A;       /* no color accent — asphalt IS the accent */
---accent-ink:  #EFEDE3;
---overlay-dark: rgba(0,0,0,0.0);
+--accent:      #C8A84E;       /* gold, restrained: numerals and one rule, never a fill behind body copy */
+--accent-ink:  #1A1A1A;
+--overlay-dark: rgba(0,0,0,0.6);
 ```
 
-- **Cover:** Mega-Cover in asphalt on paper. Type can go bigger here because there's no image competing — auto-fit has more room.
-- **Photo treatment:** Photos appear as small, contained rectangles (not full-bleed) — roughly 60–70% of slide width, left-aligned, with paper margin around them. B&W.
-- **Slide number:** Small asphalt "01 / 07" top-right. Same as Asphalt Editorial.
-- **Ornament:** None. Restraint is the point.
-- **Recommend for:** editorial essays, philosophy posts, anything that benefits from quiet confidence.
+- **Cover:** Mega-Cover in asphalt on paper. Optional small gold eyebrow (`GUIDE` or `EDITORIAL`) above the headline. The hero rides the cover as a contained rectangle (photo floor), so the headline sizes against the remaining room, not the full slide.
+- **Brief treatment (per slide):** one short explanation. Headline, at most ~45 words of Barlow 400 body at 36–40px, generous margins, no numeral, no dividing rule, no ornament. Use it when the slide says one thing.
+- **Guide treatment (per slide):** numbered subhead (`01.` in gold, Vitesse 700 at 72px, `max-width: 800px` so its first line clears the handle stamp, clearance law in `slide-architecture.md`), thin 1px asphalt hairline, reading column max 58ch, Barlow 400 at 36px, line-height 1.5, left-aligned ragged right. Use it when the slide is one step of a sequence or one section of a framework.
+- **Choosing Brief vs Guide:** by the actual content of that slide, never a word-count quota or a deck-wide switch. A Guide deck can carry a Brief bridge slide; a Brief deck can carry one Guide slide where the source hands over steps. Never shrink text to hold an arbitrary slide count; add a slide. On a restyle the saved copy is the authority and is reflowed, not shortened.
+- **Photo treatment:** B&W with contrast baked into the JPEG by Pillow at prep time (`ImageOps.grayscale` + `ImageEnhance.Contrast`), never CSS `filter` (SKILL.md trap 6). Contained, never full-bleed: Brief slides use the small rectangle (60–70% slide width, left-aligned, paper margin around it); Guide slides use the 100% width x 40% height break above or below the column as a visual rest every 2–3 slides.
+- **Slide number:** small asphalt "Page 3 / 8" bottom-left, Barlow 600 16pt. Reads like a magazine folio.
+- **Ornament:** the Guide hairline only. Restraint is the point on both treatments.
+- **Lists:** checklist square marker (8x8 asphalt outline) on Guide slides when the source supports the list. Editorial and White Board can present source-supported lists; Mono Series keeps its own filled-square marker.
+- **Recommend for:** explanation, how-to guides, frameworks, philosophy posts, quieter teaching; anything that wants quiet confidence more than a photo.
 
 ---
 
@@ -139,37 +144,13 @@ Monochrome black / paper / asphalt-tinted gray. Oversized ghosted slide numbers 
 - **Header strip:** Every slide carries a thin top header (~88px tall) with handle (avatar dot + @Sleech72) left and a topic tag (`#mindset`, `#offseason`, etc.) right. Barlow 600 small caps, 22pt.
 - **No slide-number stamp.** This pack drops the standard "02 / 07" corner stamp entirely. The ghost number IS the counter on content slides. Cover and CTA carry no counter at all. Other packs use the stamp; Mono Series does not.
 - **Body copy alignment:** Left, center, or right — alignment rotates slide to slide to create rhythm. Centered body allowed up to 3 lines on declarative-statement slides only.
-- **Bullet lists:** Allowed. Custom marker is an 8x8 filled square in fg-dominant at 0.5 opacity. No round dots, no dashes. Match Editorial Long-Form's marker treatment.
+- **Bullet lists:** Allowed. Custom marker is an 8x8 filled square in fg-dominant at 0.5 opacity. No round dots, no dashes. Editorial's Guide checklist keeps its own outline marker; this filled square is Mono's.
 - **Recommend for:** numbered teaching listicles ("5 ways to ___", "Top 7 ___", "3 lessons from ___"), breakdown series, coaching-principle drops where each slide is one numbered point.
 - **Note:** This is the only pack with zero color accent. If a layout tempts you to add gold or any other color, the pack's identity is gone.
 
 ---
 
-## 6. EDITORIAL LONG-FORM
-
-Paper background, asphalt body copy in real reading columns, numbered subheads. Built for text-heavy educational content.
-
-```css
---bg-dominant: #EFEDE3;
---bg-inverse:  #1A1A1A;
---fg-dominant: #1A1A1A;
---fg-inverse:  #EFEDE3;
---accent:      #C8A84E;
---accent-ink:  #1A1A1A;
---overlay-dark: rgba(0,0,0,0.6);
-```
-
-- **Cover:** Mega-Cover in asphalt on paper. Can include a small `EDITORIAL` or `GUIDE` eyebrow label in gold above the headline.
-- **Content slides:** reading-column layout. Max 58ch width. Barlow 400 at 36px (renders ~18px at IG display), line-height 1.5, left-aligned ragged right. Numbered subhead (`01.` in gold, Vitesse 700 at 72pt) sits above the paragraph and MUST carry `max-width: 800px` so its first line clears the `@Sleech72` handle-stamp (clearance law: `slide-architecture.md`, Persistent frame section).
-- **Photo treatment:** Photos allowed but kept small — 100% width × 40% height max, positioned above or below the text column as a visual break every 2–3 slides.
-- **Slide number:** Small asphalt "Page 3 / 8" bottom-left, Barlow 600 16pt. Reads like a magazine folio.
-- **Ornament:** Thin 1px asphalt hairline between the subhead and the body column on content slides.
-- **Allowed list marker:** checkbox square (8×8 asphalt outline) for checklist slides. This is the only pack where lists are explicitly allowed.
-- **Recommend for:** how-to guides, teaching content, frameworks, multi-point educational posts.
-
----
-
-## 7. NEWSPRINT BAUHAUS
+## 6. NEWSPRINT BAUHAUS
 
 Vox-explainer editorial fused with classic Bauhaus. Every slide is a magazine spread, not a corporate slide: aged newsprint paper, oversized condensed black headlines, hand-drawn yellow highlighter strokes, and geometric primary-color primitives used with discipline. Journalistic, opinionated, confident — headlines provoke, they don't describe.
 
@@ -220,23 +201,70 @@ Vox-explainer editorial fused with classic Bauhaus. Every slide is a magazine sp
 
 ---
 
+## 7. WHITE BOARD
+
+A real football strength coach explaining one useful relationship on a clean white board, photographed straight on, without fake room scenery. Teaching-first: large readable labels, one useful drawing per teaching slide, clean white space. At phone size it reads as a coaching explanation, not a project-management board.
+
+```css
+.pack--white-board {
+  --bg-dominant: #FAFCFA;      /* board white */
+  --bg-inverse:  #17201D;      /* ink block, CTA only */
+  --fg-dominant: #17201D;      /* dark ink carries the meaning */
+  --fg-inverse:  #FAFCFA;
+  --accent:      #176B47;      /* green marker: ONE focal relationship per slide */
+  --accent-ink:  #FFFFFF;
+  --board-rule:  #C9D4CE;      /* thin structural rules and dividers */
+  --overlay-dark: none;
+}
+```
+
+- **Type:** Vitesse Bold for concise headings, 72–92px, line-height 1.1, uppercase optional. Barlow for everything else: primary labels 44–56px Barlow 600, explanatory body 40–44px Barlow 400 at line-height 1.35–1.45, secondary labels never below 36px. Zero letter spacing. No handwriting face as a reading font, anywhere. No dense paragraph column on a drawing slide.
+- **Safe area:** the standard 64px side margins, 40px absolute edge clearance, and the persistent frame (handle stamp, logo, progress bar). The headline obeys the handle-stamp clearance law.
+- **Composition:** headline in the top band, the relationship in the main area, one short takeaway below on a thin rule. Most teaching slides give roughly half or more of the usable area to the relationship, not a paragraph. One or two prose or photo bridge slides are fine. Vary intelligently within the family; do not stamp identical boxes on every slide, and do not force a diagram where none is useful.
+- **Ink and green:** dark ink carries the meaning. Green highlights the one focal relationship per slide (the changed condition, the final step, the callout that matters). Every distinction also reads through words, position, or line style; color alone never carries the lesson.
+- **Connectors:** thin rules (`--board-rule`) for structure; 4–6px ink connectors with clear endpoints (an arrowhead or a terminal bar) for relationships. Slight marker-like irregularity is optional on a single emphasis mark, never on text and never on anything that could read as a quantitative axis.
+- **Forbidden:** chalk dust, wooden frames, photographed walls, sticky notes, ornamental Xs and Os, fake handwriting, colored card grids, gradients, shadows, ghost numbers, decorative charts. Field lines and player symbols appear only when a genuine spatial teaching example requires them; no invented positions to make a slide football-shaped.
+- **Body layouts:** the three existing visual-teaching contracts (`visual-teaching.md`), translated into this pack. No new archetype, slide role, schema field, or claim exception.
+  1. **Compare:** two clearly labeled conditions sharing the same units and context, aligned rows and a divider rather than nested cards, the relevant difference in green.
+  2. **Sequence:** three to four short connected steps, equal spacing unless a real sourced duration justifies a proportional timeline; the turn or final step in green.
+  3. **Annotated example:** one authorized artifact or clearly labeled illustration with at most three or four numbered callouts, each tied to one identifiable item; the callout that matters in green.
+  Start with ONE principal visual body slide per deck under the existing contract; clean typography and photo bridges elsewhere. A full-deck repeat of these layouts is a later editorial expansion, not permission to invent material. If a layout cannot hold the source relationship, fall back to Editorial, not a made-up diagram.
+- **Cover:** Type Plate is the default. Short Vitesse headline, one green rule or one green-emphasized word, one contained relevant real photograph (B&W baked with Pillow, trap 6). Headline and image stay distinct and readable. No blur, collage, or cutout halo as the White Board default.
+- **Photo floor:** unchanged, no new exemption. Hero contained on the cover; body photo on a bridge or annotated-photo slide so it never crowds the drawing. Prepare through the standard JPEG prep and size ceilings.
+- **Slide number:** small ink "03 / 07" top-left, Barlow 700 22px, letter-spacing 2px, opacity 0.6. Handle stamp top-right as every stamped pack.
+- **CTA:** text-led on board white: the action-specific ask in Vitesse on an ink block (`--bg-inverse`) or plain, one green rule, normal footer. Do not automatically append "Save this" to a conversation or conversion deck.
+- **Saved copy:** every drawing label, step, entry, callout, and takeaway is editable HTML bound once (`data-gw-copy`, repeated labels bound separately). SVG/CSS carries only non-text connectors and rules. Never flatten the board into an image. On a style-only rebuild: no new labels, no rewritten takeaway, no inserted diagram, no invented numbers; reuse the saved structure, and if needed keep the previous visual geometry inside White Board's colors and type.
+- **Recommend for:** a source-supported comparison, sequence, or annotated example that IS the lesson; "draw it for me" teaching; program-design decisions with two conditions.
+- **Status: STAGED.** Automatic selection is OFF until Scott approves the rendered proofs (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Explicit requests and dropdown `restyle: White Board` notes work now. To activate, change this bullet to `**Status: ACTIVE.**` (Scott's call; no per-carousel question afterwards).
+
+---
+
 ## Pack selection quick-reference
 
 | User said... | Suggest |
 |---|---|
-| "mindset", "grind", "discipline" | Asphalt Editorial |
-| "argument", "case", "why X is wrong", "the science of", "what coaches miss" | The Case |
+| "mindset", "grind", "discipline", a training narrative | Asphalt Editorial |
+| "argument", "case", "why X is wrong", "what coaches miss" AND an argument develops across the deck with a strong photo behind it | The Case |
 | "bold take", "hot take", "launch" | Acid Block |
-| "essay", "philosophy", "quiet" | Paper Minimal |
+| "essay", "philosophy", "quiet", "how-to", "guide", "teach", "framework", "explain" | Editorial |
 | "5 ways to", "top 7", "3 lessons", "numbered listicle" | Mono Series |
-| "how-to", "guide", "teach", "framework", "long-form teaching" | Editorial Long-Form |
 | "explainer", "breakdown", "magazine", "newsprint", "bauhaus", "vox", "myth vs fact" | Newsprint Bauhaus |
+| "compare", "before and after", "sequence", "steps in order", "annotate", "draw it", "white board" AND the source supports that relationship as the lesson | White Board |
 
-If unclear, ask. Don't guess — the pack shapes everything downstream.
+Attended and unclear: ask. Unattended: apply the policy below and flag the slug in the assignment table.
 
-**Photo-forward tiebreak (Scott 2026-09-03).** When a topic fits two rows, the photo-first pack wins: a teaching topic that could be Editorial Long-Form or The Case goes to The Case; a listicle that could be Mono Series or Asphalt Editorial goes to Asphalt Editorial. A clean single-row match is not a tie; build it in that row's pack.
+## Automatic selection (new builds, attended or not)
 
-**Rotation guard.** The tiebreak never starves the text packs. If none of the last 6 carousels built (queue-state topics with a `style_pack`, newest by `added`) is Editorial Long-Form or Mono Series, suspend the tiebreak for the current batch and let the quick-reference row win as written. Unattended runs apply this without asking.
+Applies to any build without an explicit pack and to `/gw-carousel-batch` discovery. It replaced the photo-forward tiebreak and its rotation guard on 2026-09-12 (The Case had won 82 of 245 built decks; a photo's mere availability must not make it win a teaching topic).
+
+1. **Explicit choice wins.** A pack Scott named, a dropdown `restyle:` note, or a legacy note naming Paper Minimal or Editorial Long-Form is honored (legacy spec from `legacy-paper-packs.md`, no forced rename). Existing decks keep their pack unless a restyle was requested; action-only and cover-only work never reselects.
+2. **Read the teaching job** from the brief, body, and source. A keyword in the hook is not enough: "the science of" over a checklist body is a checklist.
+3. **Relationship first.** If a source-supported comparison, sequence, or annotated example is the central lesson, consider White Board first. While White Board is STAGED, record "White Board fit, staged" and continue to step 4. If the relationship is absent, do not manufacture one.
+4. **Fit by job.** Editorial for explanation, guides, and quieter teaching. Mono Series for genuine numbered-point structures. Newsprint Bauhaus for explainers that want the graphic-magazine treatment. Asphalt Editorial for mindset and declarative narrative; Acid Block for bold takes and launches.
+5. **The Case is eligible** when an argument develops across the deck AND a strong photo genuinely supports the context. It no longer wins because the hook says science, why, or wrong, and never because a photo happens to exist.
+6. **Rolling guard: no more than two Case choices in a six-position planning window.** Before an automatic candidate, inspect the previous five recognized packs (`python -m scripts.gwqueue.pack_history` from the vault dir: queue snapshot ordered by `added` then slug, newest first; `carousel_missing` rows and unknown packs skipped; legacy packs count). Two or more Case among them: exclude The Case for this candidate and take the next genuine fit, usually Editorial for explanatory copy or Asphalt Editorial for declarative narrative, with the message intact. The batch reserves in deterministic candidate order so same-batch assignments count for the next decision (`--simulate`). Empty history starts empty. Unreadable history: non-Case best fit plus a "history unavailable" flag, never a blocked batch and never invented history. Existing over-representation is not repaired retroactively; no pack fills a quota. Explicit Case requests bypass the guard and are reported as explicit overrides.
+
+The snapshot order is a planning proxy, not publish order or exact build time. The two-in-six threshold is an editorial guardrail, not a proven engagement optimum. Report the pack and a one-line reason per topic in the assignment table; the policy fixtures and their recorded dry runs live in `style-selection-fixtures.md`.
 
 ---
 
@@ -256,8 +284,8 @@ Slide content width at 1080×1350 with 64px left/right margins = **952px**. Char
 
 | Display face | Used by | Factor | Evidence status |
 |---|---|---|---|
-| Vitesse Bold | packs 1-6, every pack except Newsprint | **0.75** | Measured 2026-08-02, real glyphs at 72 / 88 / 92 / 96 / 108px. Worst real-word rate is a constant 0.735 × font-size at every size; 0.75 is that rounded up to absorb punctuation and `.hl` underlines. |
-| Anton | pack 7 Newsprint Bauhaus only | **0.32** | Measured 2026-08-12, real glyphs at 100px (Range widths, rendered band-stations cover, fonts.ready awaited). Real Scott-voice all-caps lines run a constant 0.271–0.302 × font-size ("BUILDING BAND" is the worst at 0.302); 0.32 is that rounded up to absorb punctuation and the highlighter stroke. All-W probe ceiling is 0.478 — a W/M-heavy line can run ~50% wider than the budget, so verify any such headline against real rendered width, not the formula. The old 0.45 was the 2026-07-12 demo declaration, never measured; it under-budgeted real copy by ~40% and pushed planners to shorten headlines that actually fit. |
+| Vitesse Bold | every pack except Newsprint Bauhaus | **0.75** | Measured 2026-08-02, real glyphs at 72 / 88 / 92 / 96 / 108px. Worst real-word rate is a constant 0.735 × font-size at every size; 0.75 is that rounded up to absorb punctuation and `.hl` underlines. |
+| Anton | pack 6 Newsprint Bauhaus only | **0.32** | Measured 2026-08-12, real glyphs at 100px (Range widths, rendered band-stations cover, fonts.ready awaited). Real Scott-voice all-caps lines run a constant 0.271–0.302 × font-size ("BUILDING BAND" is the worst at 0.302); 0.32 is that rounded up to absorb punctuation and the highlighter stroke. All-W probe ceiling is 0.478 — a W/M-heavy line can run ~50% wider than the budget, so verify any such headline against real rendered width, not the formula. The old 0.45 was the 2026-07-12 demo declaration, never measured; it under-budgeted real copy by ~40% and pushed planners to shorten headlines that actually fit. |
 | anything else | future packs | unmeasured | Measure it before trusting any budget. Never reuse another face's factor. |
 
 **Why 0.57 was retired.** Every budget in this file before 2026-08-02 used a single 0.57 factor. It is not a font constant. It is Vitesse measured on narrow copy: I/L/T/E-heavy lines genuinely run 0.53 × font-size. Real Scott-voice copy runs 0.60 to 0.735, because W and M are close to double the width of an I. That is why the 2026-07-28 Asphalt check appeared to confirm 0.57 and still produced a budget that clips.
@@ -277,12 +305,15 @@ Headlines use `white-space: nowrap`, so an over-budget line clips silently inste
 | Asphalt Editorial | `.content-headline` | ~92px | 14 | 3 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): at 92px, 17 chars ran 963-1150px past the 952px zone and the worst real-word rate of 67.6px/char gives 14. Supersedes the 2026-07-28 value of 18. That pass sampled narrow copy only, which is exactly the 1016-1106px band reproduced here by I/L/T/E-heavy lines, so it confirmed the retired 0.57 instead of catching it. Same Vitesse face as The Case, so the same 0.75 factor applies. |
 | Acid Block | `.mega-cover` (cover) | ~120px | 16 | 4 | starting estimate |
 | Acid Block | `.content-headline` | ~92px | 22 | 3 | starting estimate |
-| Paper Minimal | `.mega-cover` (cover) | ~140px | 14 | 4 | starting estimate (bigger headline allowed — no photo competing) |
-| Paper Minimal | `.content-headline` | ~96px | 21 | 3 | starting estimate |
 | Mono Series | `.mega-cover` (cover) | ~150px | 13 | 3 | starting estimate (oversized headline paired with ghost number) |
 | Mono Series | `.content-headline` | ~96px | 21 | 3 | starting estimate |
-| Editorial Long-Form | `.mega-cover` (cover) | ~104px | 19 | 4 | starting estimate |
-| Editorial Long-Form | Numbered subhead | 72px | 15 | 2 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): stamp-safe width is 800px, not the full column, and at 72px Vitesse 17 chars ran 754-900px with a worst real-word rate of 52.9px/char, so 800 / 52.9 gives 15. Supersedes the 2026-07-28 value of 19, which was 800 / (0.57 × 72) on the retired factor. Reading-column body has its own 58ch max, a different system. |
+| Editorial | `.mega-cover` (cover) | ~104px | 12 | 4 | derived 2026-09-12 from the measured 0.75 factor (952 / (0.75 × 104)); auto-fit guarded. Replaces the Paper Minimal and Editorial Long-Form estimate rows (14 and 19), which ran on the retired 0.57 factor. |
+| Editorial | `.content-headline` (Brief) | 88px | 14 | 3 | ✅ same face and size as The Case `.content-headline`, measured 2026-08-02 (worst real-word rate 64.7px/char). |
+| Editorial | Numbered subhead (Guide) | 72px | 15 | 2 | ✅ measured 2026-08-02 (worst-case real glyphs, 1080x1350): stamp-safe width is 800px, not the full column, and at 72px Vitesse 17 chars ran 754-900px with a worst real-word rate of 52.9px/char, so 800 / 52.9 gives 15. Supersedes the 2026-07-28 value of 19, which was 800 / (0.57 × 72) on the retired factor. Reading-column body has its own 58ch max, a different system. |
+| White Board | `.mega-cover` (cover) | 108px | 11 | 3 | ✅ same face and size as The Case cover, measured 2026-08-02; auto-fit guarded. The cover shares the band with a contained photo, so plan 3 lines, not 4. |
+| White Board | `.board-headline` | 84px | 15 | 2 | derived 2026-09-12 from the measured 0.75 factor (952 / (0.75 × 84)). Headlines wrap (`white-space: normal`, `text-wrap: balance`), so an over-budget line pushes the drawing down instead of clipping; keep to 2 lines. ✅ proof-verified 2026-09-12 at 1080x1350 and 390px: "Same two lifts. One change." (27ch) and "It is already in your template" (30ch) both held 2 balanced lines. |
+| White Board | `.cond-label` / `.step h3` (Barlow 600, 44–48px) | 44–48px | 20 per half-width column, 40 full width | 2 | Barlow has no measured factor; labels wrap inside their column. ✅ proof-verified 2026-09-12: "Paired by pattern" (17ch) one line in a 448px column; "Check the overlapping rosters" (29ch) one line full width. |
+| White Board | `.takeaway` (Barlow 600, 44px) | 44px | 40 | 2 | wraps, never clips. ✅ proof-verified 2026-09-12: 57ch takeaway held 2 lines at 952px. Row text `.row .txt` 38px wraps to 2 lines inside a fixed 118px row so both conditions stay aligned. |
 | Newsprint Bauhaus | `.mega-cover` (cover, Anton) | ~180px | 16 | 4 | ✅ (measured 2026-08-12, real glyphs) chars-per-line ≈ 952 / (0.32 × font-size) for this pack, never the Vitesse factor. At 180px that is ~16 chars; "FIFTEEN MINUTES" (15ch) fits at 150px+ with margin. W/M-heavy lines: verify against real rendered width (see factor table). |
 | Newsprint Bauhaus | `.content-headline` (Anton) | ~112px | 18 | 3 | ✅ (pack demo render, 2026-07-12) |
 | Newsprint Bauhaus | Black block callout (Barlow 600) | 28px | 40 | 3 | ✅ (pack demo render, 2026-07-12) |

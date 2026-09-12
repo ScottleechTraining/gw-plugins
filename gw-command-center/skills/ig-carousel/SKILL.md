@@ -34,9 +34,14 @@ Six ways carousel builds fail silently. Every one has cost real time. Check them
 
 **All raw markup (HTML, CSS, JS) lives in `references/html-implementation.md`.** SKILL.md stays prose-only. When a step needs the actual code, it points you to a numbered section in that reference. Do not inline raw markup into this file.
 
+**What's new in v3.8 (style refresh, 2026-09-12):**
+- Seven ACTIVE packs. The two paper packs merged into one Editorial pack with two per-slide density treatments (Brief, Guide); their historical specs moved to `references/legacy-paper-packs.md` and stay valid for existing decks and old restyle notes. No existing deck is migrated.
+- New White Board pack (clean white, dark ink, green marker emphasis, purposeful comparisons, sequences, and annotations). STAGED: explicit requests work, automatic selection waits for Scott's approval of the rendered proofs (status bullet in `references/style-packs.md`).
+- The photo-forward tiebreak and its rotation guard are retired. Automatic selection follows the "Automatic selection" policy in `references/style-packs.md`: teaching job first, The Case only when an argument develops across the deck with a strong photo, and a rolling guard of at most two Case choices per six planning slots (`python -m scripts.gwqueue.pack_history`). Fixtures: `references/style-selection-fixtures.md`.
+
 **What's new in v3.7 (photo floor):**
 - Two photos per carousel minimum (cover + one body slide), per pack treatment; Mono Series exempt. Law at the top of `references/style-packs.md`.
-- Photo-forward pack tiebreak with a rotation guard so Editorial Long-Form and Mono Series keep getting built (quick-reference section of `references/style-packs.md`).
+- Photo-forward pack tiebreak with a rotation guard (retired in v3.8; see above).
 - Batch mode defaults one two-slide spread on a landscape body photo (Step 1, item 8).
 
 **What's new in v3.6 (content archetypes):**
@@ -250,8 +255,9 @@ back instead of building it broken.
 | **Highlighted-Word Paragraph** | Accent color block behind specific words in body copy |
 | **Pull Quote** | Large quote marks, attribution line |
 | **Color-Block Statement** | Solid accent background, huge contrast text |
-| **Long-Form Text** | Reading-column body copy with numbered subhead. Used heavily in Editorial Long-Form pack. |
-| **Checklist** | Numbered or checked list items (Editorial Long-Form only for true checklists) |
+| **Long-Form Text** | Reading-column body copy with numbered subhead. The reading-column pack's Guide treatment leans on this (see `references/style-packs.md`). |
+| **Checklist** | Numbered or checked list items, only in the packs whose section in `references/style-packs.md` allows source-supported lists |
+| **Board Layout** | Compare, Sequence, or Annotated example on a white board (`references/slide-architecture.md`, White Board section); the visual-teaching contract governs what it may show |
 | **CTA / Follow** | Final slide, no swipe arrow, logo lockup |
 
 **Cover headline rule:** the cover is a phone-legible power statement. Write whatever length you want — the skill auto-fits the type to the safe zone. If auto-fit drops the size below 80pt (at 1080x1350), stop and recommend trimming. Powerful > short.
@@ -319,7 +325,7 @@ content-hash backup behavior. Old unbuilt packs without new schema remain legacy
 
 **For seamless spreads:** see `references/seamless-image-spread.md`. Use pixel-based `background-size: calc(1080px * N) 1350px` and `background-position: calc(-1080px * k) 0` so side-by-side slides reconstruct the full image. Do not use percentages for spread positioning — they silently render slide 2+ as empty.
 
-**For long-form text slides (Editorial Long-Form pack):** reading column max 58ch wide, Barlow 400 at 36px, line-height 1.5, left-aligned ragged right. Numbered subhead in Vitesse 700 at 72pt, gold.
+**For long-form text slides (the Guide treatment of the reading-column pack):** reading column max 58ch wide, Barlow 400 at 36px, line-height 1.5, left-aligned ragged right. Numbered subhead in Vitesse 700 at 72pt, gold.
 
 **Toolbar:**
 - Sticky top
@@ -412,7 +418,7 @@ Before outputting HTML, verify:
 - No emoji anywhere
 - No decorative borders or flourishes
 - No script/handwriting/cursive fonts
-- No bullet points (use numbered steps or line breaks). Exception: Editorial Long-Form pack allows checklist items with a custom square marker.
+- No bullet points (use numbered steps or line breaks). Exception: a pack whose section in `references/style-packs.md` allows source-supported lists (its own marker, never a round dot).
 - No strikethrough text
 - No centered body copy (left-align body; center only single-line headings). Exception: any pack whose section in `references/style-packs.md` explicitly permits centered body copy.
 - No light/thin font weights on headings

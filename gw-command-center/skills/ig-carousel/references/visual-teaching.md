@@ -2,6 +2,8 @@
 
 Installed in plugin 0.25.0 (2026-09-09). Editorial and layout reference for opted-in decks: Forge chooses a visual body slide only when a source-supported relationship (comparison, sequence, annotated example) teaches the decision more clearly than prose, and the builder translates the layout into the selected style pack. No new style pack, archetype, role, or schema field. Style-only rebuilds preserve both the saved text and the diagram's meaning; legacy decks are never retrofitted. The Codex proof renders (Oswald, document palette) live outside the plugin and are not production decks.
 
+**White Board (added 2026-09-12).** The White Board pack in `style-packs.md` is a style whose body layouts are exactly these three contracts (compare, sequence, annotated example) drawn on a clean white board with green emphasis. It changes how a visual slide looks, not what it may claim: selection rules, evidence requirements, one principal visual slide per deck, saved-copy bindings, and the preflight below apply unchanged. Choosing White Board never authorizes a diagram the source does not support; when no relationship earns a drawing the deck falls back to Editorial.
+
 ## A Visual Must Do a Job
 
 Use a diagram when position, connection, sequence, or annotation makes the coaching decision easier to understand than a paragraph. Putting prose in rectangles is not automatically visual teaching. If removing the shapes loses no useful information, use simpler typography instead.

@@ -189,7 +189,7 @@ Large display-font quote, attribution below in Barlow small caps. Quote marks ar
 Solid accent background, huge contrast text. No photo. Used sparingly — max one per carousel.
 
 ### Long-Form Text
-Reading column, numbered subhead. Editorial Long-Form pack leans on this. `.subhead` MUST carry `max-width: 800px` — its first line starts inside the handle-stamp band (see the clearance law in the Persistent frame section).
+Reading column, numbered subhead. Editorial's Guide treatment leans on this (Editorial Long-Form before 2026-09-12). `.subhead` MUST carry `max-width: 800px` — its first line starts inside the handle-stamp band (see the clearance law in the Persistent frame section).
 
 ```html
 <div class="content long-form">
@@ -200,7 +200,16 @@ Reading column, numbered subhead. Editorial Long-Form pack leans on this. `.subh
 ```
 
 ### Checklist
-Editorial Long-Form only. Items use a square outline marker instead of a bullet.
+Editorial (Guide slides) and White Board, source-supported lists only. Items use a square outline marker instead of a bullet.
+
+### Board Layout (White Board pack)
+The pack's teaching slide: headline band, the relationship in the main area, one takeaway on a thin rule. Three layouts, all under the visual-teaching contract in `visual-teaching.md` (no new role; every visible string is its own `data-gw-copy` binding):
+
+- **Compare:** two labeled columns sharing one grid so rows align; a vertical `--board-rule` divider between them; the changed condition carries the green emphasis (label color plus a 6px green rule, never color alone).
+- **Sequence:** three or four steps down a single 5px ink rail with numbered ink discs; equal spacing; the final step's disc and label go green; a `scale_note` field states "Order only" when durations are not sourced.
+- **Annotated example:** the artifact (table or card) at 60–65% width, three or four numbered callouts beside or below it, each callout's number matching a numbered mark on the artifact; the callout that matters goes green.
+
+Headline Vitesse 84px (2 lines max), labels Barlow 600 44–56px, body Barlow 400 40–44px, takeaway Barlow 600 44px. Roughly half or more of the usable height belongs to the relationship. The verified CSS for these three layouts is in `html-implementation.md`, section 10.
 
 ### CTA / Follow
 Last slide. No swipe arrow. Handle prominent. Clear instruction ("Follow @Sleech72 for more.").

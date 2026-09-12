@@ -125,7 +125,7 @@ async function exportPDF() {
 
 ## 5. Inline Resize Controls — CSS
 
-Add after the existing toolbar rules in style slot 9. For Paper Minimal and Editorial Long-Form (paper-dominant packs) the dark toolbar still works — do not invert it per pack.
+Add after the existing toolbar rules in style slot 9. For the light packs (Editorial, White Board, and the legacy paper packs) the dark toolbar still works — do not invert it per pack.
 
 ```css
 .resize-toolbar {
@@ -404,3 +404,193 @@ The assembler calls `patch_html` on the candidate file to supply `SAVE_BUTTON_HT
 **Opted-in files:** capability-check and follow [copy-record.md](copy-record.md), the single schema and lifecycle contract. The assembler embeds the master and injects `scripts/gwqueue/carousel_copy_browser.js` plus copy-aware save integration into the standalone HTML. No relative script dependency and no hand-built caption editor: the helper supplies the editable caption outside slides. Skeleton copy uses stable bindings, including the required final CTA binding.
 
 Save captures current bound text, explicit newlines, caption, and CTA into escaped master JSON before serializing the document. Invalid copy must stop saving before the file is touched. Do not bypass that preparation by serializing the DOM yourself. After editing, save/reopen and run the copy validator; a restyle must read the saved master and preserve wording exactly. A capability failure is not permission to downgrade opted-in files to legacy saving.
+
+---
+
+## 10. White Board pack — namespaced CSS (proof-verified 2026-09-12)
+
+Verbatim from the proof decks rendered through the real export path (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Tokens live on the slide itself (`.slide.pack--white-board`, SKILL.md trap 2). Every visible string on a board slide is its own `data-gw-copy` binding; the CSS carries only rules, discs, and connectors. Photos are baked B&W JPEGs in `--cover-photo` / `--body-photo` (`/*GW_HERO*/`, `/*GW_HERO2*/`), never a CSS filter (trap 6). The persistent frame uses the dark logo (`/*GW_LOGO_DARK*/`).
+
+```css
+  /* ---- pack tokens: on the slide itself (SKILL.md trap 2) ---- */
+  .slide.pack--white-board {
+    --bg-dominant: #FAFCFA;
+    --bg-inverse:  #17201D;
+    --fg-dominant: #17201D;
+    --fg-inverse:  #FAFCFA;
+    --accent:      #176B47;
+    --accent-ink:  #FFFFFF;
+    --board-rule:  #C9D4CE;
+    --overlay-dark: none;
+    --edit-highlight: var(--accent);
+  }
+
+  /* Prose, photo, and card bridges sit centered; the drawing slide stays top-aligned. */
+  .slide-content.bridge { justify-content: center; padding-bottom: 170px; }
+
+  /* ---- persistent frame ---- */
+  .num-stamp {
+    position: absolute; top: 56px; left: 64px; z-index: 6;
+    font-family: var(--font-body); font-weight: 700; font-size: 22px;
+    letter-spacing: 2px; opacity: 0.6;
+  }
+  .handle-stamp {
+    position: absolute; top: 56px; right: 64px; z-index: 6;
+    font-family: var(--font-body); font-weight: 700; font-size: 22px;
+    letter-spacing: 3px; text-transform: uppercase; opacity: 0.6;
+  }
+  .swipe-arrow { position: absolute; bottom: 100px; right: 64px; z-index: 6; font-size: 40px; line-height: 1; opacity: 0.55; }
+  .progress-bar {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 6;
+    display: flex; align-items: center; gap: 20px; padding: 26px 64px;
+  }
+  .tgw-logo {
+    width: 108px; height: 26px; flex-shrink: 0;
+    background-image: var(--tgw-logo-dark);
+    background-size: contain; background-repeat: no-repeat; background-position: left center;
+    opacity: 0.8;
+  }
+  .progress-track { flex: 1; height: 3px; background: var(--board-rule); position: relative; }
+  .progress-fill { position: absolute; top: -1px; bottom: -1px; left: 0; background: var(--accent); }
+  .progress-count { font-family: var(--font-body); font-weight: 700; font-size: 16px; letter-spacing: 2px; opacity: 0.6; }
+
+  /* ---- shared board type ---- */
+  .board-headline {
+    max-width: 940px;
+    font-family: var(--font-heading); font-weight: 700;
+    font-size: 84px; line-height: 1.1; letter-spacing: 0; text-wrap: balance;
+  }
+  .green-rule { width: 200px; height: 10px; background: var(--accent); margin: 30px 0 34px; }
+  .board-body {
+    max-width: 900px;
+    font-family: var(--font-body); font-weight: 400;
+    font-size: 42px; line-height: 1.4; white-space: pre-line;
+  }
+  .takeaway {
+    margin-top: 20px; max-width: 940px;
+    border-top: 4px solid var(--fg-dominant); padding-top: 16px;
+    font-family: var(--font-body); font-weight: 600; font-size: 44px; line-height: 1.25;
+  }
+
+  /* ---- cover (Type Plate: headline, one green rule, one contained photo) ---- */
+  .mega-cover {
+    font-family: var(--font-heading); font-weight: 700;
+    font-size: 96px; line-height: 1.02; letter-spacing: 0; text-transform: uppercase;
+    display: flex; flex-direction: column;
+  }
+  .mega-cover span { display: block; white-space: normal; }
+  .mega-cover br { display: none; }
+  .cover-photo {
+    width: 952px; height: 470px; flex-shrink: 0;
+    background-image: var(--cover-photo); background-size: cover; background-position: center;
+    border: 3px solid var(--fg-dominant);
+  }
+
+  /* ---- compare layout (visual teaching: two conditions, one dimension) ---- */
+  .compare { position: relative; display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; margin-top: 26px; }
+  .compare::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 3px solid var(--board-rule); }
+  .cond-label {
+    font-family: var(--font-body); font-weight: 600; font-size: 44px; line-height: 1.1;
+    padding-bottom: 12px; border-bottom: 6px solid var(--fg-dominant); margin-bottom: 14px;
+  }
+  .cond.after .cond-label { color: var(--accent); border-color: var(--accent); }
+  /* Fixed row height keeps the two conditions aligned even when one label wraps to two lines. */
+  .row { display: flex; gap: 16px; align-items: flex-start; min-height: 118px; padding: 4px 0; }
+  .row .disc {
+    flex-shrink: 0; width: 44px; height: 44px; margin-top: 4px; border-radius: 50%;
+    border: 4px solid var(--fg-dominant);
+    font-family: var(--font-body); font-weight: 700; font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* Told apart without color: outlined discs on the straight column, filled on the paired one. */
+  .cond.after .row .disc { background: var(--fg-dominant); color: var(--accent-ink); }
+  .row .txt { font-family: var(--font-body); font-weight: 400; font-size: 38px; line-height: 1.3; }
+  /* The one focal relationship in green: what happens in the rest. */
+  .cond.after .row.focal .txt { color: var(--accent); font-weight: 600; }
+  .cond.after .row.focal .disc { background: var(--accent); border-color: var(--accent); }
+  .dimension { margin-top: 20px; max-width: 940px; font-family: var(--font-body); font-weight: 400; font-size: 40px; line-height: 1.35; }
+
+  /* ---- sequence layout (order only unless durations are sourced) ---- */
+  .sequence { position: relative; margin-top: 30px; padding-left: 96px; }
+  .sequence::before { content: ''; position: absolute; left: 30px; top: 26px; bottom: 44px; width: 5px; background: var(--fg-dominant); }
+  .step { position: relative; padding-bottom: 20px; margin-bottom: 16px; border-bottom: 2px solid var(--board-rule); }
+  .step:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+  .step .disc { position: absolute; left: -96px; top: 0; width: 64px; height: 64px; border-radius: 50%; background: var(--fg-dominant); color: var(--accent-ink); font-weight: 700; font-size: 30px; display: flex; align-items: center; justify-content: center; }
+  .step h3 { font-weight: 600; font-size: 48px; line-height: 1.1; margin-bottom: 8px; }
+  .step p { font-weight: 400; font-size: 40px; line-height: 1.3; }
+  /* The turn: the final step is the one focal relationship in green. */
+  .step.final .disc { background: var(--accent); }
+  .step.final h3 { color: var(--accent); }
+  .scale-note { margin-top: 22px; font-weight: 600; font-size: 30px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; }
+
+  /* ---- annotated example (labeled illustrative artifact + numbered callouts) ---- */
+  .illustrative { align-self: flex-start; margin: 22px 0 18px; padding: 8px 16px; background: var(--fg-dominant); color: var(--accent-ink); font-weight: 700; font-size: 26px; letter-spacing: 2px; text-transform: uppercase; }
+  .report { width: 100%; border-collapse: collapse; border: 4px solid var(--fg-dominant); }
+  .report th, .report td { padding: 16px 22px; text-align: left; border-bottom: 2px solid var(--board-rule); vertical-align: middle; font-size: 40px; line-height: 1.2; }
+  .report tr:last-child th, .report tr:last-child td { border-bottom: 0; }
+  .report th { width: 46%; font-weight: 600; }
+  .report td { font-weight: 400; }
+  .report .mark { display: inline-flex; width: 44px; height: 44px; margin-right: 14px; border-radius: 50%; background: var(--fg-dominant); color: var(--accent-ink); font-weight: 700; font-size: 24px; align-items: center; justify-content: center; vertical-align: middle; }
+  .report tr.focal .mark { background: var(--accent); }
+  .annotations { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 36px; margin-top: 26px; }
+  .annotation { font-weight: 400; font-size: 36px; line-height: 1.25; }
+  .annotation strong { display: block; font-weight: 600; font-size: 40px; margin-bottom: 2px; }
+  .annotation strong::before { content: attr(data-number) " / "; color: var(--accent); }
+  .annotation.focal strong { color: var(--accent); }
+
+  /* ---- photo bridge ---- */
+  .body-photo {
+    width: 952px; height: 500px; flex-shrink: 0; margin-top: 38px;
+    background-image: var(--body-photo); background-size: cover; background-position: center;
+    border: 3px solid var(--fg-dominant);
+  }
+
+  /* ---- reference card (source-supported list) ---- */
+  .card { border: 4px solid var(--fg-dominant); padding: 40px 44px 36px; }
+  .card-title {
+    font-family: var(--font-heading); font-weight: 700; font-size: 60px; line-height: 1.05;
+    padding-bottom: 22px; margin-bottom: 20px; border-bottom: 6px solid var(--accent);
+  }
+  .check { display: flex; gap: 20px; align-items: flex-start; padding: 11px 0; }
+  .check .box { flex-shrink: 0; width: 34px; height: 34px; margin-top: 9px; border: 4px solid var(--fg-dominant); }
+  .check .txt { font-family: var(--font-body); font-weight: 400; font-size: 40px; line-height: 1.3; }
+  .card-note {
+    margin-top: 22px; padding-top: 20px; border-top: 3px solid var(--board-rule);
+    font-family: var(--font-body); font-weight: 600; font-size: 34px; line-height: 1.35;
+  }
+
+  /* ---- cta ---- */
+  .slide-content.cta { justify-content: center; padding-bottom: 190px; }
+  .cta-block { background: var(--bg-inverse); color: var(--fg-inverse); padding: 52px 56px 56px; max-width: 952px; }
+  .cta-headline { font-family: var(--font-heading); font-weight: 700; font-size: 72px; line-height: 1.08; letter-spacing: 0; }
+  .cta-follow { margin-top: 44px; font-family: var(--font-body); font-weight: 700; font-size: 30px; letter-spacing: 4px; text-transform: uppercase; }
+```
+
+Board markup pattern for the three layouts (labels shown as static text here; bind each one in production):
+
+```html
+<!-- Compare: two conditions, aligned rows, divider, one focal row in green -->
+<div class="compare">
+  <section class="cond before"><p class="cond-label">Condition A</p>
+    <div class="row"><span class="disc">1</span><span class="txt">…</span></div> …
+  </section>
+  <section class="cond after"><p class="cond-label">Condition B</p>
+    <div class="row"><span class="disc">1</span><span class="txt">…</span></div>
+    <div class="row focal"><span class="disc">3</span><span class="txt">the changed thing</span></div> …
+  </section>
+</div>
+<p class="dimension">The one dimension that changed.</p>
+<p class="takeaway">…</p>
+
+<!-- Sequence: one rail, numbered discs, final step green, order note -->
+<div class="sequence">
+  <section class="step"><span class="disc">1</span><h3>…</h3><p>…</p></section> …
+  <section class="step final"><span class="disc">4</span><h3>…</h3><p>…</p></section>
+</div>
+<p class="scale-note">Order only. Not a time scale.</p>
+
+<!-- Annotated: labeled artifact, numbered marks, matching callouts, focal callout green -->
+<p class="illustrative">Illustrative entry / not a work prescription</p>
+<table class="report"><tbody><tr class="focal"><th><span class="mark">4</span>…</th><td>…</td></tr></tbody></table>
+<div class="annotations"><div class="annotation focal"><strong data-number="4">…</strong>…</div></div>
+```
