@@ -27,7 +27,7 @@ History for every row unless stated: previous five recognized packs = Newsprint 
 
 ## Six-topic dry-run assignment report (2026-09-12)
 
-Unattended settings. Candidates are the two real waiting topics in `_inbox` plus four recently built managed decks treated as new candidates (their existing decks were not touched). Deterministic order: slug ascending. Guard input from `python -m scripts.gwqueue.pack_history`: previous five = Newsprint Bauhaus, The Case, Editorial Long-Form, Editorial Long-Form, Editorial Long-Form; The Case allowed. White Board STAGED.
+Unattended settings. Candidates are the two real waiting topics in `_inbox` plus four recently built managed decks treated as new candidates (their existing decks were not touched). Deterministic order: slug ascending. Guard input from `python -m scripts.gwqueue.pack_history`: previous five = Newsprint Bauhaus, The Case, Editorial Long-Form, Editorial Long-Form, Editorial Long-Form; The Case allowed. White Board was STAGED when this run was recorded; since activation on 2026-09-12 every row marked "White Board fit, staged" resolves to White Board (rows 1, 4, 5, 6 and the seventh topic), and fixture 3 reads White Board.
 
 | # | Slug | Brief (approach / action / archetype / visual) | Pack | Selection reason |
 |---|---|---|---|---|

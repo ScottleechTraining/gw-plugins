@@ -36,7 +36,7 @@ Six ways carousel builds fail silently. Every one has cost real time. Check them
 
 **What's new in v3.8 (style refresh, 2026-09-12):**
 - Seven ACTIVE packs. The two paper packs merged into one Editorial pack with two per-slide density treatments (Brief, Guide); their historical specs moved to `references/legacy-paper-packs.md` and stay valid for existing decks and old restyle notes. No existing deck is migrated.
-- New White Board pack (clean white, dark ink, green marker emphasis, purposeful comparisons, sequences, and annotations). STAGED: explicit requests work, automatic selection waits for Scott's approval of the rendered proofs (status bullet in `references/style-packs.md`).
+- New White Board pack (clean white, dark ink, green marker emphasis, purposeful comparisons, sequences, and annotations; Permanent Marker on the cover headline only). ACTIVE since 2026-09-12 after Scott approved the rendered proofs.
 - The photo-forward tiebreak and its rotation guard are retired. Automatic selection follows the "Automatic selection" policy in `references/style-packs.md`: teaching job first, The Case only when an argument develops across the deck with a strong photo, and a rolling guard of at most two Case choices per six planning slots (`python -m scripts.gwqueue.pack_history`). Fixtures: `references/style-selection-fixtures.md`.
 
 **What's new in v3.7 (photo floor):**

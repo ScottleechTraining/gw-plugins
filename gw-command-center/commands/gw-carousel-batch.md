@@ -54,7 +54,7 @@ Pack rules for both modes:
 - If the history is missing or unreadable, proceed unattended with the non-Case best fit for every candidate and write `history unavailable` in the assignment table. Never invent history and never block the batch.
 - A pack Scott named explicitly bypasses the guard; report it as `explicit override`. Restyle, cover, and action buckets never reselect a pack.
 - Legacy restyle notes (`restyle: Paper Minimal`, `restyle: Editorial Long-Form`) are honored to the historical spec in `references/legacy-paper-packs.md`; do not rename or migrate them.
-- White Board is STAGED until its status bullet in `references/style-packs.md` reads ACTIVE: automatic selection skips it (record `White Board fit, staged` in the reason and continue with the next fit); explicit requests and `restyle: White Board` notes build it now.
+- White Board is ACTIVE (Scott approved 2026-09-12). Automatic selection takes it when a source-supported comparison, sequence, or annotated example is the central lesson (policy step 3); the reason line names the relationship. The cover headline is Permanent Marker per the pack; every other slide stays Vitesse and Barlow.
 
 Build the slugs in the assignment table and stop there. Do not restyle carousels nobody flagged or edit source content packs. Report capability-blocked or failed slugs explicitly, never as completed. Style-only and cover-treatment changes preserve all saved wording, caption, and CTA; an explicit action note is the copy-rewrite route.
 
