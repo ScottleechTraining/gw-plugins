@@ -409,7 +409,7 @@ Save captures current bound text, explicit newlines, caption, and CTA into escap
 
 ## 10. White Board pack — namespaced CSS (proof-verified 2026-09-12)
 
-Verbatim from the proof decks rendered through the real export path (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Tokens live on the slide itself (`.slide.pack--white-board`, SKILL.md trap 2). Every visible string on a board slide is its own `data-gw-copy` binding; the CSS carries only rules, discs, and connectors. Photos are baked B&W JPEGs in `--cover-photo` / `--body-photo` (`/*GW_HERO*/`, `/*GW_HERO2*/`), never a CSS filter (trap 6). The persistent frame uses the dark logo (`/*GW_LOGO_DARK*/`).
+Verbatim from the proof decks rendered through the real export path (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Tokens live on the slide itself (`.slide.pack--white-board`, SKILL.md trap 2). Every visible string on a board slide is its own `data-gw-copy` binding; the CSS carries only rules, discs, and connectors. Photos are baked B&W JPEGs in `--cover-photo` / `--body-photo` (`/*GW_HERO*/`, `/*GW_HERO2*/`), never a CSS filter (trap 6). The persistent frame uses the dark logo (`/*GW_LOGO_DARK*/`). The cover headline face is Permanent Marker from Google Fonts: extend the Barlow link to `family=Barlow:wght@400;600;700;900&family=Permanent+Marker`; nothing is embedded for it.
 
 ```css
   /* ---- pack tokens: on the slide itself (SKILL.md trap 2) ---- */
@@ -474,18 +474,17 @@ Verbatim from the proof decks rendered through the real export path (`docs/super
 
   /* ---- cover (Type Plate: headline, one green rule, one contained photo) ---- */
   .mega-cover {
-    font-family: var(--font-heading); font-weight: 700;
-    font-size: 96px; line-height: 1.02; letter-spacing: 0; text-transform: uppercase;
+    font-family: 'Permanent Marker', var(--font-heading); font-weight: 400;
+    font-size: 112px; line-height: 1.04; letter-spacing: 0; text-transform: none;
     display: flex; flex-direction: column;
   }
-  .mega-cover span { display: block; white-space: normal; }
+  .mega-cover span { display: block; white-space: normal; text-wrap: balance; }
   .mega-cover br { display: none; }
   .cover-photo {
-    width: 952px; height: 470px; flex-shrink: 0;
+    width: 952px; height: 420px; flex-shrink: 0;
     background-image: var(--cover-photo); background-size: cover; background-position: center;
     border: 3px solid var(--fg-dominant);
   }
-
   /* ---- compare layout (visual teaching: two conditions, one dimension) ---- */
   .compare { position: relative; display: grid; grid-template-columns: 1fr 1fr; column-gap: 56px; margin-top: 26px; }
   .compare::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 3px solid var(--board-rule); }
