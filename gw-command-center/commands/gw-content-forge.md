@@ -689,7 +689,16 @@ p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.j
 data = json.loads(p.read_text(encoding='utf-8'))
 backlog = data.get('forge_backlog', [])
 hits = [e for e in backlog if e['slug'] == new_slug]
-if hits:
+# Existence check (skill-tune 2026-09-13): a row is only 'forged' if a pack folder whose
+# name STARTS WITH the slug (prefix match, so __reforged and drifted suffixes still count)
+# exists under _inbox/ or ready/ and holds a *-content-pack-*.md. Three phantom rows in
+# September read forged with no pack on disk and vanished from the dashboard.
+deliv = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables')
+pack_dirs = [d for stage in ('_inbox', 'ready') for d in (deliv / stage).glob(new_slug + '*') if d.is_dir()]
+has_pack = any(list(d.glob('*-content-pack-*.md')) for d in pack_dirs)
+if hits and not has_pack:
+    print(f'WARNING: no content pack on disk for {new_slug}; backlog status left unchanged so the gap stays visible')
+elif hits:
     for h in hits:
         h['status'] = 'forged'
     p.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
