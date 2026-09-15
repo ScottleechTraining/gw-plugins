@@ -15,7 +15,7 @@ Replaces the retired Sunday Film Study production stack ([retirement note](../..
 3. Content pack (`/gw-content-forge`)
 4. Substack article draft (`/gw-substack-forge`)
 5. IG carousel (`ig-carousel` skill)
-6. Lead-magnet freebie (`/gw-freebie-forge`)
+6. Lead-magnet freebie (`/gw-freebie-forge`), under the idea gate in `plugins/gw-command-center/references/freebie-quality.md`: the gate may end in a concept card, a pointer to an existing tool, or "no freebie", and each of those completes this step. Scott at the terminal may say "build it" for a named resource; that authorizes the build, not the asset approval.
 
 **What it does NOT do:** email, commit, publish, post, or schedule anything. Those stay manual. Scott reviews everything and ships what he wants to ship.
 

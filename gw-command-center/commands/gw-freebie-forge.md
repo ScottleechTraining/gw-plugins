@@ -6,7 +6,11 @@ description: "Generate a lead magnet from a brief or content source. Interactive
 
 # /gw-freebie-forge [brief-or-content-path] — Lead Magnet Producer
 
-Takes any brief, transcript, or content source. Produces one-page, printable lead magnet that funnels readers into the right paid offer. Coach-direct. Scott's voice. No commit. No autonomous distribution.
+Takes any brief, transcript, or content source. Produces ONE of: a concept card (the default for unattended runs), an interactive tool, or a list-shaped PDF/markdown reference. Coach-direct. Scott's voice. No commit. No autonomous distribution.
+
+**Read `plugins/gw-command-center/references/freebie-quality.md` first.** It holds the idea gate (seven questions), the valid outcomes (new / improve existing / point to existing / research needed / no freebie), the concept-before-build rule, the concept card format, and the routing contract. This command executes that reference; it does not restate it.
+
+**Modes.** `--concept` (or any unattended run, or `concept_before_build: true` in `Deliverables/_system/freebie-settings.json` with no explicit build request from Scott): run the gate and write a concept card, never a build. `--build` (Scott at the terminal asking for a named resource, or a resource whose catalog decision is `build-approved`): run the gate, then build. A direct request from Scott supplies concept authorization only; the built asset still waits for his asset approval on the review page.
 
 Deliver one freebie plus the Step 6 report. Every teaching point in it must change what a coach does; template sections are limits, not slots to fill. Do not build a second variant, a companion asset, or a promo post.
 
@@ -23,7 +27,8 @@ If empty, abort with: "Provide a source file path. Example: `/gw-freebie-forge \
 ## Vault paths
 
 - **Voice rules:** `C:\Claude Projects\CLAUDE.md`
-- **Output:** `C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`
+- **Output:** concept cards and markdown references go to the topic folder (`_inbox/<slug>/<slug>-freebie.md` or `ready/<slug>/...`); `Deliverables\<topic-slug>-freebie.md` only when the source has no topic folder. Interactive builds: `Deliverables\projects\insiders-vault\incoming\<slug>\index.html` plus a `FREEBIE.md` pointer in the topic folder.
+- **Settings (Scott's switch, read only):** `C:\Claude Projects\Gridiron Warrior\Deliverables\_system\freebie-settings.json`
 - **Wiki for product targeting:** `C:\Claude Projects\Gridiron Warrior\wiki\` (read entities/Insiders, entities/GW-2-0, entities/Contact-Prep, entities/Scores-and-Stops, entities/Summit to pick the right CTA)
 - **Voice check guard:** `C:\Claude Projects\Gridiron Warrior\scripts\voice_check.py`
 
@@ -34,7 +39,7 @@ duplicated live site tools. These rules exist so that never happens again. They 
 written for whichever model runs this command - no session memory required.
 
 **Rule 0 - THE DEDUP GATE. Run it before creating anything.**
-Check, in order:
+The full gate is question 5 of `plugins/gw-command-center/references/freebie-quality.md`; the catalog preview (`python -m scripts.gwqueue.freebie_catalog --preview`) and `_system/review/freebie-known-resources.json` (Scott's delivered list and favorites) are part of it. Check, in order:
 1. `C:\Claude Projects\websites\scottleechtraining.com\tools\index.html` - the Toolbox
    inventory (interactive tools: program audit, high/low CNS planner, training age sort,
    missed lifts tree, session conductor, floor clock, sled load calculator, tri-set timer,
@@ -114,18 +119,24 @@ Read the wiki entity pages to decide where this freebie funnels. Priority order:
 
 Decide one. Name it in Step 6 report so Scott knows the funnel direction.
 
-### Step 4 — Write the freebie
+### Step 3.5 — The idea gate (every run)
 
-Interactive HTML is the default per Rule 1. Use the markdown template below only when Rule 1's list-shaped exception applies or Scott named the format.
+Answer the seven questions in `plugins/gw-command-center/references/freebie-quality.md` in one line each. Name two exemplars and the nearest existing or killed neighbor, and the mechanism borrowed. Decide the outcome: new resource, improve existing, point to existing, research needed, or no freebie. Only "new resource" and "improve existing" continue to Step 4. The other three outcomes end the command with one line in the Step 6 report (and in the content pack receipt when run from a chain). A zero-freebie result is a pass, not a failure.
+
+### Step 4 — Write the concept card or the freebie
+
+**Concept mode (default for unattended runs):** write the concept card in the format from `plugins/gw-command-center/references/freebie-quality.md` to the topic folder (`<slug>-freebie.md`, frontmatter `stage: idea`). Include the seven gate answers, in/out, what is new or which tool it improves, rejected alternatives, open risks. Regenerate the review page (Step 4 interactive path item 6) so the card shows in the Ideas lane. Stop. No HTML, no PDF.
+
+**Build mode:** interactive HTML is the default per Rule 1. Use the markdown template below only when Rule 1's list-shaped exception applies or Scott named the format.
 
 #### Interactive path (the default)
 
-1. **Slug and folder.** Kebab-case the topic. Create `Deliverables\projects\insiders-vault\incoming\<topic-slug>\` and build everything as ONE file: `index.html`. This exact location matters twice: the freebies.html scanner discovers `insiders-vault\incoming\**` but only sees `*freebie*.md` under `Deliverables\_inbox`, so an HTML build filed there is invisible to review. And the ledger key is derived from the file path, so never move or rename the folder after this step without re-keying the ledger.
+1. **Slug and folder.** Kebab-case the topic. Create `Deliverables\projects\insiders-vault\incoming\<topic-slug>\` and build everything as ONE file: `index.html`. This is the routing contract: the catalog keys the resource on that folder, and the topic folder gets a `FREEBIE.md` pointer (`# Freebie for this pack: <name>`, the build path, a `## What it does` line). Never copy or move the folder afterward. If a concept card already exists for this slug in the topic folder, leave it; the catalog attaches it to the build as the spec.
 2. **Start point.** Copy `Deliverables\_templates\_interactive_template.html` if its shell fits; otherwise write fresh. Either way the result obeys Rule 4: single self-contained file, vanilla JS, no framework, no build step, design tokens and fonts exactly as Rule 4 lists them, navy `.hero` header, back-breadcrumb to `/tools/`, printable `@media print` view, sign-off `Keep the Fire Burning. - Leech` plus the Step 3 CTA.
 3. **The interaction is the freebie.** The coach must put something in and get a decision out (calculate, sort, time, score). If you cannot name the input and the decision in one sentence, the teaching is list-shaped: use the markdown path instead. Put the non-trivial logic in pure functions with a `module.exports` guard for headless tests, and wire a `?demo=1` URL hook that pre-fills a realistic scenario.
 4. **Lead capture per Rule 4.** fetch() POST to the shared free-rack Kit form `9647774`; gate state in `tb_email` / `tb_unlocked` localStorage; tool state under `gw-{tool}-{purpose}` keys only.
 5. **Render and exercise it before calling it done.** Open the built file in the browser, load `?demo=1`, click through the interaction, and look at the result. A tool that has not been rendered and clicked is not built. Fix what you see, then re-check.
-6. **Enter the ledger.** Regenerate the review page so the build lands in front of Scott: `cd "C:/Claude Projects/Gridiron Warrior"` then `python -m scripts.gwqueue.build_freebie_review_page`. Rule 5 applies: pending until Scott reviews it on freebies.html.
+6. **Enter the ledger.** Regenerate the review page so the build lands in front of Scott: `cd "C:/Claude Projects/Gridiron Warrior"` then `python -m scripts.gwqueue.build_freebie_review_page`. Rule 5 applies: it shows in the Ready lane until Scott approves the asset on freebies.html. Asset approval is still not distribution.
 
 #### Markdown path (Rule 1 exception only)
 
@@ -190,7 +201,7 @@ Leech
 *scottleechtraining.com*
 ```
 
-Write to `C:\Claude Projects\Gridiron Warrior\Deliverables\<topic-slug>-freebie.md`. If same-day same-topic file exists, append `-2`, `-3` like the other forges.
+Write to the topic folder as `<topic-slug>-freebie.md` (root `Deliverables\` only when there is no topic folder). If a same-day same-topic file exists, append `-2`, `-3` like the other forges. Then regenerate the review page (item 6 above).
 
 ### Step 5 — Voice check
 
@@ -207,6 +218,7 @@ If voice_check returns non-zero (banned words, em-dashes, or other violations), 
 ### Step 6 — Report to Scott
 
 Tell him:
+0. The gate outcome (new / improve existing / point to existing / research needed / no freebie) and, for a concept card, that it waits in the Ideas lane for Build this
 1. Output file path
 2. The funnel target picked (with one-line rationale)
 3. The hook headline

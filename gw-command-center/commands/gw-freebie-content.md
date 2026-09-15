@@ -61,6 +61,9 @@ and `ready/`). If mode is omitted: `extract` when no CONTENT.md exists,
    under node (or the existing test pattern) to confirm nothing broke.
 6. Set `status: scott-edited` in CONTENT.md frontmatter, then rebuild the
    review page: `cd "C:/Claude Projects/Gridiron Warrior" && python -m scripts.gwqueue.build_freebie_review_page`.
+   Editing CONTENT.md or index.html changes the resource fingerprint, so any
+   earlier asset approval is stale on purpose: the card returns to the Ready
+   lane and Scott approves the edited version. Tell him that in the report.
 7. Report a short diff summary: which fields changed, voice check result,
    smoke test result. The freebie is now ready for promote/commit (which is
    still a separate, Scott-triggered step).

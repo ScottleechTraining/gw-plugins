@@ -1,7 +1,7 @@
 ---
 name: gw-freebie-apply
 model: sonnet
-description: "Apply a pasted gw-freebie-result string from freebies.html. approve marks a freebie eligible for the Vault, edit flags it (with a note) for the fix batch, kill retires it: standalone .md files move to killed/_freebies/, PDFs inside topic folders just get marked killed in the sidecar. Mechanical parse and apply, no judgment."
+description: "Apply a pasted freebie review receipt. Current page: gw-freebie-receipt JSON (v2, validated, atomic) via scripts.gwqueue.freebie_receipt. Legacy gw-freebie-result strings still apply through apply_freebie. Mechanical parse and apply, no judgment."
 ---
 
 # GW Freebie Apply - Apply pasted freebie-review decisions
@@ -20,7 +20,24 @@ is this command's job).
 - **Freebies page:** `C:/Claude Projects/Gridiron Warrior/Deliverables/_system/review/freebies.html`
 - **Killed freebies:** `C:/Claude Projects/Gridiron Warrior/Deliverables/killed/_freebies/`
 
-## Input: the pasted string
+## Input: which receipt is it?
+
+**v2 (the current page, since 2026-09-15):**
+
+```
+gw-freebie-receipt: {"v": 2, "catalog": "...", "decisions": [{"key": "vault-incoming/x", "stage": "asset", "action": "approve", "fp": "...", "note": ""}]}
+```
+
+Apply it with the receipt module. Write the pasted line to a temp file and feed it on stdin (JSON quoting through a shell is not worth fighting):
+
+```bash
+cd "C:/Claude Projects/Gridiron Warrior"
+python -m scripts.gwqueue.freebie_receipt < path/to/receipt.txt
+```
+
+It validates every decision against the live catalog before writing anything: unknown key, duplicate key, wrong stage (a spec approved as an asset), or a stale fingerprint (the file changed since the page was built) rejects the WHOLE receipt and prints why. Nothing is half-applied. A replayed receipt prints `no-op` lines. Decisions land in `_system/review/freebie-decisions.json`; `freebie-state.json` is never touched. Transition table and lanes: `docs/superpowers/freebie-review/OPERATIONS.md`. On `REJECTED`, report the reasons and tell Scott to rebuild the page (Step 2) and decide again on the named items. Do not edit the receipt to make it pass.
+
+**Legacy (`gw-freebie-result:` string from the old page, kept for old pastes):**
 
 ```
 gw-freebie-result: approve=[id1,id2] edit=[id3:"note",id4] kill=[id5]
@@ -46,7 +63,7 @@ relative to `Deliverables/`, extension dropped, slashes replaced with `__`
   moved (they live beside their pack); they are only marked killed in the
   sidecar so the page mutes them.
 
-## Step 1: Parse and apply
+## Step 1 (legacy string only): Parse and apply
 
 Apply it with the applier module. Pass the whole pasted line,
 `gw-freebie-result:` prefix included, as ONE argument:
@@ -78,8 +95,7 @@ module replaced.
 
 ## Step 2: Rebuild the page
 
-Decided items re-render muted with their status badge so Scott can change his
-mind later.
+The page is one card per resource with lanes (Ready, Ideas, Fixes, Needs sorting, Library, Retired); decided items move lanes, and an edited file returns to Ready for re-review. Previews are cached by fingerprint, so a rebuild takes seconds unless files changed.
 
 ```bash
 cd "C:/Claude Projects/Gridiron Warrior"
@@ -90,11 +106,16 @@ python -m scripts.gwqueue.build_freebie_review_page
 
 One table, exactly what was applied:
 
-| verdict | id | result |
+| action | resource key | result |
 |---|---|---|
-| approve | ... | eligible for Vault |
-| edit | ... | flagged for fix batch (note) |
-| kill | ... | moved to killed/_freebies/ OR marked killed in place |
+| approve (asset) | ... | approved + fingerprint; eligible to package until the file changes |
+| changes (asset) | ... | edit (note); Fixes lane |
+| retire (asset) | ... | retired, no file moved |
+| build (idea) | ... | build-approved; stays in Ideas until built in a daytime session |
+| rework / pass (idea) | ... | rework (note) / passed |
+| no-op | ... | already applied |
+
+Legacy strings report the old verdict table (approve / edit / kill).
 
 Note any `kill ... (file gone)` lines so a mistyped or already-moved id is
 visible, not silent.
