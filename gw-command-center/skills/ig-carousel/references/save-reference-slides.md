@@ -42,7 +42,7 @@ The reference is an ordinary body slide in schema 1. Its title and rows live ins
 
 Use existing brief fields: payoff names the tool, reason names the future use, and takeaway names the decision. No schema extension is needed.
 
-The final slide and caption name the same later use. For example: "Save the checklist for your next staff meeting." Avoid stacking save, share, comment, follow, and buy requests on one post. Useful content is available in the carousel itself, not contingent on a DM. This does not prevent a separately chosen conversation or conversion post later.
+The final slide and caption name the same later use. For example: "Save this for your next staff meeting." The word "card" never appears in slide copy, the CTA, or the caption, even though this reference calls the slide a card internally: Scott banned it on 2026-09-15 and sent two more decks back for "Save the card" on 2026-09-22. Write "Save this for..." and refer to the slide as "slide 4," never "the card." The object of a CTA or caption is "this," "this post," "this carousel," or the actual tool by name ("the checklist," "the sequence," "the test"), never "card" (Scott, 2026-09-22: "Call them posts, call them carousels. We're not calling them cards."). Avoid stacking save, share, comment, follow, and buy requests on one post. Useful content is available in the carousel itself, not contingent on a DM. This does not prevent a separately chosen conversation or conversion post later.
 
 A save-to-share reroll rewrites the argument and CTA under the existing action-rewrite rules; the reference may remain only if it still serves the new intent. A style reroll must preserve saved wording exactly, even when this new editorial module would have written something else.
 
@@ -190,7 +190,7 @@ Save the room-fit check before you borrow another program.
 Write for the room you have.
 
 #### Paired Caption
-A program built around a different staff, room, and schedule brings those assumptions with it. Check them before you copy the exercises. Save the room-fit card for the next time you adapt somebody else's session.
+A program built around a different staff, room, and schedule brings those assumptions with it. Check them before you copy the exercises. Save this for the next time you adapt somebody else's session.
 
 Production boundary: the 30-athlete/3-rack example is illustrative, not a prescribed supervision ratio or a capacity/safety standard. Do not invent rack rotations or guarantee completion time from this example.
 Future paid-fit hypothesis, not post copy: an implementation service can customize around the actual school constraints. The save-led post still gives away the complete small audit.

@@ -57,6 +57,7 @@ The Dewey sheet's **`Media`** column already contains a direct URL to the asset:
 |---|---|---|
 | `https://static.getdewey.co/upload/<hash>.<ext>` | **Tier 1** | Plain HTTP GET from Dewey's public S3. Save image, embed `![[ ]]`, OCR via Read tool. Zero IG exposure. |
 | `pbs.twimg.com` (Twitter image CDN) | **Tier 1** | Same fetch path as the Dewey CDN (`media_kind: twitter-image`). |
+| `cdninstagram.com`/`fbcdn.net` URLs whose items all end in an image extension | **Tier 1** | `media_kind: ig-cdn-image`: image carousels Dewey failed to rehost (2026-09-18: 31 of 38 "video" rows were these). Same fetch path; signed URLs expire, so per-item 403s fall back gracefully (note keeps caption + notes the expired media). |
 | Contains `cdninstagram.com`, `fbcdn.net`, or `video.twimg.com` | **Tier 2.5** | Video. `transcribe-video` helper: yt-dlp download → Whisper transcript + 4 keyframes → video deleted. Note gets transcript + keyframe OCR. Fallback on failure: `video-skip`. |
 | Empty | **Tier 0** | No media. Caption-only note. |
 | Anything else | **Tier 0** | Refuse to fetch from unknown hosts. Caption-only. |
@@ -118,7 +119,7 @@ For each row:
 
 #### 3a. Dispatch on `media_kind`
 
-- **`dewey-cdn-image` / `twitter-image`** → call helper, fetch image, OCR.
+- **`dewey-cdn-image` / `twitter-image` / `ig-cdn-image`** → call helper, fetch image, OCR. (`ig-cdn-image` URLs are signed and expire: a `failed`/`partial` fetch here is normal for old rows; fall through to Tier 0 with a "media links expired" line in the Media section.)
 - **`video-url`** → Tier 2.5. Transcribe (3c).
 - **`none` / `other`** → Tier 0. No fetch.
 

@@ -137,6 +137,7 @@ Read voice rules from `C:/Claude Projects/CLAUDE.md` before writing.
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
 - No banned words: fluff, delve, tapestry, vibrant, transformative, unlock, leverage (as verb), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge
+- Never call a slide a "card" in slide copy, a CTA, or a caption (Scott 2026-09-15, again 2026-09-22 after two more decks shipped with "Save the card"). Write "Save this for..." or "Slide 4 gives you...". The reference slide is a slide. Never call a Contact Prep drill a "match" (Scott 2026-09-22); it is a drill.
 - Tough love. Coach in the trenches. Not a motivational poster.
 - Sign off all emails: Keep the Fire Burning, / Leech
 
@@ -689,13 +690,12 @@ p = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables/queue-state.j
 data = json.loads(p.read_text(encoding='utf-8'))
 backlog = data.get('forge_backlog', [])
 hits = [e for e in backlog if e['slug'] == new_slug]
-# Existence check (skill-tune 2026-09-13): a row is only 'forged' if a pack folder whose
-# name STARTS WITH the slug (prefix match, so __reforged and drifted suffixes still count)
-# exists under _inbox/ or ready/ and holds a *-content-pack-*.md. Three phantom rows in
-# September read forged with no pack on disk and vanished from the dashboard.
-deliv = pathlib.Path('C:/Claude Projects/Gridiron Warrior/Deliverables')
-pack_dirs = [d for stage in ('_inbox', 'ready') for d in (deliv / stage).glob(new_slug + '*') if d.is_dir()]
-has_pack = any(list(d.glob('*-content-pack-*.md')) for d in pack_dirs)
+# Existence check: the ONE shared rule every forged writer uses (scan, backfill, this block).
+# Trap (2026-09-22): the 09-13 check lived only here, while the scan and backfill fuzzy
+# matchers kept marking rows forged against unrelated folders. Never inline a copy again.
+sys.path.insert(0, 'C:/Claude Projects/Gridiron Warrior')
+from scripts.gwqueue.scan_folders import pack_exists_for_slug
+has_pack = pack_exists_for_slug(new_slug)
 if hits and not has_pack:
     print(f'WARNING: no content pack on disk for {new_slug}; backlog status left unchanged so the gap stays visible')
 elif hits:
