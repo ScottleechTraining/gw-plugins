@@ -121,7 +121,7 @@ Decide one. Name it in Step 6 report so Scott knows the funnel direction.
 
 ### Step 3.5 — The idea gate (every run)
 
-Answer the seven questions in `plugins/gw-command-center/references/freebie-quality.md` in one line each. Name two exemplars and the nearest existing or killed neighbor, and the mechanism borrowed. Decide the outcome: new resource, improve existing, point to existing, research needed, or no freebie. Only "new resource" and "improve existing" continue to Step 4. The other three outcomes end the command with one line in the Step 6 report (and in the content pack receipt when run from a chain). A zero-freebie result is a pass, not a failure.
+Read the retire and edit notes in `Deliverables/_system/review/freebie-decisions.json` first, then apply the Scott's verdict rules section of `plugins/gw-command-center/references/freebie-quality.md` (hard stops and build rules). Answer the nine questions there in one line each; questions 8 (who asked) and 9 (where Scott states the premise) need a named source, not a guess. Name two exemplars and the nearest existing or killed neighbor, and the mechanism borrowed. Decide the outcome: new resource, improve existing, point to existing, research needed, or no freebie. Only "new resource" and "improve existing" continue to Step 4. The other three outcomes end the command with one line in the Step 6 report (and in the content pack receipt when run from a chain). A zero-freebie result is a pass, not a failure.
 
 ### Step 4 — Write the concept card or the freebie
 

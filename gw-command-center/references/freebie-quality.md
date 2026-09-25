@@ -26,8 +26,10 @@ Run this AFTER the existing first filter (F3 `freebie: yes`, or the legacy 18/20
 5. Which existing asset is closest, and what meaningful gap remains? Check, in order: the public Toolbox and the Insiders rack (`websites/scottleechtraining.com/tools/index.html`), member downloads, `Deliverables/_system/review/freebie-known-resources.json` (Scott's delivered list and favorites), the catalog (`python -m scripts.gwqueue.freebie_catalog --preview`: Ideas, Ready, Library, Retired lanes), and killed variants in `freebie-state.json`.
 6. Which exact vault source supports the mechanics, thresholds, and advice? (wiki concept page, Voice Corpus file, or dated NotebookLM brief; no number from memory)
 7. Can a coach use it without an unreasonable new data-entry chore?
+8. Which coach asked Scott this, and where? (a DM, a podcast question, a Voice Corpus line, a wiki page). No evidence of the question means no evidence of demand.
+9. Where does Scott state the premise in his own words? (Voice Corpus, wiki concept, a Leech Letter). A premise that only a research brief supports is not Scott's teaching.
 
-No score outranks a missing answer. A missing source (6), a killed equivalent (5), no practical payoff (2 or 3), or a job an existing tool already does (5) stops the build. A new name, new color, narrower anecdote, or seasonal wrapper is not novelty.
+No score outranks a missing answer. A missing source (6), a killed equivalent (5), no practical payoff (2 or 3), a job an existing tool already does (5), no named demand (8), or a premise Scott has not stated (9) stops the build. A new name, new color, narrower anecdote, or seasonal wrapper is not novelty.
 
 Before proposing anything new, name two relevant positive exemplars from the favorites or the Library and the nearest existing or killed neighbor. Say which useful mechanism is borrowed (the session-runner, the sort, the timer), not which tool is cloned.
 
@@ -85,6 +87,36 @@ Body: the seven gate answers, one line each; what the coach puts in and gets out
 - Nothing moves after it is registered. No copying an interactive folder into a topic folder. The catalog keys resources by a stage-independent path, so topic folders may move between `_inbox`, `ready`, and `archived` without losing decisions.
 - Every build or concept card ends with the review page rebuild: `cd "C:/Claude Projects/Gridiron Warrior"` then `python -m scripts.gwqueue.build_freebie_review_page`.
 - Approval of an idea is permission to build. Approval of an asset is not permission to distribute. Publishing to the Vault, Thinkific, Kit, or the site stays a separate Scott-triggered step.
+
+## Scott's verdict rules (from his 2026-09-25 review of 19 built assets)
+
+Read before the gate, every run: the `note` on every `retired` and `edit` entry in `Deliverables/_system/review/freebie-decisions.json` (and the `killed` notes in `freebie-state.json`). Those notes are Scott's taste record. A new concept that matches a retire reason below, or a note in that file, stops at the gate with the matching note quoted in the receipt. Nine of nineteen assets were retired and eight sent back for changes; two were approved. The rules that would have caught them:
+
+**Hard stops (retire reasons, each one stops a build):**
+
+- Injury risk framing of any kind (ACL, hamstring risk, "cut placement"). Scott cannot predict injury and will not put his name on a tool that implies he can. Not as a check, not as a score, not as a warning.
+- Swapping one stimulus for another. Weight room work does not replace live tackling or good-on-good practice. No ledger, calculator, or trade table that treats different stimuli as interchangeable.
+- On-the-fly coaching decisions. An injured arm gets a substitution on the spot. Nobody opens a tool and rewrites the program. If the coach decides it in ten seconds at the rack, it is not a tool.
+- Common sense dressed as a tool. If a good coach already does it without thinking, the tool insults him.
+- Per-athlete recurring data entry by the coach. Punching in wellness scores, logging every athlete's jumps by hand, filling a long testing sheet. Scott's own answer was a Google Form that athletes fill out and a sheet that scores itself. A tool that needs the coach as data-entry clerk is a chore, not a resource.
+- Inputs the room cannot measure. Most jump mats give height only, not contact time. Assume a stopwatch, a tape, a bar and plates, jump height, and a phone. No contact time, force plates, GPS, or velocity unless the tool asks first whether the coach has the device and works without it.
+- Fixed prescriptions in nuanced domains. Conditioning volumes, sets and reps, and weekly frequencies in a wave calendar are course material, not a freebie. A prescription that ignores the athlete's other load (a track athlete told to run Nordics twice a week on top of sprint practice) is wrong, not just incomplete.
+- Prescribing which tests a coach may run. Coaches test what they want. A tool may help them read a test; it never tells them to drop one.
+- Terminology or vocabulary lessons as a tool. Scott teaches language another way.
+- Measurement-method trivia (stopwatch versus timing gates). Not a coach's problem.
+- Toughness drills as a scored test. Scott does not like the topic in tool form.
+- A single binary decision. If the whole teaching is "freeze the warm-up or rotate it", it is a paragraph or a slide, never an asset. Question 4 is the test; answer it honestly.
+- Too many parts. More than five inputs, more than one screen, or more than one kind of output means the asset is too complicated. Cut it to one decision, or route the rest to a Film Study or a course.
+
+**Build rules (from the changes and the approvals):**
+
+- The strongest approve signal is a question coaches actually ask Scott. "How much jump volume is too much" was approved because coaches ask him that. Question 8 exists for this reason. Name the asker.
+- Solve the problem the coach came with, not a neighbor of it. A speed-exposure audit that cannot tell a coach who is missing speed does not get opened twice.
+- Ask the scheduling reality. Any in-season tool asks "when do you train the team next?" A Friday game may mean a Sunday return, not Saturday.
+- Carry the season forward. A tool that sets a block (eccentrics for a few weeks) says what comes next (isometrics, then heavy threes to fives so kids hit PRs in the last weeks and roll into the offseason). Every phase tool names the exit.
+- Give the done-for-you piece. A menu of options ships with a ready circuit or routine (a core circuit for practice days), not only a framework. More options beat fewer when the options are real.
+- Respect concurrent load. Any prescription asks about the athlete's other sport, practice load, and game day before it names a frequency.
+- A good topic can still be the wrong format. "The last heavy week" was approved as an asset and flagged for a Film Study. When Scott's note says "better explained in a course", route the depth to the course and keep the freebie to one decision.
 
 ## Standing laws still apply
 
