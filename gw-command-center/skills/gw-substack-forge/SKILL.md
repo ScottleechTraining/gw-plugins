@@ -128,7 +128,7 @@ Before saving the final file, run through this list:
 
 ## Final Step: Voice Gate (mandatory)
 
-Before saving the `.md` file, run the `gw-voice-gate` checklist against the finished article and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. An article never ships with a FAIL.
+Before saving the `.md` file, run the `gw-voice-gate` checklist against the finished article and apply the fixes. Run it as a clean agent spawn, per the gate's "Run it in a clean agent" section: pass only the article text and `gw-substack-forge` as the producing skill. Never grade the article in this session. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. An article never ships with a FAIL.
 
 ---
 

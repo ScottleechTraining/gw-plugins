@@ -148,7 +148,7 @@ If you are writing and it starts to sound like a motivational poster, stop and r
 
 ## Final Step: Voice Gate (mandatory)
 
-Before presenting or saving any letter, run the `gw-voice-gate` checklist against it and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. A letter never ships with a FAIL.
+Before presenting or saving any letter, run the `gw-voice-gate` checklist against it and apply the fixes. Run it as a clean agent spawn, per the gate's "Run it in a clean agent" section: pass only the letter text and `leech-letter-editor` as the producing skill. Never grade the letter in this session. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off, sentence length, AI-slop tells, and ICP fit. A letter never ships with a FAIL.
 
 ---
 

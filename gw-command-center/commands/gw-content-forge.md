@@ -532,7 +532,7 @@ Both modes save into `Deliverables/_inbox/[TOPIC-SLUG]/`. The `_inbox/` lands ne
 
 ## Step 3.5: Voice Gate (mandatory, before save)
 
-Before saving any asset, run the `gw-voice-gate` checklist against every Scott-voice piece in the pack and apply the fixes. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off on emails, sentence length, AI-slop tells, and ICP fit. No asset ships with a FAIL.
+Before saving any asset, run the `gw-voice-gate` checklist against every Scott-voice piece in the pack and apply the fixes. Run it as one clean agent spawn for the whole pack, per the gate's "Run it in a clean agent" section: pass only the draft text, content types, and `gw-content-forge` as the producing skill. Never grade the pack in this session. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off on emails, sentence length, AI-slop tells, and ICP fit. No asset ships with a FAIL.
 
 ## Step 3.6: Message Gate (mandatory, every carousel, before save)
 

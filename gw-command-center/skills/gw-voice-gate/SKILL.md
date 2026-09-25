@@ -1,6 +1,6 @@
 ---
 name: gw-voice-gate
-description: PASS/FAIL QA gate for any draft written as Scott Leech. Runs a mechanical checklist against a draft (em-dashes, banned words, sign-off, sentence length, AI-slop tells, bullet abuse, ICP fit) and applies the fixes. Use this skill whenever Scott says "voice gate", "voice check", "check this draft against Scott's voice", or "run the gate". Also run this automatically as the final step of any GW skill that produces Scott-voice content (Leech Letter, Substack, Content Forge, freebie, seed writer) before the draft is presented or saved. A draft never ships with a FAIL.
+description: PASS/FAIL QA gate for any draft written as Scott Leech. Runs a mechanical checklist against a draft (em-dashes, banned words, sign-off, sentence length, AI-slop tells, bullet abuse, ICP fit) and applies the fixes. Use this skill whenever Scott says "voice gate", "voice check", "check this draft against Scott's voice", or "run the gate". Also run this automatically as the final step of any GW skill that produces Scott-voice content (Leech Letter, Substack, Content Forge, freebie, seed writer) before the draft is presented or saved, as its own agent spawn with only the draft and this checklist (never in the drafting session). A draft never ships with a FAIL.
 ---
 
 # GW Voice Gate
@@ -8,6 +8,17 @@ description: PASS/FAIL QA gate for any draft written as Scott Leech. Runs a mech
 A mechanical, verifiable QA gate. It runs on any draft written as Scott and returns PASS or FAIL. It edits mechanically to fix the listed violations. It never rewrites voice, restructures content, or invents ideas beyond the fixes below.
 
 The reference voice rules live in `C:\Claude Projects\CLAUDE.md` (VOICE RULES, BANNED WORDS, SIGNATURE PHRASES, EMAIL VOICE EXAMPLES). This gate is the executable version of those rules.
+
+## Run it in a clean agent, never in the drafting session
+
+A gate run in the session that wrote the draft grades its own work and inflates the score. When a producing skill calls this gate, it spawns ONE fresh agent (Agent tool, `model: "sonnet"`, set explicitly) per draft or per pack. The prompt carries only:
+
+1. The draft text, verbatim (or the saved file paths).
+2. The content type of each piece (long form or short social).
+3. The producing skill name, for the FAIL log.
+4. The instruction: "Load the `gw-voice-gate` skill and run it on this draft. Return its output format exactly."
+
+Pass no drafting context: no brief, no sources, no outline, no rationale for choices. The producing skill applies the corrected draft the agent returns. It does not argue with a FAIL or re-grade it. When Scott runs the gate by hand on a pasted draft, run it inline; that session did not write the draft.
 
 ## Input
 
