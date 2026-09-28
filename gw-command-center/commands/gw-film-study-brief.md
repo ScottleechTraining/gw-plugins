@@ -254,6 +254,13 @@ cover. If nothing matched, leave the file untouched.
 
 **Fact-density rule (2026-08-03):** pull EVERY number the source states (set counts, timelines, percentages, testing results, injury rates, loads) into the summary page, each with its context. Numbers are what makes a future page citable by AI answer engines; prose buries them. A summary with zero numbers from a numeric source is an incomplete ingest.
 
+**Origin gate (2026-09-27, run first).** Look in `Voice Corpus\Course Transcripts\Weekly Film Study\` for an ingested transcript of this Film Study: a file whose name contains `<topic-slug>` or whose frontmatter has `topic_slug: <topic-slug>`. Found and the topic is not a "Saves mine" run → RECORDED: use the recorded values below. Anything else (no transcript on disk, or any "Saves mine" topic) → PRE-RECORDING: use `external_origin: true` and the pre-recording origin lines, and name each external creator the brief draws on (for example Sam Portland, SimpliFaster). Never write "Scott's own recorded Film Study" without a transcript path you just found.
+
+- RECORDED: `external_origin: false`, `origin: "Scott's own recorded Film Study on [topic] (YYYY-MM-DD), transcript [transcript path]; brief-sourced external components attributed inline"`, `**Origin:** Scott's own recorded Film Study on [topic] ([YYYY-MM-DD](path-to-brief)).`
+- PRE-RECORDING: `external_origin: true`, `origin: "Pre-recording research brief on [topic] (YYYY-MM-DD), built from saved posts and research sources, not a recorded Film Study; external creators attributed inline: [creator names]"`, `**Origin:** Pre-recording research brief on [topic] ([YYYY-MM-DD](path-to-brief)), built from saved posts and research sources, not a recorded Film Study. External creators, attributed inline: [creator names].`
+
+`/gw-film-study-upload-kit` flips the summary page to RECORDED once the transcript is filed.
+
 **Write the summary page** at `wiki/summaries/film-study-<topic-slug>.md`:
 
 ```markdown
@@ -264,12 +271,14 @@ topic: "[topic]"
 topic_slug: [topic-slug]
 date: YYYY-MM-DD
 source_brief: [absolute path to the brief]
-external_origin: false
+external_origin: [true|false per the origin gate]
+origin: "[origin line per the origin gate]"
 pipeline: gw-film-study-brief
 ---
 
 # Film Study, [Topic]
 
+**Origin:** [bold Origin line per the origin gate]
 **Source:** [link to brief file]
 **Date:** YYYY-MM-DD
 
@@ -299,8 +308,8 @@ pipeline: gw-film-study-brief
 ---
 title: "[Concept Name]"
 type: concept
-external_origin: false
-origin: "Scott's own recorded Film Study on [topic] (YYYY-MM-DD); brief-sourced external components attributed inline"
+external_origin: [true|false per the origin gate]
+origin: "[origin line per the origin gate]"
 source_brief: [absolute path to the brief]
 date_created: YYYY-MM-DD
 status: stub
@@ -308,7 +317,7 @@ status: stub
 
 # [Concept Name]
 
-**Origin:** Film Study brief on [topic] ([YYYY-MM-DD](path-to-brief))
+**Origin:** [bold Origin line per the origin gate]
 
 ## What the brief said
 
@@ -444,5 +453,5 @@ Keep it tight. Scott has 15 minutes.
 - **Idempotent within a day** via the `-2`, `-3` convention. If a same-day brief exists, the new brief and all downstream artifacts get `-2` appended before the extension.
 - **`Research/Film Study/` is for briefs only.** Not for content packs (that's `Deliverables/`), not for published material (that's `wiki/`), not for transcripts (that's `raw-sources/` or `Voice Corpus/`).
 - **NotebookLM failure is NOT fatal.** Brief proceeds corpus-only. Wiki ingest proceeds. Chain proceeds. Status file records the NotebookLM gap.
-- **The SOURCE decides `external_origin`, not a blanket default (fixed 2026-08-17 per Scott).** A Film Study is Scott's own recorded teaching, so pages built on his transcript are `external_origin: false`: his voice, voice-input safe. External material the brief blended in (NotebookLM sources, other coaches' numbers) gets INLINE attribution at point of use, never a page-level external flag. Only a pre-recording research-only run (no transcript exists, `TRANSCRIPT NOT YET RECORDED` status) is flagged `external_origin: true`, because that page is NotebookLM material with no Scott voice in it. Why this changed: the old default-external posture quarantined 13 summaries and 4 concept stubs of Scott's OWN camp system out of voice-safe input, and the "Scott flips at synthesis" step never happened; three surfaces grew hand-written workarounds instead. The "How Scott uses this in GW" block on concept stubs stays as TODO until filled.
+- **The SOURCE decides `external_origin`, not a blanket default (fixed 2026-08-17 per Scott).** A Film Study is Scott's own recorded teaching, so pages built on his transcript are `external_origin: false`: his voice, voice-input safe. External material the brief blended in (NotebookLM sources, other coaches' numbers) gets INLINE attribution at point of use, never a page-level external flag. A pre-recording run (no ingested transcript on disk, and every "Saves mine" run) is flagged `external_origin: true` by the Step 5.7 origin gate, because that page is saved-post and NotebookLM material with no recorded Scott voice in it. The default is pre-recording; RECORDED needs a transcript path. Why (2026-09-27): the 2026-09-10/11 Saves mine runs wrote 13 pages as "Scott's own recorded Film Study" with no transcript, which made other creators' material voice-input safe. Why this changed: the old default-external posture quarantined 13 summaries and 4 concept stubs of Scott's OWN camp system out of voice-safe input, and the "Scott flips at synthesis" step never happened; three surfaces grew hand-written workarounds instead. The "How Scott uses this in GW" block on concept stubs stays as TODO until filled.
 - **Partial success is fine.** A run that produces brief + wiki + content pack + carousel + freebie but fails Substack is still a valuable run. Scott just re-invokes `/gw-substack-forge` against the brief path.
