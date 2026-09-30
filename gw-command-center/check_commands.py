@@ -12,12 +12,12 @@ Rules enforced:
   R2. The frontmatter MUST contain a `name:` field equal to the filename stem.
   R3. The frontmatter description (if present) MUST be ASCII-safe — no
       em-dash (—), no en-dash (–), no Unicode arrow (→). Use - and -> instead.
-  R4. The frontmatter MUST contain a pinned `model: claude-opus-N` or `model: sonnet`
-      (CLAUDE.md MODEL POLICY: Fable is pay-per-use; no command may silently
-      inherit the session model). Added per audit 2026-07-14 finding P2.
-      The bare `opus` alias is REJECTED as of 2026-07-24: on Opus 5 launch day it
-      still resolved to claude-opus-4-8, so aliased lanes ran a generation behind
-      with nothing in the repo naming a version. Opus lanes must pin the id.
+  R4. The frontmatter MUST contain a pinned `model: claude-opus-N` or
+      `model: claude-sonnet-N` (CLAUDE.md MODEL POLICY: Fable is pay-per-use; no
+      command may silently inherit the session model). Added per audit 2026-07-14
+      finding P2. Bare aliases are REJECTED: `opus` since 2026-07-24 (resolved to
+      claude-opus-4-8 on Opus 5 launch day) and `sonnet` since 2026-09-29 (resolved
+      to claude-sonnet-5 after Sonnet 5.5 shipped). Both lanes must pin the id.
 
 Exit codes:
   0 = all green
@@ -93,18 +93,19 @@ def check_file(path: Path) -> list[str]:
 
     model = fm.get("model")
     if not model:
-        violations.append("R4: missing `model:` field (must be a pinned `claude-opus-N` or `sonnet`)")
-    elif model == "opus":
-        # The bare alias is banned on purpose: on Opus 5 launch day (2026-07-24)
-        # `opus` still resolved to claude-opus-4-8, so aliased lanes silently ran a
+        violations.append("R4: missing `model:` field (must be a pinned `claude-opus-N` or `claude-sonnet-N`)")
+    elif model in ("opus", "sonnet"):
+        # Bare aliases are banned on purpose: `opus` resolved to claude-opus-4-8 on
+        # Opus 5 launch day (2026-07-24) and `sonnet` resolved to claude-sonnet-5
+        # after Sonnet 5.5 shipped (2026-09-29). Aliased lanes silently run a
         # generation behind with nothing in the repo naming a version. Pin the id.
         violations.append(
-            "R4: bare `opus` alias not allowed (it can lag a generation behind). "
-            "Pin the explicit id, e.g. `model: claude-opus-5`"
+            f"R4: bare `{model}` alias not allowed (it can lag a generation behind). "
+            f"Pin the explicit id, e.g. `model: claude-{model}-5-5`"
         )
-    elif model != "sonnet" and not re.fullmatch(r"claude-opus-\d[\w.-]*", model):
+    elif not re.fullmatch(r"claude-(opus|sonnet)-\d[\w.-]*", model):
         violations.append(
-            f"R4: model '{model}' not allowed (must be `sonnet` or a pinned `claude-opus-N`)"
+            f"R4: model '{model}' not allowed (must be a pinned `claude-opus-N` or `claude-sonnet-N`)"
         )
     return violations
 

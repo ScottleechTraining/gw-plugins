@@ -1,6 +1,6 @@
 ---
 name: gw-publish
-model: sonnet
+model: claude-sonnet-5-5
 description: "Mark a campaign as published. Generates a 1-page wiki summary (the campaign's permanent record in the second brain), archives the topic folder to Deliverables/archived/, and logs the publish event. Run AFTER scheduling or shipping a campaign's social, email, and Substack assets."
 ---
 

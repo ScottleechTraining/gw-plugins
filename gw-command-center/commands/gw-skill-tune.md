@@ -1,6 +1,6 @@
 ---
 name: gw-skill-tune
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Self-improvement loop for content skills. ANALYZE mode (run by /gw-weekly-synthesis, read-only): harvest the week's free grading signals (kills, polish notes, voice-gate failures, seed usage) into concrete SKILL.md diff proposals. APPLY mode (Scott pastes approval from the Sunday report): make the approved edits in the plugin folder and ship them."
 ---
 

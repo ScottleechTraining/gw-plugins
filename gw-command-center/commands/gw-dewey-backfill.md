@@ -1,6 +1,6 @@
 ---
 name: gw-dewey-backfill
-model: sonnet
+model: claude-sonnet-5-5
 description: "One-time Dewey 2nd pass - re-classify backlog for Business + AI content"
 ---
 

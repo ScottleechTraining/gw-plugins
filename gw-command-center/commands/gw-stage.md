@@ -1,6 +1,6 @@
 ---
 name: gw-stage
-model: sonnet
+model: claude-sonnet-5-5
 description: "Stage content pack assets to native draft surfaces (Kit for email, markdown fallback for X/IG/Substack until those platforms are wired)"
 ---
 

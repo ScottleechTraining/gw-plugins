@@ -1,6 +1,6 @@
 ---
 name: gw-mark
-model: sonnet
+model: claude-sonnet-5-5
 description: "One-shot channel state update for a Deliverables topic. Format: `<topic-slug> <channel> <state> [date]`. Records that a content asset was drafted, posted, skipped, or made ready without opening the queue dashboard. Channels: ig_carousel, twitter_thread, ig_single, email, insiders, substack. States: ready, drafted, posted, skip, n/a."
 ---
 

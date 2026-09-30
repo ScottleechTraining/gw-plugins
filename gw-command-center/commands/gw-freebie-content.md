@@ -1,6 +1,6 @@
 ---
 name: gw-freebie-content
-model: sonnet
+model: claude-sonnet-5-5
 description: "Scott's voice-edit layer for interactive freebies. extract mode pulls every coach-facing string out of a freebie's index.html into an editable CONTENT.md; apply mode maps Scott's edited CONTENT.md back into the HTML, runs voice check + smoke test, and rebuilds the review page. Runs BEFORE any freebie is promoted to the Vault or committed."
 ---
 

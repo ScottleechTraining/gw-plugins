@@ -1,6 +1,6 @@
 ---
 name: gw-business-research
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Daily business research - pull top topic from queue, NotebookLM -> brief"
 ---
 

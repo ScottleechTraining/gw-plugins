@@ -1,6 +1,6 @@
 ---
 name: gw-unship
-model: sonnet
+model: claude-sonnet-5-5
 description: "Take a Deliverables topic OFF the Drive sync list. Flips `ready_to_ship: false` so future /gw-queue runs skip syncing it. Existing Drive folder is not deleted automatically (manual cleanup if needed)."
 ---
 

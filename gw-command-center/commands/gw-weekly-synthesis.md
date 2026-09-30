@@ -1,6 +1,6 @@
 ---
 name: gw-weekly-synthesis
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Sunday synthesis - promote best vault material to wiki concepts, write weekly themes"
 ---
 

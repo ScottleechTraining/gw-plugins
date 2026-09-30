@@ -1,6 +1,6 @@
 ---
 name: gw-freebie-apply
-model: sonnet
+model: claude-sonnet-5-5
 description: "Apply a pasted freebie review receipt. Current page: gw-freebie-receipt JSON (v2, validated, atomic) via scripts.gwqueue.freebie_receipt. Legacy gw-freebie-result strings still apply through apply_freebie. Mechanical parse and apply, no judgment."
 ---
 

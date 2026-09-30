@@ -1,6 +1,6 @@
 ---
 name: gw-screenshot-ingest
-model: sonnet
+model: claude-sonnet-5-5
 description: "Daily screenshot ingest - OCR + classify + file Screenshots/inbox"
 ---
 

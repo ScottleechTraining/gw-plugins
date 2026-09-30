@@ -1,6 +1,6 @@
 ---
 name: gw-seed-writer
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Daily content seed - yesterday's vault deltas -> 1-3 content angles in Scott's voice"
 ---
 

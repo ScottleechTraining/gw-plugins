@@ -1,6 +1,6 @@
 ---
 name: gw-plugin-ship
-model: sonnet
+model: claude-sonnet-5-5
 description: "Ship a gw-command-center plugin change: validate, version bump, local refresh, commit and push the plugins repo."
 ---
 

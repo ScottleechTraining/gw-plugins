@@ -1,6 +1,6 @@
 ---
 name: gw-film-study-upload-kit
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Film Study upload kit - YouTube URL in, transcript filed + Thinkific post copy + wiki ingest out. Phone-to-YouTube phase 2 flow. No freebie link, no email, no commit, no posting."
 ---
 

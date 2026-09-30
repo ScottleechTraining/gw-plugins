@@ -1,7 +1,7 @@
 ---
 name: gw-carousel-batch
 description: "Batch-build IG carousel HTML for multiple content packs in parallel. Run bare (no arguments) to discover every content pack still waiting on a carousel; the style-pack recommendation is used without confirmation. Central photo assignment, ~5 subagents per wave, mandatory render-and-eyeball verification of every cover before done. Runs nightly at 3:00am as the gw-carousel-batch scheduled job, and on demand."
-model: claude-opus-5
+model: claude-opus-5-5
 ---
 
 # /gw-carousel-batch — Parallel IG Carousel Builds

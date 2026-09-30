@@ -1,6 +1,6 @@
 ---
 name: gw-ai-research
-model: claude-opus-5
+model: claude-opus-5-5
 description: "Daily AI research - pull top topic from queue, NotebookLM -> brief"
 ---
 

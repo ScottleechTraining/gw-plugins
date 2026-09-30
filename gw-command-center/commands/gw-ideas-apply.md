@@ -1,6 +1,6 @@
 ---
 name: gw-ideas-apply
-model: sonnet
+model: claude-sonnet-5-5
 description: "Apply a pasted gw-ideas-result string from ideas.html to the forge backlog. forge queues /gw-content-forge on the slug now, top bumps its score so the nightly picker takes it first, skip retires it with a recorded skip_reason. Mechanical parse and apply, no judgment."
 ---
 
