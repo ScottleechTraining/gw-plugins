@@ -169,7 +169,7 @@ regenerate it and do not contradict it. If it does not exist, create it:
   - CHAPTERS block: `0:00 Intro` first, minute-marker inferred, roughly 15-25 chapters.
   - SHOW NOTES: 3-4 bullets, what the listener walks away able to do.
   - Guest links, `Follow me: https://instagram.com/sleech72`, the three sponsor lines
-    (TrainHeroic 90-day trial link, Plyomat, Enduraphin team pricing), Insiders $1 CTA.
+    (TrainHeroic 90-day trial link, Plyomat, Enduraphin team pricing), Insiders CTA (every course included, $49 a month).
 - **HELLOAUDIO section**: keyword-front episode title; 2-paragraph description; trimmed
   timestamp list (drop intro, sponsor breaks, where-to-find, outro); compact links block.
 - **After the YouTube upload** note: paste the unlisted link into the Insiders post's
@@ -219,13 +219,13 @@ original, never stronger. Never quote transcript profanity in any asset.
 - Subject line: leads with the best insight from the session, not "Film Study recap"
 - 4-6 sentences. Leads with what Insiders coaches just learned.
 - Non-members feel what they're missing.
-- Ends with: "This is what Insiders coaches are learning every week. First month is $1. [LINK]"
+- Ends with: "This is what we work on inside GW Insiders. Every course included. [LINK]"
 - Sign off: Keep the Fire Burning, / Leech
 
 **Asset 4: Twitter Thread**
 - Tweet 1: Hook. Bold coaching truth pulled from the session. Under 280 chars.
 - Tweets 2-4: Teaching points. One idea per tweet. Specific and usable. Under 280 chars.
-- Tweet 5: Bridge to Insiders. "This is what we cover every week inside GW Insiders. First month is $1. [LINK]" Under 280 chars.
+- Tweet 5: Bridge to Insiders. "This is what we cover inside GW Insiders. Every course included, $49 a month. [LINK]" Under 280 chars.
 
 **Asset 5: Instagram Caption**
 - First line is the hook.
@@ -250,7 +250,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 - Subject line: guest name + what they taught. Curiosity angle.
 - 4-6 sentences. Lead with the guest's best insight or most surprising point.
 - Non-members feel the cost of not being inside.
-- Ends with $1 trial CTA.
+- Ends with the Insiders CTA: every course included, $49 a month.
 - Sign off: Keep the Fire Burning, / Leech
 
 **Asset 4: Twitter Thread**
@@ -314,7 +314,7 @@ Grep `Voice Corpus/` for the topic keyword and close synonyms. Note which files 
 This shapes product CTAs (for opted-in carousels, only when the selected action and a valid offer justify one):
 - If a course covers this topic (Contact Prep, GW 2.0, Scores and Stops) → point there
 - If a Film Study exists → reference it and push Insiders
-- No prior work found → default CTA is Insiders $1 trial
+- No prior work found → default CTA is Insiders, every course included, $49 a month
 
 Note any new angles, updated positions, new quotes, or new evidence. These go in the content pack AND get flagged for wiki ingest in Step 4.
 
@@ -376,7 +376,7 @@ These ship to Scott's phone as `captions/reel-ideas.txt` and get posted as Insta
 - Opens with "Coach," or jumps straight in
 - 5-8 short paragraphs. One idea per paragraph. Many are one sentence.
 - Structure: Problem → agitation → insight → CTA
-- CTA points to the product the cross-reference found (or defaults to Insiders $1 trial)
+- CTA points to the product the cross-reference found (or defaults to Insiders, every course included, $49 a month)
 - Ends with: Keep the Fire Burning, / Leech
 
 **Asset 8: Comparison Table (the citation asset)**
@@ -409,7 +409,7 @@ cta_rationale: [why these CTAs were chosen]
 pipeline: gw-content-forge
 ---
 
-# [TOPIC] — Content Pack
+# [TOPIC]: Content Pack
 
 ## Cross-Reference Summary
 [2-3 sentences: what wiki and Voice Corpus pages were consulted, what angles already exist, what's new]
@@ -533,6 +533,10 @@ Both modes save into `Deliverables/_inbox/[TOPIC-SLUG]/`. The `_inbox/` lands ne
 ## Step 3.5: Voice Gate (mandatory, before save)
 
 Before saving any asset, run the `gw-voice-gate` checklist against every Scott-voice piece in the pack and apply the fixes. Run it as one clean agent spawn for the whole pack, per the gate's "Run it in a clean agent" section: pass only the draft text, content types, and `gw-content-forge` as the producing skill. Never grade the pack in this session. Check em-dashes, banned words, the "Keep the Fire Burning, / Leech" sign-off on emails, sentence length, AI-slop tells, and ICP fit. No asset ships with a FAIL.
+
+Draft to the gate's repeat hits so the first pass is clean:
+- Sentences 30 words or fewer. Email paragraphs 5 sentences or fewer.
+- No hedges ("probably", "might" as a hedge). Pick a position.
 
 ## Step 3.6: Message Gate (mandatory, every carousel, before save)
 

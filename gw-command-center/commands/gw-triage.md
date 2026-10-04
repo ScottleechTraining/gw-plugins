@@ -23,7 +23,7 @@ Scott makes the final R/C/K/S call, but every preview must carry a suggested ver
 1. **Hook strength for the ICP**: does the first line stop a time-strapped HS football or S&C coach mid-scroll? Names a specific mistake, decision, or fear (letting athletes down, kids getting dominated), not a vague theme. Weak/generic hook is the most common reason a pack is not Ready.
 2. **Teaching novelty**: does it teach something not already sitting in `ready/` or `archived/`? A near-duplicate of a shipped or queued topic is Cold at best, never Ready. Same angle already published = Cold. Genuinely new teaching = Ready-eligible.
 3. **Seasonal timing**: is it on-calendar right now (August is coming, camp prep, in-season CNS, offseason build)? On-window and strong pushes toward Ready. On-window is a tie-breaker up, not a rescue for a weak hook. Off-season-but-evergreen is fine; off-season-and-dated leans Cold.
-4. **Offer alignment**: does it feed a live offer: Insiders ($29/mo, primary MRR), the Schools funnel (Summer/Inseason in a Day → GW Schools) or a course (GW2.0 / Contact Prep / Scores and Stops / Second Brain)? A pack with a clear CTA into an offer beats one that teaches into a dead end.
+4. **Offer alignment**: does it feed a live offer: Insiders ($49/mo, every course included, primary MRR), the Schools funnel (Summer/Inseason in a Day → GW Schools) or a course (GW2.0 / Contact Prep / Scores and Stops / Second Brain)? A pack with a clear CTA into an offer beats one that teaches into a dead end.
 
 **Verdict rule (suggested, Scott confirms):**
 - **Ready**: strong hook AND novel teaching AND (on-window OR clean offer alignment). The pack earns a spot in the publish queue as-is.

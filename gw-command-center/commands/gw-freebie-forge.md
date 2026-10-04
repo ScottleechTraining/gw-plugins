@@ -112,7 +112,7 @@ Read `C:\Claude Projects\CLAUDE.md`. Internalize:
 
 Read the wiki entity pages to decide where this freebie funnels. Priority order:
 
-1. **Insiders ($1 first month trial)** — default. Always works. Use unless a course is a clearly better fit.
+1. **Insiders ($49 a month, every course included)** — default. Always works. Use unless a course is a clearly better fit.
 2. **Contact Prep ($87)** — if the topic is physicality, tackling, partner drills, violence-as-skill, OL/DL.
 3. **Scores and Stops ($97)** — if the topic is agility, space creation, closing space, decision-making.
 4. **Gridiron Warrior 2.0 ($197)** — if the topic is summer programming, full-team S&C, season-long programs.
@@ -186,9 +186,9 @@ No bullet salad. Read like a coach talking to a coach after practice.]
 
 ## [Next step: direct, urgency-flavored CTA line]
 
-[2-3 sentences pitching the funnel target picked in Step 3. Include the price or trial offer. Include a link placeholder Scott can swap in. Specific to the offer:
+[2-3 sentences pitching the funnel target picked in Step 3. Include the price. Include a link placeholder Scott can swap in. Specific to the offer:
 
-- Insiders: "$1 for the first month. Cancel anytime. [LINK]"
+- Insiders: "Every course included. $49 a month. Cancel anytime. [LINK]"
 - Contact Prep: "$87. 60+ videos. Three-phase progression. [LINK]"
 - Scores and Stops: "$97. Agility drills for creating and closing space. [LINK]"
 - GW 2.0: "$197. Win the summer. Win the season. [LINK]"]
