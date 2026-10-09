@@ -71,6 +71,11 @@ Copy-paste everything below.
 **Description:**
 [2-4 sentences. What the Film Study teaches and who it is for.]
 
+[YouTube description block from `plugins/gw-command-center/references/insiders-offer.md`, word for word]
+
+**Pinned comment:**
+[YouTube pinned comment from the same file, word for word]
+
 CHAPTERS
 0:00 [chapter]
 [3-8 chapters total, from the transcript's actual teaching beats]
@@ -120,6 +125,7 @@ Keep it tight.
 ## Hard rules
 
 - NO freebie link anywhere in the output. Scott's explicit call, 2026-08-26.
+- The Insiders offer comes only from `plugins/gw-command-center/references/insiders-offer.md`. Never write $29, a trial, or a price from memory.
 - No email, no Kit, no commit, no push, no posting to Thinkific or anywhere else.
 - Never fabricate transcript content. Auto-captions missing = stop and say so.
 - Auto-caption text is imperfect. Quote it for ingest, but never publish raw caption lines as polished copy without cleanup.

@@ -169,7 +169,7 @@ regenerate it and do not contradict it. If it does not exist, create it:
   - CHAPTERS block: `0:00 Intro` first, minute-marker inferred, roughly 15-25 chapters.
   - SHOW NOTES: 3-4 bullets, what the listener walks away able to do.
   - Guest links, `Follow me: https://instagram.com/sleech72`, the three sponsor lines
-    (TrainHeroic 90-day trial link, Plyomat, Enduraphin team pricing), Insiders CTA (every course included, $49 a month).
+    (TrainHeroic 90-day trial link, Plyomat, Enduraphin team pricing), then the YouTube description block from `plugins/gw-command-center/references/insiders-offer.md` word for word.
 - **HELLOAUDIO section**: keyword-front episode title; 2-paragraph description; trimmed
   timestamp list (drop intro, sponsor breaks, where-to-find, outro); compact links block.
 - **After the YouTube upload** note: paste the unlisted link into the Insiders post's
@@ -208,6 +208,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 **Asset 1: YouTube Description**
 - 2-3 sentences on the topic and why it matters right now in the training calendar.
 - Timestamps inferred from transcript.
+- The YouTube description block from `plugins/gw-command-center/references/insiders-offer.md`, word for word, before the hashtags. Add the pinned-comment line from the same file under the description.
 - Hashtags: `#footballcoach #filmStudy #gridironwarrior` plus topic-specific.
 
 **Asset 2: Insiders Community Post**
@@ -240,6 +241,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 **Asset 1: YouTube Description**
 - Episode summary. Guest bio in 2 sentences (credentials, why coaches should care).
 - Timestamps inferred from transcript.
+- The YouTube description block from `plugins/gw-command-center/references/insiders-offer.md`, word for word, before the hashtags.
 - Hashtags: `#footballcoach #gridironwarrior` plus topic-specific.
 
 **Asset 2: Insiders Community Post**
