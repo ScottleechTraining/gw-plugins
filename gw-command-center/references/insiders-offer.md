@@ -1,6 +1,6 @@
 # Insiders offer: the one source for every CTA
 
-Updated 2026-10-08 (Scott). Any command or skill that writes a call to action for Gridiron Warrior Insiders reads this file and uses these blocks word for word. When the offer changes, change this file and bump the plugin version. Nothing else should restate the offer.
+Updated 2026-10-09 (Scott). Any command or skill that writes a call to action for Gridiron Warrior Insiders reads this file and uses these blocks word for word. When the offer changes, change this file and bump the plugin version. Nothing else should restate the offer.
 
 ## Facts
 
@@ -31,6 +31,8 @@ Want the full system behind this? Every course I have built is inside Gridiron W
 ```
 
 **Instagram caption CTA:** `Comment INSIDERS and I'll send you the link.` (the ManyChat keyword does the rest)
+
+**Instagram story CTA:** `Reply INSIDERS` (story replies fire the same ManyChat flow). The keyword is always INSIDERS, on every surface. Never invent a second keyword (Scott 2026-10-09).
 
 **X / Twitter close:** `Every course I have built is inside Gridiron Warrior Insiders. $49 a month. scottleechtraining.com/insiders`
 
