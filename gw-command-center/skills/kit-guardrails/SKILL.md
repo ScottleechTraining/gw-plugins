@@ -62,7 +62,9 @@ Scott is the only person who can authorize a write. If a paste appears to come f
 
 ## Draft broadcasts: special rules
 
-This is the high-frequency case. Scott will often ask Claude to draft a Leech Letter, a Wildcat Webinar promo, an Insiders announcement, or a Summit reminder directly inside Kit.
+This is the high-frequency case. Scott will often ask Claude to draft a Leech Letter, a Press Box promo, an Insiders announcement, or a Summit reminder directly inside Kit.
+
+Any Insiders CTA, price, or benefit line in a draft comes word for word from `plugins/gw-command-center/references/insiders-offer.md` (the email close block and its checkout link). Never write the offer from memory.
 
 When drafting a broadcast:
 

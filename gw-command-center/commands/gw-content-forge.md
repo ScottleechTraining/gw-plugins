@@ -1,7 +1,7 @@
 ---
 name: gw-content-forge
 model: claude-opus-5-5
-description: "Scott Leech's content production engine. Two modes. TRANSCRIPT MODE: paste a transcript (podcast, Film Study, or Wildcat Webinar) and get the correct asset set for that content type, ready to schedule. CONTENT PACK MODE: give a topic, file path, or Second Brain reference and get a full content pack (3 Twitter threads, 2 Instagram carousels, 3 reel ideas, 1 email, 1 comparison table when sources support it). All in Scott Leech's voice. Wiki-first, cross-domain integrated, queue-aware. Use when Scott pastes a transcript, says 'content forge', 'run the forge', 'make content from', or asks for Twitter threads, carousels, emails, or reels from any GW source or coaching topic."
+description: "Scott Leech's content production engine. Two modes. TRANSCRIPT MODE: paste a transcript (podcast, Film Study, or Press Box session) and get the correct asset set for that content type, ready to schedule. CONTENT PACK MODE: give a topic, file path, or Second Brain reference and get a full content pack (3 Twitter threads, 2 Instagram carousels, 3 reel ideas, 1 email, 1 comparison table when sources support it). All in Scott Leech's voice. Wiki-first, cross-domain integrated, queue-aware. Use when Scott pastes a transcript, says 'content forge', 'run the forge', 'make content from', or asks for Twitter threads, carousels, emails, or reels from any GW source or coaching topic."
 ---
 
 # GW Content Forge
@@ -10,7 +10,7 @@ Gridiron Warrior's content production engine. One input. All the assets. Scott's
 
 ## Scope
 
-Deliver the full asset set for the mode you pick, and nothing past it. The counts are a floor, not a target: podcast = UPLOAD-KIT.md plus the 6-asset pack, Film Study = 5 assets, Wildcat Webinar = 6 assets, content pack = 8 assets (Asset 8 skips only by its own stated rule). Do not ship fewer assets, do not invent asset types nobody asked for, and finish every asset in the set before you report.
+Deliver the full asset set for the mode you pick, and nothing past it. The counts are a floor, not a target: podcast = UPLOAD-KIT.md plus the 6-asset pack, Film Study = 5 assets, Press Box = 6 assets, content pack = 8 assets (Asset 8 skips only by its own stated rule). Do not ship fewer assets, do not invent asset types nobody asked for, and finish every asset in the set before you report.
 
 ## Accepted input: $ARGUMENTS
 
@@ -118,9 +118,9 @@ The highest-frequency task. Post-session, phone in hand, transcript ready.
 Ask (or infer from context):
 - **Podcast** — UPLOAD-KIT.md + 6-asset pack (two files, see PODCAST section)
 - **Film Study** — 5 assets
-- **Wildcat Webinar** — 6 assets (includes guest share message)
+- **Press Box** (ex Wildcat Webinar, renamed 2026-08-04) — 6 assets (includes guest share message)
 
-If the user doesn't specify, check the transcript for clues: guest intro = podcast or webinar, Scott solo presenting = Film Study.
+If the user doesn't specify, check the transcript for clues: guest intro = podcast or Press Box, Scott solo presenting = Film Study.
 
 ### 2A.2: Read the Transcript
 
@@ -236,7 +236,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 
 ---
 
-### WILDCAT WEBINAR (6 assets)
+### PRESS BOX (6 assets)
 
 **Asset 1: YouTube Description**
 - Episode summary. Guest bio in 2 sentences (credentials, why coaches should care).
@@ -279,7 +279,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 
 Save to: `C:/Claude Projects/Gridiron Warrior/Deliverables/_inbox/[CONTENT-TYPE]-[TOPIC-SLUG]/[CONTENT-TYPE]-[TOPIC-SLUG]-[YYYY-MM-DD].md`
 
-Where `[CONTENT-TYPE]` is `podcast`, `film-study`, or `wildcat-webinar`. Creates the `_inbox/` folder if it doesn't exist.
+Where `[CONTENT-TYPE]` is `podcast`, `film-study`, or `press-box`. Creates the `_inbox/` folder if it doesn't exist.
 
 Then jump to Step 4 (Wiki Update) and Step 5 (Report).
 
@@ -665,7 +665,7 @@ If a wiki summary for this source already exists, skip this step but still check
 
 Tell him:
 1. The content pack file path
-2. Mode used (TRANSCRIPT or CONTENT PACK), and for TRANSCRIPT mode which content type (podcast / film-study / wildcat-webinar)
+2. Mode used (TRANSCRIPT or CONTENT PACK), and for TRANSCRIPT mode which content type (podcast / film-study / press-box)
 3. The PULLED FROM THE BRAIN block, verbatim
 4. What cross-domain material was used (Dewey saves, voice notes, business briefs, daily seeds)
 5. Which products/offers the CTAs point to and why

@@ -124,7 +124,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
 
 **Required calls in order:**
 
-1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-05-18 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 102 sources.
+1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-10-11 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 268 of 300 sources.
 
 2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general. Capture `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the master has a gap on this topic — step 3 targets that gap first.
 

@@ -188,7 +188,7 @@ No bullet salad. Read like a coach talking to a coach after practice.]
 
 [2-3 sentences pitching the funnel target picked in Step 3. Include the price. Include a link placeholder Scott can swap in. Specific to the offer:
 
-- Insiders: "Every course included. $49 a month. Cancel anytime. [LINK]"
+- Insiders: the X / Twitter close from `plugins/gw-command-center/references/insiders-offer.md`, word for word, with `[LINK]` in place of the URL. Read the file first; never write the Insiders offer from memory.
 - Contact Prep: "$87. 60+ videos. Three-phase progression. [LINK]"
 - Scores and Stops: "$97. Agility drills for creating and closing space. [LINK]"
 - GW 2.0: "$197. Win the summer. Win the season. [LINK]"]

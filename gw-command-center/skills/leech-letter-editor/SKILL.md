@@ -108,6 +108,8 @@ Exception: personal letters addressed to a family member may sign off as "Dad."
 
 **Default CTA behavior:** No CTA unless Scott says otherwise.
 
+**Insiders CTA:** when the specified CTA is Insiders, use the email close from `plugins/gw-command-center/references/insiders-offer.md` word for word, with its checkout link in place of `[link]`.
+
 ---
 
 ## Output Format

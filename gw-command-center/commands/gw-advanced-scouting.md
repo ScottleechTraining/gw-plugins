@@ -56,6 +56,7 @@ numbered h2 sections -> glossary (dl.glossary) -> Deeper Reading (source-list
 chips, practitioner) -> References (ref-list, numbered academic w/ PubMed
 links) -> "Talk About It Inside" Insiders CTA -> gw-footer ("Keep the Fire
 Burning. - Leech" + "for educational use by coaches, not medical advice").
+Any Insiders price, trial, or benefit line on the page comes from `plugins/gw-command-center/references/insiders-offer.md`; never from memory.
 
 Section archetype menu (pick 6-10 per topic): the-problem, fundamentals/anatomy,
 mechanism (two-column grid), evidence (research-card stack, one study per card),

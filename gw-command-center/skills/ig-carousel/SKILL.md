@@ -204,7 +204,7 @@ Check conversation history first. Confirm any missing:
 3. **Instagram handle** — default: @Sleech72
 4. **Accent color override** *(optional)* — each pack has a locked default; only override if the user explicitly asks
 5. **Tone** — coach-tough, professional, playful, minimal
-6. **CTA** — opted-in: honor the brief's feasible action and matching CTA per `references/copy-record.md`. Legacy: follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`); the Step 0.25 archetype sets the default.
+6. **CTA** — opted-in: honor the brief's feasible action and matching CTA per `references/copy-record.md`. Legacy: follow, link in bio, DM, or comment-trigger ("Comment WORD and I'll send you X" — rules in `references/content-archetypes.md`); the Step 0.25 archetype sets the default. An Insiders CTA or caption uses the Instagram blocks from `plugins/gw-command-center/references/insiders-offer.md` word for word (keyword INSIDERS).
 7. **Image folder** *(Image Mode only)* — default: `Gridiron Warrior/Images/carousels/`
 8. **Seamless spreads?** — attended: ask "Want any photos to span multiple slides for a swipe-reveal effect? e.g., 'slide 3–4' or 'slide 2–3–4'." Default: none. Batch (unattended): if the assigned body photo is landscape, default to ONE two-slide spread on it; portrait body photos get a single photo slide.
 

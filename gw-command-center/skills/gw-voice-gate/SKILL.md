@@ -38,6 +38,7 @@ fluff, delve, tapestry, vibrant, transformative, unlock, leverage (verb use only
 - "leverage" only fails when used as a verb (leverage this, leveraging that). "Leverage" as a noun (the leverage in a squat) passes.
 - Give a plain-language replacement for each hit (utilize to use, elevate to raise, dive into to get into, unlock to open up, etc.).
 - Carousel copy, CTAs, and IG captions also fail on "card" used for a slide ("Save the card", "the card on slide 4") and on "match" used for a Contact Prep drill. Scott banned both on 2026-09-15 and 2026-09-22 after decks shipped with them. Replace with "Save this" / "slide 4" and "drill". A wrestling match or a matching pair of numbers passes.
+- Any Insiders price, trial, or benefit line must match `plugins/gw-command-center/references/insiders-offer.md`. A phrase on its "Never write" list ($29, any trial, "Weekly Film Study", "Wildcat Webinar", and the rest) is a FAIL. Replace it with the matching block from that file.
 
 ### Check 3: Sign-off
 Applies only to email, letter, or long-form post. Skip for tweets, IG captions, carousel slides.

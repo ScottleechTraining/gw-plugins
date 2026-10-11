@@ -182,7 +182,7 @@ Claude judgment:
 
 - **`high`** = genuinely useful for Insiders / Course / Summit / Film Study / hook-bank. Includes:
   - Coaching ideas, frameworks, drills, programming, hooks an HS football / S&C coach could use
-  - Posts from coaches Scott already knows or has hosted (Wildcat Webinar guests, podcast guests, Summit speakers — cross-reference `wiki/index.md` Entities and Summaries before tagging)
+  - Posts from coaches Scott already knows or has hosted (Press Box guests, including past Wildcat Webinar guests, podcast guests, Summit speakers — cross-reference `wiki/index.md` Entities and Summaries before tagging)
   - Posts from authoritative external S&C voices (Building The Elite, Fergus Connolly, Tony Holler, Mike Robertson, Cal Dietz, Joel Smith, etc.)
   - Marketing / business framework posts that directly apply to selling GW (sales copy structure, offer construction, hook patterns, email frameworks)
   - **Graphic design, AI tooling, or Claude/ChatGPT usage posts** — Scott runs the GW Design Studio and uses AI heavily for content production; tag these HIGH if they show a usable technique, MEDIUM if they're general commentary
