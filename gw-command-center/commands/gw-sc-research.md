@@ -6,7 +6,7 @@ description: "Daily S&C research - pull top topic from queue, NotebookLM -> brie
 
 # /gw-sc-research — Daily Strength & Conditioning Research Brief
 
-Mirror of `/gw-ai-research` and `/gw-business-research` but for strength & conditioning topics drawn from Scott's actual coaching territory. Sources lean on Scott's NotebookLM **S&C Master Resource** notebook plus the Dewey S&C bucket from the daily ingest.
+Mirror of `/gw-ai-research` and `/gw-business-research` but for strength & conditioning topics drawn from Scott's actual coaching territory. Sources lean on two of Scott's NotebookLM notebooks, **S&C Master Resource** (programming, speed, testing) and **S&C Health and Recovery** (concussion, nutrition, sleep, heat, return-to-play), picked per run by the routing table in step 2, plus the Dewey S&C bucket from the daily ingest.
 
 Scope: one topic, one brief, plus the queue, index, tags, and log updates the steps below name. Do not research a second topic, do not add sections the brief template does not have, and do not write files outside the paths this command names. Finish every step through the wiki log line before you report.
 
@@ -120,23 +120,33 @@ The `sc-research` gate has no log-marker validator, so this line is for Scott an
 
 ### 2. Run NotebookLM research
 
-Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** notebook (unlike business research which creates a new one per topic), and it GROWS that notebook: every run adds new original sources to the master (Scott's standing rule, 2026-08-16). Never rely on notebook recall alone.
+Use the `mcp__notebooklm__*` MCP server. This skill uses **existing** notebooks (unlike business research which creates a new one per topic), and it GROWS the one it routes to: every run adds new original sources to the routed notebook (Scott's standing rule, 2026-08-16). Never rely on notebook recall alone.
+
+**Routing table (fixed, by rule, since 2026-10-12).** One notebook per run. The topic's slug, framed question and queue line decide the route; the same notebook takes the query AND tonight's new sources, so every citation in the brief came from the notebook named in its frontmatter. Match on these keywords, first hit wins:
+
+| Route | Keywords in slug / question | Notebook | id |
+|---|---|---|---|
+| `health` | concussion, head impact, neck (injury context), nutrition, hydration, fluid, supplement, sleep, heat, heat illness, acclimatization, return-to-play, return to sport, rehab, injury, sprain, strain, pain, recovery modality (foam roll, cold, sauna, massage), wellness questionnaire, illness, mental health | `S&C Health and Recovery` | `c62bf9f3-e4b4-4f35-8b4e-f209f564ee86` |
+| `master` | everything else: programming, periodization, strength, speed, plyometrics, testing, monitoring load, in-season, off-season, youth development, coaching, facility | `S&C Master Resource` | `f4704629-7eab-4d23-ac95-7f8a2d9e826c` |
+
+Neck *strengthening as training* routes `master`; neck in a concussion or injury context routes `health`. Load monitoring routes `master`; a wellness or illness question routes `health`. When a topic straddles both, route by where the decision lands: a "should I program X" question is `master`, a "is the athlete safe / ready / fed / rested" question is `health`. Never query both by default.
 
 **Required calls in order:**
 
-1. **Resolve the master notebook ID.** Call `mcp__notebooklm__notebook_list` and find the notebook titled exactly `S&C Master Resource`. Save its `id` as `master_id`. As of 2026-10-11 this is `f4704629-7eab-4d23-ac95-7f8a2d9e826c` with 268 of 300 sources.
+1. **Resolve the routed notebook ID.** Pick the route from the table and save that id as `routed_id`; save the other row's id as `other_id`. Confirm both titles exist with `mcp__notebooklm__notebook_list` (the ids above are pinned; the list call is the liveness check). As of 2026-10-12 the master holds 257 of 300 sources and the health notebook is new and grows from tonight's routed adds.
 
-2. **Query the master notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=master_id` and a structured prompt that asks for the six fields listed below. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general. Capture `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the master has a gap on this topic — step 3 targets that gap first.
+2. **Query the routed notebook.** Call `mcp__notebooklm__notebook_query` with `notebook_id=routed_id` and a structured prompt that asks for the six fields listed below. Lead the prompt with the framed `question` and `decision` from step 1b; every field answers that question, not the topic in general. Capture `routed_id` as `notebook_id` in the brief frontmatter. Judge coverage from the answer: thin, generic, or hedging responses on any field mean the routed notebook has a gap on this topic — step 3 targets that gap first.
+   - **One fallback only.** If a field comes back thin or empty (expected while the health notebook is young), run ONE query against `other_id` for that field, cite its passages separately under `## Sources` as `(from <other notebook title>)`, and keep `notebook_id` in the frontmatter as `routed_id`. Never merge the two answers into one unattributed field, and never run the fallback when the routed answer is already full.
 
-3. **Add 2-3 new original sources to the master (MANDATORY, every run).** The brief must never be NotebookLM-recall-only.
+3. **Add 2-3 new original sources to the routed notebook (MANDATORY, every run).** The brief must never be NotebookLM-recall-only.
    - Find candidates via web search and YouTube: peer-reviewed papers and reviews, coach clinic talks, reputable practitioner writing on today's topic. High-signal only — no SEO content farms, no AI listicles.
    - If step 2 exposed a gap, pick sources that fill that exact gap first.
-   - Dedup before adding: check the master's existing source list (`notebook_describe` on `master_id`). A source already present does not count toward the 2-3.
-   - Add each via `mcp__notebooklm__source_add` with `notebook_id=master_id` (`source_type=url` covers articles and YouTube).
+   - Dedup before adding: check the routed notebook's existing source list (`notebook_get` on `routed_id`). A source already present does not count toward the 2-3.
+   - Add each via `mcp__notebooklm__source_add` with `notebook_id=routed_id` (`source_type=url` covers articles and YouTube). Never add to `other_id`; the fallback notebook is read-only for this run.
    - Attempt cap: at most 4 source_add calls per run, retries included. A failed or blank import still uses a cap slot; list its id under ## Sources for the weekly prune, and if source_describe shows no summary, delete that one stub in the same run.
-   - **Re-query the master** with the same structured prompt once the new sources finish processing, so today's brief uses the new material.
+   - **Re-query the routed notebook** with the same structured prompt once the new sources finish processing, so today's brief uses the new material.
    - Enrichment failure is NOT a blocker: if search or `source_add` errors out, ship the brief from the step-2 answer, set `sources_added: 0`, and name the reason under `## Sources`. Only the query HARD RULE below blocks a brief.
-   - Source cap: if `source_add` fails with a per-notebook source-limit error, create `S&C Master Resource II` via `notebook_create`, add there, and flag the overflow in the wiki log line so Scott sees it in the morning report.
+   - Source cap: if `source_add` fails with a per-notebook source-limit error, do NOT create a second notebook and do NOT add to the other route. Ship the brief with `sources_added: 0`, name the cap under `## Sources`, and put `NOTEBOOK AT CAP: <title>` in the wiki log line so Scott sees it in the morning report. A date-split overflow notebook (the retired `Master Resource II` rule) breaks search; the fix is a prune or a new topic route, and that is Scott's call.
 
 4. **Cross-reference the local Dewey S&C bucket** at `External Library\Twitter-Instagram Saves\_by-domain\s-and-c\` for anchor authors / recent reels relevant to the topic. A Dewey save with a strong URL is a valid step-3 source candidate.
 
@@ -189,7 +199,8 @@ question_source: queue|ds-<slug>|scott
 disposition: new|update
 supersedes: <older brief filename, UPDATE only, omit the key on NEW>
 source_count: <N>
-sources_added: <N new sources added to the master this run, 0 if enrichment failed>
+sources_added: <N new sources added to the routed notebook this run, 0 if enrichment failed>
+notebook_route: health|master
 auto_picked: false|true
 pipeline: gw-sc-research
 ---
@@ -229,7 +240,7 @@ pipeline: gw-sc-research
 
 `## Already Decided` is the only conditional section in the template. Include it only when the decisions gate actually fired; omit the heading entirely when nothing collided. It is internal, so it never ships to the Briefing Room (it is in `DROP_SECTIONS` in `websites/scottleechtraining.com/briefing-room/_build/build_briefing_room.py`).
 
-In `## Sources`, tag each source added to the master this run with `(added to master)` so the enrichment trail is visible in the brief. If enrichment failed, state the reason here in one line.
+In `## Sources`, tag each source added this run with `(added to <routed notebook title>)` so the enrichment trail is visible in the brief, and tag any fallback passage with `(from <other notebook title>)`. If enrichment failed, state the reason here in one line.
 
 **Member-ready rules (D6, 2026-09-10).** A script builds the member edition from this file, so the
 brief has to survive that pass. Five rules:
