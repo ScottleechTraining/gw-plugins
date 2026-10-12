@@ -126,7 +126,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses **existing** notebooks 
 
 | Route | Keywords in slug / question | Notebook | id |
 |---|---|---|---|
-| `health` | concussion, head impact, neck (injury context), nutrition, hydration, fluid, supplement, sleep, heat, heat illness, acclimatization, return-to-play, return to sport, rehab, injury, sprain, strain, pain, recovery modality (foam roll, cold, sauna, massage), wellness questionnaire, illness, mental health | `S&C Health and Recovery` | `c62bf9f3-e4b4-4f35-8b4e-f209f564ee86` |
+| `health` | concussion, head impact, neck (injury context), nutrition, hydration, fluid, supplement, sleep, heat, heat illness, acclimatization, return-to-play, return to play, RTP, return to sport, rehab, injury, sprain, strain, pain, tendon, tendinopathy, tendonitis, jumper's knee, recovery modality (foam roll, cold, sauna, massage), wellness questionnaire, illness, mental health | `S&C Health and Recovery` | `c62bf9f3-e4b4-4f35-8b4e-f209f564ee86` |
 | `master` | everything else: programming, periodization, strength, speed, plyometrics, testing, monitoring load, in-season, off-season, youth development, coaching, facility | `S&C Master Resource` | `f4704629-7eab-4d23-ac95-7f8a2d9e826c` |
 
 Neck *strengthening as training* routes `master`; neck in a concussion or injury context routes `health`. Load monitoring routes `master`; a wellness or illness question routes `health`. When a topic straddles both, route by where the decision lands: a "should I program X" question is `master`, a "is the athlete safe / ready / fed / rested" question is `health`. Never query both by default.
