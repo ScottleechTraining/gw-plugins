@@ -133,6 +133,7 @@ Use the `mcp__notebooklm__*` MCP server. This skill uses an **existing** noteboo
    - If step 2 exposed a gap, pick sources that fill that exact gap first.
    - Dedup before adding: check the master's existing source list (`notebook_describe` on `master_id`). A source already present does not count toward the 2-3.
    - Add each via `mcp__notebooklm__source_add` with `notebook_id=master_id` (`source_type=url` covers articles and YouTube).
+   - Attempt cap: at most 4 source_add calls per run, retries included. A failed or blank import still uses a cap slot; list its id under ## Sources for the weekly prune, and if source_describe shows no summary, delete that one stub in the same run.
    - **Re-query the master** with the same structured prompt once the new sources finish processing, so today's brief uses the new material.
    - Enrichment failure is NOT a blocker: if search or `source_add` errors out, ship the brief from the step-2 answer, set `sources_added: 0`, and name the reason under `## Sources`. Only the query HARD RULE below blocks a brief.
    - Source cap: if `source_add` fails with a per-notebook source-limit error, create `S&C Master Resource II` via `notebook_create`, add there, and flag the overflow in the wiki log line so Scott sees it in the morning report.
