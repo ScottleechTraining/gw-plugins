@@ -33,7 +33,7 @@ Search the draft for the em-dash character and for the double-hyphen used as one
 
 ### Check 2: Banned words scan
 Case-insensitive, word-boundary match against this list:
-fluff, delve, tapestry, vibrant, transformative, unlock, leverage (verb use only), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge.
+fluff, delve, tapestry, vibrant, transformative, unlock, leverage (verb use only), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, lane (as a training track or path: "strength lane", "pick his lane"; a literal sprint lane on a field passes).
 - Any hit is a FAIL. List the line number and the word.
 - "leverage" only fails when used as a verb (leverage this, leveraging that). "Leverage" as a noun (the leverage in a squat) passes.
 - Give a plain-language replacement for each hit (utilize to use, elevate to raise, dive into to get into, unlock to open up, etc.).

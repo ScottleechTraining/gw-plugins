@@ -68,7 +68,7 @@ Hard rules on the choice:
 
 #### No-brief close-out
 
-Four steps, in order, then stop. Write no brief, add no `_index.md` line, do not touch `tags.json`, and never move the line to `## Completed`. Completed means researched, and nothing here was researched.
+Four steps, in order. Write no brief, add no `_index.md` line, do not touch `tags.json`. SCOTT ANSWER NEEDED and NO NEW RESEARCH stay in the active queue, then stop. REUSE is different: the line moves to `## Completed` (the question is answered, by the older brief) and you go back to step 1 with the next active line, so one duplicate never costs the day's brief. Cap it at three REUSE pops per run; if the fourth line is also a reuse, write a NO NEW RESEARCH receipt and stop. Rule added 2026-10-15 after [chatgpt-astra-vs-claude-stack] sat first in the AI queue as a REUSE on 10-14 and 10-15 and blocked both mornings.
 
 **1. Write the receipt.** Never hand-write the JSON file; the CLI validates it.
 
@@ -88,19 +88,19 @@ Fields:
 | `disposition` | yes | `reuse`, `scott-answer-needed`, or `no-new-research` |
 | `reason` | yes | One plain sentence saying why |
 | `checks_performed` | yes | List of the checks you actually ran |
-| `queue_action` | yes | `left-active` |
+| `queue_action` | yes | `moved-to-completed` (REUSE) or `left-active` (the other two) |
 | `related_briefs` | REUSE | List with the reused brief filename |
 | `scott_question` | SCOTT ANSWER NEEDED | One specific question for Scott |
 
 The CLI exits non-zero and writes nothing if a field is missing, the disposition is unknown, a reuse names no brief, or a Scott question is absent. Fix the fields and run it again. It also never overwrites an earlier receipt for the same lane and date; a second run lands at `sc-2.json` and says so.
 
-**2. Append the suffix to the queue line, in place.** Same byte pattern the blocked path already writes: one existing line gets a suffix, every other byte of the file stays as it is. Never rewrite another line.
+**2. Update the queue line.** REUSE: cut the line from `## Active Queue` and insert it at the top of `## Completed` as `- YYYY-MM-DD - <original line> *(reuse -> <existing-brief-filename>)*`, then return to step 1 for the next active line. The other two outcomes append a suffix to the line in place. Same byte pattern the blocked path already writes: one existing line gets a suffix, every other byte of the file stays as it is. Never rewrite another line.
 
-- REUSE: ` *(reuse YYYY-MM-DD -> <existing-brief-filename>)*`
+- REUSE: no suffix in the active queue; the line is already in `## Completed` with ` *(reuse -> <existing-brief-filename>)*`
 - SCOTT ANSWER NEEDED: ` *(awaiting Scott YYYY-MM-DD)*`
 - NO NEW RESEARCH: ` *(no new research YYYY-MM-DD - <short reason>)*`
 
-The line stays under `## Active Queue` with its `[topic-slug]` intact. That keeps `scripts/queue_status.py` counting it as active (honest: the work is not done), keeps it first in line tomorrow, and lets `/gw-weekly-synthesis` Step 3 find the slug so it does not requeue the topic. Encoding: the S&C queue is UTF-8 with no BOM and CRLF line endings.
+A SCOTT ANSWER NEEDED or NO NEW RESEARCH line stays under `## Active Queue` with its `[topic-slug]` intact, so `scripts/queue_status.py` counts it as active (honest: the work is not done) and `/gw-weekly-synthesis` Step 3 finds the slug. A REUSE line in `## Completed` keeps its `[topic-slug]` too; Step 3 greps both sections, so it is not requeued, and it can no longer sit first in line. Encoding: the S&C queue is UTF-8 with no BOM and CRLF line endings.
 
 **3. Append the wiki log line.**
 
