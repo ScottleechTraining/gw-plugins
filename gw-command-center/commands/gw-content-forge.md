@@ -372,6 +372,15 @@ These ship to Scott's phone as `captions/reel-ideas.txt` and get posted as Insta
 - **B-roll option:** one line naming footage that carries this as text-over-video with no talking (weight room, sprint, film, whiteboard). Rhody practice footage is the default.
 - **CTA (last 2 seconds, one line, 5 words max):** a follow ask or a free-tool keyword. Never a paid offer. The graduated reel gets the offer keyword pinned in the comments later.
 
+Hook rules (from the Hooks for Social Media notebook, 2026-10-17; an analysis of 1,300 reels over 1M views sits behind the word count):
+- On-screen line: 5 to 8 words, 12 absolute max. Under 5 reads as vague, over 12 does not get read.
+- You and your, never I and me. A stranger decides in half a second whether this is about him. "If your backups are getting slower" beats "I noticed my backups getting slower."
+- Specific beats round. 283.9 yards beats "almost 300." An odd number stops the thumb and reads as true.
+- Goldilocks gap: the hook names the problem and withholds the fix. Do not spill the answer in the hook (nothing left to watch), do not go vague (nothing to opt into).
+- At most one negative hook (stop, never, lose, wrong) in the three. Negativity pulls attention; a wall of it trains strangers to scroll.
+- Call out the coach when it fits: "If you coach high school football and ..." is the single strongest stranger hook shape.
+- The body must pay the hook. A hook the body cannot cash is clickbait and costs trust.
+
 **Asset 7: Email Draft (Leech Letter style)**
 
 - Subject: lowercase, 3-6 words, curiosity or tension
