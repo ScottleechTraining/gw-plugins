@@ -5,7 +5,7 @@ Updated 2026-10-09 (Scott). Any command or skill that writes a call to action fo
 ## Facts
 
 - **Price:** $49 a month or $490 a year. No trial.
-- **Included:** every Gridiron Warrior course (Gridiron Warrior 2.0, Scores and Stops, Contact Prep, GW Inseason, Coach's Second Brain, and every future course). The 2026 Summit replays. Two Film Studies a month. One live Two-Minute Drill a month. Early podcast episodes. The Locker Room. The Briefing Room. Member-only tools like The Radar.
+- **Included:** every Gridiron Warrior course (Gridiron Warrior 2.0, Scores and Stops, Contact Prep, GW Inseason, Coach's Second Brain, and every future course). The 2026 Summit replays. The Winter Summit (December 6, 2026) live and on replay, at no extra cost (Scott, 2026-10-11 and 2026-10-13). Two Film Studies a month. One live Two-Minute Drill a month. Early podcast episodes. The Locker Room. The Briefing Room. Member-only tools like The Radar.
 - **Public page (YouTube, bios, social, podcast):** https://scottleechtraining.com/insiders
 - **Checkout (emails only):** https://scottleechtraining.thinkific.com/enroll/3347666?price_id=4252770
 - **Value math (when a piece argues price):** the courses alone are $505; with the Summit replays ($97) the total is $602. Gridiron Warrior 2.0 alone ($197) costs more than four months of Insiders. Never claim "any one course costs more than a month" (Coach's Second Brain is $37).
