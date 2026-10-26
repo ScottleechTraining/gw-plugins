@@ -398,6 +398,7 @@ Why it exists: comparison content wins 32.5 percent of all AI answer-engine cita
 - Format: one markdown table, two columns plus a row-label column, 4 to 7 rows. Row labels name decision points a coach weighs (cost, time per week, injury risk, what it builds, where it fails).
 - A number in every cell where the source material has one. NO invented stats. If the source has no number for a cell, write the plain fact instead. Same fact-density rule as the ingest workflow in `Gridiron Warrior/CLAUDE.md`.
 - Close with a one-line verdict in Scott's voice. Pick a side. No hedging.
+- Cells speak as GW: "we", "my", "our" for Scott's practice, or no person. Never "Scott" in the third person (three table cells slipped through the week of 2026-10-25; the gate checks sign-offs only). Outside sources keep their names ("Breda 2021").
 - **This asset is optional.** If the source material holds no genuine comparison, write `Comparison: skipped, no genuine comparison in the source` in its section and move on. A forced comparison is filler, and filler is what answer engines skip.
 
 ### 2B.5: Save CONTENT PACK MODE Output
