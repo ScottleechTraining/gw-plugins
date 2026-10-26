@@ -38,7 +38,7 @@ Plus any files modified but not committed (git status). Filter to relevant addit
 - `External Library\BusinessDocuments\YYYY-MM-DD-*-brief.md` (new business research)
 - `External Library\AI\YYYY-MM-DD-*-brief.md` (new AI research)
 - `Voice Corpus\Voice Notes\YYYY-MM-DD-*.md` (Scott's voice notes, highest-signal source in the vault)
-- `Research\NotebookLM\*-research-brief.md` (S&C research briefs)
+- `External Library\S-and-C\YYYY-MM-DD-*-brief.md` (the day's S&C research brief: an ANGLE SOURCE since 2026-10-26, Scott's ruling in `wiki/system/decisions.md`; the old `Research\NotebookLM\*-research-brief.md` path is retired)
 
 ### 1a. Two more source lanes (F5 and F6, 2026-09-10)
 
@@ -98,7 +98,8 @@ On a zero-angle day the file still opens with the `## TOP MOVE` heading, with th
 - **Max 10 individual Read tool calls total for this entire step.** This is a synthesis task, not an archival pass.
 - **Do NOT Glob or Grep the whole vault.** Use the git log output from Step 1 as the sole source of "what's new."
 - **Voice notes: read all** (highest-signal source. Scott's own words, usually 1-3 files max).
-- **Research briefs (business + AI): read both fully** if they exist (1-2 files max).
+- **S&C research brief: read it fully if it exists** (1 file) and treat its `## GW Application` bullets as angle candidates, attributed to the brief. Same sources gate as every angle: the lesson's steps, cues or fault sort still have to exist in Scott's own material, or the angle gets a `Needs:` bullet and no Forge command. Scott's ruling 2026-10-26.
+- **Research briefs (business + AI): read both fully** if they exist (1-2 files max), for context, queue health and the coach question ONLY. Never build an angle from a business or AI brief (Scott, 2026-10-26: angles come from the S&C brief, not from business or AI).
 - **Dewey notes: do NOT read individually.** The new-Dewey-row summary is already in `wiki/log.md` from `/gw-dewey-daily`'s log entry. Read THAT line to get domain counts, top authors, and one-line takeaways. Only open an individual Dewey note if a specific row is mentioned by name and you genuinely need the body.
 - **Screenshots: do NOT read processed notes individually.** Count from the git log file list. If a specific screenshot looks critical for an angle (rare), open one.
 - **CLAUDE.md: already in your project context, do NOT re-Read it.** Just internalize the voice rules from your existing context.
