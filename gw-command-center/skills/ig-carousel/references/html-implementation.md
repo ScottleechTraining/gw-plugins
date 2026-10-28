@@ -10,7 +10,7 @@ Read the section you need at the step SKILL.md points you to.
 
 Used at Step 5 (Generate the HTML). Vitesse Bold ships inside the file as a base64 data URL in an inline style block. Barlow loads from Google Fonts. Inline-only — no external stylesheet for the font.
 
-**Leech (Scott's own handwriting, since 2026-10-24):** `assets/Leech-Regular.otf` (the plugin copy has -50 units of tracking baked into every advance except the space, per Scott 2026-10-25; the untouched original stays at `C:\Claude Projects\Leech-Regular.otf`), base64 in `assets/leech-regular-base64.txt`. The runtime assembler injects it at the same `/*GW_FONTFACE*/` token as Vitesse (`carousel_assets/leech_fontface.css`), so every assembled deck carries `font-family: 'Leech'` and a skeleton never embeds it by hand. It is used ONLY where a pack section in `references/style-packs.md` names it (today: the White Board cover headline). Glyph set (103, since the 2026-10-25 merge of Scott's extras sheet): A-Z, a-z, 0-9, `. , : ; ! ? ' " - / + = % & @ # $ ( ) [ ] { } < > * | ~ _ ^ \` and curly quotes. Anything outside that set (accents, the degree sign, the multiplication sign) falls back to the next face in the stack, so keep a Leech line to plain ASCII.
+**Leech (Scott's own handwriting, since 2026-10-24):** `assets/Leech-Regular.otf` (the plugin copy has -50 units of tracking baked into every advance except the space, per Scott 2026-10-25; the untouched original stays at `C:\Claude Projects\Leech-Regular.otf`), base64 in `assets/leech-regular-base64.txt`. The runtime assembler injects it at the same `/*GW_FONTFACE*/` token as Vitesse (`carousel_assets/leech_fontface.css`), so every assembled deck carries `font-family: 'Leech'` and a skeleton never embeds it by hand. It is used ONLY where a pack section in `references/style-packs.md` names it. As of 2026-10-27 no pack does: Scott pulled it off the White Board cover ("I hate looking at my font"), so it rides along in the assembler unused until he names it. Glyph set (103, since the 2026-10-25 merge of Scott's extras sheet): A-Z, a-z, 0-9, `. , : ; ! ? ' " - / + = % & @ # $ ( ) [ ] { } < > * | ~ _ ^ \` and curly quotes. Anything outside that set (accents, the degree sign, the multiplication sign) falls back to the next face in the stack, so keep a Leech line to plain ASCII.
 
 ```html
 <!DOCTYPE html>
@@ -411,7 +411,7 @@ Save captures current bound text, explicit newlines, caption, and CTA into escap
 
 ## 10. White Board pack — namespaced CSS (proof-verified 2026-09-12)
 
-Verbatim from the proof decks rendered through the real export path (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Tokens live on the slide itself (`.slide.pack--white-board`, SKILL.md trap 2). Every visible string on a board slide is its own `data-gw-copy` binding; the CSS carries only rules, discs, and connectors. Photos are baked B&W JPEGs in `--cover-photo` / `--body-photo` (`/*GW_HERO*/`, `/*GW_HERO2*/`), never a CSS filter (trap 6). The persistent frame uses the dark logo (`/*GW_LOGO_DARK*/`). The cover headline face is **Leech** (Scott's own handwriting, since 2026-10-24; Permanent Marker before that). It arrives through the `/*GW_FONTFACE*/` token, so the Barlow link stays plain (`family=Barlow:wght@400;600;700;900`); do not add Permanent Marker to the link. Fallback after Leech is Barlow 400, never Vitesse: a bold slab glyph inside a handwritten line reads as a glitch.
+Verbatim from the proof decks rendered through the real export path (`docs/superpowers/carousel-style-refresh-2026-09-12/`). Tokens live on the slide itself (`.slide.pack--white-board`, SKILL.md trap 2). Every visible string on a board slide is its own `data-gw-copy` binding; the CSS carries only rules, discs, and connectors. Photos are baked B&W JPEGs in `--cover-photo` / `--body-photo` (`/*GW_HERO*/`, `/*GW_HERO2*/`), never a CSS filter (trap 6). The persistent frame uses the dark logo (`/*GW_LOGO_DARK*/`). The cover headline face is **Permanent Marker** (Scott's 2026-09-12 pick; Leech, his own handwriting, held the slot from 2026-10-24 to 2026-10-27 and he pulled it). It loads from the Google Fonts link, so the link reads `family=Barlow:wght@400;600;700;900&family=Permanent+Marker`. Fallback is Vitesse: the marker face is caps and bold, so the slab fallback does not read as a glitch.
 
 ```css
   /* ---- pack tokens: on the slide itself (SKILL.md trap 2) ---- */
@@ -476,11 +476,10 @@ Verbatim from the proof decks rendered through the real export path (`docs/super
 
   /* ---- cover (Type Plate: headline, one green rule, one contained photo) ---- */
   .mega-cover {
-    font-family: 'Leech', var(--font-body); font-weight: 400; /* Scott's hand, 2026-10-24 */
-    font-size: 112px; line-height: 1.04; letter-spacing: 0; text-transform: none;
-    display: flex; flex-direction: column;
+    font-family: 'Permanent Marker', var(--font-heading); font-weight: 400; /* back to the marker face, Scott 2026-10-27 */
+    font-size: 96px; line-height: 1.06; letter-spacing: 0; text-transform: none;
+    white-space: pre-line; text-wrap: balance;
   }
-  .mega-cover span { display: block; white-space: normal; text-wrap: balance; }
   .mega-cover br { display: none; }
   .cover-photo {
     width: 952px; height: 420px; flex-shrink: 0;

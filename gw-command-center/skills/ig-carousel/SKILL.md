@@ -36,7 +36,7 @@ Six ways carousel builds fail silently. Every one has cost real time. Check them
 
 **What's new in v3.8 (style refresh, 2026-09-12):**
 - Seven ACTIVE packs. The two paper packs merged into one Editorial pack with two per-slide density treatments (Brief, Guide); their historical specs moved to `references/legacy-paper-packs.md` and stay valid for existing decks and old restyle notes. No existing deck is migrated.
-- New White Board pack (clean white, dark ink, green marker emphasis, purposeful comparisons, sequences, and annotations; the cover headline only is hand-written). ACTIVE since 2026-09-12 after Scott approved the rendered proofs. Since 2026-10-24 that hand is **Leech**, Scott's real handwriting as a font, injected by the assembler (`references/html-implementation.md` section 1); Permanent Marker is legacy.
+- New White Board pack (clean white, dark ink, green marker emphasis, purposeful comparisons, sequences, and annotations; the cover headline only is hand-written). ACTIVE since 2026-09-12 after Scott approved the rendered proofs. The hand is **Permanent Marker**. Scott's own handwriting font (Leech) held the cover from 2026-10-24 to 2026-10-27 and he pulled it ("I hate looking at my font"); the assembler still injects it, no pack uses it.
 - The photo-forward tiebreak and its rotation guard are retired. Automatic selection follows the "Automatic selection" policy in `references/style-packs.md`: teaching job first, The Case only when an argument develops across the deck with a strong photo, and a rolling guard of at most two Case choices per six planning slots (`python -m scripts.gwqueue.pack_history`). Fixtures: `references/style-selection-fixtures.md`.
 
 **What's new in v3.7 (photo floor):**
@@ -417,7 +417,7 @@ Before outputting HTML, verify:
 - No rounded corners on slides or cards
 - No emoji anywhere
 - No decorative borders or flourishes
-- No script/handwriting/cursive fonts. One exception: Leech (Scott's own hand) exactly where a pack section names it, today the White Board cover headline; never as a reading font.
+- No script/handwriting/cursive fonts. One exception: the marker face exactly where a pack section names it, today Permanent Marker on the White Board cover headline; never as a reading font. Leech (Scott's own hand) only if Scott names it for a deck.
 - No bullet points (use numbered steps or line breaks). Exception: a pack whose section in `references/style-packs.md` allows source-supported lists (its own marker, never a round dot).
 - No strikethrough text
 - No centered body copy (left-align body; center only single-line headings). Exception: any pack whose section in `references/style-packs.md` explicitly permits centered body copy.
