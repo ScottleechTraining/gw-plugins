@@ -226,7 +226,7 @@ original, never stronger. Never quote transcript profanity in any asset.
 **Asset 4: Twitter Thread**
 - Tweet 1: Hook. Bold coaching truth pulled from the session. Under 280 chars.
 - Tweets 2-4: Teaching points. One idea per tweet. Specific and usable. Under 280 chars.
-- Tweet 5: Bridge to Insiders. "This is what we cover inside GW Insiders. Every course included, $49 a month. [LINK]" Under 280 chars.
+- Tweet 5: Bridge to Insiders. The X / Twitter close from `references/insiders-offer.md`, word for word. Under 280 chars.
 
 **Asset 5: Instagram Caption**
 - First line is the hook.
@@ -330,18 +330,18 @@ Same as TRANSCRIPT MODE (see Step 2A.3).
 - Tweet 1 (Hook): Bold coaching truth or provocative statement. Under 280 chars.
 - Tweets 2-5 (Teaching): One clear point per tweet. Short sentences. Specific. Under 280 chars.
 - Tweet 6 (Bridge): Connect the teaching to a real in-season or offseason scenario. Under 280 chars.
-- Tweet 7 (CTA): Soft pitch to the relevant product. Under 280 chars.
+- Tweet 7 (CTA): The X / Twitter close from `plugins/gw-command-center/references/insiders-offer.md`, word for word, alone in the tweet. A course or Film Study pointer goes in tweet 6, never in the CTA tweet.
 
 **Asset 2: Twitter Thread #2 (Myth-Buster or Story Thread)**
 - Tweet 1 (Hook): "Most coaches get [topic] wrong." or a story opener. Under 280 chars.
 - Tweets 2-4: The myth, the reality, the evidence. Or story beats. Under 280 chars.
 - Tweet 5: The lesson. Under 280 chars.
-- Tweet 6 (CTA): Different angle than Thread #1. Push to course, podcast, or Summit. Under 280 chars.
+- Tweet 6 (CTA): The same X close block, word for word, alone in the tweet. Thread #2's different angle lives in tweet 5.
 
 **Asset 3: Twitter Thread #3 (Quick-Hit Practical Thread)**
 - Tweet 1 (Hook): "Here are [3/5/7] things about [topic] most coaches never learn:" Under 280 chars.
 - Tweets 2-N: One practical, usable point each. Numbered. Short. Under 280 chars.
-- Final Tweet (CTA): Direct. Point to the most relevant offer. Under 280 chars.
+- Final Tweet (CTA): The X close block, word for word, alone in the tweet.
 
 **Asset 4: Instagram Carousel #1 (Teaching Carousel)**
 
