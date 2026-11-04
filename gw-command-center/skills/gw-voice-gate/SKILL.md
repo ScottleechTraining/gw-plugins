@@ -55,6 +55,7 @@ Applies only to email, letter, or long-form post. Skip for tweets, IG captions, 
 ### Check 5: AI-slop tells
 Flag and fix each:
 - "It's not just X, it's Y" (and "not only X but Y") constructions. Rewrite as a plain statement.
+- Contrast titles: "You do not need X. You need Y." and its variants ("You don't need X, you need Y", "Not X. Y."). Banned everywhere, hooks and bodies, by Scott 2026-11-03 ("it definitely does feel very AI oriented"). Rewrite as the one claim that matters. Packs already shipped to Drive are left alone.
 - Rule-of-three adjective stacks used as padding ("faster, stronger, and more explosive"). Cut to the one that carries weight.
 - Rhetorical-question openers stacked more than once. Keep at most one; turn the rest into statements.
 - Hedging: "might", "could potentially", "it's worth noting", "perhaps", "in some cases". Cut the hedge and state it straight.

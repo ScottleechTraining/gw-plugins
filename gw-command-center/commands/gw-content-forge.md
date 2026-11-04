@@ -137,6 +137,7 @@ Read voice rules from `C:/Claude Projects/CLAUDE.md` before writing.
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
 - No banned words: fluff, delve, tapestry, vibrant, transformative, unlock, leverage (as verb), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, lane (Scott 2026-10-13: "strength lane", "speed lane", "pick his lane" read as AI; say track, path, plan, or name the work; a sprint lane on a field is fine)
+- No contrast titles: "You do not need X. You need Y." and its variants are banned in hooks, titles, covers, captions and bodies (Scott 2026-11-03: an AI tell). State the one claim instead. Packs already on Drive stay as shipped.
 - Never call a slide a "card" in slide copy, a CTA, or a caption (Scott 2026-09-15, again 2026-09-22 after two more decks shipped with "Save the card"). Write "Save this for..." or "Slide 4 gives you...". The reference slide is a slide. Never call a Contact Prep drill a "match" (Scott 2026-09-22); it is a drill.
 - Tough love. Coach in the trenches. Not a motivational poster.
 - Sign off all emails: Keep the Fire Burning, / Leech

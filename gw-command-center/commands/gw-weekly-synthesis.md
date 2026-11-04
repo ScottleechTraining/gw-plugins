@@ -102,6 +102,18 @@ Read `External Library\Twitter-Instagram Saves\_idea-mine\promotion-drafts-recon
 
 Order: strong first, then medium, then weak. Weak drafts also list their `## Questions for Scott` count. If none pending, write "No promotion drafts pending." Scott replies with approve/toss per draft; approval moves the draft to `wiki/concepts/`, indexes and logs it, and checks it off in `_promotion-candidates.md` — that execution happens in the session where he answers, not autonomously here.
 
+### 2.6. Cold saves sweep (read-only, since 2026-11-03)
+
+The Dewey pipeline flags a promotion candidate at ingest and then nothing reads the rest of the saves again. On 2026-11-03 the vault had 2,547 External Library notes with zero inbound links and 705 of them were `quality: high` saves in `s-and-c` or `business`. This step is the weekly second look. It is read-only; Scott decides.
+
+```bash
+python "C:\Claude Projects\Gridiron Warrior\scripts\cold_saves_sweep.py" --top 5
+```
+
+Paste the table it prints into the Step 5 report under `## Cold saves worth a look`, with the `cold_high` count on the line above it. Then, for each of the five rows, replace the `Your call` cell with ONE word and a short reason, using the same bar as Step 2 and the promotion criteria: `promote` (would clear the bar as a Bucket B page with `external_origin: true`), `hook-bank` (a line worth keeping, not a concept), or `leave`. Do not write a draft, do not touch `_promotion-candidates.md`, do not touch the save. Scott replies on Sunday with approve/toss per row and the execution happens in that session, exactly as the Step 2.5 drafts do.
+
+Retrieval note: `External Library/` is its own Obsidian vault since 2026-11-03 (nested inside the main vault, excluded from the main vault's graph and search by `userIgnoreFilters`). The Second Brain scripts read it by path and do not care about vault boundaries. Nothing in this step changes for that.
+
 ### 3. Weave research briefs into concept pages
 
 For each new research brief (business, AI, S&C), check if a concept page already exists in the relevant wiki domain folder.
@@ -184,6 +196,16 @@ Stub created from Scott's voice note on <date>. Expand as more material accumula
 ```
 
 **4e. Identify 2-3 strongest themes** across the week's voice notes for the weekly summary report (carries forward to Step 5).
+
+### 4.4. Link the wiki to the Voice Corpus (writes wiki/ only)
+
+Wiki pages cite Voice Corpus files as plain `source:` paths, which the graph cannot see. On 2026-11-03, 200 of 242 corpus notes had zero inbound links. This step keeps them connected.
+
+```bash
+python "C:\Claude Projects\Gridiron Warrior\scripts\voice_corpus_links.py" --write --quiet
+```
+
+The script keeps a `## Source files` section (between marker comments) at the bottom of every wiki page that cites a corpus `.md` file, plus a generated `## Letters archive` index on `wiki/entities/leech-letters.md`. It writes wiki/ only, never the corpus (Voice Corpus files are immutable). Re-runs are no-ops. Carry its one summary line (`N of M corpus notes now have a wiki inbound link`) into the Step 5 report under `## Wiki health trend`.
 
 ### 4.5. Expand stale stubs (wiki health)
 
@@ -291,6 +313,10 @@ is asking of Scott, as ready-to-paste Claude Code prompts. Rules:
 ## Promotion drafts awaiting your call
 
 <the decision table from Step 2.5, or "No promotion drafts pending.">
+
+## Cold saves worth a look
+
+<count line + the five-row table from Step 2.6, `Your call` filled in with promote / hook-bank / leave and a short reason>
 
 ## Retire or merge proposals
 
