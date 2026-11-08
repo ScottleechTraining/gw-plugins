@@ -76,7 +76,7 @@ CLAUDE.md is already in session context. Do not re-Read it. Internalize:
 1. **Names a specific mistake or decision.** The angle points at one concrete coaching error or fork-in-the-road choice ("you're squatting Thursday and killing Friday", "you count reps instead of load"), NOT a vague theme ("conditioning matters", "toughness"). If you can't state the mistake in one sentence, the angle isn't ready.
 2. **Passes the ICP filter.** Would a time-strapped HS football or S&C coach stop scrolling? It has to hit a real pain (kids getting dominated, no time to program, letting athletes down), not just be interesting to you.
 3. **Teachable in one pack.** It fits a thread, a carousel, or one email. If it needs a course outline or three sessions to land, it's too big, split it or send it to `/gw-film-study-brief` instead of forcing it into a seed.
-4. **Not a duplicate.** Before writing, check `queue-state.json`'s `forge_backlog` and the last few days in `_daily-seeds/` for the same angle. If it's already queued or was seeded this week, skip it. A fresh spin on a shipped topic is fine; a re-run of a pending one is noise.
+4. **Not a duplicate.** Before writing, check `queue-state.json`'s `forge_backlog` and the last few days in `_daily-seeds/` for the same angle. If it's already queued or was seeded this week, skip it. Also check `Deliverables/ready/` folder names for the angle's core lesson. A fresh spin on a shipped topic passes only if it carries a decision, number, or rule the shipped pack lacks; name the shipped slug and the new piece on the Gates line (`duplicate: pass, new vs <slug>: <piece>`). A re-run of a pending one is noise.
 
 An angle that fails any gate gets cut, not scored. Only survivors go through the scoring block below.
 
