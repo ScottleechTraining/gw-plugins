@@ -36,8 +36,10 @@ for killed adjacent assets - killed stays dead unless Scott revives.
    audit trail (themes + by-source verbatim excerpts) that later gets committed
    alongside the page. This mines wiki, Voice Corpus, External Library metadata,
    screenshots, and daily seeds in one sweep.
-2. Query NotebookLM "S&C Master Resource" on the topic (notebook_list ->
-   notebook_query). Failure is not fatal - proceed corpus-only and note it.
+2. Query the NotebookLM "S&C Master Resource" set on the topic: every numbered
+   master, per `plugins/gw-command-center/references/sc-notebooks.md` sections
+   1 and 2 (notebook_list -> cross_notebook_query). Failure is not fatal -
+   proceed corpus-only and note it.
 3. Read the wiki concept pages the corpus query surfaced, plus related
    summaries (film-study, podcast).
 4. Mine Voice Corpus for URI war stories on the topic - at least one verbatim

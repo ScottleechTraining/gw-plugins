@@ -116,15 +116,15 @@ If the corpus query returns zero matches, continue anyway — the NotebookLM ste
 mcp__notebooklm__notebook_list
 ```
 
-Locate the notebook named `S&C Master Resource` (or closest match). Then:
+The S&C Master Resource is a numbered SET of notebooks (Master 1, 2, 3, ...). Resolve the set and query EVERY master per `plugins/gw-command-center/references/sc-notebooks.md` sections 1 and 2:
 
 ```
-mcp__notebooklm__notebook_query
-  notebook_id: <S&C Master Resource id>
+mcp__notebooklm__cross_notebook_query
+  notebook_names: <ids of every S&C Master Resource notebook that holds sources, comma-joined>
   query: <topic, expanded if needed for clarity>
 ```
 
-Capture the response. If the notebook isn't found or the query fails, note the failure in the brief — do NOT fabricate NotebookLM content.
+Capture the response from each master, with its notebook title. If the notebook isn't found or the query fails, note the failure in the brief — do NOT fabricate NotebookLM content.
 
 ## Step 3 — Merge into one brief
 

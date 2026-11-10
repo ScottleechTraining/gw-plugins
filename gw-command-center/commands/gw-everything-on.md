@@ -80,7 +80,7 @@ For each source, glob the directory then grep for any of the query terms (case-i
 | 7 | Podcast transcripts | `Voice Corpus\Podcast Transcripts\*.md` | Verbatim .md siblings of the .docx originals (converted 2026-08-03). The .docx stay canonical; scan the .md. |
 | 8 | Daily seeds | `Deliverables\_daily-seeds\*.md` | Past content angles |
 | 9 | Wiki | `wiki\` | Scott's IP - concepts, summaries, quotes, frameworks |
-| 10 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. Optional - skip if no obvious match. |
+| 10 | NotebookLM master notebooks | via `mcp__notebooklm__*` | Query the topic-relevant master notebook (e.g. "S&C Master Resource" for S&C-flavored topics). Use `mcp__notebooklm__notebook_list` to find candidates, then `mcp__notebooklm__notebook_query` against the most-relevant one. The S&C Master Resource is a numbered set: query every master per `plugins/gw-command-center/references/sc-notebooks.md`. Optional - skip if no obvious match. |
 | 11 | Course transcripts | `Voice Corpus\Course Transcripts\` | Scott's own course material (GW2, GWI, Contact Prep, Scores and Stops, Film Studies). Highest-authority voice source; when a topic maps to a course, its transcripts anchor the Themes section. |
 
 ### 3. Read budget guidance
