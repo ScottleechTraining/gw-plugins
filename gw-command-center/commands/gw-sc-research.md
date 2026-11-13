@@ -205,6 +205,8 @@ supersedes: <older brief filename, UPDATE only, omit the key on NEW>
 source_count: <N>
 sources_added: <N new sources added to the routed notebook this run, 0 if enrichment failed>
 notebook_route: health|master
+claims_checked: <N claims sent to the step 3b check, 0 if the check was skipped>
+claims_unsupported: <N claims fixed or cut after the check>
 auto_picked: false|true
 pipeline: gw-sc-research
 ---
@@ -265,6 +267,18 @@ brief has to survive that pass. Five rules:
 Optional: if the topic pack already carries a `claim-check.json` with F2 dispositions, the member
 build reads it. Do not create one where none exists.
 
+### 3b. Check the cited claims against the notebook (Scott's ruling 2026-11-12)
+
+The Briefing Room publishes this brief to Insiders word for word, and the member-ready rules above only check that a source tag matches an entry in `## Sources`. Nothing checked that the source says the number. This step does, with one extra query and no new model. It runs unattended; Scott does nothing.
+
+1. **List the claims.** From `## Core Concept` through `## Best Quote / Example`, collect every sentence that carries a number, a percentage, a dose, or a source tag. Number them. Skip `## GW Application`, `## Already Decided` and `## Sources`: Scott's own material is not checked here.
+2. **One query.** Call `mcp__notebooklm__notebook_query` on `routed_id` with: "For each numbered claim below, quote the exact supporting sentence from the sources and name the source, or answer UNSUPPORTED. Use only the loaded sources." Then the numbered claims. If a claim came from the step-2 fallback, send only those claims to `other_id` in one more query. Two check queries is the ceiling.
+3. **Act on the answer.** For each UNSUPPORTED claim: when the answer shows what the source really says, rewrite the sentence to that figure; otherwise cut the sentence. Never keep an unsupported number, and never patch one from memory or a web search. If a cut empties a section below its template count, leave it short; a short section beats a wrong number.
+4. **Record it.** Set `claims_checked` and `claims_unsupported` in the frontmatter, and add `claims: N checked, M fixed or cut` to the wiki log line in step 6.
+5. **A failed check never blocks the brief.** If the check query fails after the same three transient retries as step 2, ship the brief as written, set `claims_checked: 0`, and put `CLAIM CHECK SKIPPED` in the log line so the morning report shows it.
+
+Scope: this lane only. The business and AI lanes do not run it.
+
 ### 4. Update queue + index
 
 Move the researched topic from `## Active Queue` to `## Completed` with `- YYYY-MM-DD - [topic name] [topic-slug]` (and `*(auto-picked)*` if applicable). Preserve all other queue entries unchanged.
@@ -309,7 +323,7 @@ back to the raw topic slug. That is a visible defect, not an acceptable default.
 ### 6. Append to wiki log
 
 ```
-YYYY-MM-DD /gw-sc-research: [topic-slug] (auto_picked: false|true, sources_added: N)
+YYYY-MM-DD /gw-sc-research: [topic-slug] (auto_picked: false|true, sources_added: N, claims: N checked, M fixed or cut)
 ```
 
 ### 7. Do NOT commit
