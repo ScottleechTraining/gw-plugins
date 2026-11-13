@@ -8,7 +8,7 @@ description: "Daily morning digest - synthesize the overnight pipeline output in
 
 Fires daily at 7:15am after the rest of the morning pipeline has finished. Reads everything the pipeline produced overnight, maps it to GW products, and writes an action-oriented digest that Scott reads with morning coffee to decide what to dig into first.
 
-Scope: the three files named under Output targets, the forge_backlog append in Step 6, and the one wiki/log.md line in Step 7. That set is the floor and the ceiling. Do not add sections the digest structure does not name, do not build extra pages or send extra mail, and do not stop before the log line.
+Scope: the three files named under Output targets, the new lines on the standing rulings list in Step 2b, the forge_backlog append in Step 6, and the one wiki/log.md line in Step 7. That set is the floor and the ceiling. Do not add sections the digest structure does not name, do not build extra pages or send extra mail, and do not stop before the log line.
 
 ## Output targets
 
@@ -40,6 +40,8 @@ Use the local operational date in `America/New_York`. Do not use the UTC date fo
 
 7. Queue depths - run `python "C:\Claude Projects\Gridiron Warrior\scripts\queue_status.py"` and use its counts verbatim. Do NOT Read the `_topic-queue.md` files to count topics: they are UTF-16LE, a raw read shows them as empty, and that produced a false "all queues at 0, refill" digest on 2026-08-12.
 
+8. `wiki\system\open-rulings.md` - the standing list of questions that wait for Scott's ruling. Small file; it sits outside the narrative read cap. Step 2b adds to it.
+
 Dewey, screenshots, voice notes are intentionally NOT read here. Their daily counts and standouts already land in `wiki/log.md` via the `/gw-dewey-daily`, `/gw-screenshot-ingest`, and `/gw-voice-ingest` skills, and the Dewey daily confirmation arrives in a separate email. Pull their numbers from `wiki/log.md` only.
 
 ## Operational truth rules
@@ -63,6 +65,8 @@ Dewey, screenshots, voice notes are intentionally NOT read here. Their daily cou
 Write the markdown file using this exact structure. Keep it tight - every section earns its spot.
 
 Density: one line per item, and an item earns its line only if it changes what Scott does today. The section limits (one move, up to 2 in If You Have Time, one line per source) are ceilings, not targets. Omit an empty section rather than padding it. No word-count target: a short digest on a quiet morning is the correct output. Today's Seed Angles is exempt, it stays a verbatim paste.
+
+Rulings rule (Scott 2026-11-12): a question that only Scott can answer never goes in If You Have Time. It goes on the standing list in Step 2b, and the dashboard shows that list as the "Needs Your Ruling" board. Today's Move may point at the list by number ("**Answer** R4 and R5 on the Needs Your Ruling board") when his answer is the highest-leverage move of the day. Do NOT write a "Needs Your Ruling" section in the digest yourself: `scripts/build_dashboard_boards.py` renders the board from the list.
 
 Opportunity Radar rule: before writing, check `Gridiron Warrior/wiki/business/opportunity-radar.md`. If it gained a RUN-WITH-IT entry since the last digest (unchecked, score 80+), name it in its own line at the top of Today's Move: what the idea is, its score, and the save it came from. Scott decides same-week: build, park, or kill. If nothing new, say nothing.
 
@@ -644,6 +648,18 @@ This skill MUST finish in under 5 minutes wall-clock. Aggressive read discipline
 
 ### 2. Synthesize the digest into the markdown structure above
 
+### 2b. Put every new question for Scott on the standing rulings list
+
+Read `wiki\system\open-rulings.md` and follow the rules at the top of that file. From today's inputs, collect each question that only Scott can answer: his number, his rule, his yes or no. The usual places:
+
+- a seed angle with a `Needs:` bullet or a `repair:` next command that asks for Scott's own number, rule or voice note
+- a brief line that asks Scott to rule or decide (often under `## GW Application` or `## Already Decided`)
+- a pack, build or lane that today's log or status files say is blocked on his answer
+
+Compare each one by meaning against the Open and the Closed lists. Append only the new ones under `## Open`, one line per decision, in the file's shape (`- R<number> | YYYY-MM-DD | <question>`). Write the question as one plain sentence Scott can answer from his truck, then one short sentence on what the answer unblocks. Questions that hang on one answer share a line; independent questions get their own. Ceiling: 5 new lines a morning, the ones that block the most first.
+
+Never reword, renumber, close or delete a line here. A task for Scott (sign in, plug in, record a film study) is not a ruling and stays out. If nothing new needs him, leave the file untouched.
+
 ### 3. Write `_morning-briefing.md` at vault root (overwrite, don't append)
 
 ### 4. Render the same content into `_morning-briefing.html` using the email HTML rules above (overwrite, don't append). Both files must reflect the same digest content; HTML omits the `Subject:` line. **Include the "Open Dashboard ->" button at the top of the email body** linking to `https://gw-command-center.netlify.app`.
@@ -667,13 +683,13 @@ The nightly forge picker applies its own novelty gate on top of this, so a parap
 
 ```
 
-YYYY-MM-DD /gw-morning-digest: digest written (1 top move, N new vault items)
+YYYY-MM-DD /gw-morning-digest: digest written (1 top move, N new vault items, R rulings added, K open)
 
 ```
 
 ### 8. Do NOT commit
 
-The `gw-daily-closeout` job runs after this digest and commits all approved daily-output paths once, via `scripts/git_safe_commit.py`. This skill's job ends at writing `_morning-briefing.md`, `_morning-briefing.html`, `_dashboard-index.html`, and the wiki/log.md line.
+The `gw-daily-closeout` job runs after this digest and commits all approved daily-output paths once, via `scripts/git_safe_commit.py`. This skill's job ends at writing `_morning-briefing.md`, `_morning-briefing.html`, `_dashboard-index.html`, the new `wiki/system/open-rulings.md` lines, and the wiki/log.md line.
 
 ## Notes
 

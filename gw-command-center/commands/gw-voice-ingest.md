@@ -79,10 +79,30 @@ Cut the line out of Active and append it under `## Covered` in this shape:
 Never reword a topic line, never delete one, and never move a topic the notes did not cover.
 If nothing matched, leave the file untouched. Say in the log line how many moved.
 
+### 5b. Close any open ruling the note answered
+
+Read `wiki\system\open-rulings.md`. These are the questions Scott reads on the dashboard each
+morning as the "Needs Your Ruling" board. He answers them by voice on the drive in, often by
+number ("Ruling 3, per week").
+
+For every note you just filed, compare it against the lines under `## Open`. Close a line ONLY
+when the note names its number, or when the note plainly answers the question it asks. A note
+that only talks about the same subject has not answered it. One note can answer several.
+
+Cut the answered line out of Open and append it under `## Closed` in this shape:
+
+```
+- R<number> | <date opened> | closed 2026-MM-DD | <the question, verbatim> | [[YYYY-MM-DD-topic-slug]]
+```
+
+Never reword a question, never delete a line, and never write Scott's answer anywhere but the
+verbatim note. If Scott says a number that is not on the Open list, close nothing and say so in
+the log line. If nothing matched, leave the file untouched.
+
 ### 6. Append to log
 
 ```
-2026-MM-DD /gw-voice-ingest: N voice notes processed, M driving topics covered
+2026-MM-DD /gw-voice-ingest: N voice notes processed, M driving topics covered, K rulings answered (R3, R5)
 ```
 
 Do NOT run `git commit`. The `gw-daily-closeout` job commits all approved daily-output paths once, after the morning digest, via `scripts/git_safe_commit.py`. This skill's job ends at writing files and the wiki/log.md line.
