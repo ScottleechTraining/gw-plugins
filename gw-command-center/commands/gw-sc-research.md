@@ -202,7 +202,7 @@ audience: <who is asking and their constraint>
 question_source: queue|ds-<slug>|scott
 disposition: new|update
 supersedes: <older brief filename, UPDATE only, omit the key on NEW>
-source_count: <N>
+source_count: <N: total sources in the routed notebook(s) AFTER tonight's adds, read from a fresh notebook_list. Route health = the health notebook count. Route master = the sum of every master in the set. Never the number of sources cited>
 sources_added: <N new sources added to the routed notebook this run, 0 if enrichment failed>
 notebook_route: health|master
 claims_checked: <N claims sent to the step 3b check, 0 if the check was skipped>
