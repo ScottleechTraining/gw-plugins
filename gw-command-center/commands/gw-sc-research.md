@@ -333,5 +333,5 @@ The `gw-daily-closeout` job commits all approved daily-output paths once, after 
 ## Voice rules (apply to brief body)
 
 - Plain-language coaching tone. Short sentences. Active verbs.
-- No em-dashes. No banned words (see CLAUDE.md).
+- No em-dashes. No banned words or phrases (see `plugins/gw-command-center/references/banned-words.md`).
 - This is a research brief, not a Leech Letter — present findings cleanly. Scott translates to voice during weekly synthesis or content forge.

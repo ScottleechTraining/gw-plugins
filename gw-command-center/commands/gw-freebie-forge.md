@@ -104,7 +104,7 @@ If the source is a Film Study brief, the "Bottom-line takeaways" section is the 
 Read `C:\Claude Projects\CLAUDE.md`. Internalize:
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
-- Banned words: delve, tapestry, vibrant, transformative, unlock, leverage (as verb), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, fluff
+- Banned words and phrases: read `plugins/gw-command-center/references/banned-words.md` (words, contrast titles, and the term bans)
 - Tough love. Coach in the trenches.
 - Sign off: `Keep the Fire Burning,` / `Leech`
 

@@ -65,7 +65,7 @@ It prints at most three map entries from `wiki/business/evergreen-teaching-map.m
 CLAUDE.md is already in session context. Do not re-Read it. Internalize:
 - Voice rules: short sentences, active verbs, plain language
 - No em-dashes ever
-- Banned words list
+- Banned words and phrases: read `plugins/gw-command-center/references/banned-words.md` (it is not in session context)
 - Signature phrases
 - Sign-off: "Keep the Fire Burning, / Leech"
 
@@ -180,7 +180,7 @@ Dedup first: do not repeat one of the 15 tracked questions in `wiki/business/aeo
 
 Every angle's hook and body MUST pass this check:
 - No em-dashes
-- No banned words (fluff, delve, leverage as verb, unlock, etc.)
+- No banned words or phrases (read `plugins/gw-command-center/references/banned-words.md`)
 - Sounds like a coach in the trenches, not a marketer
 - Could plausibly be the first line of a Leech Letter
 

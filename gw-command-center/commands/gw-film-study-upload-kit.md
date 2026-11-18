@@ -129,4 +129,4 @@ Keep it tight.
 - No email, no Kit, no commit, no push, no posting to Thinkific or anywhere else.
 - Never fabricate transcript content. Auto-captions missing = stop and say so.
 - Auto-caption text is imperfect. Quote it for ingest, but never publish raw caption lines as polished copy without cleanup.
-- No em-dashes. No banned words from CLAUDE.md.
+- No em-dashes. No banned words or phrases from `plugins/gw-command-center/references/banned-words.md`.

@@ -81,7 +81,7 @@ These apply in all three modes without exception:
 - Tough love, not cheerleading. Scott doesn't pump people up. He tells the truth.
 - Address coaches directly: "you." Never "one" or "coaches."
 - No em-dashes. Ever.
-- Never use: delve, tapestry, vibrant, transformative, unlock (as a concept), leverage (as a verb), game-changer, fluff.
+- No banned words or phrases. Read `plugins/gw-command-center/references/banned-words.md` before writing. It holds the full word list, contrast titles, and the term bans.
 - No generic motivational filler. If it could appear on a poster at Target, cut it.
 
 ---

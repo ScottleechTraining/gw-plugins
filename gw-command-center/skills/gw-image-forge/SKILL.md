@@ -289,6 +289,23 @@ On `429` (rate limit), the script retries once automatically with 5s backoff bef
 
 ---
 
+## Edit Step (real photo in, frame around the athlete changed)
+
+Added 2026-11-18 (ruling R19). Does not replace the generation method above. Use it only when Scott gives a real photo and wants a **cutout** or a **background swap**. Crops and text overlays need no model call (do them in the carousel HTML).
+
+**Hard rule:** the edit works on the frame AROUND the athlete. It never changes, redraws, re-poses or regenerates the athlete: face, body, jersey, numbers stay the photo's own pixels as far as the API allows. The code builds the prompt and always appends "Preserve the subject exactly..." (the `PRESERVE_RULE` constant). No AI avatar of Scott, ever.
+
+```bash
+echo '{"name":"slug","edit":"cutout","image":"C:/IMAGES/Football/photo.jpg","quality":"high"}' | python "C:/Claude Projects/plugins/gw-command-center/skills/gw-image-forge/scripts/generate.py" --config - [--dry-run]
+```
+
+- `edit`: `cutout` (athlete on a flat `fill`, default white) or `background` (add `"background": "description"`).
+- Optional: `fill`, `out_dir` (default `Images\`). Output is PNG. The original is never modified.
+- gpt-image-2 rejects a transparent background (HTTP 400, verified 2026-11-18), so a cutout is on a flat color, not alpha.
+- Test finding (2026-11-18): the output is a re-render. The athlete came back larger in frame with the grain gone. Compare to the original before any use, and never edit a photo of a real athlete without Scott's say.
+
+---
+
 ## North Star (read this last, every time)
 
 > Could this image have appeared in a 1987 SI feature, a 1996 NCAA media guide, or a 2026 university athletic communications release?

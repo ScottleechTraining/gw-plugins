@@ -7,7 +7,7 @@ description: PASS/FAIL QA gate for any draft written as Scott Leech. Runs a mech
 
 A mechanical, verifiable QA gate. It runs on any draft written as Scott and returns PASS or FAIL. It edits mechanically to fix the listed violations. It never rewrites voice, restructures content, or invents ideas beyond the fixes below.
 
-The reference voice rules live in `C:\Claude Projects\CLAUDE.md` (VOICE RULES, BANNED WORDS, SIGNATURE PHRASES, EMAIL VOICE EXAMPLES). This gate is the executable version of those rules.
+The reference voice rules live in `C:\Claude Projects\CLAUDE.md` (VOICE RULES, SIGNATURE PHRASES, EMAIL VOICE EXAMPLES). The word and phrase bans live in `plugins/gw-command-center/references/banned-words.md`. This gate is the executable version of those rules.
 
 ## Run it in a clean agent, never in the drafting session
 
@@ -32,12 +32,10 @@ Search the draft for the em-dash character and for the double-hyphen used as one
 - Rewrite each offending sentence without it: split into two sentences, or replace with a period. Never swap in a semicolon-heavy construction.
 
 ### Check 2: Banned words scan
-Case-insensitive, word-boundary match against this list:
-fluff, delve, tapestry, vibrant, transformative, unlock, leverage (verb use only), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, lane (as a training track or path: "strength lane", "pick his lane"; a literal sprint lane on a field passes).
+Read `plugins/gw-command-center/references/banned-words.md` first. It is the one word list. Case-insensitive, word-boundary match against its "Banned words" section and its "Banned phrases and terms" section ("card" for a slide, "match" for a drill, "mat drills" and "mat block" in public copy), honoring the exceptions it lists.
 - Any hit is a FAIL. List the line number and the word.
-- "leverage" only fails when used as a verb (leverage this, leveraging that). "Leverage" as a noun (the leverage in a squat) passes.
-- Give a plain-language replacement for each hit (utilize to use, elevate to raise, dive into to get into, unlock to open up, etc.).
-- Carousel copy, CTAs, and IG captions also fail on "card" used for a slide ("Save the card", "the card on slide 4") and on "match" used for a Contact Prep drill. Scott banned both on 2026-09-15 and 2026-09-22 after decks shipped with them. Replace with "Save this" / "slide 4" and "drill". A wrestling match or a matching pair of numbers passes.
+- Give a plain-language replacement for each hit (the file lists the common ones).
+- A word under "Flagged, not banned" is a flag, not a FAIL. Suggest the replacement.
 - Any Insiders price, trial, or benefit line must match `plugins/gw-command-center/references/insiders-offer.md`. A phrase on its "Never write" list ($29, any trial, "Weekly Film Study", "Wildcat Webinar", and the rest) is a FAIL. Replace it with the matching block from that file.
 
 ### Check 3: Sign-off
@@ -55,7 +53,7 @@ Applies only to email, letter, or long-form post. Skip for tweets, IG captions, 
 ### Check 5: AI-slop tells
 Flag and fix each:
 - "It's not just X, it's Y" (and "not only X but Y") constructions. Rewrite as a plain statement.
-- Contrast titles: "You do not need X. You need Y." and its variants ("You don't need X, you need Y", "Not X. Y."). Banned everywhere, hooks and bodies, by Scott 2026-11-03 ("it definitely does feel very AI oriented"). Rewrite as the one claim that matters. Packs already shipped to Drive are left alone.
+- Contrast titles: "You do not need X. You need Y." and every variant listed in `plugins/gw-command-center/references/banned-words.md`. A hit is a FAIL. Rewrite as the one claim that matters. Packs already shipped to Drive are left alone.
 - Rule-of-three adjective stacks used as padding ("faster, stronger, and more explosive"). Cut to the one that carries weight.
 - Rhetorical-question openers stacked more than once. Keep at most one; turn the rest into statements.
 - Hedging: "might", "could potentially", "it's worth noting", "perhaps", "in some cases". Cut the hedge and state it straight.

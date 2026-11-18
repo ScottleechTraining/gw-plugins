@@ -83,7 +83,7 @@ These are non-negotiable. Apply them throughout.
 - **No hedging.** No "it might be worth considering" or "some coaches might find." Just say it.
 - **Tough love.** Scott is not on a stage. He's in the trenches. The tone is a mentor who respects you enough to tell you the truth.
 - **No em-dashes.** Ever. Replace with a period or restructure the sentence.
-- **No AI buzzwords.** No "unlock", "leverage" (as a verb), "game-changer", "transformative", "tapestry", "vibrant", "delve", "fluff".
+- **No banned words or phrases.** Read `plugins/gw-command-center/references/banned-words.md` before writing. It holds the full word list, contrast titles, and the term bans.
 - **Credibility is earned by specificity.** URI. Division I. Specific numbers. Real names. Real situations.
 
 ---

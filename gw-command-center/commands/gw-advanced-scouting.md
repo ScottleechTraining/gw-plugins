@@ -78,7 +78,7 @@ Full academic citations: authors, title, journal, year, PubMed link.
 Voice rules: plain-language section intros in Scott's register (short sentences,
 second person, tough love); one fact-box stat punch per major section; at least
 one scott-quote URI war story; signature phrases where natural; NO em-dashes
-anywhere; banned-word list from root CLAUDE.md.
+anywhere; banned-word list from `plugins/gw-command-center/references/banned-words.md`.
 
 ## Phase 3 - Build
 

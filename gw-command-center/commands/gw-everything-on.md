@@ -196,7 +196,7 @@ cd "C:\Claude Projects\Gridiron Warrior" && git add "Deliverables/_corpus-querie
 ## Voice and tone (for the synthesis sections)
 
 - Coach-direct. Short sentences. Plain language.
-- No em-dashes. No banned words (see CLAUDE.md).
+- No em-dashes. No banned words or phrases (see `plugins/gw-command-center/references/banned-words.md`).
 - This is a research brief Scott will mine - clarity over polish.
 - Quote excerpts verbatim. Do NOT paraphrase or "clean up" voice note transcripts - preserve the raw register.
 

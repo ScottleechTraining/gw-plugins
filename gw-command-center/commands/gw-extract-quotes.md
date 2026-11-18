@@ -43,7 +43,7 @@ Read voice rules from `CLAUDE.md`. The quotes you extract must match Scott's voi
 **SKIP:**
 - Filler ("yeah, totally," "for sure," "right")
 - Pleasantries and intros
-- Banned words (delve, leverage, unlock, etc. — full list in CLAUDE.md)
+- Lines that use a banned word or phrase (full list in `plugins/gw-command-center/references/banned-words.md`)
 - Anything with em-dashes (Scott's hard rule)
 - Generic motivational lines that don't teach anything
 

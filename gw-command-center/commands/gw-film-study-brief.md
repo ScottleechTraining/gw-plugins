@@ -438,12 +438,12 @@ Keep it tight. Scott has 15 minutes.
 - Publish to Substack. Post to IG. Send anything to Kit. Schedule any future run.
 - Auto-pick a topic when the queue is empty (abort instead).
 - Re-enable the retired Sunday cowork prompts (`gw-notebooklm-handshake`, `gw-film-study-pipeline-run`, `gw-film-study-weekly-batch-prep`). Those stay archived.
-- Use em-dashes anywhere in produced content. Use any banned word from CLAUDE.md.
+- Use em-dashes anywhere in produced content. Use any banned word or phrase from `plugins/gw-command-center/references/banned-words.md`.
 
 ## Voice and tone (for the synthesis sections)
 
 - Coach-direct. Short sentences. Plain language.
-- No em-dashes. No banned words (see CLAUDE.md / AGENTS.md).
+- No em-dashes. No banned words or phrases (see `plugins/gw-command-center/references/banned-words.md`).
 - Quote excerpts verbatim. Don't "clean up" voice transcripts.
 - This is a research brief Scott will mine — clarity over polish.
 - Downstream skills (content-forge, substack-forge, freebie-forge) enforce their own voice rules on their outputs. Don't second-guess them.

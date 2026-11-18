@@ -136,9 +136,7 @@ Read voice rules from `C:/Claude Projects/CLAUDE.md` before writing.
 
 - Short sentences. Active verbs. Plain language.
 - **No em-dashes. Not one.**
-- No banned words: fluff, delve, tapestry, vibrant, transformative, unlock, leverage (as verb), game-changer, revolutionary, groundbreaking, seamless, robust, utilize, synergy, holistic, empower, journey, curated, cutting-edge, innovative, best-in-class, dive into, unpack, explore, elevate, reimagine, supercharge, lane (Scott 2026-10-13: "strength lane", "speed lane", "pick his lane" read as AI; say track, path, plan, or name the work; a sprint lane on a field is fine)
-- No contrast constructions: "You do not need X. You need Y." and every variant the voice gate's check 5 catches ("Not X. Y.", "X, not Y.", a one-line "Not four weeks." beat, "you think X, it starts with Y") are banned in hooks, titles, covers, captions, threads, reels and emails (Scott 2026-11-03: an AI tell). State the one claim instead. Before the gate, search each asset for a sentence that opens or closes on "not" and rewrite any that sets up a contrast. Packs already on Drive stay as shipped.
-- Never call a slide a "card" in slide copy, a CTA, or a caption (Scott 2026-09-15, again 2026-09-22 after two more decks shipped with "Save the card"). Write "Save this for..." or "Slide 4 gives you...". The reference slide is a slide. Never call a Contact Prep drill a "match" (Scott 2026-09-22); it is a drill.
+- No banned words or phrases. Read `plugins/gw-command-center/references/banned-words.md` before writing: the word list ("lane" included), contrast titles, "card" for a slide, "match" for a drill, and "Contact Prep drills" not "mat drills". Before the gate, search each asset for a sentence that opens or closes on "not" and rewrite any that sets up a contrast.
 - Tough love. Coach in the trenches. Not a motivational poster.
 - Sign off all emails: Keep the Fire Burning, / Leech
 

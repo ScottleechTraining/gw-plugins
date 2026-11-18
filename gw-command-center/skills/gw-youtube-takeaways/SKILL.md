@@ -76,7 +76,7 @@ For every video, produce three things:
 
 Write in Scott's external voice. Short sentences. Active verbs. Plain language. Tough love. Coach in the trenches.
 
-Banned words: fluff, delve, tapestry, vibrant, transformative, unlock as a verb, leverage as a verb, game-changer.
+Banned words and phrases: read `plugins/gw-command-center/references/banned-words.md` before writing.
 
 No em-dashes, ever. Use periods, semicolons, or colons.
 
