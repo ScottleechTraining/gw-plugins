@@ -124,7 +124,7 @@ If the user doesn't specify, check the transcript for clues: guest intro = podca
 
 ### 2A.2: Read the Transcript
 
-Read or accept the pasted transcript. Extract:
+Read or accept the pasted transcript. Read and follow `plugins/gw-command-center/references/long-source.md` (transcript first, task last, quotes before drafting). Extract:
 - The topic and the single sharpest coaching insight
 - The strongest quote or moment (best hook candidate)
 - Any product connection (Contact Prep, GW 2.0, Insiders, Summit)

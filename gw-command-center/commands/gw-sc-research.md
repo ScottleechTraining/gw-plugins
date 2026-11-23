@@ -177,6 +177,8 @@ A blocked stub now **fails** the job gate (the `not_contains: "status: blocked"`
 1. `C:\Claude Projects\Gridiron Warrior\wiki\system\decisions.md`, in full. Every `KILLED`, `DECLINED`, `DE-SCOPED`, `RETIRED`, `REJECTED`, and `RULE` heading is off the board.
 2. The topic's own wiki pages. Grep `wiki\index.md` for the topic's keywords to find them, then read only those pages — index.md is 337KB, never read it whole. Where a page marks a number or a prescription as the GW standard (a dated "Scott's ruling", "per Scott", or "Scott's call" note), that ruling outranks anything a source told you. The source's number keeps its attribution to its author; it never becomes the recommendation.
 
+**Reference pack check (Scott's ruling R15, 2026-11-23).** Then look in `C:\Claude Projects\Gridiron Warrior\Research\reference-packs\` for a baked pack that covers the topic (skip the `-test-result.md` files). If one exists, read it. Name in `## Already Decided` every source position in it that conflicts with a Scott ruling, one line each: the ruling, the source position, the source. Scott's rule stands. Report the conflict; never resolve it. If no pack covers the topic, go on as before. A pack never replaces the live NotebookLM query in step 2: it only sees the sources it was built from. Never build or refresh a pack in this command; a pack is a manual job Scott asks for.
+
 Nothing that collides gets recommended. Write one line in `## Already Decided` instead, naming the entry, its date, and its reopen condition, then move on. A brief that says "declined 2026-08-07, reopen if Scott raises it" is worth more than one that re-pitches it.
 
 Judgment, not keyword match. A shared noun is not a collision: `decisions.md` kills the member-facing answer bot, not every mention of a bot. Confirm the recommendation IS the dead thing before cutting it. If it genuinely differs, keep it and say in one clause how it differs.
@@ -244,7 +246,7 @@ pipeline: gw-sc-research
 - ...
 ```
 
-`## Already Decided` is the only conditional section in the template. Include it only when the decisions gate actually fired; omit the heading entirely when nothing collided. It is internal, so it never ships to the Briefing Room (it is in `DROP_SECTIONS` in `websites/scottleechtraining.com/briefing-room/_build/build_briefing_room.py`).
+`## Already Decided` is the only conditional section in the template. Include it only when the decisions gate or the reference pack check actually fired; omit the heading entirely when nothing collided. It is internal, so it never ships to the Briefing Room (it is in `DROP_SECTIONS` in `websites/scottleechtraining.com/briefing-room/_build/build_briefing_room.py`).
 
 In `## Sources`, tag each source added this run with `(added to <routed notebook title>)` so the enrichment trail is visible in the brief, and tag any fallback passage with `(from <other notebook title>)`. If enrichment failed, state the reason here in one line.
 

@@ -128,7 +128,7 @@ Capture the response from each master, with its notebook title. If the notebook 
 
 ## Step 3 — Merge into one brief
 
-Read the corpus-query output file from Step 1 (skim — do NOT inline the full file). Extract:
+Read the corpus-query output file from Step 1. Read and follow `plugins/gw-command-center/references/long-source.md` (whole file first, task last, quotes before drafting). Do NOT inline the full file into the brief. Extract:
 - The 3-5 themes from its **Themes** section.
 - 6-12 best-signal excerpts from its **By Source** sections.
 
